@@ -1,8 +1,8 @@
 Sky Engine v0.9.5
 =================
 
-Sky Engine is a basic 2D Games Engine for use with Android Development. It is still currently
-under development, but a lot of the engine exists to be able to create basic games.
+Sky Engine is a basic 2D Games Engine for use with Android Development, programmed in Java. It is still
+currently under development, but a lot of the engine exists to be able to create basic games.
 
 The Engine utilises the Android Canvas to draw shapes, sprites and text to the screen.
 
@@ -19,15 +19,21 @@ placed in a class that should implement StageInterface. This brings forth method
 
 
 
+
 Documentation and Usage
 -----------------------
 
 This is all still fairly under construction at the moment.
+
+There is a basic JavaDoc, which can be found in the doc/index.html file. It is not fully complete
+yet, with most descriptions etc. missing.
+
 
 
 
 Further Development
 -------------------
 
+	* Improved triangulation.
+	* Multiplayer and Networking (as well as Bluetooth Connectivity).
 	* 3D with OpenGL.
-	* Multiplayer and Networking (as well as Bluetooth).
