@@ -3,7 +3,7 @@ package sky.engine.physics.bodies;
 import sky.engine.geometry.Vector2D;
 
 /**
- * 
+ * A RigidBody is an object that has a position, velocity and mass.
  * 
  * @author Matthew Kelly (Badgerati).
  *
@@ -51,7 +51,11 @@ public abstract class RigidBody
 	
 	
 	/**
-	 * Create instance of new RigidBody
+	 * Create instance of new RigidBody object.
+	 * 
+	 * @param position - Position of the body.
+	 * @param velocity - Velocity of the body.
+	 * @param mass - Current mass of the body (cannot be negative).
 	 */
 	public RigidBody(Vector2D position, Vector2D velocity, float mass)
 	{
@@ -68,6 +72,21 @@ public abstract class RigidBody
 			InverseMass = 0;
 		else
 			InverseMass = 1.0f / mass;
+	}
+	
+	
+	/**
+	 * Create new instance of a RigidBody object, defaulted with zero velocity and
+	 * infinite mass.
+	 * 
+	 * @param position - Position of the body.
+	 */
+	public RigidBody(Vector2D position)
+	{
+		Position = position.clone();
+		Velocity = Vector2D.Zeros;
+		Mass = INFINITE_MASS;
+		InverseMass = 0;
 	}
 	
 	
