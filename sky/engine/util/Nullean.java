@@ -2,7 +2,6 @@ package sky.engine.util;
 
 /**
  * A Nullean object helps represent 3 different possible outcomes: False, True and Neutral (null).
- * Unlike a typical Boolean which can only represent True and False.
  * 
  * When a Nullean is created, the Value will be either True or False, but unlike a Boolean,
  * a Nullean is nullable, allowing for a theoretical third possible outcome. Therefore, we
@@ -45,7 +44,7 @@ public class Nullean
 	/**
 	 * Create an instance of a new Nullean object.
 	 * 
-	 * @param value - Integer value to create Nullean from. False if 0, true otherwise.
+	 * @param value - Integer value to create Nullean from. False if 0, True if 1, or False otherwise.
 	 */
 	public Nullean(int value)
 	{
