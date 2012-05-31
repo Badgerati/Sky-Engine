@@ -20,7 +20,7 @@ public class Nullean
 	/**
 	 * Current boolean value of this Nullean object.
 	 */
-	public final boolean Value;
+	public boolean Value;
 	
 	
 	
