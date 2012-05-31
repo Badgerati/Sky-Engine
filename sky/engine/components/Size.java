@@ -190,7 +190,7 @@ public class Size
 	/**
 	 * Returns this size as a 2D vector
 	 */
-	public Vector2D asVector2()
+	public Vector2D asVector2D()
 	{
 		return new Vector2D(Width, Height);
 	}
@@ -199,7 +199,7 @@ public class Size
 	/**
 	 * Returns this size as a 3D vector
 	 */
-	public Vector3D asVector3()
+	public Vector3D asVector3D()
 	{
 		return new Vector3D(Width, Height, Depth);
 	}
