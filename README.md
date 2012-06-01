@@ -1,6 +1,10 @@
 Sky Engine v0.9.5
 =================
 
+All rights reserved to Matthew Kelly (Badgerati) and Cadaeic Studios. Usage of the Sky Engine, or any of its enclosed
+components, packages, classes and/or methods much appropriately give credit to the developer. (Either
+'Matthew Kelly (Badgerati)' or 'Cadaeic Studios').
+
 Sky Engine is a basic 2D Games Engine for use with Android Development, programmed in Java. It is still
 currently under development, but a lot of the engine exists to be able to create basic games.
 
