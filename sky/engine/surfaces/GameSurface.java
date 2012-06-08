@@ -2,6 +2,7 @@ package sky.engine.surfaces;
 
 import sky.engine.components.Size;
 import sky.engine.graphics.Colour;
+import sky.engine.graphics.textures.TextureManager;
 import sky.engine.interfaces.GameInterface;
 import sky.engine.interfaces.StageInterface;
 import sky.engine.sensors.Accelerometer;
@@ -464,7 +465,9 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	 */
 	public void load()
 	{
-		if (stagesSet) {
+		if (stagesSet)
+		{
+			TextureManager.initialise(getResources());
 			stages.load(getResources());
 			contentLoaded = true;
 		}

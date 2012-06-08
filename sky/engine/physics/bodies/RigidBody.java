@@ -60,7 +60,7 @@ public abstract class RigidBody
 	public RigidBody(Vector2D position, Vector2D velocity, float mass)
 	{
 		if (mass < 0)
-			throw new Error("Mass cannot be negative");
+			throw new Error("Mass cannot be negative.");
 		
 		Position = position.clone();
 		Velocity = velocity.clone();

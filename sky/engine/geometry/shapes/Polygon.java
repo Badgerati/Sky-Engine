@@ -248,6 +248,7 @@ public class Polygon extends Shape
 	/**
 	 * Returns the area of this geometric polygon
 	 */
+	@Override
 	public float area()
 	{
 		float area = 0;

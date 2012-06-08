@@ -127,6 +127,7 @@ public class Circle extends Shape
 	/**
 	 * Return the area of this circle
 	 */
+	@Override
 	public float area()
 	{
 		return (Radius * Radius) * (float)Math.PI;		

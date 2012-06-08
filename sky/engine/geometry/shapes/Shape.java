@@ -1,13 +1,11 @@
 package sky.engine.geometry.shapes;
 
-import java.util.ArrayList;
-
 import sky.engine.geometry.Angle;
+import sky.engine.geometry.Triangulation;
 import sky.engine.geometry.Vector2D;
 import sky.engine.physics.bodies.RigidBody;
 import sky.engine.physics.collisions.Projection;
 import sky.engine.physics.collisions.SATCollision;
-import sky.engine.util.VisitorMap;
 
 /**
  * 
@@ -140,6 +138,22 @@ public abstract class Shape extends RigidBody
 	
 	
 	
+	/**
+	 * Returns the area of this Shape. Should be overriden.
+	 */
+	public float area()
+	{
+		return 0;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	
 	
@@ -209,73 +223,11 @@ public abstract class Shape extends RigidBody
 	
 	
 	/**
-	 * Triangulate this shape, fails if vertex count is less than 3
+	 * Returns a Triangulation of this shape, fails if vertex count is less than 3.
 	 */
-	public ArrayList<Triangle> triangulate()
+	public Triangulation triangulate()
 	{
-		if (vertices.length < 3) {
-			return null;
-		}
-		
-		
-		ArrayList<Triangle> tri = new ArrayList<Triangle>();
-		
-		//visitor map
-		VisitorMap<Vector2D, Vector2D> visitormap = new VisitorMap<Vector2D, Vector2D>();
-		
-		for (int i = 0; i < vertices.length; i++)
-		{
-			visitormap.add(vertices[i], vertices[i + 1 == vertices.length ? 0 : i + 1], false);
-		}
-		
-		
-		//current starting vertex
-		Vector2D current = vertices[0];
-		boolean linkExists = true;
-		
-		
-		//loop
-		while (linkExists)
-		{
-			Vector2D second = visitormap.getNext(current);
-			Vector2D third = visitormap.getNext(second);
-			
-			if (second == null || third == null)
-			{
-				linkExists = false;
-				continue;
-			}
-			
-			if (current.equals(third) || current.equals(second) || second.equals(third))
-			{
-				linkExists = false;
-				continue;
-			}
-
-			
-			Vector2D dir1 = second.sub(current);
-			dir1.normalise();
-			Vector2D dir2 = third.sub(second);
-			dir2.normalise();
-			
-			float cross = dir1.cross(dir2);
-			
-			if (cross >= 0)
-			{
-				tri.add(new Triangle(current, second, third));
-				visitormap.setVisited(current, second, true);
-				visitormap.setVisited(second, third, true);
-				visitormap.add(current, third, false);
-				current = third.clone();
-			}
-			else
-			{
-				current = second.clone();
-			}
-		}
-		
-		
-		return tri;
+		return new Triangulation(this.vertices);
 	}
 	
 	
