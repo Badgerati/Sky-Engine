@@ -1,4 +1,4 @@
-Sky Engine v0.9.8
+Sky Engine v0.9.9
 =================
 
 Sky Engine is a basic 2D Games Engine for use with Android Development, programmed in Java. It is still
@@ -33,6 +33,20 @@ descriptions etc. missing.
 Updates and Fixes
 -----------------
 
+Version 0.9.9
+	* Added ConvexHull class, for generating a polygon's convex hull. Uses the QuickHull algorithm.
+	* Bounding Volumes have now been moved to a new package: sky.engine.graphics.bounds
+	* Vectors now extends the Vector object, making things a little simplier for later ideas.
+	* Vectors are now comparable, to allow the SortedArray to work correctly. (shall do same with other classes later on)
+	* TextureManager is no longer abstract. Why I made it abstract originally, who knows.
+	* Added new SortedArray data structure to help with geometric calculations.
+	* Added new MultiList data structure. This will take a while to explain, but think arrays in PHP.
+	* Added new ListSet data structure, keeping elements in the order they were added for a Set.
+	* Create an Arrays class to add further functionality on arrays - such as reversing, merging and swapping.
+	* You will notice a graphs package in util - this is just me dabbling around with something.
+	
+
+Version 0.9.8
 	* Added Triangulation object, to make triangulating vertices more re-usable.
 	* Added a TextureManager to allow re-use of Textures.
 	* Bounding Volumes are no longer depreciated, and should be used over Geometric Shapes for collision detection.
@@ -47,7 +61,8 @@ Updates and Fixes
 Future Development and Ideas
 ----------------------------
 
-	* Implement bounding volume hierarchies.
+	* Implement bounding volume hierarchies (a R-trees?).
+	* Implement Quaternions for use with 3D later on. Possible applications with 2D?
 	* A class that can deal with the inbuilt Android 'options' menu more easily.
 	* A class that can have more control over screens - much like in XNA.
 	* Extend the HighscoreManager to deal with possibilities other than just name-and-score.
