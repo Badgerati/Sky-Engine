@@ -34,6 +34,7 @@ Updates and Fixes
 -----------------
 
 Version 0.9.9
+
 	* Added ConvexHull class, for generating a polygon's convex hull. Uses the QuickHull algorithm.
 	* Bounding Volumes have now been moved to a new package: sky.engine.graphics.bounds
 	* Vectors now extends the Vector object, making things a little simplier for later ideas.
@@ -47,6 +48,7 @@ Version 0.9.9
 	
 
 Version 0.9.8
+
 	* Added Triangulation object, to make triangulating vertices more re-usable.
 	* Added a TextureManager to allow re-use of Textures.
 	* Bounding Volumes are no longer depreciated, and should be used over Geometric Shapes for collision detection.
