@@ -20,3 +20,5 @@ sky.engine.sensors
 sky.engine.surfaces
 sky.engine.threads
 sky.engine.util
+sky.engine.util.graphs
+sky.engine.util.primitives
