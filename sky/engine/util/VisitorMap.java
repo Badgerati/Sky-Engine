@@ -15,13 +15,13 @@ import java.util.Set;
  * @param <K> - Class type for the Keys.
  * @param <L> - Class type for the Links of the Keys.
  */
-public class VisitorMap<K, L>
+public class VisitorMap<K, L> extends Visitor<K, L>
 {
 	/**
 	 * The VisitorMap itself, which consists of a HashMap of Keys, with associated
 	 * HashMap of Links and boolean values indicating the visitation state of that Link.
 	 */
-	private HashMap<K, HashMap<L, Boolean>> visitormap = null;
+	private HashMap<K, HashMap<L, Boolean>> visitormap = new HashMap<K, HashMap<L, Boolean>>();
 	
 	
 	
@@ -37,7 +37,7 @@ public class VisitorMap<K, L>
 	 */
 	public VisitorMap()
 	{
-		visitormap = new HashMap<K, HashMap<L, Boolean>>();
+		
 	}
 	
 	
@@ -55,6 +55,7 @@ public class VisitorMap<K, L>
 	 * @param key - Key to add.
 	 * @return True if successful, false otherwise.
 	 */
+	@Override
 	public boolean add(K key)
 	{
 		if (!visitormap.containsKey(key))
@@ -85,6 +86,7 @@ public class VisitorMap<K, L>
 	 * @param visited - Current visited state of the Link.
 	 * @return True if successful, false otherwise.
 	 */
+	@Override
 	public boolean add(K key, L link, boolean visited)
 	{
 		if (!visitormap.containsKey(key))
@@ -118,6 +120,7 @@ public class VisitorMap<K, L>
 	 * @param link - Link to remove.
 	 * @return True if successful, false otherwise.
 	 */
+	@Override
 	public boolean remove(K key, L link)
 	{
 		if (visitormap.containsKey(key))
@@ -145,6 +148,7 @@ public class VisitorMap<K, L>
 	 * @param key - Key to remove.
 	 * @return True if successful, false otherwise.
 	 */
+	@Override
 	public boolean remove(K key)
 	{
 		if (visitormap.containsKey(key))
@@ -167,28 +171,25 @@ public class VisitorMap<K, L>
 	
 	
 	/**
-	 * Returns a Nullean value of whether the given Key contains the given Link in its Links.
-	 * If the Key does not exist, null is returned.
+	 * Returns a boolean value of whether the given Key contains the given Link in its Links.
+	 * If the Key does not exist, false is returned.
 	 * 
 	 * @param key - Key to find the Link in.
 	 * @param link - Link to attempt to locate.
-	 * @return True if found, false otherwise. Null if Key does not exist.
+	 * @return True if found, false otherwise. False if Key does not exist.
 	 */
-	public Nullean contains(K key, L link)
+	@Override
+	public boolean contains(K key, L link)
 	{
 		if (visitormap.containsKey(key))
 		{
 			if (visitormap.get(key).containsKey(link))
 			{
-				return new Nullean(true);
+				return true;
 			}
 		}
-		else
-		{
-			return null;
-		}
 		
-		return new Nullean(false);
+		return false;
 	}
 	
 	
@@ -206,6 +207,7 @@ public class VisitorMap<K, L>
 	 * @param key - Key to attempt to locate.
 	 * @return True if found, false otherwise.
 	 */
+	@Override
 	public boolean contains(K key)
 	{
 		if (visitormap.containsKey(key))
@@ -226,24 +228,25 @@ public class VisitorMap<K, L>
 	
 	
 	/**
-	 * Returns a Nullean value of whether the given Link has been visited from the given Key.
-	 * If the given Key or Link does not exist then null is returned.
+	 * Returns a boolean value of whether the given Link has been visited from the given Key.
+	 * If the given Key or Link does not exist then false is returned.
 	 * 
 	 * @param key - Key to find the Link in.
 	 * @param link - Link to find visited state for.
-	 * @return True if Link visited, false otherwise. Null if Key or Link do not exist.
+	 * @return True if Link visited, false otherwise. False if Key or Link do not exist.
 	 */
-	public Nullean isVisited(K key, L link)
+	@Override
+	public boolean isVisited(K key, L link)
 	{
 		if (visitormap.containsKey(key))
 		{
 			if (visitormap.get(key).containsKey(link))
 			{
-				return new Nullean(visitormap.get(key).get(link));
+				return visitormap.get(key).get(link);
 			}
 		}
 		
-		return null;
+		return false;
 	}
 	
 	
@@ -264,6 +267,7 @@ public class VisitorMap<K, L>
 	 * @param visited - Visited state to set Link to.
 	 * @return True if successful, false otherwise.
 	 */
+	@Override
 	public boolean setVisited(K key, L link, boolean visited)
 	{
 		if (visitormap.containsKey(key))
@@ -293,6 +297,7 @@ public class VisitorMap<K, L>
 	 * 
 	 * @return Total number of Keys.
 	 */
+	@Override
 	public int size()
 	{
 		return visitormap.size();
@@ -312,6 +317,7 @@ public class VisitorMap<K, L>
 	 * @param key - Key to get Links from.
 	 * @return Total number of Links Key contains, -1 otherwise.
 	 */
+	@Override
 	public int size(K key)
 	{
 		if (visitormap.containsKey(key))
@@ -392,6 +398,7 @@ public class VisitorMap<K, L>
 	 * 
 	 * @return True if successful, false otherwise.
 	 */
+	@Override
 	public boolean clear()
 	{
 		visitormap.clear();
@@ -413,6 +420,7 @@ public class VisitorMap<K, L>
 	 * @param key - Key to clear Links from.
 	 * @return True if successful, false otherwise.
 	 */
+	@Override
 	public boolean clear(K key)
 	{
 		if (visitormap.containsKey(key))
@@ -440,6 +448,7 @@ public class VisitorMap<K, L>
 	 * @param key - Key to get next non-visited Link from.
 	 * @return First non-visited Link, or null otherwise.
 	 */
+	@Override
 	public L getNext(K key)
 	{
 		if (visitormap.containsKey(key))
@@ -511,13 +520,14 @@ public class VisitorMap<K, L>
 	
 	
 	/**
-	 * Returns a Nullean value of whether all Links have been visited from the given Key,
-	 * returning null if the Key does not exist.
+	 * Returns a boolean value of whether all Links have been visited from the given Key,
+	 * returning false if the Key does not exist.
 	 * 
 	 * @param key - Key to test all Links of.
-	 * @return True if all are visited, false otherwise. Null if Key does not exist.
+	 * @return True if all are visited, false otherwise. False if Key does not exist.
 	 */
-	public Nullean allVisited(K key)
+	@Override
+	public boolean allVisited(K key)
 	{
 		if (visitormap.containsKey(key))
 		{
@@ -526,14 +536,14 @@ public class VisitorMap<K, L>
 			for (boolean visit : visits)
 			{
 				if (!visit) {
-					return new Nullean(false);
+					return false;
 				}
 			}
 			
-			return new Nullean(true);
+			return true;
 		}
 		
-		return null;
+		return false;
 	}
 	
 	

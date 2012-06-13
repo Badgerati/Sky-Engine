@@ -1,6 +1,7 @@
 package sky.engine.graphics.textures;
 
 import java.util.HashMap;
+import java.util.Set;
 
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
@@ -11,24 +12,25 @@ import android.graphics.BitmapFactory;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public abstract class TextureManager
+public class TextureManager
 {
 	/**
 	 * HashMap of all loaded textures.
 	 */
-	private static HashMap<Integer, Texture> loadedTextures = null;
+	private HashMap<Integer, Texture> loadedTextures = null;
 	
 	
 	/**
 	 * HashMap to map user given IDs to actual Texture IDs.
 	 */
-	private static HashMap<Integer, Integer> textureIDs = null;
+	private HashMap<Integer, Integer> textureIDs = null;
 	
 	
 	/**
 	 * Resource manager to help load Bitmaps.
 	 */
-	private static Resources resources = null;
+	private Resources globalResource = null;
+	
 	
 	
 	
@@ -39,40 +41,62 @@ public abstract class TextureManager
 	
 	
 	/**
-	 * Load and add a Texture to the set of all Textures, from given resources.
+	 * Create a new TextureManager object
 	 */
-	public static boolean load(Resources res, int resourceID, int textureID)
+	public TextureManager(Resources globalres)
 	{
-		if (loadedTextures.containsKey(resourceID) || textureIDs.containsKey(textureID))
-		{
-			return false;
-		}
+		loadedTextures = new HashMap<Integer, Texture>();
+		textureIDs = new HashMap<Integer, Integer>();
+		globalResource = globalres;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Load and add a Texture to the set of all Textures, from a given Resource.
+	 */
+	public Texture load(Resources res, int resourceID, int textureID)
+	{
+		if (loadedTextures.containsKey(resourceID))
+			return getTextureByResourceID(resourceID);
+		
+		if (textureIDs.containsKey(textureID))
+			return getTextureByTextureID(textureID);
 		
 		textureIDs.put(textureID, resourceID);
 		
 		Texture texture = new Texture(BitmapFactory.decodeStream(res.openRawResource(resourceID)));
 		loadedTextures.put(resourceID, texture);
 		
-		return true;
+		return texture;
 	}
 	
 	
 	/**
-	 * Load and add a Texture to the set of all Textures, from global resources.
+	 * Load and add a Texture to the set of all Textures, from the global Resource.
 	 */
-	public static boolean load(int resourceID, int textureID)
+	public Texture load(int resourceID, int textureID)
 	{
-		if (loadedTextures.containsKey(resourceID) || textureIDs.containsKey(textureID))
-		{
-			return false;
-		}
+		if (loadedTextures.containsKey(resourceID))
+			return getTextureByResourceID(resourceID);
+		
+		if (textureIDs.containsKey(textureID))
+			return getTextureByTextureID(textureID);
 		
 		textureIDs.put(textureID, resourceID);
 		
-		Texture texture = new Texture(BitmapFactory.decodeStream(resources.openRawResource(resourceID)));
+		Texture texture = new Texture(BitmapFactory.decodeStream(globalResource.openRawResource(resourceID)));
 		loadedTextures.put(resourceID, texture);
 		
-		return true;
+		return texture;
 	}
 	
 	
@@ -85,14 +109,28 @@ public abstract class TextureManager
 	
 	
 	/**
-	 * Initialises the TextureManager. This method is normally called by the
-	 * engine itself.
+	 * Sets the global Resource to use when loading textures.
 	 */
-	public static void initialise(Resources res)
+	public void setGlobalResource(Resources globalres)
+	{
+		globalResource = globalres;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Resets the currently loaded textures, keeping the global Resource.
+	 */
+	public void reset()
 	{
 		loadedTextures = new HashMap<Integer, Texture>();
 		textureIDs = new HashMap<Integer, Integer>();
-		resources = res;
 	}
 	
 	
@@ -107,7 +145,7 @@ public abstract class TextureManager
 	/**
 	 * Returns a Texture given the resourceID.
 	 */
-	public static Texture getTextureByResourceID(int resourceID)
+	public Texture getTextureByResourceID(int resourceID)
 	{
 		return loadedTextures.get(resourceID);
 	}
@@ -116,7 +154,7 @@ public abstract class TextureManager
 	/**
 	 * Returns a Texture given the user generated textureID.
 	 */
-	public static Texture getTextureByTextureID(int textureID)
+	public Texture getTextureByTextureID(int textureID)
 	{
 		return loadedTextures.get(textureIDs.get(textureID));
 	}
@@ -130,20 +168,71 @@ public abstract class TextureManager
 	
 	
 	/**
-	 * Deletes a Texture with the given textureID
+	 * Deletes a Texture with the given textureID. Returns the removed Texture, or
+	 * null if no mapping was found.
 	 */
-	public static boolean deleteTexture(int textureID)
+	public Texture removeTexture(int textureID)
 	{
 		if (!textureIDs.containsKey(textureID))
 		{
-			return false;
+			return null;
 		}
 		
 		int resID = textureIDs.get(textureID);
 		textureIDs.remove(textureID);
-		loadedTextures.remove(resID);
+		return loadedTextures.remove(resID);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	/**
+	 * Returns a Set of all current textureIDs.
+	 */
+	public Set<Integer> getTextureIDs()
+	{
+		if (textureIDs != null) {
+			return textureIDs.keySet();
+		}
 		
-		return true;
+		return null;
+	}
+	
+	
+	/**
+	 * Returns a Set of all current resourceIDs.
+	 */
+	public Set<Integer> getResourceIDs()
+	{
+		if (loadedTextures != null) {
+			return loadedTextures.keySet();
+		}
+		
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Returns the current global Resource.
+	 */
+	public final Resources getGlobalResource()
+	{
+		return globalResource;
 	}
 	
 	

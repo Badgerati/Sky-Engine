@@ -119,7 +119,8 @@ public class BoundingCircle extends Bounding
 	/**
 	 * Has the Bounding Circle been intersected by a point?
 	 */
-	public boolean _contains(Vector2D point)
+	@Override
+	public boolean contains(Vector2D point)
 	{
 		Vector2D v = this.Position.sub(point);
 		if (v.magnitude() < this.Radius)

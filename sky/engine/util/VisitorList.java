@@ -13,24 +13,24 @@ import java.util.ArrayList;
  * @param <K> - Class type for the keys.
  * @param <L> - Class type for the links of the keys.
  */
-public class VisitorList<K, L>
+public class VisitorList<K, L> extends Visitor<K, L>
 {
 	/**
 	 * Keys for this VisitorList.
 	 */
-	private ArrayList<K> Keys = null;
+	protected ArrayList<K> Keys = null;
 	
 	
 	/**
 	 * The links this VisitorList's keys points to.
 	 */
-	private ArrayList<ArrayList<L>> Links = null;
+	protected ArrayList<ArrayList<L>> Links = null;
 	
 	
 	/**
 	 * Have those links been visited already?
 	 */
-	private ArrayList<ArrayList<Boolean>> Visited = null;
+	protected ArrayList<ArrayList<Boolean>> Visited = null;
 	
 	
 	
@@ -68,6 +68,7 @@ public class VisitorList<K, L>
 	 * @param key - Key to add.
 	 * @return True if successful, false otherwise.
 	 */
+	@Override
 	public boolean add(K key)
 	{
 		int indexKey = Keys.indexOf(key);
@@ -105,6 +106,7 @@ public class VisitorList<K, L>
 	 * @param visited - Current visited state of the link.
 	 * @return True if successful, false otherwise.
 	 */
+	@Override
 	public boolean add(K key, L link, boolean visited)
 	{
 		int indexKey = Keys.indexOf(key);
@@ -156,6 +158,7 @@ public class VisitorList<K, L>
 	 * @param link - Link to remove.
 	 * @return True if successful, false otherwise.
 	 */
+	@Override
 	public boolean remove(K key, L link)
 	{
 		int indexKey = Keys.indexOf(key);
@@ -197,6 +200,7 @@ public class VisitorList<K, L>
 	 * @param key - Key to remove.
 	 * @return True if successful, false otherwise.
 	 */
+	@Override
 	public boolean remove(K key)
 	{
 		int indexKey = Keys.indexOf(key);
@@ -231,6 +235,7 @@ public class VisitorList<K, L>
 	 * @param link - Link to attempt to locate.
 	 * @return True if found, false otherwise.
 	 */
+	@Override
 	public boolean contains(K key, L link)
 	{
 		int indexKey = Keys.indexOf(key);
@@ -259,6 +264,7 @@ public class VisitorList<K, L>
 	 * @param key - Key to attempt to locate.
 	 * @return True if found, false otherwise.
 	 */
+	@Override
 	public boolean contains(K key)
 	{
 		return Keys.contains(key);
@@ -283,6 +289,7 @@ public class VisitorList<K, L>
 	 * @param link - Link to find visited state for.
 	 * @return True if link visited, false otherwise.
 	 */
+	@Override
 	public boolean isVisited(K key, L link)
 	{
 		int indexKey = Keys.indexOf(key);
@@ -325,6 +332,7 @@ public class VisitorList<K, L>
 	 * @param visited - Visited state to set link to.
 	 * @return True if successful, false otherwise.
 	 */
+	@Override
 	public boolean setVisited(K key, L link, boolean visited)
 	{
 		int indexKey = Keys.indexOf(key);
@@ -363,6 +371,7 @@ public class VisitorList<K, L>
 	 * 
 	 * @return Total number of keys.
 	 */
+	@Override
 	public int size()
 	{
 		return Keys.size();
@@ -381,6 +390,7 @@ public class VisitorList<K, L>
 	 * @param key - Key to get links from.
 	 * @return Total number of links key contains, -1 otherwise.
 	 */
+	@Override
 	public int size(K key)
 	{
 		int indexKey = Keys.indexOf(key);
@@ -447,6 +457,7 @@ public class VisitorList<K, L>
 	 * 
 	 * @return True if successful, false otherwise.
 	 */
+	@Override
 	public boolean clear()
 	{
 		Keys.clear();
@@ -468,6 +479,7 @@ public class VisitorList<K, L>
 	 * @param key - Key to clear links from.
 	 * @return True if successful, false otherwise.
 	 */
+	@Override
 	public boolean clear(K key)
 	{
 		int indexKey = Keys.indexOf(key);
@@ -498,6 +510,7 @@ public class VisitorList<K, L>
 	 * @param key - Key to get next non-visited link from.
 	 * @return First non-visited link, or null otherwise.
 	 */
+	@Override
 	public L getNext(K key)
 	{
 		int indexKey = Keys.indexOf(key);
@@ -715,6 +728,7 @@ public class VisitorList<K, L>
 	 * @param key - Key to test all links of.
 	 * @return True if all are visited, false otherwise.
 	 */
+	@Override
 	public boolean allVisited(K key)
 	{
 		int indexKey = Keys.indexOf(key);

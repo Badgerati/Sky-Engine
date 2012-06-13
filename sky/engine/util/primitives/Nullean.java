@@ -1,4 +1,4 @@
-package sky.engine.util;
+package sky.engine.util.primitives;
 
 /**
  * A Nullean object helps represent 3 different possible outcomes: False, True and Neutral (null).

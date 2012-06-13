@@ -49,7 +49,7 @@ public class Texture
 		try
 		{
 			Texture t = (Texture)o;
-			return this.bitmap.equals(t.getTexture());
+			return this.bitmap.equals(t.getBitmap());
 		}
 		catch (Exception e)
 		{
@@ -85,7 +85,7 @@ public class Texture
 	/**
 	 * Returns the Bitmap associated with this Texture.
 	 */
-	public final Bitmap getTexture()
+	public final Bitmap getBitmap()
 	{
 		return this.bitmap;
 	}

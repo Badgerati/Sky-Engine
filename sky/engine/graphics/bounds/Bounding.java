@@ -1,6 +1,7 @@
 package sky.engine.graphics.bounds;
 
 import sky.engine.geometry.Angle;
+import sky.engine.geometry.ConvexHull;
 import sky.engine.geometry.Triangulation;
 import sky.engine.geometry.Vector2D;
 import sky.engine.physics.collisions.Projection;
@@ -190,6 +191,33 @@ public abstract class Bounding
 	 * Bounding always returns null.
 	 */
 	public Triangulation triangulate()
+	{
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+
+	
+	
+	/**
+	 * Convex hull this bound, fails if vertex count is less than 2. A Bounding
+	 * Polygon is returned.
+	 */
+	public BoundingPoly convexAsBound()
+	{
+		return null;
+	}
+	
+	
+	/**
+	 * Convex hull this bound, fails if vertex count is less than 2. A ConvexHull
+	 * object is returned.
+	 */
+	public ConvexHull convex()
 	{
 		return null;
 	}

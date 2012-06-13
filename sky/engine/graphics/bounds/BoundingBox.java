@@ -39,14 +39,6 @@ public class BoundingBox extends BoundingPoly
 	public BoundingBox(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4)
 	{		
 		super(new Vector2D[] { v1.clone(), v2.clone(), v3.clone(), v4.clone() });
-		//this.vertices = new Vector2D[4];
-		
-		//this.vertices[0] = v1.clone();
-		//this.vertices[1] = v2.clone();
-		//this.vertices[2] = v3.clone();
-		//this.vertices[3] = v4.clone();
-
-		//Position = Vector2D.getCentre(new Vector2D[] { v1, v2, v3, v4 });
 	}
 	
 
@@ -56,12 +48,6 @@ public class BoundingBox extends BoundingPoly
 	public BoundingBox(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4)
 	{
 		super(position, new Vector2D[] { v1.clone(), v2.clone(), v3.clone(), v4.clone() });
-		//this.vertices = new Vector2D[4];
-		
-		//this.vertices[0] = v1.clone();
-		//this.vertices[1] = v2.clone();
-		//this.vertices[2] = v3.clone();
-		//this.vertices[3] = v4.clone();
 	}
 	
 	

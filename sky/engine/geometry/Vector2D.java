@@ -7,7 +7,7 @@ package sky.engine.geometry;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public class Vector2D
+public class Vector2D extends Vector
 {
 	/**
 	 * X component of this vector
@@ -46,6 +46,7 @@ public class Vector2D
 	{
 		X = 0;
 		Y = 0;
+		vector_type = Vector.VECTOR_2D;
 	}
 
 	
@@ -56,6 +57,7 @@ public class Vector2D
 	{
 		X = x;
 		Y = y;
+		vector_type = Vector.VECTOR_2D;
 	}
 
 	
@@ -66,6 +68,7 @@ public class Vector2D
 	{
 		X = vector.X;
 		Y = vector.Y;
+		vector_type = Vector.VECTOR_2D;
 	}
 	
 	
@@ -118,7 +121,7 @@ public class Vector2D
 	/**
 	 * Clones the given vector array
 	 */
-	public static Vector2D[] clones(Vector2D[] vectors)
+	public static Vector2D[] clone(Vector2D[] vectors)
 	{
 		Vector2D[] v = new Vector2D[vectors.length];
 		
@@ -182,6 +185,33 @@ public class Vector2D
 		{
 			return super.equals(o);
 		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Compares this Vector to another given Vector. Returns 0 if they are equal, -1 if this
+	 * Vector is less than the given vector, and 1 if this Vector is greater than it.
+	 */
+	public int compareTo(Vector2D v2)
+	{
+		//greater than given
+		if  (X > v2.X || (Y > v2.Y && X == v2.X))
+			return 1;
+		
+		//less than given
+		else if (X < v2.X || (Y < v2.Y && X == v2.X))
+			return -1;
+		
+		//else, equal
+		return 0;
 	}
 
 	
@@ -249,7 +279,7 @@ public class Vector2D
 	
 	
 	/**
-	 * Returns the magnitude of this vector (basically just the length from (0,0))
+	 * Returns the magnitude of this vector (basically just the length from (0,0)).
 	 */
 	public float magnitude()
 	{
@@ -258,11 +288,35 @@ public class Vector2D
 	
 	
 	/**
-	 * Returns the magnitude of the distance between this vector and another
+	 * Returns the magnitude of the distance between this vector and another.
 	 */
 	public float magnitude(Vector2D v2)
 	{
-		return (float)Math.sqrt((this.X * v2.X) + (this.Y * v2.Y));
+		float x = X - v2.X;
+		float y = Y - v2.Y;
+		
+		return (float)Math.sqrt((x * x) + (y * y));
+	}
+	
+	
+	/**
+	 * Returns the squared magnitude of this vector.
+	 */
+	public float squaredMagnitude()
+	{		
+		return ((X * X) + (Y * Y));
+	}
+	
+	
+	/**
+	 * Returns the squared magnitude of this vector to another.
+	 */
+	public float squaredMagnitude(Vector2D v2)
+	{
+		float x = X - v2.X;
+		float y = Y - v2.Y;
+		
+		return ((x * x) + (y * y));
 	}
 	
 	
@@ -470,7 +524,7 @@ public class Vector2D
 
 	
 	/**
-	 * Returns this vector's left winding perpendicular
+	 * Returns this vector's left-winding perpendicular
 	 */
 	public Vector2D leftPerp()
 	{
@@ -479,7 +533,7 @@ public class Vector2D
 	
 	
 	/**
-	 * Returns this vector's right winding perpendicular
+	 * Returns this vector's right-winding perpendicular
 	 */
 	public Vector2D rightPerp()
 	{
@@ -503,28 +557,36 @@ public class Vector2D
 	 *               OPERATORS
 	 *******************************************/
 	
-	/** add by another vector */
+	/**
+	 * add by another vector
+	 */
 	public Vector2D add(Vector2D vector)
 	{
 		return new Vector2D(X + vector.X, Y + vector.Y);
 	}
 	
 
-	/** subtract by another vector */
+	/**
+	 * subtract by another vector
+	 */
 	public Vector2D sub(Vector2D vector)
 	{
 		return new Vector2D(X - vector.X, Y - vector.Y);
 	}
 	
 
-	/** multiply by another vector */
+	/**
+	 * multiply by another vector
+	 */
 	public Vector2D mul(Vector2D vector)
 	{
 		return new Vector2D(X * vector.X, Y * vector.Y);
 	}
 	
 
-	/** divide by another vector */
+	/**
+	 * divide by another vector
+	 */
 	public Vector2D div(Vector2D vector)
 	{
 		return new Vector2D(X / vector.X, Y / vector.Y);
@@ -535,20 +597,44 @@ public class Vector2D
 	
 	
 	
+
 	
 	
-	
-	/** multiply by scalar */
+	/**
+	 * multiply by scalar
+	 */
 	public Vector2D mulScalar(float value)
 	{
 		return new Vector2D(X * value, Y * value);
 	}
 	
 	
-	/** divide by scalar */
+	/**
+	 * multiply by scalar
+	 */
+	public Vector2D mulScalar(float x, float y)
+	{
+		return new Vector2D(X * x, Y * y);
+	}
+	
+
+	
+	
+	/**
+	 * divide by scalar
+	 */
 	public Vector2D divScalar(float value)
 	{
 		return new Vector2D(X / value, Y / value);
+	}
+	
+	
+	/**
+	 * divide by scalar
+	 */
+	public Vector2D divScalar(float x, float y)
+	{
+		return new Vector2D(X / x, Y / y);
 	}
 	
 	
@@ -559,7 +645,9 @@ public class Vector2D
 	
 	
 	
-	/** dot product */
+	/**
+	 * dot product
+	 */
 	public float dot(Vector2D vector)
 	{
 		return (X * vector.X) + (Y * vector.Y);
@@ -567,7 +655,9 @@ public class Vector2D
 	
 	
 	
-	/** cross product */
+	/**
+	 * cross product
+	 */
 	public float cross(Vector2D vector)
 	{
 		return ((X * vector.Y) - (Y * vector.X));
@@ -581,7 +671,9 @@ public class Vector2D
 	
 	
 	
-	/** Square the vector's components */
+	/**
+	 * Square the vector's components
+	 */
 	public Vector2D square()
 	{
 		return new Vector2D(X * X, Y * Y);
@@ -589,7 +681,9 @@ public class Vector2D
 	
 	
 	
-	/** Inverse the vector's components */
+	/**
+	 * Inverse the vector's components
+	 */
 	public Vector2D inverse()
 	{
 		return new Vector2D(1.0f / X, 1.0f / Y);
@@ -597,7 +691,9 @@ public class Vector2D
 	
 	
 	
-	/** Raise the vector's components to a given power */
+	/**
+	 * Raise the vector's components to a given power
+	 */
 	public Vector2D toPowerOf(int power)
 	{
 		float x = 1, y = 1;

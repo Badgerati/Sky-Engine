@@ -1,6 +1,7 @@
 package sky.engine.geometry.shapes;
 
 import sky.engine.geometry.Angle;
+import sky.engine.geometry.ConvexHull;
 import sky.engine.geometry.Triangulation;
 import sky.engine.geometry.Vector2D;
 import sky.engine.physics.bodies.RigidBody;
@@ -227,7 +228,29 @@ public abstract class Shape extends RigidBody
 	 */
 	public Triangulation triangulate()
 	{
-		return new Triangulation(this.vertices);
+		if (isCircle || vertices == null)
+			return null;
+		
+		return new Triangulation(vertices);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Returns a ConvexHull of this shape, fails if vertex count is less than 2.
+	 */
+	public ConvexHull convex()
+	{
+		if (isCircle || vertices == null)
+			return null;
+		
+		return new ConvexHull(vertices);
 	}
 	
 	

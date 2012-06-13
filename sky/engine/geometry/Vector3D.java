@@ -6,7 +6,7 @@ package sky.engine.geometry;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public class Vector3D
+public class Vector3D extends Vector
 {
 	/**
 	 * X component of this vector
@@ -49,6 +49,7 @@ public class Vector3D
 		X = 0;
 		Y = 0;
 		Z = 0;
+		vector_type = Vector.VECTOR_3D;
 	}
 
 	
@@ -60,6 +61,7 @@ public class Vector3D
 		X = x;
 		Y = y;
 		Z = z;
+		vector_type = Vector.VECTOR_3D;
 	}
 
 	
@@ -71,6 +73,7 @@ public class Vector3D
 		X = vector.X;
 		Y = vector.Y;
 		Z = 0;
+		vector_type = Vector.VECTOR_3D;
 	}
 
 	
@@ -82,6 +85,7 @@ public class Vector3D
 		X = vector.X;
 		Y = vector.Y;
 		Z = z;
+		vector_type = Vector.VECTOR_3D;
 	}
 
 	
@@ -93,6 +97,7 @@ public class Vector3D
 		X = vector.X;
 		Y = vector.Y;
 		Z = vector.Z;
+		vector_type = Vector.VECTOR_3D;
 	}
 	
 	
@@ -159,7 +164,7 @@ public class Vector3D
 	/**
 	 * Clones the given vector array
 	 */
-	public static Vector3D[] clones(Vector3D[] vectors)
+	public static Vector3D[] clone(Vector3D[] vectors)
 	{
 		Vector3D[] v = new Vector3D[vectors.length];
 		
@@ -174,6 +179,11 @@ public class Vector3D
 	}
 	
 
+	
+	
+	
+	
+	
 	
 	
 	
@@ -206,6 +216,33 @@ public class Vector3D
 		{
 			return super.equals(o);
 		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Compares this Vector to another given Vector. Returns 0 if they are equal, -1 if this
+	 * Vector is less than the given vector, and 1 if this Vector is greater than it.
+	 */
+	public int compareTo(Vector3D v2)
+	{
+		//greater than given
+		if  (X > v2.X || Y > v2.Y || Z > v2.Z)
+			return 1;
+		
+		//less than given
+		else if (X < v2.X || Y < v2.Y || Z < v2.Z)
+			return -1;
+		
+		//else, equal
+		return 0;
 	}
 
 	
@@ -275,7 +312,7 @@ public class Vector3D
 	
 	
 	/**
-	 * the magnitude of this vector
+	 * the magnitude of this vector.
 	 */
 	public float magnitude()
 	{
@@ -284,12 +321,41 @@ public class Vector3D
 	
 	
 	/**
-	 * Returns the magnitude of the distance between this vector and another
+	 * Returns the magnitude of the distance between this vector and another.
 	 */
 	public float magnitude(Vector3D v2)
 	{
-		return (float)Math.sqrt((this.X * v2.X) + (this.Y * v2.Y) + this.Z * v2.Z);
+		float x = X - v2.X;
+		float y = Y - v2.Y;
+		float z = Z - v2.Z;
+		
+		return (float)Math.sqrt((x * x) + (y * y) + (z * z));
 	}
+	
+	
+	/**
+	 * Returns the squared magnitude of this vector.
+	 */
+	public float squaredMagnitude()
+	{		
+		return ((X * X) + (Y * Y) + (Z * Z));
+	}
+	
+	
+	/**
+	 * Returns the squared magnitude of this vector to another.
+	 */
+	public float squaredMagnitude(Vector3D v2)
+	{
+		float x = X - v2.X;
+		float y = Y - v2.Y;
+		float z = Z - v2.Z;
+		
+		return ((x * x) + (y * y) + (z * z));
+	}
+	
+	
+	
 	
 	
 	
@@ -517,7 +583,7 @@ public class Vector3D
 	
 	
 	
-	
+
 	
 	
 	/** multiply by scalar */
@@ -527,10 +593,26 @@ public class Vector3D
 	}
 	
 	
+	/** multiply by scalar */
+	public Vector3D mulScalar(float x, float y, float z)
+	{
+		return new Vector3D(X * x, Y * y, Z * z);
+	}
+	
+	
+	
+	
 	/** divide by scalar */
 	public Vector3D divScalar(float value)
 	{
 		return new Vector3D(X / value, Y / value, Z / value);
+	}
+	
+	
+	/** divide by scalar */
+	public Vector3D divScalar(float x, float y, float z)
+	{
+		return new Vector3D(X / x, Y / y, Z / z);
 	}
 	
 	

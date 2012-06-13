@@ -36,20 +36,7 @@ public abstract class SATCollision
 		else if (bound1.isCircle())
 		{
 			//get vertex closest to centre of circle
-			Vector2D centre = bound1.getPosition();
-			Vector2D closest = bound2.vertices[0];
-			float mag = centre.magnitude(bound2.vertices[0]);
-			float tempMag = 0;
-			
-			for (int i = 1; i < bound2.vertices.length; i++)
-			{
-				tempMag = centre.magnitude(bound2.vertices[i]);
-				
-				if (tempMag < mag) {
-					mag = tempMag;
-					closest = bound2.vertices[i];
-				}
-			}
+			Vector2D closest = getClosest(bound1, bound2);
 			
 			//get axes from circle and closest vertex
 			axes1 = new Vector2D[1];
@@ -62,20 +49,7 @@ public abstract class SATCollision
 		else if (bound2.isCircle())
 		{
 			//get vertex closest to centre of circle
-			Vector2D centre = bound2.getPosition();
-			Vector2D closest = bound1.vertices[0];
-			float mag = centre.magnitude(bound1.vertices[0]);
-			float tempMag = 0;
-			
-			for (int i = 1; i < bound1.vertices.length; i++)
-			{
-				tempMag = centre.magnitude(bound1.vertices[i]);
-				
-				if (tempMag < mag) {
-					mag = tempMag;
-					closest = bound1.vertices[i];
-				}
-			}
+			Vector2D closest = getClosest(bound2, bound1);
 			
 			//get axes from circle and closest vertex
 			axes2 = new Vector2D[1];
@@ -156,20 +130,7 @@ public abstract class SATCollision
 		else if (shape1.isCircle())
 		{
 			//get vertex closest to centre of circle
-			Vector2D centre = shape1.getPosition();
-			Vector2D closest = shape2.vertices[0];
-			float mag = centre.magnitude(shape2.vertices[0]);
-			float tempMag = 0;
-			
-			for (int i = 1; i < shape2.vertices.length; i++)
-			{
-				tempMag = centre.magnitude(shape2.vertices[i]);
-				
-				if (tempMag < mag) {
-					mag = tempMag;
-					closest = shape2.vertices[i];
-				}
-			}
+			Vector2D closest = getClosest(shape1, shape2);
 			
 			//get axes from circle and closest vertex
 			axes1 = new Vector2D[1];
@@ -182,20 +143,7 @@ public abstract class SATCollision
 		else if (shape2.isCircle())
 		{
 			//get vertex closest to centre of circle
-			Vector2D centre = shape2.getPosition();
-			Vector2D closest = shape1.vertices[0];
-			float mag = centre.magnitude(shape1.vertices[0]);
-			float tempMag = 0;
-			
-			for (int i = 1; i < shape1.vertices.length; i++)
-			{
-				tempMag = centre.magnitude(shape1.vertices[i]);
-				
-				if (tempMag < mag) {
-					mag = tempMag;
-					closest = shape1.vertices[i];
-				}
-			}
+			Vector2D closest = getClosest(shape2, shape1);
 			
 			//get axes from circle and closest vertex
 			axes2 = new Vector2D[1];
@@ -283,20 +231,7 @@ public abstract class SATCollision
 		else if (bound1.isCircle())
 		{
 			//get vertex closest to centre of circle
-			Vector2D centre = bound1.getPosition();
-			Vector2D closest = bound2.vertices[0];
-			float mag = centre.magnitude(bound2.vertices[0]);
-			float tempMag = 0;
-			
-			for (int i = 1; i < bound2.vertices.length; i++)
-			{
-				tempMag = centre.magnitude(bound2.vertices[i]);
-				
-				if (tempMag < mag) {
-					mag = tempMag;
-					closest = bound2.vertices[i];
-				}
-			}
+			Vector2D closest = getClosest(bound1, bound2);
 			
 			//get axes from circle and closest vertex
 			axes1 = new Vector2D[1];
@@ -309,20 +244,7 @@ public abstract class SATCollision
 		else if (bound2.isCircle())
 		{
 			//get vertex closest to centre of circle
-			Vector2D centre = bound2.getPosition();
-			Vector2D closest = bound1.vertices[0];
-			float mag = centre.magnitude(bound1.vertices[0]);
-			float tempMag = 0;
-			
-			for (int i = 1; i < bound1.vertices.length; i++)
-			{
-				tempMag = centre.magnitude(bound1.vertices[i]);
-				
-				if (tempMag < mag) {
-					mag = tempMag;
-					closest = bound1.vertices[i];
-				}
-			}
+			Vector2D closest = getClosest(bound2, bound1);
 			
 			//get axes from circle and closest vertex
 			axes2 = new Vector2D[1];
@@ -462,20 +384,7 @@ public abstract class SATCollision
 		else if (shape1.isCircle())
 		{
 			//get vertex closest to centre of circle
-			Vector2D centre = shape1.getPosition();
-			Vector2D closest = shape2.vertices[0];
-			float mag = centre.magnitude(shape2.vertices[0]);
-			float tempMag = 0;
-			
-			for (int i = 1; i < shape2.vertices.length; i++)
-			{
-				tempMag = centre.magnitude(shape2.vertices[i]);
-				
-				if (tempMag < mag) {
-					mag = tempMag;
-					closest = shape2.vertices[i];
-				}
-			}
+			Vector2D closest = getClosest(shape1, shape2);
 			
 			//get axes from circle and closest vertex
 			axes1 = new Vector2D[1];
@@ -488,20 +397,7 @@ public abstract class SATCollision
 		else if (shape2.isCircle())
 		{
 			//get vertex closest to centre of circle
-			Vector2D centre = shape2.getPosition();
-			Vector2D closest = shape1.vertices[0];
-			float mag = centre.magnitude(shape1.vertices[0]);
-			float tempMag = 0;
-			
-			for (int i = 1; i < shape1.vertices.length; i++)
-			{
-				tempMag = centre.magnitude(shape1.vertices[i]);
-				
-				if (tempMag < mag) {
-					mag = tempMag;
-					closest = shape1.vertices[i];
-				}
-			}
+			Vector2D closest = getClosest(shape2, shape1);
 			
 			//get axes from circle and closest vertex
 			axes2 = new Vector2D[1];
@@ -710,6 +606,63 @@ public abstract class SATCollision
 		
 		
 		return true;
+	}
+	
+	
+	
+	
+	
+	
+
+	
+	
+	/**
+	 * Given two bounds, where the first is a circle. Return the closest vertex from
+	 * the second bound.
+	 */
+	private static Vector2D getClosest(Bounding circle, Bounding bound)
+	{
+		Vector2D centre = circle.getPosition();
+		Vector2D closest = bound.vertices[0];
+		float mag = centre.squaredMagnitude(bound.vertices[0]);
+		float tempMag = 0;
+		
+		for (int i = 1; i < bound.vertices.length; i++)
+		{
+			tempMag = centre.squaredMagnitude(bound.vertices[i]);
+			
+			if (tempMag < mag) {
+				mag = tempMag;
+				closest = bound.vertices[i];
+			}
+		}
+		
+		return closest;
+	}
+	
+	
+	/**
+	 * Given two shapes, where the first is a circle. Return the closest vertex from
+	 * the second shapes.
+	 */
+	private static Vector2D getClosest(Shape circle, Shape shape)
+	{
+		Vector2D centre = circle.getPosition();
+		Vector2D closest = shape.vertices[0];
+		float mag = centre.squaredMagnitude(shape.vertices[0]);
+		float tempMag = 0;
+		
+		for (int i = 1; i < shape.vertices.length; i++)
+		{
+			tempMag = centre.squaredMagnitude(shape.vertices[i]);
+			
+			if (tempMag < mag) {
+				mag = tempMag;
+				closest = shape.vertices[i];
+			}
+		}
+		
+		return closest;
 	}
 	
 

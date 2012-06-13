@@ -16,7 +16,7 @@ public class Triangulation
 	/**
 	 * Current triangulation, represented by a 2D array of Vectors.
 	 */
-	private Vector2D[][] triangles = null;
+	protected Vector2D[][] triangles = null;
 	
 	
 	
@@ -36,7 +36,7 @@ public class Triangulation
 	
 	
 	/**
-	 * Create new instance of a Triangulation on array of given vertices.
+	 * Create new instance of a Triangulation on an array of given right-winding vertices.
 	 */
 	public Triangulation(Vector2D[] vertices)
 	{
@@ -148,6 +148,9 @@ public class Triangulation
 	 */
 	public Triangle[] asGeometric()
 	{
+		if (triangles == null)
+			return null;
+		
 		int length = triangles.length;
 		Triangle[] tri = new Triangle[length];
 		
@@ -170,6 +173,9 @@ public class Triangulation
 	 */
 	public DrawableTriangle[] asDrawable()
 	{
+		if (triangles == null)
+			return null;
+		
 		int length = triangles.length;
 		DrawableTriangle[] tri = new DrawableTriangle[length];
 		
@@ -192,6 +198,9 @@ public class Triangulation
 	 */
 	public BoundingTri[] asBounding()
 	{
+		if (triangles == null)
+			return null;
+		
 		int length = triangles.length;
 		BoundingTri[] tri = new BoundingTri[length];
 		

@@ -77,7 +77,7 @@ public class Box extends Polygon
 	 */
 	public Box(Box rect)
 	{
-		super(rect.Position, Vector2D.clones(rect.vertices));
+		super(rect.Position, Vector2D.clone(rect.vertices));
 		Width = rect.Width;
 		Height = rect.Height;
 	}

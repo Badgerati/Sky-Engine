@@ -250,16 +250,41 @@ public class Size
 	
 	
 	
+
 	
 	
-	
-	/** by a scalar */
+	/**
+	 * Multiply this Size's components by a scalar value.
+	 */
 	public Size mulScalar(float value)
 	{
 		return new Size(Width * value, Height * value, Depth * value);
 	}
 	
 	
+	/**
+	 * Multiply this Size's components by a scalar value.
+	 */
+	public Size mulScalar(float w_scalar, float h_scalar)
+	{
+		return new Size(Width * w_scalar, Height * h_scalar, Depth);
+	}
+	
+	
+	/**
+	 * Multiply this Size's components by a scalar value.
+	 */
+	public Size mulScalar(float w_scalar, float h_scalar, float d_scalar)
+	{
+		return new Size(Width * w_scalar, Height * h_scalar, Depth * d_scalar);
+	}
+	
+	
+	
+	
+	/**
+	 * Divide this Size's components by a scalar value.
+	 */
 	public Size divScalar(float value)
 	{
 		return new Size(Width / value, Height / value, Depth / value);

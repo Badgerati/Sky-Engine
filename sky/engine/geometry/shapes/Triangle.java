@@ -90,7 +90,7 @@ public class Triangle extends Polygon
 	 */
 	public Triangle(Triangle triangle)
 	{
-		super(triangle.Position, Vector2D.clones(triangle.vertices));
+		super(triangle.Position, Vector2D.clone(triangle.vertices));
 		
 		SideX = triangle.SideX;
 		SideY = triangle.SideY;

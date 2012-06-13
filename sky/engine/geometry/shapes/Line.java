@@ -9,7 +9,7 @@ import sky.engine.geometry.Vector2D;
  *
  */
 public class Line extends Shape
-{	
+{
 
 	
 	/********************************************
@@ -62,6 +62,7 @@ public class Line extends Shape
 		super(v1.midpoint(v2), velocity, mass);
 		initialise(v1, v2);
 	}
+	
 	
 	
 	
@@ -136,6 +137,43 @@ public class Line extends Shape
 	public Vector2D midpoint()
 	{
 		return new Vector2D((vertices[0].X + vertices[1].X) * 0.5f, (vertices[0].Y + vertices[1].Y) * 0.5f);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Returns the slope of this line.
+	 */
+	public float getSlope()
+	{
+		float xdiff = vertices[1].X - vertices[0].X;
+		float ydiff = vertices[1].Y - vertices[0].Y;
+		return ydiff / -xdiff;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Returns the y-intercept of this line.
+	 */
+	public float getYintercept()
+	{
+		float xdiff = vertices[1].X - vertices[0].X;
+		float ydiff = vertices[1].Y - vertices[0].Y;
+		return ((vertices[0].Y * xdiff) - (vertices[0].X * ydiff)) / -xdiff;
 	}
 	
 	

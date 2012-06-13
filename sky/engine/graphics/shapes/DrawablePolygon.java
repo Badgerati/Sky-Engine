@@ -28,7 +28,18 @@ public class DrawablePolygon extends Polygon implements DrawableShape
 	
 
 	
+
+
 	
+	/**
+	 * Create new instance of a default Graphical Polygon
+	 */
+	public DrawablePolygon(Vector2D position, Vector2D[] vertices)
+	{
+		super(position, vertices);
+		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		initialise();
+	}
 
 	
 	/**
@@ -65,7 +76,19 @@ public class DrawablePolygon extends Polygon implements DrawableShape
 	
 	
 
+
 	
+	
+	
+	/**
+	 * Create new instance of a default Graphical Polygon
+	 */
+	public DrawablePolygon(Vector2D[] vertices)
+	{
+		super(vertices);
+		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		initialise();
+	}
 	
 	
 	/**
