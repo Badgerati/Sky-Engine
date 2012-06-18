@@ -216,16 +216,23 @@ public class HighscoreManager
 			return false;
 		
 		//else, if the number of records is less than total allowed, true
-		else if (Records.size() < numberOfEntries)
+		if (Records.size() < numberOfEntries)
 			return true;
 		
 		//else, is the score more than last record's score in table
-		else if (score >= Long.parseLong(Records.get(Records.size()-1).get(SCORE).replace(",", "")))
+		String tempscore = Records.get(Records.size()-1).get(SCORE);
+		for (String r : new String[] { ",", ".", " " })
+		{
+			tempscore.replace(r, "");
+		}
+		
+		long recscore = Long.parseLong(tempscore);
+		
+		if (score >= recscore)
 			return true;
 		
 		//finally, if we even get here, return false
-		else
-			return false;
+		return false;
 	}
 	
 	
@@ -243,16 +250,16 @@ public class HighscoreManager
 	/**
 	 * Add the given score and name to the table
 	 */
-	public void addRecord(String name, long _score)
+	public void addRecord(String name, long score)
 	{
 		//reformat name and score
 		name = "XX.\t" + name;
-		String score = String.format("%,d", _score);
+		String _score = String.format("%,d", score);
 		
 		//create new record
 		HashMap<String, String> newRecord = new HashMap<String, String>();
 		newRecord.put(NAME, name);
-		newRecord.put(SCORE, score);
+		newRecord.put(SCORE, _score);
 		
 		
 		//if the record list is empty, just write the new record in
@@ -278,7 +285,7 @@ public class HighscoreManager
 				tempRecord = Records.get(i);
 				
 				//is new record greater than this one?
-				if (_score >= Long.parseLong(tempRecord.get(SCORE).replace(",", "")) && !addedRecord)
+				if (score >= Long.parseLong(tempRecord.get(SCORE).replace(",", "")) && !addedRecord)
 				{
 					tempRecords.add(newRecord);
 					tempRecords.add(tempRecord);

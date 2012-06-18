@@ -12,7 +12,7 @@ import sky.engine.util.ListSet;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public class Node<N, E>
+public class Node<N>
 {
 	/**
 	 * 
@@ -29,19 +29,19 @@ public class Node<N, E>
 	/**
 	 * Set of out-edges for this Node.
 	 */
-	private ListSet<Edge<E, N>> outEdges = new ListSet<Edge<E, N>>();
+	private ListSet<Edge<N>> outEdges = new ListSet<Edge<N>>();
 	
 	
 	/**
 	 * Set of in-edges for this Node.
 	 */
-	private ListSet<Edge<E, N>> inEdges = new ListSet<Edge<E, N>>();
+	private ListSet<Edge<N>> inEdges = new ListSet<Edge<N>>();
 	
 	
 	/**
-	 * Item this Node stores.
+	 * Data this Node stores.
 	 */
-	public N item = null;
+	public N data = null;
 	
 	
 	
@@ -59,16 +59,16 @@ public class Node<N, E>
 	 */
 	public Node(N item)
 	{
-		this.item = item;
+		this.data = item;
 	}
 	
 	
 	/**
 	 * 
 	 */
-	public Node(N item, Node<N, E> node, E weight, int parentOrChild)
+	public Node(N item, Node<N> node, float weight, int parentOrChild)
 	{
-		this.item = item;
+		this.data = item;
 		
 		switch (parentOrChild)
 		{
@@ -84,9 +84,9 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public Node(N item, Collection<Edge<E, N>> outedges, Collection<Edge<E, N>> inedges)
+	public Node(N item, Collection<Edge<N>> outedges, Collection<Edge<N>> inedges)
 	{
-		this.item = item;		
+		this.data = item;		
 		
 		if (outedges != null) outEdges.addAll(outedges);
 		if (inedges != null) inEdges.addAll(inedges);
@@ -110,9 +110,9 @@ public class Node<N, E>
 	{
 		try
 		{
-			Node<N, E> node = (Node<N, E>)o;
+			Node<N> node = (Node<N>)o;
 			
-			return (item.equals(node.item));
+			return (data.equals(node.data));
 		}
 		catch (Exception e)
 		{
@@ -135,7 +135,7 @@ public class Node<N, E>
 	@Override
 	public int hashCode()
 	{
-		return (item.hashCode());
+		return (data.hashCode());
 	}
 	
 	
@@ -151,7 +151,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public boolean addOutEdge(Edge<E, N> edge)
+	public boolean addOutEdge(Edge<N> edge)
 	{
 		return outEdges.add(edge);
 	}
@@ -160,7 +160,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public void addOutEdge(int index, Edge<E, N> edge)
+	public void addOutEdge(int index, Edge<N> edge)
 	{
 		outEdges.add(index, edge);
 	}
@@ -169,7 +169,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public boolean addInEdge(Edge<E, N> edge)
+	public boolean addInEdge(Edge<N> edge)
 	{
 		return inEdges.add(edge);
 	}
@@ -178,7 +178,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public void addInEdge(int index, Edge<E, N> edge)
+	public void addInEdge(int index, Edge<N> edge)
 	{
 		inEdges.add(index, edge);
 	}
@@ -194,7 +194,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public boolean addOutEdges(Collection<Edge<E, N>> edges)
+	public boolean addOutEdges(Collection<Edge<N>> edges)
 	{
 		return outEdges.addAll(edges);
 	}
@@ -203,7 +203,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public boolean addOutEdges(int index, Collection<Edge<E, N>> edges)
+	public boolean addOutEdges(int index, Collection<Edge<N>> edges)
 	{
 		return outEdges.addAll(index, edges);
 	}
@@ -212,7 +212,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public boolean addInEdges(Collection<Edge<E, N>> edges)
+	public boolean addInEdges(Collection<Edge<N>> edges)
 	{
 		return inEdges.addAll(edges);
 	}
@@ -221,7 +221,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public boolean addInEdges(int index, Collection<Edge<E, N>> edges)
+	public boolean addInEdges(int index, Collection<Edge<N>> edges)
 	{
 		return inEdges.addAll(index, edges);
 	}
@@ -236,18 +236,18 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public boolean createOutEdge(Node<N, E> child)
+	public boolean createOutEdge(Node<N> child)
 	{
-		return createOutEdge(null, child);
+		return createOutEdge(0, child);
 	}
 	
 	
 	/**
 	 * 
 	 */
-	public boolean createOutEdge(E weight, Node<N, E> child)
+	public boolean createOutEdge(float weight, Node<N> child)
 	{
-		Edge<E, N> edge = new Edge<E, N>(weight, this, child);
+		Edge<N> edge = new Edge<N>(weight, this, child);
 		return (outEdges.add(edge) && child.addInEdge(edge));
 	}
 	
@@ -255,18 +255,18 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public boolean createInEdge(Node<N, E> parent)
+	public boolean createInEdge(Node<N> parent)
 	{
-		return createInEdge(null, parent);
+		return createInEdge(0, parent);
 	}
 	
 	
 	/**
 	 * 
 	 */
-	public boolean createInEdge(E weight, Node<N, E> parent)
+	public boolean createInEdge(float weight, Node<N> parent)
 	{
-		Edge<E, N> edge = new Edge<E, N>(weight, parent, this);
+		Edge<N> edge = new Edge<N>(weight, parent, this);
 		return (inEdges.add(edge) && parent.addOutEdge(edge));
 	}
 	
@@ -283,7 +283,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public boolean removeOutEdge(Edge<E, N> edge)
+	public boolean removeOutEdge(Edge<N> edge)
 	{
 		return outEdges.remove(edge);
 	}
@@ -292,7 +292,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public boolean removeOutEdges(Collection<Edge<E, N>> edges)
+	public boolean removeOutEdges(Collection<Edge<N>> edges)
 	{
 		return outEdges.removeAll(edges);
 	}
@@ -301,7 +301,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public boolean removeInEdge(Edge<E, N> edge)
+	public boolean removeInEdge(Edge<N> edge)
 	{
 		return inEdges.remove(edge);
 	}
@@ -310,7 +310,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public boolean removeInEdges(Collection<Edge<E, N>> edges)
+	public boolean removeInEdges(Collection<Edge<N>> edges)
 	{
 		return inEdges.removeAll(edges);
 	}
@@ -359,9 +359,9 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public Node<N, E> clone()
+	public Node<N> clone()
 	{
-		return new Node<N, E>(item, outEdges, inEdges);
+		return new Node<N>(data, outEdges, inEdges);
 	}
 	
 	
@@ -373,7 +373,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public boolean containsOutEdge(Edge<E, N> edge)
+	public boolean containsOutEdge(Edge<N> edge)
 	{
 		return outEdges.contains(edge);
 	}
@@ -382,7 +382,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public boolean containsInEdge(Edge<E, N> edge)
+	public boolean containsInEdge(Edge<N> edge)
 	{
 		return inEdges.contains(edge);
 	}
@@ -398,7 +398,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public boolean containsAllOutEdges(Collection<Edge<E, N>> edges)
+	public boolean containsAllOutEdges(Collection<Edge<N>> edges)
 	{
 		return outEdges.containsAll(edges);
 	}
@@ -407,7 +407,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public boolean containsAllInEdges(Collection<Edge<E, N>> edges)
+	public boolean containsAllInEdges(Collection<Edge<N>> edges)
 	{
 		return inEdges.containsAll(edges);
 	}
@@ -423,7 +423,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public Edge<E, N> getOutEdge(int index)
+	public Edge<N> getOutEdge(int index)
 	{
 		return outEdges.get(index);
 	}
@@ -432,7 +432,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public Edge<E, N> getInEdge(int index)
+	public Edge<N> getInEdge(int index)
 	{
 		return inEdges.get(index);
 	}
@@ -447,7 +447,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public Edge<E, N> setOutEdge(int index, Edge<E, N> edge)
+	public Edge<N> setOutEdge(int index, Edge<N> edge)
 	{
 		return outEdges.set(index, edge);
 	}
@@ -456,7 +456,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public Edge<E, N> setInEdge(int index, Edge<E, N> edge)
+	public Edge<N> setInEdge(int index, Edge<N> edge)
 	{
 		return inEdges.set(index, edge);
 	}
@@ -472,7 +472,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public int indexOfOutEdge(Edge<E, N> edge)
+	public int indexOfOutEdge(Edge<N> edge)
 	{
 		return outEdges.indexOf(edge);
 	}
@@ -481,7 +481,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public int indexOfInEdge(Edge<E, N> edge)
+	public int indexOfInEdge(Edge<N> edge)
 	{
 		return inEdges.indexOf(edge);
 	}
@@ -542,7 +542,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public Iterator<Edge<E, N>> iteratorOut()
+	public Iterator<Edge<N>> iteratorOut()
 	{
 		return outEdges.iterator();
 	}
@@ -551,7 +551,7 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public Iterator<Edge<E, N>> iteratorIn()
+	public Iterator<Edge<N>> iteratorIn()
 	{
 		return inEdges.iterator();
 	}
@@ -560,9 +560,9 @@ public class Node<N, E>
 	/**
 	 * 
 	 */
-	public Pair<Iterator<Edge<E, N>>, Iterator<Edge<E, N>>> iterators()
+	public Pair<Iterator<Edge<N>>, Iterator<Edge<N>>> iterators()
 	{
-		return new Pair<Iterator<Edge<E, N>>, Iterator<Edge<E, N>>>(outEdges.iterator(), inEdges.iterator());
+		return new Pair<Iterator<Edge<N>>, Iterator<Edge<N>>>(outEdges.iterator(), inEdges.iterator());
 	}
 	
 	

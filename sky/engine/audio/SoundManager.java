@@ -147,8 +147,12 @@ public class SoundManager
 		float volume = (streamVolumeCurrent / streamVolumeMax) * volumelevel;
 		
 		//Play the sound with the correct volume
-		if (soundpool != null && soundpoolMap != null) {
-			soundpool.play(soundpoolMap.get(soundID), volume, volume, 1, 0, 1f);
+		if (soundpool != null && soundpoolMap != null)
+		{
+			try {
+				soundpool.play(soundpoolMap.get(soundID), volume, volume, 1, 0, 1f);
+			}
+			catch (Exception e) { }
 		}
 	}
 	

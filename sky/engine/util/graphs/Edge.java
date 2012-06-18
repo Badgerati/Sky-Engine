@@ -7,24 +7,24 @@ package sky.engine.util.graphs;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public class Edge<E, N>
+public class Edge<N>
 {
 	/**
 	 * Current weight object for the Edge.
 	 */
-	public E weight = null;
+	public float weight = 0;
 	
 	
 	/**
-	 * Node this Edge comes from.
+	 * Parent Node this Edge comes from.
 	 */
-	public Node<N, E> parentNode = null;
+	public Node<N> parentNode = null;
 	
 	
 	/**
-	 * Node this Edge points to.
+	 * Child Node this Edge points to.
 	 */
-	public Node<N, E> childNode = null;
+	public Node<N> childNode = null;
 	
 	
 	
@@ -39,7 +39,7 @@ public class Edge<E, N>
 	/**
 	 * 
 	 */
-	public Edge(E weight, Node<N, E> parent, Node<N, E> child)
+	public Edge(float weight, Node<N> parent, Node<N> child)
 	{
 		this.weight = weight;
 		parentNode = parent;
@@ -50,9 +50,9 @@ public class Edge<E, N>
 	/**
 	 * 
 	 */
-	public Edge(Node<N, E> parent, Node<N, E> child)
+	public Edge(Node<N> parent, Node<N> child)
 	{
-		this.weight = null;
+		this.weight = 0;
 		parentNode = parent;
 		childNode = child;
 	}
@@ -76,7 +76,7 @@ public class Edge<E, N>
 	{
 		try
 		{
-			Edge<E, N> edge = (Edge<E, N>)o;
+			Edge<N> edge = (Edge<N>)o;
 			
 			return (parentNode.equals(edge.parentNode) && childNode.equals(edge.childNode));
 		}
@@ -101,7 +101,7 @@ public class Edge<E, N>
 	@Override
 	public int hashCode()
 	{
-		return (weight.hashCode() + parentNode.hashCode() + childNode.hashCode());
+		return ((int)weight + parentNode.hashCode() + childNode.hashCode());
 	}
 	
 	

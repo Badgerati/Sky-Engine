@@ -11,12 +11,12 @@ import sky.engine.util.ListSet;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public class Graph<N, E>
+public class Graph<N>
 {
 	/**
 	 * 
 	 */
-	private ListSet<Node<N, E>> nodes = new ListSet<Node<N, E>>();
+	private ListSet<Node<N>> nodes = new ListSet<Node<N>>();
 	
 	
 	
@@ -38,7 +38,7 @@ public class Graph<N, E>
 	/**
 	 * 
 	 */
-	public Graph(Node<N, E> node)
+	public Graph(Node<N> node)
 	{
 		nodes.add(node);
 	}
@@ -47,7 +47,7 @@ public class Graph<N, E>
 	/**
 	 * 
 	 */
-	public Graph(Collection<Node<N, E>> nodes)
+	public Graph(Collection<Node<N>> nodes)
 	{
 		this.nodes.addAll(nodes);
 	}
@@ -64,7 +64,7 @@ public class Graph<N, E>
 	/**
 	 * 
 	 */
-	public boolean addNode(Node<N, E> node)
+	public boolean addNode(Node<N> node)
 	{		
 		return nodes.add(node);
 	}
@@ -80,7 +80,7 @@ public class Graph<N, E>
 	/**
 	 * 
 	 */
-	public boolean addNodes(Collection<Node<N, E>> nodes)
+	public boolean addNodes(Collection<Node<N>> nodes)
 	{		
 		return nodes.addAll(nodes);
 	}
@@ -113,7 +113,7 @@ public class Graph<N, E>
 	/**
 	 * 
 	 */
-	public Iterator<Node<N, E>> iterator()
+	public Iterator<Node<N>> iterator()
 	{
 		return nodes.iterator();
 	}

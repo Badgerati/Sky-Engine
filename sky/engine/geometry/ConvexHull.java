@@ -6,7 +6,7 @@ import sky.engine.geometry.shapes.Polygon;
 import sky.engine.graphics.bounds.BoundingPoly;
 import sky.engine.graphics.shapes.DrawablePolygon;
 import sky.engine.util.MultiList;
-import sky.engine.util.SortedArray;
+import sky.engine.util.SortedList;
 import sky.engine.util.primitives.SEArrays;
 
 /**
@@ -92,7 +92,7 @@ public class ConvexHull
 			return false;
 		
 		//sort the vertices into ascending order
-		SortedArray<Vector2D> sorted = new SortedArray<Vector2D>(vertices);
+		SortedList<Vector2D> sorted = new SortedList<Vector2D>(vertices);
 		
 		Vector2D[] temp1 = quickHull(vertices, sorted.getFirst(), sorted.getLast());
 		Vector2D[] temp2 = quickHull(vertices, sorted.getLast(), sorted.getFirst());
