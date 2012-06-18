@@ -29,7 +29,7 @@ public class SortedList<T> implements List<T>
 	 * Constant value for a ascending sort.
 	 */
 	protected static final int ASCENDING = 0;
-	
+	 
 	
 	/**
 	 * Constant value for a descending sort.
