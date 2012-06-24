@@ -1,6 +1,6 @@
 package sky.engine.threads;
 
-import sky.engine.interfaces.GameInterface;
+import sky.engine.game.GameInterface;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Handler;
@@ -53,7 +53,7 @@ public class GameThread extends Thread
 	/**
 	 * Handler for game-over dialog
 	 */
-	private Handler handler;
+	private Handler handler = null;
 	
 	
 	/**
@@ -71,7 +71,7 @@ public class GameThread extends Thread
 	/**
 	 * Handle to the game panel
 	 */
-	private GameInterface gameloop;
+	private GameInterface gamesurface = null;
 	
 	
 	
@@ -89,7 +89,7 @@ public class GameThread extends Thread
 	{
 		super();
 		surfaceHolder = holder;
-		gameloop = panel;
+		gamesurface = panel;
 		this.handler = handler;
 	}
 	
@@ -129,7 +129,7 @@ public class GameThread extends Thread
 	 */
 	public GameInterface getGame()
 	{
-		return gameloop;
+		return gamesurface;
 	}
 	
 	
@@ -359,13 +359,13 @@ public class GameThread extends Thread
 	public void run()
 	{
 		//continue looping here until the surface actually exists
-		while (!gameloop.surfaceExists()) { }
+		while (!gamesurface.surfaceExists()) { }
 		
 		//the canvas
 		Canvas c;
 		
 		//load everything before running
-		gameloop.load();
+		gamesurface.load();
 		
 		//timings for framerate
 		long beginTime;		//time when the cycle began
@@ -394,8 +394,8 @@ public class GameThread extends Thread
 						framesSkipped = 0;
 						
 						//update and draw
-						gameloop.update(beginTime);
-						if (c != null) gameloop.draw(c);
+						gamesurface.update(beginTime);
+						if (c != null) gamesurface.draw(c);
 						
 						//how long the cycle ran for
 						timeDiff = System.currentTimeMillis() - beginTime;
@@ -411,7 +411,7 @@ public class GameThread extends Thread
 						//we're running a little late, time to catch up!
 						while (sleepTime < 0 && framesSkipped < MAX_FRAME_SKIPS)
 						{
-							gameloop.update(beginTime);
+							gamesurface.update(beginTime);
 							sleepTime += FRAME_PERIOD;
 							framesSkipped++;
 						}

@@ -1,10 +1,10 @@
 package sky.engine.surfaces;
 
 import sky.engine.components.Size;
+import sky.engine.game.GameInterface;
 import sky.engine.graphics.Colour;
-import sky.engine.interfaces.GameInterface;
-import sky.engine.interfaces.StageInterface;
 import sky.engine.sensors.Accelerometer;
+import sky.engine.stages.StageInterface;
 import sky.engine.threads.GameThread;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -246,6 +246,20 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	
 	
 	/**
+	 * Store size of surface.
+	 */
+	public void getSize()
+	{
+		ScreenSize = new Size(getWidth(), getHeight());
+	}
+	
+	
+	
+	
+	
+	
+	
+	/**
 	 * Start the thread
 	 */
 	public void startThread()
@@ -364,8 +378,11 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	 */
 	public void setAccelerometer(Accelerometer accel)
 	{
-		sensorManager = accel.getManager();
-		accelerometer = accel.getAccelerometer();
+		if (accel != null)
+		{
+			sensorManager = accel.getManager();
+			accelerometer = accel.getAccelerometer();
+		}
 	}
 	
 	
@@ -381,7 +398,10 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	 */
 	public void registerAccelListener()
 	{
-		sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
+		if (sensorManager != null)
+		{
+			sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
+		}
 	}
 	
 	
@@ -396,7 +416,10 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	 */
 	public void unregisterAccelListener()
 	{
-		sensorManager.unregisterListener(this);
+		if (sensorManager != null)
+		{
+			sensorManager.unregisterListener(this);
+		}
 	}
 	
 	
@@ -464,9 +487,11 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	 */
 	public void load()
 	{
-		if (stagesSet)
+		if (stagesSet && surfaceCreated)
 		{
-			stages.load(getResources());
+			getSize();
+			
+			stages.load(getResources(), GameSurface.ScreenSize);
 			contentLoaded = true;
 		}
 	}

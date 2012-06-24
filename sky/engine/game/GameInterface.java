@@ -1,4 +1,4 @@
-package sky.engine.interfaces;
+package sky.engine.game;
 
 import android.graphics.Canvas;
 

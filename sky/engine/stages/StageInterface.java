@@ -1,5 +1,6 @@
-package sky.engine.interfaces;
+package sky.engine.stages;
 
+import sky.engine.components.Size;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.hardware.SensorEvent;
@@ -16,7 +17,7 @@ public interface StageInterface
 	/**
 	 * Loading content
 	 */
-	public void load(Resources res);
+	public void load(Resources res, Size screensize);
 	
 	
 	/**
