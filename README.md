@@ -43,7 +43,7 @@ Version 0.9.9
 	* Added new SortedArray data structure to help with geometric calculations.
 	* Added new MultiList data structure. This will take a while to explain, but think arrays in PHP.
 	* Added new ListSet data structure, keeping elements in the order they were added for a Set.
-	* Create an Arrays class to add further functionality on arrays - such as reversing, merging and swapping.
+	* Created an Arrays class to add further functionality on arrays - such as reversing, merging and swapping.
 	* You will notice a graphs package in util - this is just me dabbling around with something.
 	
 
@@ -63,7 +63,7 @@ Version 0.9.8
 Future Development and Ideas
 ----------------------------
 
-	* Implement bounding volume hierarchies (a R-trees?).
+	* Implement bounding volume hierarchies (and R-trees?).
 	* Implement Quaternions for use with 3D later on. Possible applications with 2D?
 	* A class that can deal with the inbuilt Android 'options' menu more easily.
 	* A class that can have more control over screens - much like in XNA.

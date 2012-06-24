@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import sky.engine.io.FileManager;
-
+import sky.engine.util.MultiList;
+import sky.engine.util.ObjectMap;
 import android.content.Context;
 
 /**
@@ -38,7 +39,8 @@ public class HighscoreManager
 	/**
 	 * List of records read in from the file
 	 */
-	private ArrayList<HashMap<String, String>> Records = null;
+	private MultiList Records = null;
+	//private ArrayList<HashMap<String, Long>> Records = null;
 	
 	
 	/**
@@ -67,7 +69,7 @@ public class HighscoreManager
 		this.numberOfEntries = numberOfEntries;
 		
 		//initialise the records
-		Records = new ArrayList<HashMap<String, String>>();
+		Records = new MultiList(); //new ArrayList<HashMap<String, Long>>();
 		
 		//create file manager
 		fileManager = new FileManager(context, filename);
@@ -98,20 +100,23 @@ public class HighscoreManager
 		
 		
 		//loop through each line and store the records appropriately
-		String name, score;
-		HashMap<String, String> tempRecord = new HashMap<String, String>();
+		String name;
+		long score;
+		//HashMap<String, Long> tempRecord = new HashMap<String, Long>();
 		
 		for (int i = 0; i < lines.size(); i += 2)
 		{
-			tempRecord.clear();
+			//tempRecord.clear();
 			
 			name = lines.get(i).trim().replace("Name=", "");
-			score = lines.get(i+1).trim().replace("Score=", "");
+			score = Long.parseLong(lines.get(i+1).trim().replace("Score=", ""));
 			
-			tempRecord.put(NAME, name);
-			tempRecord.put(SCORE, score);
+			Records.add(new String[] { NAME, SCORE }, new Object[] { name, score });
 			
-			Records.add(tempRecord);
+			//tempRecord.put(NAME, name);
+			//tempRecord.put(SCORE, score);
+			
+			//Records.add(tempRecord);
 		}
 	}
 	
@@ -134,13 +139,13 @@ public class HighscoreManager
 	{
 		//create the string to write
 		String stringToWrite = "";
-		HashMap<String, String> tempRecord = null;
+		HashMap<Object, Object> tempRecord = null;
 		
 		for (int i = 0; i < numberOfEntries; i++)
 		{
 			tempRecord = Records.get(i);
-			stringToWrite += "Name=" + tempRecord.get(NAME) + "\n"
-							+ "Score=" + tempRecord.get(SCORE);
+			stringToWrite += "Name=" + (String)tempRecord.get(NAME) + "\n"
+							+ "Score=" + Long.toString((Long)tempRecord.get(SCORE));
 			
 			if (i != numberOfEntries - 1)
 				stringToWrite += "\n";
@@ -190,7 +195,7 @@ public class HighscoreManager
 	/**
 	 * Get the records of this table
 	 */
-	public ArrayList<HashMap<String, String>> getRecords()
+	public MultiList getRecords()
 	{
 		return Records;
 	}
@@ -220,15 +225,17 @@ public class HighscoreManager
 			return true;
 		
 		//else, is the score more than last record's score in table
-		String tempscore = Records.get(Records.size()-1).get(SCORE);
-		for (String r : new String[] { ",", ".", " " })
-		{
-			tempscore.replace(r, "");
-		}
+		long lastscore = (Long)Records.get(Records.size() - 1).get(SCORE);
+				
+				//Records.get(Records.size()-1).get(SCORE);
+		//for (String r : new String[] { ",", ".", " " })
+		//{
+		//	tempscore.replace(r, "");
+		//}
 		
-		long recscore = Long.parseLong(tempscore);
+		//long recscore = Long.parseLong(tempscore);
 		
-		if (score >= recscore)
+		if (score >= lastscore)
 			return true;
 		
 		//finally, if we even get here, return false
@@ -254,12 +261,12 @@ public class HighscoreManager
 	{
 		//reformat name and score
 		name = "XX.\t" + name;
-		String _score = String.format("%,d", score);
+		//String _score = String.format("%,d", score);
 		
 		//create new record
-		HashMap<String, String> newRecord = new HashMap<String, String>();
+		ObjectMap newRecord = new ObjectMap();
 		newRecord.put(NAME, name);
-		newRecord.put(SCORE, _score);
+		newRecord.put(SCORE, score);
 		
 		
 		//if the record list is empty, just write the new record in
@@ -272,8 +279,9 @@ public class HighscoreManager
 		else
 		{
 			//temp records list for new positioning
-			ArrayList<HashMap<String, String>> tempRecords = new ArrayList<HashMap<String, String>>();
-			HashMap<String, String> tempRecord = new HashMap<String, String>();
+			//ArrayList<HashMap<String, String>> tempRecords = new ArrayList<HashMap<String, String>>();
+			MultiList tempRecords = new MultiList();
+			ObjectMap tempRecord = new ObjectMap();
 			
 			//boolean to see if new record was added, so we can just dump store the rest
 			boolean addedRecord = false;
@@ -285,7 +293,7 @@ public class HighscoreManager
 				tempRecord = Records.get(i);
 				
 				//is new record greater than this one?
-				if (score >= Long.parseLong(tempRecord.get(SCORE).replace(",", "")) && !addedRecord)
+				if (score >= (Long)tempRecord.get(SCORE) && !addedRecord)
 				{
 					tempRecords.add(newRecord);
 					tempRecords.add(tempRecord);
@@ -331,7 +339,7 @@ public class HighscoreManager
 	{
 		for (int i = 0; i < Records.size(); i++)
 		{
-			String tempName = Records.get(i).get(NAME).replaceFirst("\t", "\n");
+			String tempName = ((String)Records.get(i).get(NAME)).replaceFirst("\t", "\n");
 			String[] temp = tempName.split("\n");
 			String trace = "";
 			
@@ -346,7 +354,7 @@ public class HighscoreManager
 		//overflow entries should be positioned as XX
 		if (Records.size() > numberOfEntries)
 		{
-			String tempName = Records.get(numberOfEntries).get(NAME).replaceFirst("\t", "\n");
+			String tempName = ((String)Records.get(numberOfEntries).get(NAME)).replaceFirst("\t", "\n");
 			String[] temp = tempName.split("\n");
 			Records.get(numberOfEntries).put(NAME, "XX.\t" + temp[temp.length-1]);
 		}

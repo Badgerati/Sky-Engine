@@ -1,7 +1,6 @@
 package sky.engine.util;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * A MultiList works in much the same way as arrays do in PHP. That is, we can have a key
@@ -28,7 +27,7 @@ import java.util.HashMap;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public class MultiList extends ArrayList<HashMap<Object, Object>>
+public class MultiList extends ArrayList<ObjectMap>
 {
 	/**
 	 * Serial ID.
@@ -70,7 +69,7 @@ public class MultiList extends ArrayList<HashMap<Object, Object>>
 	 */
 	public boolean add(Object key, Object value)
 	{
-		HashMap<Object, Object> temp = new HashMap<Object, Object>();
+		ObjectMap temp = new ObjectMap();
 		temp.put(key, value);
 		return this.add(temp);
 	}
@@ -105,13 +104,13 @@ public class MultiList extends ArrayList<HashMap<Object, Object>>
 	 */
 	public boolean add(Object[] keys, Object[] values)
 	{
-		if (keys.length != values.length)
-			throw new Error("The length of keys must equal the length of values given.");
+		//if (keys.length != values.length)
+		//	throw new Error("The length of keys must equal the length of values given.");
 		
-		HashMap<Object, Object> temp = new HashMap<Object, Object>();
+		ObjectMap temp = new ObjectMap(keys, values);
 		
-		for (int i = 0; i < keys.length; i++)
-			temp.put(keys[i], values[i]);
+		//for (int i = 0; i < keys.length; i++)
+		//	temp.put(keys[i], values[i]);
 		
 		return this.add(temp);
 	}
@@ -131,12 +130,15 @@ public class MultiList extends ArrayList<HashMap<Object, Object>>
 		if (index < 0 || index >= this.size())
 			throw new IndexOutOfBoundsException();
 		
-		if (keys.length != values.length)
-			throw new Error("The length of keys must equal the length of values given.");
+		this.get(index).put(keys, values);
 		
-		HashMap<Object, Object> temp = this.get(index);
-		for (int i = 0; i < keys.length; i++)
-			temp.put(keys[i], values[i]);
+		//if (keys.length != values.length)
+		//	throw new Error("The length of keys must equal the length of values given.");
+		
+		//ObjectMap temp = this.get(index);
+		
+		//for (int i = 0; i < keys.length; i++)
+		//	temp.put(keys[i], values[i]);
 		
 		return true;
 	}
