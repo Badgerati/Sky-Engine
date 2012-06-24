@@ -1,5 +1,5 @@
-Sky Engine v0.9.9
-=================
+Sky Engine v0.9.9.2
+===================
 
 Sky Engine is a basic 2D Games Engine for use with Android Development, programmed in Java. It is still
 currently under development, but a lot of the engine exists to be able to create basic games.
@@ -45,6 +45,8 @@ Version 0.9.9
 	* Added new ListSet data structure, keeping elements in the order they were added for a Set.
 	* Created an Arrays class to add further functionality on arrays - such as reversing, merging and swapping.
 	* You will notice a graphs package in util - this is just me dabbling around with something.
+	* Graphs package works for basic graph-theory.
+	* Implemented an 'ObjectMap' some simplify initialisations and settings of general HashMaps. (`HashMap<Obj, Obj>`).
 	
 
 Version 0.9.8
