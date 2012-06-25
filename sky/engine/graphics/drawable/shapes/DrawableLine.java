@@ -1,4 +1,4 @@
-package sky.engine.graphics.shapes;
+package sky.engine.graphics.drawable.shapes;
 
 import sky.engine.geometry.Vector2D;
 import sky.engine.geometry.shapes.Line;
@@ -34,6 +34,16 @@ public class DrawableLine extends Line implements DrawableShape
 	/**
 	 * Create new instance of a default Graphical Line
 	 */
+	public DrawableLine(Vector2D position, Vector2D v1, Vector2D v2)
+	{
+		super(position, v1, v2);
+		Paint = new ShapePaint(Colour.WHITE, 0, false, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+	}
+
+	
+	/**
+	 * Create new instance of a default Graphical Line
+	 */
 	public DrawableLine(Vector2D position, Vector2D v1, Vector2D v2, Vector2D velocity, float mass)
 	{
 		super(position, v1, v2, velocity, mass);
@@ -54,15 +64,25 @@ public class DrawableLine extends Line implements DrawableShape
 	/**
 	 * Create new instance of a Graphical Line
 	 */
-	public DrawableLine(Vector2D position, Vector2D v1, Vector2D v2, int fill, int outline, boolean showoutline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
+	public DrawableLine(Vector2D position, Vector2D v1, Vector2D v2, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
 	{
 		super(position, v1, v2, velocity, mass);
-		Paint = new ShapePaint(fill, outline, showoutline, outlinewidth, antialias);
+		Paint = new ShapePaint(fill, outline, true, outlinewidth, antialias);
 	}
 	
 	
 	
+
 	
+	
+	/**
+	 * Create new instance of a default Graphical Line
+	 */
+	public DrawableLine(Vector2D v1, Vector2D v2)
+	{
+		super(v1, v2);
+		Paint = new ShapePaint(Colour.WHITE, 0, false, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+	}
 	
 	
 	/**
@@ -88,10 +108,10 @@ public class DrawableLine extends Line implements DrawableShape
 	/**
 	 * Create new instance of a Graphical Line
 	 */
-	public DrawableLine(Vector2D v1, Vector2D v2, int fill, int outline, boolean showoutline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
+	public DrawableLine(Vector2D v1, Vector2D v2, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
 	{
 		super(v1, v2, velocity, mass);
-		Paint = new ShapePaint(fill, outline, showoutline, outlinewidth, antialias);
+		Paint = new ShapePaint(fill, outline, true, outlinewidth, antialias);
 	}
 
 	
@@ -149,7 +169,7 @@ public class DrawableLine extends Line implements DrawableShape
 	 */
 	public void draw(Canvas canvas)
 	{
-		if (Paint.Outline)
+		if (Paint.ShowOutline)
 			canvas.drawLine(vertices[0].X, vertices[0].Y, vertices[1].X, vertices[1].Y, Paint.OutlinePaint);
 		
 		canvas.drawLine(vertices[0].X, vertices[0].Y, vertices[1].X, vertices[1].Y, Paint.FillPaint);

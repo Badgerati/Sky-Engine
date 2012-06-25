@@ -1,11 +1,11 @@
-package sky.engine.graphics.particles;
+package sky.engine.graphics.drawable.particles;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import sky.engine.geometry.Angle;
 import sky.engine.geometry.Vector2D;
+import sky.engine.math.Angle;
 import android.graphics.Canvas;
 
 /**
@@ -14,22 +14,8 @@ import android.graphics.Canvas;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public class Explosion
-{
-	
-	/**
-	 * Alive and dead constants
-	 */
-	public static final int STATE_ALIVE = 0;
-	public static final int STATE_DEAD = 1;
-
-	
-	/**
-	 * Current state of the explosion
-	 */
-	private int explosionState;
-	
-	
+public class Trail
+{	
 	/**
 	 * Random number generator
 	 */
@@ -37,31 +23,37 @@ public class Explosion
 	
 	
 	/**
-	 * point where explosion is to happen
+	 * point where trail is to happen
 	 */
 	private Vector2D mOrigin = null;
 	
 	
 	/**
-	 * the particles of the explosion
+	 * number of particles to create on each iteration
+	 */
+	private int toCreate;
+	
+	
+	/**
+	 * the particles of the trail
 	 */
 	private List<Particle> mParticles = null;
 	
 	
 	/**
-	 * lifetime of the explosion
+	 * lifetime of the trail
 	 */
 	private int mLifetime;
 	
 	
 	/**
-	 * speed of explosion
+	 * speed of trail
 	 */
 	private float mSpeed;
 	
 	
 	/**
-	 * colour of particles
+	 * colour of the particles
 	 */
 	private int mColour;
 	
@@ -74,23 +66,17 @@ public class Explosion
 	
 	
 	/**
-	 * Create new instance of an explosion object
+	 * Create new instance of a Trail object
 	 */
-	public Explosion(Vector2D position, int lifetime, int size, float speed, int colour)
-	{
-		explosionState = STATE_ALIVE;
-		
+	public Trail(Vector2D position, int lifetime, int create, float speed, int colour)
+	{		
 		mOrigin = position;
+		toCreate = create;
 		mLifetime = lifetime;
 		mSpeed = speed;
 		mColour = colour;
-				
-		mParticles = new ArrayList<Particle>();
 		
-		for (int i = 0; i < size; i++)
-		{
-			mParticles.add(generateNewParticle());
-		}
+		mParticles = new ArrayList<Particle>();
 		
 	}
 	
@@ -120,7 +106,7 @@ public class Explosion
 		float angular = 0.1f * (float)(rand.nextDouble() * 2 - 1);
 		
 		//time to live
-		int ttl = mLifetime + rand.nextInt(40);
+		int ttl = mLifetime;
 		
 		//create
 		return new Particle(position, velocity, angle, angular, mColour, ttl);
@@ -135,35 +121,16 @@ public class Explosion
 	
 	
 	/**
-	 * Is the explosion alive?
-	 */
-	public boolean isAlive()
-	{
-		return explosionState == STATE_ALIVE ? true : false;
-	}
-	
-	
-	/**
-	 * Is the explosion dead?
-	 */
-	public boolean isDead()
-	{
-		return explosionState == STATE_DEAD ? true : false;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/**
-	 * Update the explosive particles
+	 * Update trail
 	 */
 	public void update()
 	{
+		for (int i = 0; i < toCreate; i++)
+		{
+			mParticles.add(generateNewParticle());
+		}
+		
+		
 		for (int particle = 0; particle < mParticles.size(); particle++)
 		{
 			mParticles.get(particle).update();
@@ -172,10 +139,7 @@ public class Explosion
 				mParticles.remove(particle);
 				particle--;
 			}
-		}
-		
-		if (mParticles.size() <= 0)
-			explosionState = STATE_DEAD;		
+		}	
 	}
 	
 	
@@ -187,7 +151,7 @@ public class Explosion
 	
 	
 	/**
-	 * Draw the explosive particles
+	 * Draw
 	 */
 	public void draw(Canvas canvas)
 	{
@@ -195,6 +159,8 @@ public class Explosion
 			mParticles.get(i).draw(canvas);
 		
 	}
+	
+	
 	
 	
 	

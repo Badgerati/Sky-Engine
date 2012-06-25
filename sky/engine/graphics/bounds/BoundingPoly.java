@@ -2,10 +2,10 @@ package sky.engine.graphics.bounds;
 
 import java.util.Random;
 
-import sky.engine.geometry.Angle;
 import sky.engine.geometry.ConvexHull;
 import sky.engine.geometry.Triangulation;
 import sky.engine.geometry.Vector2D;
+import sky.engine.math.Angle;
 
 /**
  * Bounding Polygons are to be created to bound more complicated objects.

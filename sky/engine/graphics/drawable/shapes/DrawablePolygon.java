@@ -1,4 +1,4 @@
-package sky.engine.graphics.shapes;
+package sky.engine.graphics.drawable.shapes;
 
 import sky.engine.geometry.Vector2D;
 import sky.engine.geometry.shapes.Polygon;
@@ -67,10 +67,10 @@ public class DrawablePolygon extends Polygon implements DrawableShape
 	/**
 	 * Create new instance of a Graphical Polygon
 	 */
-	public DrawablePolygon(Vector2D position, Vector2D[] vertices, int fill, int outline, boolean showoutline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
+	public DrawablePolygon(Vector2D position, Vector2D[] vertices, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
 	{
 		super(position, vertices, velocity, mass);
-		Paint = new ShapePaint(fill, outline, showoutline, outlinewidth, antialias);
+		Paint = new ShapePaint(fill, outline, true, outlinewidth, antialias);
 		initialise();
 	}
 	
@@ -116,10 +116,10 @@ public class DrawablePolygon extends Polygon implements DrawableShape
 	/**
 	 * Create new instance of a Graphical Polygon
 	 */
-	public DrawablePolygon(Vector2D[] vertices, int fill, int outline, boolean showoutline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
+	public DrawablePolygon(Vector2D[] vertices, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
 	{
 		super(vertices, velocity, mass);
-		Paint = new ShapePaint(fill, outline, showoutline, outlinewidth, antialias);
+		Paint = new ShapePaint(fill, outline, true, outlinewidth, antialias);
 		initialise();
 	}
 	
@@ -153,10 +153,10 @@ public class DrawablePolygon extends Polygon implements DrawableShape
 	/**
 	 * Create new instance of a Graphical Polygon
 	 */
-	public DrawablePolygon(Vector2D position, int noOfVertices, float size, int fill, int outline, boolean showoutline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
+	public DrawablePolygon(Vector2D position, int noOfVertices, float size, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
 	{
 		super(position, noOfVertices, size, velocity, mass);
-		Paint = new ShapePaint(fill, outline, showoutline, outlinewidth, antialias);
+		Paint = new ShapePaint(fill, outline, true, outlinewidth, antialias);
 		initialise();
 	}
 	
@@ -190,10 +190,10 @@ public class DrawablePolygon extends Polygon implements DrawableShape
 	/**
 	 * Create new instance of a Graphical Polygon
 	 */
-	public DrawablePolygon(Vector2D position, int noOfVertices, float minSize, float maxSize, int fill, int outline, boolean showoutline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
+	public DrawablePolygon(Vector2D position, int noOfVertices, float minSize, float maxSize, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
 	{
 		super(position, noOfVertices, minSize, maxSize, velocity, mass);
-		Paint = new ShapePaint(fill, outline, showoutline, outlinewidth, antialias);
+		Paint = new ShapePaint(fill, outline, true, outlinewidth, antialias);
 		initialise();
 	}
 	
@@ -279,7 +279,7 @@ public class DrawablePolygon extends Polygon implements DrawableShape
 	 */
 	public void draw(Canvas canvas)
 	{
-		if (Paint.Outline)
+		if (Paint.ShowOutline)
 			canvas.drawPath(polygon, Paint.OutlinePaint);
 		
 		canvas.drawPath(polygon, Paint.FillPaint);

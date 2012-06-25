@@ -1,4 +1,4 @@
-package sky.engine.graphics.particles;
+package sky.engine.graphics.drawable.particles;
 
 import java.util.Random;
 

@@ -1,4 +1,4 @@
-package sky.engine.graphics.shapes;
+package sky.engine.graphics.drawable.shapes;
 
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -66,10 +66,10 @@ public class DrawableTriangle extends Triangle implements DrawableShape
 	/**
 	 * Create new instance of a Graphical Triangle
 	 */
-	public DrawableTriangle(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, int fill, int outline, boolean showoutline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
+	public DrawableTriangle(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
 	{
 		super(position, v1, v2, v3, velocity, mass);
-		Paint = new ShapePaint(fill, outline, showoutline, outlinewidth, antialias);
+		Paint = new ShapePaint(fill, outline, true, outlinewidth, antialias);
 		initialise();
 	}
 
@@ -115,10 +115,10 @@ public class DrawableTriangle extends Triangle implements DrawableShape
 	/**
 	 * Create new instance of a Graphical Triangle
 	 */
-	public DrawableTriangle(Vector2D v1, Vector2D v2, Vector2D v3, int fill, int outline, boolean showoutline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
+	public DrawableTriangle(Vector2D v1, Vector2D v2, Vector2D v3, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
 	{
 		super(v1, v2, v3, velocity, mass);
-		Paint = new ShapePaint(fill, outline, showoutline, outlinewidth, antialias);
+		Paint = new ShapePaint(fill, outline, true, outlinewidth, antialias);
 		initialise();
 	}
 
@@ -126,7 +126,18 @@ public class DrawableTriangle extends Triangle implements DrawableShape
 	
 	
 	
+
+
 	
+	/**
+	 * Create new instance of a default Graphical Triangle
+	 */
+	public DrawableTriangle(Vector2D position, float sidex, float sidey, float sidez)
+	{
+		super(position, sidex, sidey, sidez);
+		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		initialise();
+	}
 
 	
 	/**
@@ -154,10 +165,10 @@ public class DrawableTriangle extends Triangle implements DrawableShape
 	/**
 	 * Create new instance of a Graphical Triangle
 	 */
-	public DrawableTriangle(Vector2D position, float sidex, float sidey, float sidez, int fill, int outline, boolean showoutline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
+	public DrawableTriangle(Vector2D position, float sidex, float sidey, float sidez, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
 	{
 		super(position, sidex, sidey, sidez, velocity, mass);
-		Paint = new ShapePaint(fill, outline, showoutline, outlinewidth, antialias);
+		Paint = new ShapePaint(fill, outline, true, outlinewidth, antialias);
 		initialise();
 	}
 	
@@ -246,7 +257,7 @@ public class DrawableTriangle extends Triangle implements DrawableShape
 	 */
 	public void draw(Canvas canvas)
 	{
-		if (Paint.Outline)
+		if (Paint.ShowOutline)
 			canvas.drawPath(polygon, Paint.OutlinePaint);
 		
 		canvas.drawPath(polygon, Paint.FillPaint);

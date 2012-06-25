@@ -1,9 +1,9 @@
 package sky.engine.geometry.shapes;
 
-import sky.engine.geometry.Angle;
 import sky.engine.geometry.ConvexHull;
 import sky.engine.geometry.Triangulation;
 import sky.engine.geometry.Vector2D;
+import sky.engine.math.Angle;
 import sky.engine.physics.bodies.RigidBody;
 import sky.engine.physics.collisions.Projection;
 import sky.engine.physics.collisions.SATCollision;

@@ -1,4 +1,4 @@
-package sky.engine.graphics.shapes;
+package sky.engine.graphics.drawable.shapes;
 
 import android.graphics.Canvas;
 import sky.engine.geometry.Vector2D;
@@ -32,6 +32,16 @@ public class DrawableCircle extends Circle implements DrawableShape
 	/**
 	 * Create new instance of a default Graphical Circle
 	 */
+	public DrawableCircle(Vector2D position, float radius)
+	{
+		super(position, radius);
+		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+	}
+
+	
+	/**
+	 * Create new instance of a default Graphical Circle
+	 */
 	public DrawableCircle(Vector2D position, float radius, Vector2D velocity, float mass)
 	{
 		super(position, radius, velocity, mass);
@@ -52,10 +62,10 @@ public class DrawableCircle extends Circle implements DrawableShape
 	/**
 	 * Create new instance of a Graphical Circle
 	 */
-	public DrawableCircle(Vector2D position, float radius, int fill, int outline, boolean showoutline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
+	public DrawableCircle(Vector2D position, float radius, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
 	{
 		super(position, radius, velocity, mass);
-		Paint = new ShapePaint(fill, outline, showoutline, outlinewidth, antialias);
+		Paint = new ShapePaint(fill, outline, true, outlinewidth, antialias);
 	}
 	
 	
@@ -64,10 +74,10 @@ public class DrawableCircle extends Circle implements DrawableShape
 	/**
 	 * Create new instance of a Graphical Circle
 	 */
-	public DrawableCircle(DrawableCircle gcircle)
+	public DrawableCircle(DrawableCircle circle)
 	{
-		super(gcircle.Position, gcircle.Radius, gcircle.Velocity, gcircle.Mass);
-		Paint = new ShapePaint(gcircle.Paint);
+		super(circle.Position, circle.Radius, circle.Velocity, circle.Mass);
+		Paint = new ShapePaint(circle.Paint);
 	}
 	
 	
@@ -106,7 +116,7 @@ public class DrawableCircle extends Circle implements DrawableShape
 	 */
 	public void draw(Canvas canvas)
 	{
-		if (Paint.Outline)
+		if (Paint.ShowOutline)
 			canvas.drawCircle(Position.X, Position.Y, Radius, Paint.OutlinePaint);
 		
 		canvas.drawCircle(Position.X, Position.Y, Radius, Paint.FillPaint);

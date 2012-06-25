@@ -2,7 +2,6 @@ package sky.engine.surfaces;
 
 import sky.engine.components.Size;
 import sky.engine.game.GameInterface;
-import sky.engine.graphics.Colour;
 import sky.engine.sensors.Accelerometer;
 import sky.engine.stages.StageInterface;
 import sky.engine.threads.GameThread;
@@ -526,9 +525,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	 * Draw things to the canvas
 	 */
 	public void draw(Canvas canvas)
-	{
-		canvas.drawColor(Colour.CORNFLOWER_BLUE);
-		
+	{		
 		if (stagesSet) {
 			stages.draw(canvas);
 		}

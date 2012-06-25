@@ -37,7 +37,7 @@ public class ShapePaint
 	/**
 	 * Does this Graphical Paint have an outline?
 	 */
-	public boolean Outline = false;
+	public boolean ShowOutline = false;
 	
 	
 	/**
@@ -68,7 +68,7 @@ public class ShapePaint
 		OutlinePaint.setColor(outlinecolour);
 		OutlineWidth = outlinewidth;
 		OutlinePaint.setStrokeWidth(OutlineWidth);
-		Outline = showoutline;
+		ShowOutline = showoutline;
 		
 		//anti-aliasing
 		AntiAliasing = antialias;
@@ -89,7 +89,7 @@ public class ShapePaint
 		OutlinePaint.setColor(gpaint.OutlinePaint.getColor());
 		OutlineWidth = gpaint.OutlineWidth;
 		OutlinePaint.setStrokeWidth(OutlineWidth);
-		Outline = gpaint.Outline;
+		ShowOutline = gpaint.ShowOutline;
 		
 		//anti-aliasing
 		AntiAliasing = gpaint.AntiAliasing;

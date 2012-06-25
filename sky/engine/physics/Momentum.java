@@ -1,7 +1,7 @@
 package sky.engine.physics;
 
-import sky.engine.geometry.Angle;
 import sky.engine.geometry.Vector2D;
+import sky.engine.math.Angle;
 
 /**
  * 

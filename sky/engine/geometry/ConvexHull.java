@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import sky.engine.geometry.shapes.Polygon;
 import sky.engine.graphics.bounds.BoundingPoly;
-import sky.engine.graphics.shapes.DrawablePolygon;
+import sky.engine.graphics.drawable.shapes.DrawablePolygon;
 import sky.engine.util.MultiList;
 import sky.engine.util.SortedList;
 import sky.engine.util.primitives.SEArrays;

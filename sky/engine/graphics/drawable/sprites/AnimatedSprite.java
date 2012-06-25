@@ -1,4 +1,4 @@
-package sky.engine.graphics.sprites;
+package sky.engine.graphics.drawable.sprites;
 
 import sky.engine.components.Size;
 import sky.engine.geometry.Vector2D;

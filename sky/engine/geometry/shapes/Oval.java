@@ -6,15 +6,21 @@ import sky.engine.physics.collisions.Projection;
 /**
  * 
  * 
- * @author Matthew Kelly (Badgerati).
+ * @author Matthew Kelly (Badgerati)
  *
  */
-public class Circle extends Shape
+public class Oval extends Shape
 {
-	/** 
-	 * This circle's radius
+	/**
+	 * 
 	 */
-	protected float Radius = 0;
+	protected float xRadius = 0;
+	
+	
+	/**
+	 * 
+	 */
+	protected float yRadius = 0;
 	
 	
 	
@@ -32,24 +38,26 @@ public class Circle extends Shape
 	 ********************************************/
 	
 	/**
-	 * Create new instance of a Geometric Circle
+	 * Create new instance of a Geometric Oval
 	 */
-	public Circle(Vector2D position, float radius)
+	public Oval(Vector2D position, float xradius, float yradius)
 	{
 		super(position);
-		Radius = radius;
+		xRadius = xradius;
+		yRadius = yradius;
 		vertices = new Vector2D[2];
 		isCircle = true;
 	}
 	
 	
 	/**
-	 * Create new instance of a Geometric Circle from another Circle
+	 * Create new instance of a Geometric Oval from another Oval
 	 */
-	public Circle(Circle circle)
+	public Oval(Oval oval)
 	{
-		super(circle.Position);
-		Radius = circle.Radius;
+		super(oval.Position);
+		xRadius = oval.xRadius;
+		yRadius = oval.xRadius;
 		vertices = new Vector2D[2];
 		isCircle = true;
 	}
@@ -67,12 +75,13 @@ public class Circle extends Shape
 	 ********************************************/
 	
 	/**
-	 * Create new instance of a Geometric Circle
+	 * Create new instance of a Geometric Oval
 	 */
-	protected Circle(Vector2D position, float radius, Vector2D velocity, float mass)
+	protected Oval(Vector2D position, float xradius, float yradius, Vector2D velocity, float mass)
 	{
 		super(position, velocity, mass);
-		Radius = radius;
+		xRadius = xradius;
+		yRadius = yradius;
 		vertices = new Vector2D[2];
 		isCircle = true;
 	}
@@ -89,42 +98,11 @@ public class Circle extends Shape
 	
 	
 	/**
-	 * Clone this circle
+	 * Clone this oval
 	 */
-	public Circle clone()
+	public Oval clone()
 	{
-		return new Circle(Position, Radius);
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/**
-	 * Set the radius.
-	 */
-	public void setRadius(float radius)
-	{
-		Radius = radius;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	/**
-	 * Get the radius.
-	 */
-	public float getRadius()
-	{
-		return Radius;
+		return new Oval(Position, xRadius, yRadius);
 	}
 	
 	
@@ -136,14 +114,73 @@ public class Circle extends Shape
 	
 	
 	
+	/**
+	 * 
+	 */
+	public void setXRadius(float xradius)
+	{
+		xRadius = xradius;
+	}
+	
+	
+	
+	
 	
 	
 	/**
-	 * Return the circumference of this circle
+	 * 
+	 */
+	public void setYRadius(float yradius)
+	{
+		yRadius = yradius;
+	}
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * 
+	 */
+	public float getXRadius()
+	{
+		return xRadius;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * 
+	 */
+	public float getYRadius()
+	{
+		return yRadius;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Return the approx circumference of this oval
 	 */
 	public float circumference()
 	{
-		return ((float)Math.PI * Radius);
+		return 2 * (float)Math.PI * (float)Math.sqrt( ((xRadius * xRadius) + (yRadius * yRadius)) * 0.5f );
 	}
 	
 	
@@ -156,12 +193,12 @@ public class Circle extends Shape
 	
 	
 	/**
-	 * Return the area of this circle
+	 * Return the area of this oval
 	 */
 	@Override
 	public float area()
 	{
-		return (Radius * Radius) * (float)Math.PI;		
+		return (float)Math.PI * xRadius * yRadius;	
 	}
 	
 	
@@ -175,13 +212,13 @@ public class Circle extends Shape
 	
 	
 	/**
-	 * Project this circle onto the given axis
+	 * Project this oval onto the given axis
 	 */
 	@Override
 	public Projection project(Vector2D axis)
 	{
-		float rvx = Radius * axis.X;
-		float rvy = Radius * axis.Y;
+		float rvx = xRadius * axis.X;
+		float rvy = yRadius * axis.Y;
 
 		this.vertices[0] = new Vector2D(Position.X + rvx, Position.Y + rvy);
 		this.vertices[1] = new Vector2D(Position.X - rvx, Position.Y - rvy);
@@ -200,6 +237,7 @@ public class Circle extends Shape
 		
 		return new Projection(min, max);
 	}
+	
 	
 	
 	

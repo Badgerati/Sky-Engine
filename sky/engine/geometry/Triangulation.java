@@ -2,7 +2,7 @@ package sky.engine.geometry;
 
 import sky.engine.geometry.shapes.Triangle;
 import sky.engine.graphics.bounds.BoundingTri;
-import sky.engine.graphics.shapes.DrawableTriangle;
+import sky.engine.graphics.drawable.shapes.DrawableTriangle;
 import sky.engine.util.VisitorMap;
 
 /**
