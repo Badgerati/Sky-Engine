@@ -1,4 +1,4 @@
-Sky Engine v0.9.9.2
+Sky Engine v0.9.9.5
 ===================
 
 Sky Engine is a basic 2D Games Engine for use with Android Development, programmed in Java. It is still
@@ -32,6 +32,17 @@ descriptions etc. missing.
 
 Updates and Fixes
 -----------------
+
+Version 0.9.9.5
+
+	* All drawable shapes in the graphics package have been moved to: sky.engine.graphics.drawable
+	* Sprites and Particles packages have also been move to: sky.engine.graphics.drawable
+	* Angle class has been moved to: sky.engine.math from sky.engine.geometry
+	* Added new geometric shapes: Arc and Oval.
+	* Added new drawabl shapes: DrawableArc, DrawableOval, and DrawableRoundedBox.
+	* Added a GameActivity class to make creating the main game views far simpler, for reuse of Pause, OnCreate etc.
+	* Added a StageCreator class to make creating stages far simpler, for reuse of threads, contexts etc.
+
 
 Version 0.9.9
 
