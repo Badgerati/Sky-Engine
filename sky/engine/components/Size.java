@@ -279,7 +279,7 @@ public class Size
 		return new Size(Width * w_scalar, Height * h_scalar, Depth * d_scalar);
 	}
 	
-	
+
 	
 	
 	/**
@@ -288,6 +288,24 @@ public class Size
 	public Size divScalar(float value)
 	{
 		return new Size(Width / value, Height / value, Depth / value);
+	}
+	
+	
+	/**
+	 * Divide this Size's components by a scalar value.
+	 */
+	public Size divScalar(float w_scalar, float h_scalar)
+	{
+		return new Size(Width / w_scalar, Height / h_scalar, Depth);
+	}
+	
+	
+	/**
+	 * Divide this Size's components by a scalar value.
+	 */
+	public Size divScalar(float w_scalar, float h_scalar, float d_scalar)
+	{
+		return new Size(Width / w_scalar, Height / h_scalar, Depth / d_scalar);
 	}
 	
 	

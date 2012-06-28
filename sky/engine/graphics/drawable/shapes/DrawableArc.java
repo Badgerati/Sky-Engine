@@ -49,7 +49,7 @@ public class DrawableArc extends Arc implements DrawableShape
 	{
 		super(position, radius, startangle, sweepangle);
 		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
-		initialise();
+		setRect();
 	}
 
 	
@@ -60,7 +60,7 @@ public class DrawableArc extends Arc implements DrawableShape
 	{
 		super(position, radius, startangle, sweepangle, velocity, mass);
 		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
-		initialise();
+		setRect();
 	}
 	
 	
@@ -71,7 +71,7 @@ public class DrawableArc extends Arc implements DrawableShape
 	{
 		super(position, radius, startangle, sweepangle, velocity, mass);
 		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
-		initialise();
+		setRect();
 	}
 	
 	
@@ -82,7 +82,7 @@ public class DrawableArc extends Arc implements DrawableShape
 	{
 		super(position, radius, startangle, sweepangle, velocity, mass);
 		Paint = new ShapePaint(fill, outline, true, outlinewidth, antialias);
-		initialise();
+		setRect();
 	}
 	
 	
@@ -95,7 +95,7 @@ public class DrawableArc extends Arc implements DrawableShape
 	{
 		super(arc.Position, arc.Radius, arc.StartAngle, arc.SweepAngle, arc.Velocity, arc.Mass);
 		Paint = new ShapePaint(arc.Paint);
-		initialise();
+		setRect();
 	}
 	
 	
@@ -109,7 +109,7 @@ public class DrawableArc extends Arc implements DrawableShape
 	/**
 	 * 
 	 */
-	private void initialise()
+	private void setRect()
 	{
 		float temp = Radius * 0.5f;
 		rect = new RectF();
@@ -149,10 +149,38 @@ public class DrawableArc extends Arc implements DrawableShape
 	public void setRadius(float radius)
 	{
 		Radius = radius;
-		initialise();
+		setRect();
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Integrate the position of this shape
+	 */
+	@Override
+	public void integrate(float dt)
+	{
+		super.integrate(dt);
+		setRect();
+	}
+
+	
+	/**
+	 * Integrate the position of this shape
+	 */
+	@Override
+	public void integrate(Vector2D velocity, float dt)
+	{
+		super.integrate(velocity, dt);
+		setRect();
+	}
+
+
 	
 	
 	

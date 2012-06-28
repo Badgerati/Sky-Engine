@@ -13,7 +13,7 @@ public class ShapePaint
 	/**
 	 * Default outline width
 	 */
-	public static final float DEFAULT_OUTLINE_WIDTH = 1.0f;
+	public static final float DEFAULT_OUTLINE_WIDTH = 2.0f;
 	
 	
 	/**

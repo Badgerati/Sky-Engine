@@ -46,7 +46,7 @@ public class DrawableRoundBox extends DrawableBox
 	public DrawableRoundBox(DrawableBox box, float rx, float ry)
 	{
 		super(box);
-		initialise(rx, ry);
+		intialise(rx, ry);
 	}
 	
 	
@@ -61,7 +61,7 @@ public class DrawableRoundBox extends DrawableBox
 	public DrawableRoundBox(Vector2D position, float width, float height, float rx, float ry)
 	{
 		super(position, width, height);
-		initialise(rx, ry);
+		intialise(rx, ry);
 	}
 
 	
@@ -71,7 +71,7 @@ public class DrawableRoundBox extends DrawableBox
 	public DrawableRoundBox(Vector2D position, float width, float height, float rx, float ry, Vector2D velocity, float mass)
 	{
 		super(position, width, height, velocity, mass);
-		initialise(rx, ry);
+		intialise(rx, ry);
 	}
 	
 	
@@ -81,7 +81,7 @@ public class DrawableRoundBox extends DrawableBox
 	public DrawableRoundBox(Vector2D position, float width, float height, float rx, float ry, int fill, int outline, Vector2D velocity, float mass)
 	{
 		super(position, width, height, fill, outline, velocity, mass);
-		initialise(rx, ry);
+		intialise(rx, ry);
 	}
 	
 	
@@ -91,7 +91,7 @@ public class DrawableRoundBox extends DrawableBox
 	public DrawableRoundBox(Vector2D position, float width, float height, float rx, float ry, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
 	{
 		super(position, width, height, fill, outline, outlinewidth, antialias, velocity, mass);
-		initialise(rx, ry);
+		intialise(rx, ry);
 	}
 
 	
@@ -106,7 +106,7 @@ public class DrawableRoundBox extends DrawableBox
 	public DrawableRoundBox(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, float rx, float ry)
 	{
 		super(position, v1, v2, v3, v4);
-		initialise(rx, ry);
+		intialise(rx, ry);
 	}
 	
 	
@@ -116,7 +116,7 @@ public class DrawableRoundBox extends DrawableBox
 	public DrawableRoundBox(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, float rx, float ry, Vector2D velocity, float mass)
 	{
 		super(position, v1, v2, v3, v4, velocity, mass);
-		initialise(rx, ry);
+		intialise(rx, ry);
 	}
 	
 	
@@ -126,7 +126,7 @@ public class DrawableRoundBox extends DrawableBox
 	public DrawableRoundBox(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, float rx, float ry, int fill, int outline, Vector2D velocity, float mass)
 	{
 		super(position, v1, v2, v3, v4, fill, outline, velocity, mass);
-		initialise(rx, ry);
+		intialise(rx, ry);
 	}
 	
 	
@@ -136,7 +136,7 @@ public class DrawableRoundBox extends DrawableBox
 	public DrawableRoundBox(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, float rx, float ry, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
 	{
 		super(position, v1, v2, v3, v4, fill, outline, outlinewidth, antialias, velocity, mass);
-		initialise(rx, ry);
+		intialise(rx, ry);
 	}
 
 	
@@ -151,7 +151,7 @@ public class DrawableRoundBox extends DrawableBox
 	public DrawableRoundBox(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, float rx, float ry, Vector2D velocity, float mass)
 	{
 		super(v1, v2, v3, v4, velocity, mass);
-		initialise(rx, ry);
+		intialise(rx, ry);
 	}
 	
 	
@@ -161,7 +161,7 @@ public class DrawableRoundBox extends DrawableBox
 	public DrawableRoundBox(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4,  float rx, float ry)
 	{
 		super(v1, v2, v3, v4);
-		initialise(rx, ry);
+		intialise(rx, ry);
 	}
 	
 	
@@ -171,7 +171,7 @@ public class DrawableRoundBox extends DrawableBox
 	public DrawableRoundBox(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, float rx, float ry, int fill, int outline, Vector2D velocity, float mass)
 	{
 		super(v1, v2, v3, v4, fill, outline, velocity, mass);
-		initialise(rx, ry);
+		intialise(rx, ry);
 	}
 	
 	
@@ -181,7 +181,7 @@ public class DrawableRoundBox extends DrawableBox
 	public DrawableRoundBox(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, float rx, float ry, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
 	{
 		super(v1, v2, v3, v4, fill, outline, outlinewidth, antialias, velocity, mass);
-		initialise(rx, ry);
+		intialise(rx, ry);
 	}
 	
 	
@@ -196,7 +196,7 @@ public class DrawableRoundBox extends DrawableBox
 	{
 		super(rbox.Position, rbox.vertices[0], rbox.vertices[1], rbox.vertices[2], rbox.vertices[3], rbox.Velocity, rbox.Mass);
 		Paint = new ShapePaint(rbox.Paint);
-		initialise(rbox.xRadius, rbox.yRadius);
+		intialise(rbox.xRadius, rbox.yRadius);
 	}
 	
 	
@@ -215,13 +215,23 @@ public class DrawableRoundBox extends DrawableBox
 	/**
 	 * Initialises the rect bounds for this rounded box.
 	 */
-	private void initialise(float rx, float ry)
+	private void intialise(float rx, float ry)
 	{
 		//radii
 		xRadius = rx;
 		yRadius = ry;
 		
-		//rect bounds
+		setRect();
+	}
+	
+	
+	
+	
+	/**
+	 * Set the rectangular bounds
+	 */
+	private void setRect()
+	{
 		rect = new RectF();
 		rect.set((int)vertices[0].X, (int)vertices[0].Y, (int)vertices[2].X, (int)vertices[2].Y);
 	}
@@ -246,6 +256,34 @@ public class DrawableRoundBox extends DrawableBox
 	public DrawableRoundBox clone()
 	{
 		return new DrawableRoundBox(this);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Integrate the position of this shape
+	 */
+	@Override
+	public void integrate(float dt)
+	{
+		super.integrate(dt);
+		setRect();
+	}
+
+	
+	/**
+	 * Integrate the position of this shape
+	 */
+	@Override
+	public void integrate(Vector2D velocity, float dt)
+	{
+		super.integrate(velocity, dt);
+		setRect();
 	}
 	
 

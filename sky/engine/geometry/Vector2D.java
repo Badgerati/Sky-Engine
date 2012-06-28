@@ -639,6 +639,46 @@ public class Vector2D extends Vector
 		return new Vector2D(X / x, Y / y);
 	}
 	
+
+	
+	
+	/**
+	 * add by scalar
+	 */
+	public Vector2D addScalar(float value)
+	{
+		return new Vector2D(X + value, Y + value);
+	}
+	
+	
+	/**
+	 * add by scalar
+	 */
+	public Vector2D addScalar(float x, float y)
+	{
+		return new Vector2D(X + x, Y + y);
+	}
+	
+
+	
+	
+	/**
+	 * sub by scalar
+	 */
+	public Vector2D subScalar(float value)
+	{
+		return new Vector2D(X - value, Y - value);
+	}
+	
+	
+	/**
+	 * sub by scalar
+	 */
+	public Vector2D subScalar(float x, float y)
+	{
+		return new Vector2D(X - x, Y - y);
+	}
+	
 	
 	
 	

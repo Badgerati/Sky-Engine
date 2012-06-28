@@ -43,7 +43,7 @@ public class DrawableOval extends Oval implements DrawableShape
 	{
 		super(position, xradius, yradius);
 		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
-		initialise();
+		setRect();
 	}
 
 	
@@ -54,7 +54,7 @@ public class DrawableOval extends Oval implements DrawableShape
 	{
 		super(position, xradius, yradius, velocity, mass);
 		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
-		initialise();
+		setRect();
 	}
 	
 	
@@ -65,7 +65,7 @@ public class DrawableOval extends Oval implements DrawableShape
 	{
 		super(position, xradius, yradius, velocity, mass);
 		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
-		initialise();
+		setRect();
 	}
 	
 	
@@ -76,7 +76,7 @@ public class DrawableOval extends Oval implements DrawableShape
 	{
 		super(position, xradius, yradius, velocity, mass);
 		Paint = new ShapePaint(fill, outline, true, outlinewidth, antialias);
-		initialise();
+		setRect();
 	}
 	
 	
@@ -89,7 +89,7 @@ public class DrawableOval extends Oval implements DrawableShape
 	{
 		super(oval.Position, oval.xRadius, oval.yRadius, oval.Velocity, oval.Mass);
 		Paint = new ShapePaint(oval.Paint);
-		initialise();
+		setRect();
 	}
 	
 	
@@ -103,7 +103,7 @@ public class DrawableOval extends Oval implements DrawableShape
 	/**
 	 * 
 	 */
-	private void initialise()
+	private void setRect()
 	{
 		rect = new RectF();
 		rect.set(Position.X - xRadius, Position.Y - yRadius, Position.X + xRadius, Position.Y + yRadius);
@@ -142,7 +142,7 @@ public class DrawableOval extends Oval implements DrawableShape
 	public void setXRadius(float xradius)
 	{
 		xRadius = xradius;
-		initialise();
+		setRect();
 	}
 	
 	
@@ -157,7 +157,35 @@ public class DrawableOval extends Oval implements DrawableShape
 	public void setYRadius(float yradius)
 	{
 		yRadius = yradius;
-		initialise();
+		setRect();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Integrate the position of this shape
+	 */
+	@Override
+	public void integrate(float dt)
+	{
+		super.integrate(dt);
+		setRect();
+	}
+
+	
+	/**
+	 * Integrate the position of this shape
+	 */
+	@Override
+	public void integrate(Vector2D velocity, float dt)
+	{
+		super.integrate(velocity, dt);
+		setRect();
 	}
 	
 	
