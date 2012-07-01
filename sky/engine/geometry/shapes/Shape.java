@@ -48,7 +48,7 @@ public abstract class Shape extends RigidBody
 	 */
 	public Shape(Vector2D position)
 	{
-		super(position, Vector2D.Zeros, 1);
+		super(position, Vector2D.zeros(), 1);
 	}
 	
 	

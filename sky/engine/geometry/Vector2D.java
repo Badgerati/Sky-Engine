@@ -23,12 +23,6 @@ public class Vector2D extends Vector
 	public float Y;
 	
 	
-	/**
-	 * A vector of zeros
-	 */
-	public static final Vector2D Zeros = new Vector2D(0, 0);
-	
-	
 	
 	
 	
@@ -215,6 +209,50 @@ public class Vector2D extends Vector
 		//else, equal
 		return 0;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Compare the X value to the given vector's X values. Returns 0 if equal, 1 if
+	 * this is greater than given, -1 otherwise
+	 */
+	public int compareX(Vector2D v2)
+	{
+		if (X > v2.X)
+			return 1;
+		
+		else if (X < v2.X)
+			return -1;
+		
+		return 0;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Compare the Y value to the given vector's Y values. Returns 0 if equal, 1 if
+	 * this is greater than given, -1 otherwise
+	 */
+	public int compareY(Vector2D v2)
+	{
+		if (Y > v2.Y)
+			return 1;
+		
+		else if (Y < v2.Y)
+			return -1;
+		
+		return 0;
+	}
 
 	
 	
@@ -267,6 +305,22 @@ public class Vector2D extends Vector
 	{
 		X = -X;
 		Y = -Y;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Returns a vector of zeros
+	 */
+	public static Vector2D zeros()
+	{
+		return new Vector2D(0, 0);
 	}
 	
 	

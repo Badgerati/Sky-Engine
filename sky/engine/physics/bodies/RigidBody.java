@@ -84,7 +84,7 @@ public abstract class RigidBody
 	public RigidBody(Vector2D position)
 	{
 		Position = position.clone();
-		Velocity = Vector2D.Zeros;
+		Velocity = Vector2D.zeros();
 		Mass = INFINITE_MASS;
 		InverseMass = 0;
 	}

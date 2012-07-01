@@ -28,12 +28,6 @@ public class Vector3D extends Vector
 	public float Z;
 	
 	
-	/**
-	 * A vector of zeros
-	 */
-	public static final Vector3D Zeros = new Vector3D(0, 0, 0);
-	
-	
 	
 	
 	
@@ -292,6 +286,7 @@ public class Vector3D extends Vector
 	
 	
 	
+	
 	/**
 	 * Negates this vector's components
 	 */
@@ -302,6 +297,20 @@ public class Vector3D extends Vector
 		Z = -Z;
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * returns a vector of zeros
+	 */
+	public static Vector3D zeros()
+	{
+		return new Vector3D(0, 0, 0);
+	}
 	
 	
 	

@@ -4,6 +4,7 @@ import sky.engine.geometry.ConvexHull;
 import sky.engine.geometry.Triangulation;
 import sky.engine.geometry.Vector2D;
 import sky.engine.math.Angle;
+import sky.engine.physics.collisions.MTV;
 import sky.engine.physics.collisions.Projection;
 import sky.engine.physics.collisions.SATCollision;
 
@@ -236,6 +237,15 @@ public abstract class Bounding
 	public boolean intersect(Bounding bound)
 	{
 		return SATCollision.intersect(this, bound);
+	}
+	
+	
+	/**
+	 * Get the amount of intersection between the given bound and this bound
+	 */
+	public MTV getIntersection(Bounding bound)
+	{
+		return SATCollision.getIntersection(this, bound);
 	}
 	
 	

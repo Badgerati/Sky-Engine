@@ -13,13 +13,13 @@ public abstract class Vector implements Comparable<Vector>
 	/**
 	 * Vector 2D type
 	 */
-	public static final int VECTOR_2D = 0;
+	protected static final int VECTOR_2D = 0;
 	
 	
 	/**
 	 * Vector 3D type
 	 */
-	public static final int VECTOR_3D = 1;
+	protected static final int VECTOR_3D = 1;
 	
 	
 	/**

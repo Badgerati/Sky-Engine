@@ -56,6 +56,17 @@ public class DrawableBox extends Box implements DrawableShape
 	/**
 	 * Create new instance of a Graphical Box
 	 */
+	public DrawableBox(Vector2D position, float width, float height, int fill, int outline)
+	{
+		super(position, width, height);
+		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		initialise();
+	}
+	
+	
+	/**
+	 * Create new instance of a Graphical Box
+	 */
 	public DrawableBox(Vector2D position, float width, float height, int fill, int outline, Vector2D velocity, float mass)
 	{
 		super(position, width, height, velocity, mass);
@@ -105,6 +116,17 @@ public class DrawableBox extends Box implements DrawableShape
 	/**
 	 * Create new instance of a Graphical Box
 	 */
+	public DrawableBox(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, int fill, int outline)
+	{
+		super(position, v1, v2, v3, v4);
+		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		initialise();
+	}
+	
+	
+	/**
+	 * Create new instance of a Graphical Box
+	 */
 	public DrawableBox(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, int fill, int outline, Vector2D velocity, float mass)
 	{
 		super(position, v1, v2, v3, v4, velocity, mass);
@@ -147,6 +169,17 @@ public class DrawableBox extends Box implements DrawableShape
 	{
 		super(v1, v2, v3, v4);
 		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		initialise();
+	}
+	
+	
+	/**
+	 * Create new instance of a Graphical Box
+	 */
+	public DrawableBox(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, int fill, int outline)
+	{
+		super(v1, v2, v3, v4);
+		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
 		initialise();
 	}
 	

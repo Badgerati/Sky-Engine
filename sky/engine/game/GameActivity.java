@@ -112,6 +112,20 @@ public class GameActivity extends Activity
     {
         gamesurface.startThread();
         thread = gamesurface.getThread();
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    /**
+     * Set the thread to run
+     */
+    protected void runThread()
+    {
     	thread.setRunning();
     }
     

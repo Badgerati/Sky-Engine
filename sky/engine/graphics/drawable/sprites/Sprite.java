@@ -87,7 +87,7 @@ public class Sprite extends RigidBody
 	 */
 	public Sprite(Bitmap bitmap, Vector2D position, float scale)
 	{
-		super(position, Vector2D.Zeros, 0);
+		super(position, Vector2D.zeros(), 0);
 		initialise(bitmap, position, scale, scale);
 	}
 	
@@ -107,7 +107,7 @@ public class Sprite extends RigidBody
 	 */
 	public Sprite(Bitmap bitmap, Vector2D position, float scalewidth, float scaleheight)
 	{
-		super(position, Vector2D.Zeros, 0);
+		super(position, Vector2D.zeros(), 0);
 		initialise(bitmap, position, scalewidth, scaleheight);
 	}
 	

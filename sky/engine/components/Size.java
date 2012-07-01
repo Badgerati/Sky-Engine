@@ -1,5 +1,7 @@
 package sky.engine.components;
 
+import java.util.Comparator;
+
 import sky.engine.geometry.Vector2D;
 import sky.engine.geometry.Vector3D;
 
@@ -12,7 +14,7 @@ import sky.engine.geometry.Vector3D;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public class Size
+public class Size implements Comparable<Size>
 {
 	/**
 	 * Width component
@@ -30,6 +32,16 @@ public class Size
 	 * Depth component
 	 */
 	public float Depth;
+	
+	
+	/**
+	 * Comparator object for a Size component
+	 */
+	public static final Comparator<Size> SIZE_COMPARATOR = new Comparator<Size>() {
+		public int compare(Size s1, Size s2) {
+			return s1.compareTo(s2);
+		}
+	};
 	
 	
 	
@@ -213,11 +225,77 @@ public class Size
 	
 	
 	
+	 /**
+	  * Compares this size component to the given size. Returns 0 if they're equal,
+	  * 1 if this size is greater than given, or -1 if less then given.
+	  */
+	public int compareTo(Size size)
+	{
+		//greater
+		if ((Height * Width * Depth) > (size.Height * size.Width * size.Depth))
+			return 1;
+		
+		//less
+		else if ((Height * Width * Depth) < (size.Height * size.Width * size.Depth))
+			return -1;		
+		
+		//equal
+		return 0;
+	}
+
+
+	
+	
+	
+	
+	
+	/**
+	 * Is this size equal to the given size?
+	 */
+	@Override
+	public boolean equals(Object o)
+	{
+		try
+		{
+			Size size = (Size)o;
+			return (Height == size.Height && Width == size.Width && Depth == size.Depth);
+		}
+		catch (Exception e)
+		{
+			return super.equals(o);
+		}
+	}
+
+
+	
+	
+	
+	
+	
+	/**
+	 * Returns the hash code for this size
+	 */
+	@Override
+	public int hashCode()
+	{
+		return (int)(Height + Width + Depth);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/*******************************************
 	 *               OPERATORS
 	 *******************************************/
-	
+
 	/** by another size */
 	public Size add(Size size)
 	{
@@ -306,6 +384,18 @@ public class Size
 	public Size divScalar(float w_scalar, float h_scalar, float d_scalar)
 	{
 		return new Size(Width / w_scalar, Height / h_scalar, Depth / d_scalar);
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Divide the scalar values by this Size's components.
+	 */
+	public Size reverseDivScalar(float w_scalar, float h_scalar)
+	{
+		return new Size(w_scalar / Width, h_scalar / Height, Depth);
 	}
 	
 	
