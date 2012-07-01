@@ -42,6 +42,9 @@ Version 0.9.9.5
 	* Added new drawabl shapes: DrawableArc, DrawableOval, and DrawableRoundedBox.
 	* Added a GameActivity class to make creating the main game views far simpler, for reuse of Pause, OnCreate etc.
 	* Added a StageCreator class to make creating stages far simpler, for reuse of threads, contexts etc.
+	* Sizes are now comparable.
+	* Changed the static final of Vector.Zeros to a method instead - since it was erroring.
+	* Added a DrawableRoundBox2 shape, where each corner is editable.
 
 
 Version 0.9.9
