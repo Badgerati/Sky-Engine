@@ -3,8 +3,8 @@ package sky.engine.graphics.drawable.shapes;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Path;
-import sky.engine.geometry.Vector2D;
 import sky.engine.geometry.shapes.Triangle;
+import sky.engine.geometry.vectors.Vector2D;
 import sky.engine.graphics.Colour;
 import sky.engine.graphics.paints.ShapePaint;
 

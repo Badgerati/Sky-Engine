@@ -1,7 +1,7 @@
 package sky.engine.graphics.bounds;
 
 import sky.engine.components.Size;
-import sky.engine.geometry.Vector2D;
+import sky.engine.geometry.vectors.Vector2D;
 
 /**
  * 
@@ -48,6 +48,30 @@ public class BoundingBox extends BoundingPoly
 	public BoundingBox(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4)
 	{
 		super(position, new Vector2D[] { v1.clone(), v2.clone(), v3.clone(), v4.clone() });
+	}
+	
+
+	/** 
+	 * Create a new bounding box
+	 */
+	public BoundingBox(Vector2D[] vertices)
+	{
+		super(vertices);
+		
+		if (vertices.length != 4)
+			throw new Error("You must supply exactly 4 vertices for a BoundingBox.");
+	}
+	
+
+	/** 
+	 * Create a new bounding box
+	 */
+	public BoundingBox(Vector2D position, Vector2D[] vertices)
+	{
+		super(position, vertices);
+		
+		if (vertices.length != 4)
+			throw new Error("You must supply exactly 4 vertices for a BoundingBox.");
 	}
 	
 	

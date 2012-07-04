@@ -1,6 +1,6 @@
 package sky.engine.physics.collisions;
 
-import sky.engine.geometry.Vector2D;
+import sky.engine.geometry.vectors.Vector2D;
 
 /**
  * 

@@ -37,7 +37,17 @@ public class TextureManager
 	
 	
 	
+
 	
+	
+	/**
+	 * Create a new TextureManager object
+	 */
+	public TextureManager()
+	{
+		loadedTextures = new HashMap<Integer, Texture>();
+		textureIDs = new HashMap<Integer, Integer>();
+	}
 	
 	
 	/**
@@ -85,6 +95,9 @@ public class TextureManager
 	 */
 	public Texture load(int resourceID, int textureID)
 	{
+		if (globalResource == null)
+			throw new Error("No global resource set for TextureManager.");
+		
 		if (loadedTextures.containsKey(resourceID))
 			return getTextureByResourceID(resourceID);
 		
@@ -125,12 +138,28 @@ public class TextureManager
 	
 	
 	/**
-	 * Resets the currently loaded textures, keeping the global Resource.
+	 * Clears the currently loaded textures, keeping the global Resource.
 	 */
-	public void reset()
+	public void clear()
 	{
 		loadedTextures = new HashMap<Integer, Texture>();
 		textureIDs = new HashMap<Integer, Integer>();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Returns the number of loaded textures
+	 */
+	public int size()
+	{
+		return loadedTextures.size();
 	}
 	
 	

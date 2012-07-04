@@ -3,8 +3,8 @@ package sky.engine.graphics.drawable.shapes;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Path;
-import sky.engine.geometry.Vector2D;
 import sky.engine.geometry.shapes.Box;
+import sky.engine.geometry.vectors.Vector2D;
 import sky.engine.graphics.Colour;
 import sky.engine.graphics.paints.ShapePaint;
 
@@ -238,15 +238,47 @@ public class DrawableBox extends Box implements DrawableShape
 	 */
 	private void initialise()
 	{
-		polygon = new Path();
-		matrix = new Matrix();
+		if (polygon == null)
+		{
+			polygon = new Path();
+			matrix = new Matrix();
+		}
 		
+		polygon.reset();
 		polygon.moveTo(vertices[0].X, vertices[0].Y);
 		for (int i = 1; i < vertices.length; i++)
 		{
 			polygon.lineTo(vertices[i].X, vertices[i].Y);
 		}
 		polygon.close();
+	}
+	
+	
+	
+	
+	
+
+	
+	
+	/**
+	 * Set the box's height
+	 */
+	@Override
+	public void setHeight(float height)
+	{
+		super.setHeight(height);
+		initialise();
+	}
+	
+	
+	/**
+	 * Set the box's width
+	 */
+	@Override
+	public void setWidth(float width)
+	{
+		super.setWidth(width);
+		initialise();
 	}
 	
 	

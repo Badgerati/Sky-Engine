@@ -2,7 +2,8 @@ package sky.engine.graphics.bounds;
 
 import sky.engine.geometry.ConvexHull;
 import sky.engine.geometry.Triangulation;
-import sky.engine.geometry.Vector2D;
+import sky.engine.geometry.shapes.GeometricShape;
+import sky.engine.geometry.vectors.Vector2D;
 import sky.engine.math.Angle;
 import sky.engine.physics.collisions.MTV;
 import sky.engine.physics.collisions.Projection;
@@ -13,7 +14,7 @@ import sky.engine.physics.collisions.SATCollision;
  * 
  * @author Matthew Kelly (Badgerati).
  */
-public abstract class Bounding
+public abstract class Bounding implements GeometricShape
 {
 	/**
 	 * Position of the bound
@@ -24,7 +25,7 @@ public abstract class Bounding
 	/**
 	 * Vertices of this bound
 	 */
-	public Vector2D[] vertices = null;
+	protected Vector2D[] vertices = null;
 	
 	
 	/**
@@ -174,6 +175,34 @@ public abstract class Bounding
 	
 	
 	
+	
+	/**
+	 * Returns the vertices of this bound.
+	 */
+	public Vector2D[] vertices()
+	{
+		return vertices;
+	}
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Set the vertices of the bound.
+	 */
+	public void setVertices(Vector2D[] vertices)
+	{
+		this.vertices = Vector2D.clone(vertices);
+	}
+	
+	
+	
+	
+	
+	
 
 	
 	
@@ -218,7 +247,7 @@ public abstract class Bounding
 	 * Convex hull this bound, fails if vertex count is less than 2. A ConvexHull
 	 * object is returned.
 	 */
-	public ConvexHull convex()
+	public ConvexHull convexhull()
 	{
 		return null;
 	}
@@ -234,7 +263,7 @@ public abstract class Bounding
 	/**
 	 * Does the given bound intersect this bound?
 	 */
-	public boolean intersect(Bounding bound)
+	public boolean intersect(GeometricShape bound)
 	{
 		return SATCollision.intersect(this, bound);
 	}
@@ -243,7 +272,7 @@ public abstract class Bounding
 	/**
 	 * Get the amount of intersection between the given bound and this bound
 	 */
-	public MTV getIntersection(Bounding bound)
+	public MTV getIntersection(GeometricShape bound)
 	{
 		return SATCollision.getIntersection(this, bound);
 	}

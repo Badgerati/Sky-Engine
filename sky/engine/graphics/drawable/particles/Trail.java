@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import sky.engine.geometry.Vector2D;
+import sky.engine.geometry.vectors.Vector2D;
 import sky.engine.math.Angle;
 import android.graphics.Canvas;
 

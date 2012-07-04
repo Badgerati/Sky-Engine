@@ -4,7 +4,7 @@ import java.util.Random;
 
 import sky.engine.geometry.ConvexHull;
 import sky.engine.geometry.Triangulation;
-import sky.engine.geometry.Vector2D;
+import sky.engine.geometry.vectors.Vector2D;
 import sky.engine.math.Angle;
 
 /**
@@ -171,7 +171,7 @@ public class BoundingPoly extends Bounding
 	 * object is returned.
 	 */
 	@Override
-	public ConvexHull convex()
+	public ConvexHull convexhull()
 	{
 		if (vertices == null)
 			return null;

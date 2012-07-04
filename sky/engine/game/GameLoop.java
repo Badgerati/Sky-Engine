@@ -8,7 +8,7 @@ import android.graphics.Canvas;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public interface GameInterface
+public interface GameLoop
 {
 	/**
 	 * Does the surface exist?

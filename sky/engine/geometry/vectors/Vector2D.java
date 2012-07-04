@@ -1,4 +1,4 @@
-package sky.engine.geometry;
+package sky.engine.geometry.vectors;
 
 import sky.engine.math.Angle;
 
@@ -123,8 +123,7 @@ public class Vector2D extends Vector
 		
 		for (int i = 0; i < vectors.length; i++)
 		{
-			v[i].X = vectors[i].X;
-			v[i].Y = vectors[i].Y;
+			v[i] = vectors[i].clone();
 		}
 		
 		return v;

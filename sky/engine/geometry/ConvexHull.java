@@ -3,6 +3,7 @@ package sky.engine.geometry;
 import java.util.HashMap;
 
 import sky.engine.geometry.shapes.Polygon;
+import sky.engine.geometry.vectors.Vector2D;
 import sky.engine.graphics.bounds.BoundingPoly;
 import sky.engine.graphics.drawable.shapes.DrawablePolygon;
 import sky.engine.util.MultiList;

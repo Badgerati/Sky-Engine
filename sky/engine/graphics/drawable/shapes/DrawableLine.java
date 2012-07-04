@@ -1,7 +1,7 @@
 package sky.engine.graphics.drawable.shapes;
 
-import sky.engine.geometry.Vector2D;
 import sky.engine.geometry.shapes.Line;
+import sky.engine.geometry.vectors.Vector2D;
 import sky.engine.graphics.Colour;
 import sky.engine.graphics.paints.ShapePaint;
 import android.graphics.Canvas;

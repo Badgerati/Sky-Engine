@@ -1,6 +1,6 @@
 package sky.engine.physics.bodies;
 
-import sky.engine.geometry.Vector2D;
+import sky.engine.geometry.vectors.Vector2D;
 
 /**
  * A RigidBody is an object that has a position, velocity and mass.

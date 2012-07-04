@@ -1,7 +1,7 @@
 package sky.engine.graphics.drawable.shapes;
 
-import sky.engine.geometry.Vector2D;
 import sky.engine.geometry.shapes.Polygon;
+import sky.engine.geometry.vectors.Vector2D;
 import sky.engine.graphics.Colour;
 import sky.engine.graphics.paints.ShapePaint;
 import android.graphics.Canvas;
@@ -49,6 +49,17 @@ public class DrawablePolygon extends Polygon implements DrawableShape
 	{
 		super(position, vertices, velocity, mass);
 		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		initialise();
+	}
+	
+	
+	/**
+	 * Create new instance of a Graphical Polygon
+	 */
+	public DrawablePolygon(Vector2D position, Vector2D[] vertices, int fill, int outline)
+	{
+		super(position, vertices);
+		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
 		initialise();
 	}
 	
@@ -105,6 +116,17 @@ public class DrawablePolygon extends Polygon implements DrawableShape
 	/**
 	 * Create new instance of a Graphical Polygon
 	 */
+	public DrawablePolygon(Vector2D[] vertices, int fill, int outline)
+	{
+		super(vertices);
+		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		initialise();
+	}
+	
+	
+	/**
+	 * Create new instance of a Graphical Polygon
+	 */
 	public DrawablePolygon(Vector2D[] vertices, int fill, int outline, Vector2D velocity, float mass)
 	{
 		super(vertices, velocity, mass);
@@ -135,6 +157,17 @@ public class DrawablePolygon extends Polygon implements DrawableShape
 	{
 		super(position, noOfVertices, size, velocity, mass);
 		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		initialise();
+	}
+	
+	
+	/**
+	 * Create new instance of a Graphical Polygon
+	 */
+	public DrawablePolygon(Vector2D position, int noOfVertices, float size, int fill, int outline)
+	{
+		super(position, noOfVertices, size);
+		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
 		initialise();
 	}
 	
@@ -182,6 +215,17 @@ public class DrawablePolygon extends Polygon implements DrawableShape
 	public DrawablePolygon(Vector2D position, int noOfVertices, float minSize, float maxSize, int fill, int outline, Vector2D velocity, float mass)
 	{
 		super(position, noOfVertices, minSize, maxSize, velocity, mass);
+		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		initialise();
+	}
+	
+	
+	/**
+	 * Create new instance of a Graphical Polygon
+	 */
+	public DrawablePolygon(Vector2D position, int noOfVertices, float minSize, float maxSize, int fill, int outline)
+	{
+		super(position, noOfVertices, minSize, maxSize);
 		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
 		initialise();
 	}

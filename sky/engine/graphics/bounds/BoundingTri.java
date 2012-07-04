@@ -1,6 +1,6 @@
 package sky.engine.graphics.bounds;
 
-import sky.engine.geometry.Vector2D;
+import sky.engine.geometry.vectors.Vector2D;
 
 /**
  * 
@@ -10,7 +10,7 @@ import sky.engine.geometry.Vector2D;
  */
 public class BoundingTri extends BoundingPoly
 {
-	
+
 	
 	/**
 	 * Create new instance of a bounding triangle
@@ -18,13 +18,6 @@ public class BoundingTri extends BoundingPoly
 	public BoundingTri(Vector2D v1, Vector2D v2, Vector2D v3)
 	{
 		super(new Vector2D[] { v1.clone(), v2.clone(), v3.clone() });
-		//this.vertices = new Vector2D[3];
-		
-		//this.vertices[0] = v1.clone();
-		//this.vertices[1] = v2.clone();
-		//this.vertices[2] = v3.clone();
-		
-		//Position = Vector2D.getCentre(new Vector2D[] { v1, v2, v3 });
 	}
 	
 
@@ -34,11 +27,30 @@ public class BoundingTri extends BoundingPoly
 	public BoundingTri(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3)
 	{
 		super(position, new Vector2D[] { v1.clone(), v2.clone(), v3.clone() });
-		//this.vertices = new Vector2D[3];
+	}
+	
+	
+	/**
+	 * Create new instance of a bounding triangle
+	 */
+	public BoundingTri(Vector2D[] vertices)
+	{
+		super(vertices);
 		
-		//this.vertices[0] = v1.clone();
-		//this.vertices[1] = v2.clone();
-		//this.vertices[2] = v3.clone();
+		if (vertices.length != 3)
+			throw new Error("You must supply exactly 3 vertices for a BoundingTri.");
+	}
+	
+
+	/**
+	 * Create new instance of a bounding triangle
+	 */
+	public BoundingTri(Vector2D position, Vector2D[] vertices)
+	{
+		super(position, vertices);
+		
+		if (vertices.length != 3)
+			throw new Error("You must supply exactly 3 vertices for a BoundingTri.");
 	}
 
 	

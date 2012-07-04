@@ -1,6 +1,7 @@
 package sky.engine.geometry;
 
 import sky.engine.geometry.shapes.Triangle;
+import sky.engine.geometry.vectors.Vector2D;
 import sky.engine.graphics.bounds.BoundingTri;
 import sky.engine.graphics.drawable.shapes.DrawableTriangle;
 import sky.engine.util.VisitorMap;

@@ -1,7 +1,7 @@
 package sky.engine.game;
 
 import sky.engine.sensors.Accelerometer;
-import sky.engine.stages.StageInterface;
+import sky.engine.stages.StageLoop;
 import sky.engine.surfaces.GameSurface;
 import sky.engine.threads.GameThread;
 import android.app.Activity;
@@ -139,7 +139,7 @@ public class GameActivity extends Activity
     /**
      * 
      */
-    protected void setStage(StageInterface stage)
+    protected void setStage(StageLoop stage)
     {
         gamesurface.setStage(stage);
     }

@@ -2,9 +2,10 @@ package sky.engine.geometry.shapes;
 
 import sky.engine.geometry.ConvexHull;
 import sky.engine.geometry.Triangulation;
-import sky.engine.geometry.Vector2D;
+import sky.engine.geometry.vectors.Vector2D;
 import sky.engine.math.Angle;
 import sky.engine.physics.bodies.RigidBody;
+import sky.engine.physics.collisions.MTV;
 import sky.engine.physics.collisions.Projection;
 import sky.engine.physics.collisions.SATCollision;
 
@@ -14,7 +15,7 @@ import sky.engine.physics.collisions.SATCollision;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public abstract class Shape extends RigidBody
+public abstract class Shape extends RigidBody implements GeometricShape
 {
 	/**
 	 * Current degrees of rotation of this shape
@@ -31,7 +32,7 @@ public abstract class Shape extends RigidBody
 	/**
 	 * List of vertices for the shape
 	 */
-	public Vector2D[] vertices = null;
+	protected Vector2D[] vertices = null;
 	
 	
 	
@@ -76,6 +77,34 @@ public abstract class Shape extends RigidBody
 	public boolean isCircle()
 	{
 		return isCircle;
+	}
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Returns the shape's vertices
+	 */
+	public Vector2D[] vertices()
+	{
+		return vertices;
+	}
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Set the vertices of the shape.
+	 */
+	public void setVertices(Vector2D[] vertices)
+	{
+		this.vertices = Vector2D.clone(vertices);
 	}
 	
 	
@@ -245,7 +274,7 @@ public abstract class Shape extends RigidBody
 	/**
 	 * Returns a ConvexHull of this shape, fails if vertex count is less than 2.
 	 */
-	public ConvexHull convex()
+	public ConvexHull convexhull()
 	{
 		if (isCircle || vertices == null)
 			return null;
@@ -254,7 +283,7 @@ public abstract class Shape extends RigidBody
 	}
 	
 	
-	
+
 	
 	
 	
@@ -264,9 +293,23 @@ public abstract class Shape extends RigidBody
 	/**
 	 * Does the given shape intersect this shape?
 	 */
-	public boolean intersect(Shape shape2)
+	public boolean intersect(GeometricShape shape2)
 	{
 		return SATCollision.intersect(this, shape2);
+	}
+	
+	
+	
+
+	
+	
+	
+	/**
+	 * Get the amount of intersection between the given shape and this shape
+	 */
+	public MTV getIntersection(GeometricShape shape2)
+	{
+		return SATCollision.getIntersection(this, shape2);
 	}
 	
 	

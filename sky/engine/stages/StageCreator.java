@@ -1,7 +1,7 @@
 package sky.engine.stages;
 
 import sky.engine.audio.SoundManager;
-import sky.engine.geometry.Vector3D;
+import sky.engine.geometry.vectors.Vector3D;
 import sky.engine.graphics.textures.TextureManager;
 import sky.engine.threads.GameThread;
 import android.content.Context;

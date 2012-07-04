@@ -12,7 +12,7 @@ import android.view.MotionEvent;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public interface StageInterface
+public interface StageLoop
 {
 	/**
 	 * Loading content

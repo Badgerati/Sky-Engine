@@ -2,8 +2,8 @@ package sky.engine.components;
 
 import java.util.Comparator;
 
-import sky.engine.geometry.Vector2D;
-import sky.engine.geometry.Vector3D;
+import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector3D;
 
 
 

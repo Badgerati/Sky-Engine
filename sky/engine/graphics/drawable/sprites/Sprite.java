@@ -1,7 +1,7 @@
 package sky.engine.graphics.drawable.sprites;
 
 import sky.engine.components.Size;
-import sky.engine.geometry.Vector2D;
+import sky.engine.geometry.vectors.Vector2D;
 import sky.engine.math.Angle;
 import sky.engine.physics.bodies.RigidBody;
 import android.graphics.Bitmap;

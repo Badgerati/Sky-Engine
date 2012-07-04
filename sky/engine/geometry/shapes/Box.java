@@ -1,6 +1,6 @@
 package sky.engine.geometry.shapes;
 
-import sky.engine.geometry.Vector2D;
+import sky.engine.geometry.vectors.Vector2D;
 
 /**
  * 
@@ -13,13 +13,13 @@ public class Box extends Polygon
 	/**
 	 * Width of Rectangle
 	 */
-	public final float Width;
+	protected float Width;
 	
 	
 	/**
 	 * Height of Rectangle
 	 */
-	public final float Height;
+	protected float Height;
 	
 	
 	
@@ -174,6 +174,57 @@ public class Box extends Polygon
 
 		for (int i = 0; i < vertices.length; i++)
 			vertices[i].integrate(Position);
+	}
+
+	
+	
+	
+	
+	
+
+	
+	
+	/**
+	 * Set the box's height
+	 */
+	public void setHeight(float height)
+	{
+		Height = height;
+		build(Width, Height);
+	}
+	
+	
+	/**
+	 * Set the box's width
+	 */
+	public void setWidth(float width)
+	{
+		Width = width;
+		build(Width, Height);
+	}
+	
+	
+	
+	
+	
+
+	
+	
+	/**
+	 * Get the box's height
+	 */
+	public float getHeight()
+	{
+		return Height;
+	}
+	
+	
+	/**
+	 * Get the box's width
+	 */
+	public float getWidth()
+	{
+		return Width;
 	}
 	
 	

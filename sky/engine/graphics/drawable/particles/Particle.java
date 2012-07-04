@@ -2,7 +2,7 @@ package sky.engine.graphics.drawable.particles;
 
 import java.util.Random;
 
-import sky.engine.geometry.Vector2D;
+import sky.engine.geometry.vectors.Vector2D;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 

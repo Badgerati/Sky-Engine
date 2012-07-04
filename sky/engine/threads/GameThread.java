@@ -1,6 +1,6 @@
 package sky.engine.threads;
 
-import sky.engine.game.GameInterface;
+import sky.engine.game.GameLoop;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Handler;
@@ -71,7 +71,7 @@ public class GameThread extends Thread
 	/**
 	 * Handle to the game panel
 	 */
-	private GameInterface gamesurface = null;
+	private GameLoop gamesurface = null;
 	
 	
 	
@@ -85,7 +85,7 @@ public class GameThread extends Thread
 	/**
 	 * Create new instance of a GameThread
 	 */
-	public GameThread(SurfaceHolder holder, GameInterface panel, Handler handler)
+	public GameThread(SurfaceHolder holder, GameLoop panel, Handler handler)
 	{
 		super();
 		surfaceHolder = holder;
@@ -127,7 +127,7 @@ public class GameThread extends Thread
 	/**
 	 * Get the current game
 	 */
-	public GameInterface getGame()
+	public GameLoop getGame()
 	{
 		return gamesurface;
 	}

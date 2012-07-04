@@ -1,9 +1,9 @@
 package sky.engine.surfaces;
 
 import sky.engine.components.Size;
-import sky.engine.game.GameInterface;
+import sky.engine.game.GameLoop;
 import sky.engine.sensors.Accelerometer;
-import sky.engine.stages.StageInterface;
+import sky.engine.stages.StageLoop;
 import sky.engine.threads.GameThread;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -27,7 +27,7 @@ import android.view.SurfaceView;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, GameInterface, SensorEventListener
+public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, GameLoop, SensorEventListener
 {
 	/**
 	 * Holder to the main thread
@@ -38,7 +38,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	/**
 	 * Stages of the game
 	 */
-	private StageInterface stages = null;
+	private StageLoop stages = null;
 	
 	
 	/**
@@ -276,7 +276,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	/**
 	 * Set the stage to use
 	 */
-	public void setStage(StageInterface stage)
+	public void setStage(StageLoop stage)
 	{
 		if (!stagesSet)
 		{
