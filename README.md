@@ -39,12 +39,13 @@ Version 0.9.9.5
 	* Sprites and Particles packages have also been move to: sky.engine.graphics.drawable
 	* Angle class has been moved to: sky.engine.math from sky.engine.geometry
 	* Added new geometric shapes: Arc and Oval.
-	* Added new drawabl shapes: DrawableArc, DrawableOval, and DrawableRoundedBox.
+	* Added new drawable shapes: DrawableArc, DrawableOval, DrawableRoundedBox, and DrawableRoundBox2.
 	* Added a GameActivity class to make creating the main game views far simpler, for reuse of Pause, OnCreate etc.
-	* Added a StageCreator class to make creating stages far simpler, for reuse of threads, contexts etc.
+	* Added a StageCreator class to make creating stages far simpler, for reuse of threads, contexts, and texture managers etc.
 	* Sizes are now comparable.
 	* Changed the static final of Vector.Zeros to a method instead - since it was erroring.
-	* Added a DrawableRoundBox2 shape, where each corner is editable.
+	* Created new GeometricShapes interface to help with collision resolutions - such as project() and getAxes().
+	* Vectors have now been moved to their own package: sky.engine.geometry.vectors
 
 
 Version 0.9.9
