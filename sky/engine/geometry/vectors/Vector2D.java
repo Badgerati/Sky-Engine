@@ -1,5 +1,7 @@
 package sky.engine.geometry.vectors;
 
+import java.util.Comparator;
+
 import sky.engine.math.Angle;
 
 
@@ -9,7 +11,7 @@ import sky.engine.math.Angle;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public class Vector2D extends Vector
+public class Vector2D implements Comparable<Vector2D>
 {
 	/**
 	 * X component of this vector
@@ -21,6 +23,16 @@ public class Vector2D extends Vector
 	 * Y component of this vector
 	 */
 	public float Y;
+	
+	
+	/**
+	 * Comparator object for a Vector2D.	
+	 */
+	public static final Comparator<Vector2D> VECTOR2D_COMPARATOR = new Comparator<Vector2D>() {
+		public int compare(Vector2D v1, Vector2D v2) {
+			return v1.compareTo(v2);
+		}
+	};
 	
 	
 	
@@ -42,7 +54,6 @@ public class Vector2D extends Vector
 	{
 		X = 0;
 		Y = 0;
-		vector_type = Vector.VECTOR_2D;
 	}
 
 	
@@ -53,7 +64,6 @@ public class Vector2D extends Vector
 	{
 		X = x;
 		Y = y;
-		vector_type = Vector.VECTOR_2D;
 	}
 
 	
@@ -64,7 +74,6 @@ public class Vector2D extends Vector
 	{
 		X = vector.X;
 		Y = vector.Y;
-		vector_type = Vector.VECTOR_2D;
 	}
 	
 	
@@ -338,7 +347,7 @@ public class Vector2D extends Vector
 	 */
 	public float magnitude()
 	{
-		return (float)Math.sqrt((X * X) + (Y * Y));
+		return android.util.FloatMath.sqrt((X * X) + (Y * Y));
 	}
 	
 	
@@ -350,7 +359,7 @@ public class Vector2D extends Vector
 		float x = X - v2.X;
 		float y = Y - v2.Y;
 		
-		return (float)Math.sqrt((x * x) + (y * y));
+		return android.util.FloatMath.sqrt((x * x) + (y * y));
 	}
 	
 	

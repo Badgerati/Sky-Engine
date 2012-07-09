@@ -99,13 +99,15 @@ public class BoundingCircle extends Bounding
 	/**
 	 * Does this Bounding Circle intersect another Bounding Circle
 	 */
-	public boolean _intersect(BoundingCircle circle)
+	public boolean intersect(BoundingCircle circle)
 	{
-		Vector2D v = this.Position.sub(circle.Position);
-		if (v.magnitude() < (this.Radius + circle.Radius))
+		float sqrmag = Position.squaredMagnitude(circle.Position);
+		float sqrradius = (Radius * Radius) + (circle.Radius * circle.Radius);
+		
+		if (sqrmag <= sqrradius)
 			return true;
 		else
-			return false;		
+			return false;
 	}
 	
 	
@@ -122,8 +124,10 @@ public class BoundingCircle extends Bounding
 	@Override
 	public boolean contains(Vector2D point)
 	{
-		Vector2D v = this.Position.sub(point);
-		if (v.magnitude() < this.Radius)
+		float sqrmag = Position.squaredMagnitude(point);
+		float sqrradius = (Radius * Radius);
+		
+		if (sqrmag <= sqrradius)
 			return true;
 		else
 			return false;

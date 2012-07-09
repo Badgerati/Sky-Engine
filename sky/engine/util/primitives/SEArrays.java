@@ -1,15 +1,13 @@
 package sky.engine.util.primitives;
 
-import java.util.Arrays;
-
 /**
  * SEArrays holds more methods than can be applied to array variables. Much like the way
  * the Arrays class works.
  * 
- * @author Matthew Kelly (Badgerati).
+ * @author Matthew Kelly (Badgerati)
  *
  */
-public abstract class SEArrays
+public abstract class SEArrays extends Arrays
 {
 	
 	/**
@@ -34,10 +32,15 @@ public abstract class SEArrays
 			return first;
 		}
 		
-		T[] result = Arrays.copyOf(first, first.length + second.length);
+		T[] result = copyOf(first, first.length + second.length);
 		System.arraycopy(second, 0, result, first.length, second.length);
 		return result;
 	}
+	
+	
+	
+	
+	
 	
 	
 	/**
@@ -53,7 +56,7 @@ public abstract class SEArrays
 		for (T[] array : rest)
 			totalLength += array.length;
 		
-		T[] result = Arrays.copyOf(first, totalLength);
+		T[] result = copyOf(first, totalLength);
 		int offset = first.length;
 		for (T[] array : rest)
 		{
@@ -63,9 +66,6 @@ public abstract class SEArrays
 		
 		return result;
 	}
-	
-	
-	
 	
 	
 	
@@ -87,8 +87,6 @@ public abstract class SEArrays
 			SEArrays.swap(array, i, array.length - i - 1);
 		}
 	}
-	
-	
 	
 	
 	

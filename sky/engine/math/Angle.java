@@ -1,7 +1,5 @@
 package sky.engine.math;
 
-
-
 /**
  * This class is abstract and helps make accessing angles faster. To do this, we store,
  * say, 360 angle values of Sin, Cos and Tan into an indexable array.
@@ -14,13 +12,13 @@ public abstract class Angle
 	/**
 	 * Convert degrees to Radians.
 	 */
-	public static final float TO_RADIANS = (float)(Math.PI / 180.0f);
+	public static final float TO_RADIANS = 0.0174532925f;
 	
 	
 	/**
 	 * Convert Radians to Degrees.
 	 */
-	public static final float TO_DEGREES = (float)(180.0f / Math.PI);
+	public static final float TO_DEGREES = 57.2957795f;
 	
 	
 	/**
@@ -64,8 +62,8 @@ public abstract class Angle
 		//fill them
 		for (int i = 0; i < 360; i++)
 		{
-			SINE[i] = (float)Math.sin(i * TO_RADIANS);
-			COSINE[i] = (float)Math.cos(i * TO_RADIANS);
+			SINE[i] = android.util.FloatMath.sin(i * TO_RADIANS);
+			COSINE[i] = android.util.FloatMath.cos(i * TO_RADIANS);
 			TANGENT[i] = (float)Math.tan(i * TO_RADIANS);
 		}
 	}
@@ -100,7 +98,7 @@ public abstract class Angle
 	
 	
 	/**
-	 * Return the value of sin(degree). degree will be rounded to closest whole integer value
+	 * Return the value of sin(degree)
 	 */
 	public static float sin(float degree)
 	{
@@ -121,7 +119,28 @@ public abstract class Angle
 	
 	
 	/**
-	 * Return the value of cos(degree). degree will be rounded to closest whole integer value
+	 * Return the value of sin(radians)
+	 */
+	public static float sinr(float radians)
+	{
+		//do we need to initialise the arrays?
+		if (SINE == null)
+			initialise();
+		
+		//get the sine value wanted
+		int deg = (int)(radians * TO_DEGREES);
+		deg = confineDegree(deg);
+		return SINE[deg];
+	}
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Return the value of cos(degree)
 	 */
 	public static float cos(float degree)
 	{
@@ -142,7 +161,28 @@ public abstract class Angle
 	
 	
 	/**
-	 * Return the value of tan(degree). degree will be rounded to closest whole integer value
+	 * Return the value of cos(radians)
+	 */
+	public static float cosr(float radians)
+	{
+		//do we need to initialise the arrays?
+		if (COSINE == null)
+			initialise();
+		
+		//get the cosine value wanted
+		int deg = (int)(radians * TO_DEGREES);
+		deg = confineDegree(deg);
+		return COSINE[deg];
+	}
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Return the value of tan(degree)
 	 */
 	public static float tan(float degree)
 	{
@@ -152,6 +192,27 @@ public abstract class Angle
 		
 		//get the tangent value wanted
 		int deg = (int)degree;
+		deg = confineDegree(deg);
+		return TANGENT[deg];
+	}
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Return the value of tan(radians)
+	 */
+	public static float tanr(float radians)
+	{
+		//do we need to initialise the arrays?
+		if (TANGENT == null)
+			initialise();
+		
+		//get the tangent value wanted
+		int deg = (int)(radians * TO_DEGREES);
 		deg = confineDegree(deg);
 		return TANGENT[deg];
 	}

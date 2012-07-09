@@ -67,6 +67,17 @@ public class DrawableArc extends Arc implements DrawableShape
 	/**
 	 * Create new instance of a Drawable Arc
 	 */
+	public DrawableArc(Vector2D position, float radius, float startangle, float sweepangle, int fill, int outline)
+	{
+		super(position, radius, startangle, sweepangle);
+		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		setRect();
+	}
+	
+	
+	/**
+	 * Create new instance of a Drawable Arc
+	 */
 	public DrawableArc(Vector2D position, float radius, float startangle, float sweepangle, int fill, int outline, Vector2D velocity, float mass)
 	{
 		super(position, radius, startangle, sweepangle, velocity, mass);

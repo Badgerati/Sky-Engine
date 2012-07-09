@@ -61,6 +61,17 @@ public class DrawableOval extends Oval implements DrawableShape
 	/**
 	 * Create new instance of a Drawable Oval
 	 */
+	public DrawableOval(Vector2D position, float xradius, float yradius, int fill, int outline)
+	{
+		super(position, xradius, yradius);
+		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		setRect();
+	}
+	
+	
+	/**
+	 * Create new instance of a Drawable Oval
+	 */
 	public DrawableOval(Vector2D position, float xradius, float yradius, int fill, int outline, Vector2D velocity, float mass)
 	{
 		super(position, xradius, yradius, velocity, mass);

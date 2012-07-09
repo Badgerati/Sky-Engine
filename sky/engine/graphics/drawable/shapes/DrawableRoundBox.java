@@ -78,6 +78,16 @@ public class DrawableRoundBox extends DrawableBox
 	/**
 	 * Create new instance of a Graphical Box
 	 */
+	public DrawableRoundBox(Vector2D position, float width, float height, float rx, float ry, int fill, int outline)
+	{
+		super(position, width, height, fill, outline);
+		intialise(rx, ry);
+	}
+	
+	
+	/**
+	 * Create new instance of a Graphical Box
+	 */
 	public DrawableRoundBox(Vector2D position, float width, float height, float rx, float ry, int fill, int outline, Vector2D velocity, float mass)
 	{
 		super(position, width, height, fill, outline, velocity, mass);
@@ -123,6 +133,16 @@ public class DrawableRoundBox extends DrawableBox
 	/**
 	 * Create new instance of a Graphical Box
 	 */
+	public DrawableRoundBox(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, float rx, float ry, int fill, int outline)
+	{
+		super(position, v1, v2, v3, v4, fill, outline);
+		intialise(rx, ry);
+	}
+	
+	
+	/**
+	 * Create new instance of a Graphical Box
+	 */
 	public DrawableRoundBox(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, float rx, float ry, int fill, int outline, Vector2D velocity, float mass)
 	{
 		super(position, v1, v2, v3, v4, fill, outline, velocity, mass);
@@ -161,6 +181,16 @@ public class DrawableRoundBox extends DrawableBox
 	public DrawableRoundBox(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4,  float rx, float ry)
 	{
 		super(v1, v2, v3, v4);
+		intialise(rx, ry);
+	}
+	
+	
+	/**
+	 * Create new instance of a Graphical Box
+	 */
+	public DrawableRoundBox(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, float rx, float ry, int fill, int outline)
+	{
+		super(v1, v2, v3, v4, fill, outline);
 		intialise(rx, ry);
 	}
 	

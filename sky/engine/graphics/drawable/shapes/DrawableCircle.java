@@ -52,6 +52,16 @@ public class DrawableCircle extends Circle implements DrawableShape
 	/**
 	 * Create new instance of a Graphical Circle
 	 */
+	public DrawableCircle(Vector2D position, float radius, int fill, int outline)
+	{
+		super(position, radius);
+		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+	}
+	
+	
+	/**
+	 * Create new instance of a Graphical Circle
+	 */
 	public DrawableCircle(Vector2D position, float radius, int fill, int outline, Vector2D velocity, float mass)
 	{
 		super(position, radius, velocity, mass);

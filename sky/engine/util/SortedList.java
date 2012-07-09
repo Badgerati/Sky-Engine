@@ -1,7 +1,6 @@
 package sky.engine.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -86,7 +85,7 @@ public class SortedList<T> implements List<T>
 	public SortedList(Comparator<T> comp, T[] array)
 	{
 		comparator = comp;
-		sortedarray = Arrays.copyOf(array, array.length);
+		sortedarray = SEArrays.copyOf(array, array.length);
 		sortAscending();
 	}
 	
@@ -104,7 +103,7 @@ public class SortedList<T> implements List<T>
 	{
 		comparator = comp;
 		T[] array = (T[])collection.toArray();
-		sortedarray = Arrays.copyOf(array, array.length);
+		sortedarray = SEArrays.copyOf(array, array.length);
 		sortAscending();
 	}
 	
@@ -129,7 +128,7 @@ public class SortedList<T> implements List<T>
 	public SortedList(T[] array)
 	{
 		comparator = null;
-		sortedarray = Arrays.copyOf(array, array.length);
+		sortedarray = SEArrays.copyOf(array, array.length);
 		sortAscending();
 	}
 	
@@ -146,7 +145,7 @@ public class SortedList<T> implements List<T>
 	{
 		comparator = null;
 		T[] array = (T[])collection.toArray();
-		sortedarray = Arrays.copyOf(array, array.length);
+		sortedarray = SEArrays.copyOf(array, array.length);
 		sortAscending();
 	}
 	
@@ -184,7 +183,7 @@ public class SortedList<T> implements List<T>
 	 */
 	public boolean add(T object)
 	{
-		sortedarray = Arrays.copyOf(sortedarray, sortedarray.length + 1);
+		sortedarray = SEArrays.copyOf(sortedarray, sortedarray.length + 1);
 		sortedarray[sortedarray.length - 1] = object;
 		sortAscending();
 		return true;
@@ -217,7 +216,7 @@ public class SortedList<T> implements List<T>
 	public boolean addAll(T[] objects)
 	{
 		int originalLength = sortedarray.length;
-		sortedarray = Arrays.copyOf(sortedarray, sortedarray.length + objects.length);
+		sortedarray = SEArrays.copyOf(sortedarray, sortedarray.length + objects.length);
 		System.arraycopy(objects, 0, sortedarray, originalLength, objects.length);
 		sortAscending();
 		return true;
@@ -262,9 +261,9 @@ public class SortedList<T> implements List<T>
 		if (index < 0 || index >= sortedarray.length)
 			throw new IndexOutOfBoundsException();
 		
-		List<T> list = new ArrayList<T>(Arrays.asList(sortedarray));
+		List<T> list = new ArrayList<T>(SEArrays.asList(sortedarray));
 		T temp = list.remove(index);
-		sortedarray = list.toArray(Arrays.copyOf(sortedarray, 0));
+		sortedarray = list.toArray(SEArrays.copyOf(sortedarray, 0));
 		
 		return temp;
 	}
@@ -278,9 +277,9 @@ public class SortedList<T> implements List<T>
 	 */
 	public boolean remove(Object object)
 	{
-		List<T> list = new ArrayList<T>(Arrays.asList(sortedarray));
+		List<T> list = new ArrayList<T>(SEArrays.asList(sortedarray));
 		boolean b = list.remove(object);
-		sortedarray = list.toArray(Arrays.copyOf(sortedarray, 0));
+		sortedarray = list.toArray(SEArrays.copyOf(sortedarray, 0));
 		
 		return b;
 	}
@@ -301,9 +300,9 @@ public class SortedList<T> implements List<T>
 	 */
 	public boolean removeAll(T[] objects)
 	{
-		List<T> list = new ArrayList<T>(Arrays.asList(sortedarray));
-		boolean b = list.removeAll(Arrays.asList(objects));
-		sortedarray = list.toArray(Arrays.copyOf(sortedarray, 0));
+		List<T> list = new ArrayList<T>(SEArrays.asList(sortedarray));
+		boolean b = list.removeAll(SEArrays.asList(objects));
+		sortedarray = list.toArray(SEArrays.copyOf(sortedarray, 0));
 		return b;
 	}
 
@@ -331,11 +330,11 @@ public class SortedList<T> implements List<T>
 	 */
 	public boolean retainAll(Collection<?> collection)
 	{
-		List<T> list = new ArrayList<T>(Arrays.asList(sortedarray));
+		List<T> list = new ArrayList<T>(SEArrays.asList(sortedarray));
 		
 		if (list.retainAll(collection))
 		{
-			sortedarray = list.toArray(Arrays.copyOf(sortedarray, 0));
+			sortedarray = list.toArray(SEArrays.copyOf(sortedarray, 0));
 			return true;
 		}
 		
@@ -348,11 +347,11 @@ public class SortedList<T> implements List<T>
 	 */
 	public boolean retainAll(T[] objects)
 	{
-		List<T> list = new ArrayList<T>(Arrays.asList(sortedarray));
+		List<T> list = new ArrayList<T>(SEArrays.asList(sortedarray));
 		
-		if (list.retainAll(Arrays.asList(objects)))
+		if (list.retainAll(SEArrays.asList(objects)))
 		{
-			sortedarray = list.toArray(Arrays.copyOf(sortedarray, 0));
+			sortedarray = list.toArray(SEArrays.copyOf(sortedarray, 0));
 			return true;
 		}
 		
@@ -413,9 +412,9 @@ public class SortedList<T> implements List<T>
 		int index = 0;
 		
 		if (comparator != null)
-			index = Arrays.binarySearch(sortedarray, object);
+			index = SEArrays.binarySearch(sortedarray, object);
 		else
-			index = Arrays.binarySearch(sortedarray, (T)object, comparator);
+			index = SEArrays.binarySearch(sortedarray, (T)object, comparator);
 		
 		if (wasDescending)
 			sortDescending();
@@ -527,7 +526,7 @@ public class SortedList<T> implements List<T>
 	 */
 	public void clear()
 	{
-		sortedarray = Arrays.copyOf(sortedarray, 0);
+		sortedarray = SEArrays.copyOf(sortedarray, 0);
 	}
 
 	
@@ -644,9 +643,9 @@ public class SortedList<T> implements List<T>
 			return;
 		
 		if (comparator != null)
-			Arrays.sort(sortedarray, comparator);
+			SEArrays.sort(sortedarray, comparator);
 		else
-			Arrays.sort(sortedarray);
+			SEArrays.sort(sortedarray);
 		
 		currentSort = ASCENDING;
 	}
@@ -668,9 +667,9 @@ public class SortedList<T> implements List<T>
 			return;
 		
 		if (comparator != null)
-			Arrays.sort(sortedarray, Collections.reverseOrder(comparator));
+			SEArrays.sort(sortedarray, Collections.reverseOrder(comparator));
 		else
-			Arrays.sort(sortedarray, Collections.reverseOrder());
+			SEArrays.sort(sortedarray, Collections.reverseOrder());
 		
 		currentSort = DESCENDING;
 	}
@@ -706,7 +705,7 @@ public class SortedList<T> implements List<T>
 	 */
 	public Iterator<T> iterator()
 	{
-		List<T> list = new ArrayList<T>(Arrays.asList(sortedarray));
+		List<T> list = new ArrayList<T>(SEArrays.asList(sortedarray));
 		return list.iterator();
 	}
 
@@ -716,7 +715,7 @@ public class SortedList<T> implements List<T>
 	 */
 	public ListIterator<T> listIterator()
 	{
-		List<T> list = new ArrayList<T>(Arrays.asList(sortedarray));
+		List<T> list = new ArrayList<T>(SEArrays.asList(sortedarray));
 		return list.listIterator();
 	}
 
@@ -726,7 +725,7 @@ public class SortedList<T> implements List<T>
 	 */
 	public ListIterator<T> listIterator(int index)
 	{
-		List<T> list = new ArrayList<T>(Arrays.asList(sortedarray));
+		List<T> list = new ArrayList<T>(SEArrays.asList(sortedarray));
 		return list.listIterator(index);
 	}
 
@@ -742,11 +741,10 @@ public class SortedList<T> implements List<T>
 	 */
 	public List<T> subList(int start, int end)
 	{
-		List<T> list = new ArrayList<T>(Arrays.asList(sortedarray));
+		List<T> list = new ArrayList<T>(SEArrays.asList(sortedarray));
 		return list.subList(start, end);
 	}
 
-	
 	
 	
 	
@@ -763,6 +761,8 @@ public class SortedList<T> implements List<T>
 	}
 
 
+	
+	
 	/**
 	 * 
 	 */
@@ -772,10 +772,7 @@ public class SortedList<T> implements List<T>
 		return (T[])sortedarray;
 	}
 	
-	
-	
-	
-	
+		
 	
 	
 }

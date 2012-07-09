@@ -1,5 +1,7 @@
 package sky.engine.geometry.vectors;
 
+import java.util.Comparator;
+
 import sky.engine.math.Angle;
 
 /**
@@ -8,7 +10,7 @@ import sky.engine.math.Angle;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public class Vector3D extends Vector
+public class Vector3D implements Comparable<Vector3D>
 {
 	/**
 	 * X component of this vector
@@ -28,6 +30,17 @@ public class Vector3D extends Vector
 	public float Z;
 	
 	
+	/**
+	 * Comparator object for a Vector.	
+	 */
+	public static final Comparator<Vector3D> VECTOR3D_COMPARATOR = new Comparator<Vector3D>() {
+		public int compare(Vector3D v1, Vector3D v2) {
+			return v1.compareTo(v2);
+		}
+	};
+	
+	
+	
 	
 	
 	
@@ -45,7 +58,6 @@ public class Vector3D extends Vector
 		X = 0;
 		Y = 0;
 		Z = 0;
-		vector_type = Vector.VECTOR_3D;
 	}
 
 	
@@ -57,7 +69,6 @@ public class Vector3D extends Vector
 		X = x;
 		Y = y;
 		Z = z;
-		vector_type = Vector.VECTOR_3D;
 	}
 
 	
@@ -69,7 +80,6 @@ public class Vector3D extends Vector
 		X = vector.X;
 		Y = vector.Y;
 		Z = 0;
-		vector_type = Vector.VECTOR_3D;
 	}
 
 	
@@ -81,7 +91,6 @@ public class Vector3D extends Vector
 		X = vector.X;
 		Y = vector.Y;
 		Z = z;
-		vector_type = Vector.VECTOR_3D;
 	}
 
 	
@@ -93,7 +102,6 @@ public class Vector3D extends Vector
 		X = vector.X;
 		Y = vector.Y;
 		Z = vector.Z;
-		vector_type = Vector.VECTOR_3D;
 	}
 	
 	
@@ -327,7 +335,7 @@ public class Vector3D extends Vector
 	 */
 	public float magnitude()
 	{
-		return (float)Math.sqrt((X * X) + (Y * Y) + (Z * Z));
+		return android.util.FloatMath.sqrt((X * X) + (Y * Y) + (Z * Z));
 	}
 	
 	
@@ -340,7 +348,7 @@ public class Vector3D extends Vector
 		float y = Y - v2.Y;
 		float z = Z - v2.Z;
 		
-		return (float)Math.sqrt((x * x) + (y * y) + (z * z));
+		return android.util.FloatMath.sqrt((x * x) + (y * y) + (z * z));
 	}
 	
 	

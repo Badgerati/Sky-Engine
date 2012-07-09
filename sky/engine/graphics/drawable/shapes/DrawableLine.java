@@ -54,6 +54,16 @@ public class DrawableLine extends Line implements DrawableShape
 	/**
 	 * Create new instance of a Graphical Line
 	 */
+	public DrawableLine(Vector2D position, Vector2D v1, Vector2D v2, int fill, int outline)
+	{
+		super(position, v1, v2);
+		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+	}
+	
+	
+	/**
+	 * Create new instance of a Graphical Line
+	 */
 	public DrawableLine(Vector2D position, Vector2D v1, Vector2D v2, int fill, int outline, Vector2D velocity, float mass)
 	{
 		super(position, v1, v2, velocity, mass);
@@ -92,6 +102,16 @@ public class DrawableLine extends Line implements DrawableShape
 	{
 		super(v1, v2, velocity, mass);
 		Paint = new ShapePaint(Colour.WHITE, 0, false, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+	}
+	
+	
+	/**
+	 * Create new instance of a Graphical Line
+	 */
+	public DrawableLine(Vector2D v1, Vector2D v2, int fill, int outline)
+	{
+		super(v1, v2);
+		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
 	}
 	
 	

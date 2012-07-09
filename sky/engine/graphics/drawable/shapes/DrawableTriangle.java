@@ -55,6 +55,17 @@ public class DrawableTriangle extends Triangle implements DrawableShape
 	/**
 	 * Create new instance of a Graphical Triangle
 	 */
+	public DrawableTriangle(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, int fill, int outline)
+	{
+		super(position, v1, v2, v3);
+		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		initialise();
+	}
+	
+	
+	/**
+	 * Create new instance of a Graphical Triangle
+	 */
 	public DrawableTriangle(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, int fill, int outline, Vector2D velocity, float mass)
 	{
 		super(position, v1, v2, v3, velocity, mass);
@@ -97,6 +108,17 @@ public class DrawableTriangle extends Triangle implements DrawableShape
 	{
 		super(v1, v2, v3, velocity, mass);
 		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		initialise();
+	}
+	
+	
+	/**
+	 * Create new instance of a Graphical Triangle
+	 */
+	public DrawableTriangle(Vector2D v1, Vector2D v2, Vector2D v3, int fill, int outline)
+	{
+		super(v1, v2, v3);
+		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
 		initialise();
 	}
 	
@@ -147,6 +169,17 @@ public class DrawableTriangle extends Triangle implements DrawableShape
 	{
 		super(position, sidex, sidey, sidez, velocity, mass);
 		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		initialise();
+	}
+	
+	
+	/**
+	 * Create new instance of a Graphical Triangle
+	 */
+	public DrawableTriangle(Vector2D position, float sidex, float sidey, float sidez, int fill, int outline)
+	{
+		super(position, sidex, sidey, sidez);
+		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
 		initialise();
 	}
 	
