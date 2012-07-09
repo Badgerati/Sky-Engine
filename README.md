@@ -1,4 +1,4 @@
-Sky Engine v0.9.9.5
+Sky Engine v0.9.1
 ===================
 
 Sky Engine is a basic 2D Games Engine for use with Android Development, programmed in Java. It is still
@@ -33,7 +33,7 @@ descriptions etc. missing.
 Updates and Fixes
 -----------------
 
-Version 0.9.9.5
+Version 0.9.1
 
 	* All drawable shapes in the graphics package have been moved to: sky.engine.graphics.drawable
 	* Sprites and Particles packages have also been move to: sky.engine.graphics.drawable
@@ -48,7 +48,7 @@ Version 0.9.9.5
 	* Vectors have now been moved to their own package: sky.engine.geometry.vectors
 
 
-Version 0.9.9
+Version 0.9.0
 
 	* Added ConvexHull class, for generating a polygon's convex hull. Uses the QuickHull algorithm.
 	* Bounding Volumes have now been moved to a new package: sky.engine.graphics.bounds
@@ -64,7 +64,7 @@ Version 0.9.9
 	* Implemented an 'ObjectMap' some simplify initialisations and settings of general HashMaps. (`HashMap<Obj, Obj>`).
 	
 
-Version 0.9.8
+Version 0.8.0
 
 	* Added Triangulation object, to make triangulating vertices more re-usable.
 	* Added a TextureManager to allow re-use of Textures.
