@@ -1,8 +1,8 @@
 package sky.engine.util.primitives;
 
 /**
- * SEArrays holds more methods than can be applied to array variables. Much like the way
- * the Arrays class works.
+ * SEArrays extends the Arrays class, and exploits further methods that can be applied to
+ * arrays. Such as reversing and array or merging arrays together.
  * 
  * @author Matthew Kelly (Badgerati)
  *

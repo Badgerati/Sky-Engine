@@ -37,6 +37,20 @@ public class Texture
 	
 	
 	
+	/**
+	 * Clones this texture
+	 */
+	public Texture clone()
+	{
+		return new Texture(bitmap);
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 
 	
@@ -104,6 +118,12 @@ public class Texture
 	{
 		return bitmap.getHeight();
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 	/**
