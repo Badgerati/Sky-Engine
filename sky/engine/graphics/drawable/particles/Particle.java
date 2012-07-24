@@ -2,7 +2,7 @@ package sky.engine.graphics.drawable.particles;
 
 import java.util.Random;
 
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
@@ -42,13 +42,13 @@ public class Particle
 	/**
 	 * Position of the particle
 	 */
-	private Vector2D mPosition = null;
+	private Vector2 mPosition = null;
 	
 	
 	/**
 	 * Speed of the particle
 	 */
-	private Vector2D mVelocity = null;
+	private Vector2 mVelocity = null;
 	
 	
 	/**
@@ -88,12 +88,12 @@ public class Particle
 	/**
 	 * Create new instance of a particle object
 	 */
-	public Particle(Vector2D position, Vector2D velocity, float angle, float angularvel, int colour, int ttl)
+	public Particle(Vector2 position, Vector2 velocity, float angle, float angularvel, int colour, int ttl)
 	{
 		particleState = STATE_ALIVE;
 		
-		mPosition = new Vector2D(position.X, position.Y);
-		mVelocity = new Vector2D(velocity.X, velocity.Y);
+		mPosition = new Vector2(position.X, position.Y);
+		mVelocity = new Vector2(velocity.X, velocity.Y);
 		mAngularVelocity = angularvel;
 		mPaint = new Paint();
 		mPaint.setColor(colour);

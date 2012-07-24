@@ -1,7 +1,7 @@
 package sky.engine.stages;
 
 import sky.engine.audio.SoundManager;
-import sky.engine.geometry.vectors.Vector3D;
+import sky.engine.geometry.vectors.Vector3;
 import sky.engine.graphics.textures.TextureManager;
 import sky.engine.threads.GameThread;
 import android.content.Context;
@@ -26,10 +26,10 @@ public class StageCreator
 	protected GameThread thread = null;
 	
 	
-	/**
-	 * Texture Manager.
-	 */
-	protected TextureManager texturemanager = null;
+	///**
+	// * Texture Manager.
+	// */
+	//protected TextureManager texturemanager = null;
 	
 	
 	/**
@@ -41,7 +41,7 @@ public class StageCreator
 	/**
 	 * Vector to store the values from the accelerometer.
 	 */
-	protected Vector3D accelerometer = null;
+	protected Vector3 accelerometer = null;
 	
 	
 	
@@ -60,9 +60,10 @@ public class StageCreator
 	{
 		this.context = context;
 		this.thread = thread;
-		this.texturemanager = new TextureManager(context.getResources());
+		//this.texturemanager = new TextureManager(context.getResources());
+		TextureManager.initialise(context.getResources());
 		this.soundmanager = new SoundManager(context, 10, 100, SoundManager.STREAM_MUSIC);
-		this.accelerometer = new Vector3D();
+		this.accelerometer = new Vector3();
 	}
 	
 	

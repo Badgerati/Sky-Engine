@@ -1,7 +1,7 @@
 package sky.engine.geometry;
 
 import sky.engine.geometry.shapes.Triangle;
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 import sky.engine.graphics.bounds.BoundingTri;
 import sky.engine.graphics.drawable.shapes.DrawableTriangle;
 import sky.engine.util.VisitorMap;
@@ -17,9 +17,7 @@ public class Triangulation
 	/**
 	 * Current triangulation, represented by a 2D array of Vectors.
 	 */
-	protected Vector2D[][] triangles = null;
-	
-	
+	protected Vector2[][] triangles = null;
 	
 	
 	
@@ -39,7 +37,7 @@ public class Triangulation
 	/**
 	 * Create new instance of a Triangulation on an array of given right-winding vertices.
 	 */
-	public Triangulation(Vector2D[] vertices)
+	public Triangulation(Vector2[] vertices)
 	{
 		boolean bool = triangulate(vertices);
 		
@@ -55,36 +53,34 @@ public class Triangulation
 	
 	
 	
-	
-	
 	/**
 	 * Triangulates an array of given right-winding vertices.
 	 * 
 	 * @return True if number of vertices is greater than or equal to 3, false otherwise.
 	 */
-	public boolean triangulate(Vector2D[] vertices)
+	public boolean triangulate(Vector2[] vertices)
 	{
 		if (vertices.length < 3)
 			return false;
 		
 		
-		triangles = new Vector2D[vertices.length - 2][3];
+		triangles = new Vector2[vertices.length - 2][3];
 		
-		VisitorMap<Vector2D, Vector2D> visitormap = new VisitorMap<Vector2D, Vector2D>();
+		VisitorMap<Vector2, Vector2> visitormap = new VisitorMap<Vector2, Vector2>();
 		for (int i = 0; i < vertices.length; i++)
 		{
 			visitormap.add(vertices[i], vertices[i + 1 == vertices.length ? 0 : i + 1], false);
 		}
 		
 		
-		Vector2D current = vertices[0];
+		Vector2 current = vertices[0];
 		int counter = 0;
 		
 		
 		while (true)
 		{
-			Vector2D second = visitormap.getNext(current);
-			Vector2D third = visitormap.getNext(second);
+			Vector2 second = visitormap.getNext(current);
+			Vector2 third = visitormap.getNext(second);
 			
 			if (second == null || third == null || current.equals(third))
 			{
@@ -92,9 +88,9 @@ public class Triangulation
 			}
 
 			
-			Vector2D dir1 = second.sub(current);
+			Vector2 dir1 = second.sub(current);
 			dir1.normalise();
-			Vector2D dir2 = third.sub(second);
+			Vector2 dir2 = third.sub(second);
 			dir2.normalise();
 			
 			float cross = dir1.cross(dir2);
@@ -128,16 +124,13 @@ public class Triangulation
 	
 	
 	
-	
-	
 	/**
 	 * Returns this triangulation as a raw array of vertices.
 	 */
-	public final Vector2D[][] asVertices()
+	public final Vector2[][] asVertices()
 	{
 		return triangles;
 	}
-	
 	
 	
 	
@@ -168,7 +161,6 @@ public class Triangulation
 	
 	
 	
-	
 	/**
 	 * Returns this triangulation as an array of drawable triangles.
 	 */
@@ -192,8 +184,6 @@ public class Triangulation
 	
 	
 	
-	
-	
 	/**
 	 * Returns this triangulation as an array of bounding triangles.
 	 */
@@ -212,7 +202,6 @@ public class Triangulation
 		
 		return tri;
 	}
-	
 	
 	
 

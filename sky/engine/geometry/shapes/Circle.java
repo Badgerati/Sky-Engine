@@ -1,6 +1,6 @@
 package sky.engine.geometry.shapes;
 
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 import sky.engine.physics.collisions.Projection;
 
 /**
@@ -23,22 +23,38 @@ public class Circle extends Shape
 	
 
 	
+	/**
+	 * Create new instance of a Geometric Circle
+	 */
+	public Circle(float radius)
+	{
+		super(Vector2.zeros());
+		Radius = radius;
+		vertices = new Vector2[2];
+		isCircle = true;
+	}
 	
-
-	
-	
-	/********************************************
-	 * 			PUBLIC CONSTRUCTORS
-	 ********************************************/
 	
 	/**
 	 * Create new instance of a Geometric Circle
 	 */
-	public Circle(Vector2D position, float radius)
+	public Circle(Vector2 position, float radius)
 	{
 		super(position);
 		Radius = radius;
-		vertices = new Vector2D[2];
+		vertices = new Vector2[2];
+		isCircle = true;
+	}
+
+	
+	/**
+	 * Create new instance of a Geometric Circle
+	 */
+	public Circle(Vector2 position, float radius, Vector2 velocity, float mass)
+	{
+		super(position, velocity, mass);
+		Radius = radius;
+		vertices = new Vector2[2];
 		isCircle = true;
 	}
 	
@@ -48,39 +64,11 @@ public class Circle extends Shape
 	 */
 	public Circle(Circle circle)
 	{
-		super(circle.Position);
+		super(circle.Position, circle.Velocity, circle.Mass);
 		Radius = circle.Radius;
-		vertices = new Vector2D[2];
+		vertices = new Vector2[2];
 		isCircle = true;
 	}
-
-	
-	
-	
-	
-	
-	
-
-	
-	/********************************************
-	 * 			PROTECTED CONSTRUCTORS
-	 ********************************************/
-	
-	/**
-	 * Create new instance of a Geometric Circle
-	 */
-	protected Circle(Vector2D position, float radius, Vector2D velocity, float mass)
-	{
-		super(position, velocity, mass);
-		Radius = radius;
-		vertices = new Vector2D[2];
-		isCircle = true;
-	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -93,11 +81,8 @@ public class Circle extends Shape
 	 */
 	public Circle clone()
 	{
-		return new Circle(Position, Radius);
+		return new Circle(this);
 	}
-	
-	
-	
 	
 	
 	
@@ -116,9 +101,6 @@ public class Circle extends Shape
 	
 	
 	
-	
-	
-	
 	/**
 	 * Get the radius.
 	 */
@@ -131,13 +113,6 @@ public class Circle extends Shape
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Return the circumference of this circle
 	 */
@@ -145,10 +120,6 @@ public class Circle extends Shape
 	{
 		return ((float)Math.PI * Radius);
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -169,22 +140,17 @@ public class Circle extends Shape
 	
 	
 	
-	
-	
-	
-	
-	
 	/**
 	 * Project this circle onto the given axis
 	 */
 	@Override
-	public Projection project(Vector2D axis)
+	public Projection project(Vector2 axis)
 	{
 		float rvx = Radius * axis.X;
 		float rvy = Radius * axis.Y;
 
-		this.vertices[0] = new Vector2D(Position.X + rvx, Position.Y + rvy);
-		this.vertices[1] = new Vector2D(Position.X - rvx, Position.Y - rvy);
+		this.vertices[0] = new Vector2(Position.X + rvx, Position.Y + rvy);
+		this.vertices[1] = new Vector2(Position.X - rvx, Position.Y - rvy);
 		
 		float min = axis.dot(vertices[0]);
 		float max = min;

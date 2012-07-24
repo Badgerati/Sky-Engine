@@ -11,7 +11,7 @@ import sky.engine.math.Angle;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public class Vector2D implements Comparable<Vector2D>
+public class Vector2 implements Comparable<Vector2>
 {
 	/**
 	 * X component of this vector
@@ -28,17 +28,11 @@ public class Vector2D implements Comparable<Vector2D>
 	/**
 	 * Comparator object for a Vector2D.	
 	 */
-	public static final Comparator<Vector2D> VECTOR2D_COMPARATOR = new Comparator<Vector2D>() {
-		public int compare(Vector2D v1, Vector2D v2) {
+	public static final Comparator<Vector2> VECTOR2D_COMPARATOR = new Comparator<Vector2>() {
+		public int compare(Vector2 v1, Vector2 v2) {
 			return v1.compareTo(v2);
 		}
 	};
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -50,7 +44,7 @@ public class Vector2D implements Comparable<Vector2D>
 	/**
 	 * Create a new 2D Vector object
 	 */
-	public Vector2D()
+	public Vector2()
 	{
 		X = 0;
 		Y = 0;
@@ -60,7 +54,7 @@ public class Vector2D implements Comparable<Vector2D>
 	/**
 	 * Create a new 2D Vector object
 	 */
-	public Vector2D(float x, float y)
+	public Vector2(float x, float y)
 	{
 		X = x;
 		Y = y;
@@ -70,17 +64,11 @@ public class Vector2D implements Comparable<Vector2D>
 	/**
 	 * Create a new 2D Vector object
 	 */
-	public Vector2D(Vector2D vector)
+	public Vector2(Vector2 vector)
 	{
 		X = vector.X;
 		Y = vector.Y;
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -97,10 +85,13 @@ public class Vector2D implements Comparable<Vector2D>
 	}
 	
 	
+	
+	
+	
 	/**
 	 * Set X and Y components
 	 */
-	public void set(Vector2D vector)
+	public void set(Vector2 vector)
 	{
 		X = vector.X;
 		Y = vector.Y;
@@ -110,25 +101,24 @@ public class Vector2D implements Comparable<Vector2D>
 	
 	
 	
-	
-	
-	
-	
 	/**
 	 * Clone this vector
 	 */
-	public Vector2D clone()
+	public Vector2 clone()
 	{
-		return new Vector2D(this.X, this.Y);
+		return new Vector2(this.X, this.Y);
 	}
+	
+	
+	
 	
 	
 	/**
 	 * Clones the given vector array
 	 */
-	public static Vector2D[] clone(Vector2D[] vectors)
+	public static Vector2[] clone(Vector2[] vectors)
 	{
-		Vector2D[] v = new Vector2D[vectors.length];
+		Vector2[] v = new Vector2[vectors.length];
 		
 		for (int i = 0; i < vectors.length; i++)
 		{
@@ -143,15 +133,10 @@ public class Vector2D implements Comparable<Vector2D>
 	
 
 	
-
-	
-	
-	
-	
 	/**
 	 * Does the passed vector equal this one?
 	 */
-	public boolean equals(Vector2D v2)
+	public boolean equals(Vector2 v2)
 	{		
 		return (X == v2.X && Y == v2.Y);
 	}
@@ -182,7 +167,7 @@ public class Vector2D implements Comparable<Vector2D>
 	{
 		try
 		{
-			Vector2D v2 = (Vector2D)o;
+			Vector2 v2 = (Vector2)o;
 			return (X == v2.X && Y == v2.Y);
 		}
 		catch (Exception e)
@@ -195,16 +180,11 @@ public class Vector2D implements Comparable<Vector2D>
 	
 	
 	
-	
-	
-	
-	
-	
 	/**
 	 * Compares this Vector to another given Vector. Returns 0 if they are equal, -1 if this
 	 * Vector is less than the given vector, and 1 if this Vector is greater than it.
 	 */
-	public int compareTo(Vector2D v2)
+	public int compareTo(Vector2 v2)
 	{
 		//greater than given
 		if  (X > v2.X || (Y > v2.Y && X == v2.X))
@@ -222,14 +202,11 @@ public class Vector2D implements Comparable<Vector2D>
 	
 	
 	
-	
-	
-	
 	/**
 	 * Compare the X value to the given vector's X values. Returns 0 if equal, 1 if
 	 * this is greater than given, -1 otherwise
 	 */
-	public int compareX(Vector2D v2)
+	public int compareX(Vector2 v2)
 	{
 		if (X > v2.X)
 			return 1;
@@ -244,14 +221,11 @@ public class Vector2D implements Comparable<Vector2D>
 	
 	
 	
-	
-	
-	
 	/**
 	 * Compare the Y value to the given vector's Y values. Returns 0 if equal, 1 if
 	 * this is greater than given, -1 otherwise
 	 */
-	public int compareY(Vector2D v2)
+	public int compareY(Vector2 v2)
 	{
 		if (Y > v2.Y)
 			return 1;
@@ -262,10 +236,6 @@ public class Vector2D implements Comparable<Vector2D>
 		return 0;
 	}
 
-	
-	
-	
-	
 	
 	
 	
@@ -284,11 +254,6 @@ public class Vector2D implements Comparable<Vector2D>
 	
 	
 	
-	
-	
-	
-	
-	
 	/**
 	 * Absolute this vector, making both components positive
 	 */
@@ -297,9 +262,6 @@ public class Vector2D implements Comparable<Vector2D>
 		if (X < 0) X *= -1;
 		if (Y < 0) Y *= -1;
 	}
-	
-	
-	
 	
 	
 	
@@ -319,23 +281,13 @@ public class Vector2D implements Comparable<Vector2D>
 	
 	
 	
-	
-	
-	
-	
 	/**
 	 * Returns a vector of zeros
 	 */
-	public static Vector2D zeros()
+	public static Vector2 zeros()
 	{
-		return new Vector2D(0, 0);
+		return new Vector2(0, 0);
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -351,16 +303,22 @@ public class Vector2D implements Comparable<Vector2D>
 	}
 	
 	
+	
+	
+	
 	/**
 	 * Returns the magnitude of the distance between this vector and another.
 	 */
-	public float magnitude(Vector2D v2)
+	public float magnitude(Vector2 v2)
 	{
 		float x = X - v2.X;
 		float y = Y - v2.Y;
 		
 		return android.util.FloatMath.sqrt((x * x) + (y * y));
 	}
+	
+	
+	
 	
 	
 	/**
@@ -372,19 +330,19 @@ public class Vector2D implements Comparable<Vector2D>
 	}
 	
 	
+	
+	
+	
 	/**
 	 * Returns the squared magnitude of this vector to another.
 	 */
-	public float squaredMagnitude(Vector2D v2)
+	public float squaredMagnitude(Vector2 v2)
 	{
 		float x = X - v2.X;
 		float y = Y - v2.Y;
 		
 		return ((x * x) + (y * y));
 	}
-	
-	
-	
 	
 	
 	
@@ -405,18 +363,13 @@ public class Vector2D implements Comparable<Vector2D>
 	
 	
 	
-	
-	
-	
-	
 	/**
 	 * Returns the midpoint of this vector to another vector
 	 */
-	public Vector2D midpoint(Vector2D v2)
+	public Vector2 midpoint(Vector2 v2)
 	{
-		return new Vector2D( (X + v2.X) * 0.5f, (Y + v2.Y) * 0.5f ); 
+		return new Vector2( (X + v2.X) * 0.5f, (Y + v2.Y) * 0.5f ); 
 	}
-	
 	
 	
 	
@@ -428,9 +381,9 @@ public class Vector2D implements Comparable<Vector2D>
 	 * For example, the 4 vertices of a square will return the centre point of
 	 * the square.
 	 */
-	public static Vector2D getCentre(Vector2D[] vectors)
+	public static Vector2 getCentre(Vector2[] vectors)
 	{
-		Vector2D centre = new Vector2D();
+		Vector2 centre = new Vector2();
 		
 		for (int i = 0; i < vectors.length; i++)
 		{
@@ -446,10 +399,6 @@ public class Vector2D implements Comparable<Vector2D>
 	
 	
 	
-	
-	
-	
-	
 	/**
 	 * angle of direction of the vector on XY plane
 	 */
@@ -457,15 +406,6 @@ public class Vector2D implements Comparable<Vector2D>
 	{
 		return Angle.arctan(X, -Y);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -490,10 +430,13 @@ public class Vector2D implements Comparable<Vector2D>
 	}
 	
 	
+	
+	
+	
 	/**
 	 * Rotates this vector about the given origin by the given degree.
 	 */
-	public void rotate(float degree, Vector2D origin)
+	public void rotate(float degree, Vector2 origin)
 	{
 		float sinA = Angle.sin(degree);
 		float cosA = Angle.cos(degree);
@@ -513,15 +456,10 @@ public class Vector2D implements Comparable<Vector2D>
 	
 	
 	
-	
-	
-	
-	
-	
 	/**
 	 * Rotate this vector on a given origin by a given vector
 	 */
-	public void rotate(Vector2D vector, float x, float y)
+	public void rotate(Vector2 vector, float x, float y)
 	{
 		float Xoffset = X - x;
 		float Yoffset = Y - y;
@@ -534,10 +472,13 @@ public class Vector2D implements Comparable<Vector2D>
 	}
 	
 	
+	
+	
+	
 	/**
 	 * Rotate this vector on a given origin by a given vector
 	 */
-	public void rotate(Vector2D vector, Vector2D origin)
+	public void rotate(Vector2 vector, Vector2 origin)
 	{
 		float Xoffset = X - origin.X;
 		float Yoffset = Y - origin.Y;
@@ -548,12 +489,6 @@ public class Vector2D implements Comparable<Vector2D>
 		X = newX + origin.X;
 		Y = newY + origin.Y;
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 
@@ -569,10 +504,13 @@ public class Vector2D implements Comparable<Vector2D>
 	}
 	
 	
+	
+	
+	
 	/**
 	 * Integrate this vector by given velocity
 	 */
-	public void integrate(Vector2D velocity)
+	public void integrate(Vector2 velocity)
 	{
 		X += velocity.X;
 		Y += velocity.Y;
@@ -583,34 +521,25 @@ public class Vector2D implements Comparable<Vector2D>
 	
 	
 	
-	
-	
-
-	
 	/**
 	 * Returns this vector's left-winding perpendicular
 	 */
-	public Vector2D leftPerp()
+	public Vector2 leftPerp()
 	{
-		return new Vector2D(-this.Y, this.X);
+		return new Vector2(-this.Y, this.X);
 	}
+	
+	
+	
 	
 	
 	/**
 	 * Returns this vector's right-winding perpendicular
 	 */
-	public Vector2D rightPerp()
+	public Vector2 rightPerp()
 	{
-		return new Vector2D(this.Y, -this.X);
+		return new Vector2(this.Y, -this.X);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -624,61 +553,57 @@ public class Vector2D implements Comparable<Vector2D>
 	/**
 	 * add by another vector
 	 */
-	public Vector2D add(Vector2D vector)
+	public Vector2 add(Vector2 vector)
 	{
-		return new Vector2D(X + vector.X, Y + vector.Y);
+		return new Vector2(X + vector.X, Y + vector.Y);
 	}
 	
 
 	/**
 	 * subtract by another vector
 	 */
-	public Vector2D sub(Vector2D vector)
+	public Vector2 sub(Vector2 vector)
 	{
-		return new Vector2D(X - vector.X, Y - vector.Y);
+		return new Vector2(X - vector.X, Y - vector.Y);
 	}
 	
 
 	/**
 	 * multiply by another vector
 	 */
-	public Vector2D mul(Vector2D vector)
+	public Vector2 mul(Vector2 vector)
 	{
-		return new Vector2D(X * vector.X, Y * vector.Y);
+		return new Vector2(X * vector.X, Y * vector.Y);
 	}
 	
 
 	/**
 	 * divide by another vector
 	 */
-	public Vector2D div(Vector2D vector)
+	public Vector2 div(Vector2 vector)
 	{
-		return new Vector2D(X / vector.X, Y / vector.Y);
+		return new Vector2(X / vector.X, Y / vector.Y);
 	}
 	
 	
 	
 	
 	
-	
-
-	
-	
 	/**
 	 * multiply by scalar
 	 */
-	public Vector2D mulScalar(float value)
+	public Vector2 mulScalar(float value)
 	{
-		return new Vector2D(X * value, Y * value);
+		return new Vector2(X * value, Y * value);
 	}
 	
 	
 	/**
 	 * multiply by scalar
 	 */
-	public Vector2D mulScalar(float x, float y)
+	public Vector2 mulScalar(float x, float y)
 	{
-		return new Vector2D(X * x, Y * y);
+		return new Vector2(X * x, Y * y);
 	}
 	
 
@@ -687,18 +612,18 @@ public class Vector2D implements Comparable<Vector2D>
 	/**
 	 * divide by scalar
 	 */
-	public Vector2D divScalar(float value)
+	public Vector2 divScalar(float value)
 	{
-		return new Vector2D(X / value, Y / value);
+		return new Vector2(X / value, Y / value);
 	}
 	
 	
 	/**
 	 * divide by scalar
 	 */
-	public Vector2D divScalar(float x, float y)
+	public Vector2 divScalar(float x, float y)
 	{
-		return new Vector2D(X / x, Y / y);
+		return new Vector2(X / x, Y / y);
 	}
 	
 
@@ -707,18 +632,18 @@ public class Vector2D implements Comparable<Vector2D>
 	/**
 	 * add by scalar
 	 */
-	public Vector2D addScalar(float value)
+	public Vector2 addScalar(float value)
 	{
-		return new Vector2D(X + value, Y + value);
+		return new Vector2(X + value, Y + value);
 	}
 	
 	
 	/**
 	 * add by scalar
 	 */
-	public Vector2D addScalar(float x, float y)
+	public Vector2 addScalar(float x, float y)
 	{
-		return new Vector2D(X + x, Y + y);
+		return new Vector2(X + x, Y + y);
 	}
 	
 
@@ -727,32 +652,29 @@ public class Vector2D implements Comparable<Vector2D>
 	/**
 	 * sub by scalar
 	 */
-	public Vector2D subScalar(float value)
+	public Vector2 subScalar(float value)
 	{
-		return new Vector2D(X - value, Y - value);
+		return new Vector2(X - value, Y - value);
 	}
 	
 	
 	/**
 	 * sub by scalar
 	 */
-	public Vector2D subScalar(float x, float y)
+	public Vector2 subScalar(float x, float y)
 	{
-		return new Vector2D(X - x, Y - y);
+		return new Vector2(X - x, Y - y);
 	}
 	
 	
 	
-	
-	
-
 	
 	
 	
 	/**
 	 * dot product
 	 */
-	public float dot(Vector2D vector)
+	public float dot(Vector2 vector)
 	{
 		return (X * vector.X) + (Y * vector.Y);
 	}
@@ -762,7 +684,7 @@ public class Vector2D implements Comparable<Vector2D>
 	/**
 	 * cross product
 	 */
-	public float cross(Vector2D vector)
+	public float cross(Vector2 vector)
 	{
 		return ((X * vector.Y) - (Y * vector.X));
 	}
@@ -771,16 +693,13 @@ public class Vector2D implements Comparable<Vector2D>
 	
 	
 	
-
-	
-	
 	
 	/**
 	 * Square the vector's components
 	 */
-	public Vector2D square()
+	public Vector2 square()
 	{
-		return new Vector2D(X * X, Y * Y);
+		return new Vector2(X * X, Y * Y);
 	}
 	
 	
@@ -788,9 +707,9 @@ public class Vector2D implements Comparable<Vector2D>
 	/**
 	 * Inverse the vector's components
 	 */
-	public Vector2D inverse()
+	public Vector2 inverse()
 	{
-		return new Vector2D(1.0f / X, 1.0f / Y);
+		return new Vector2(1.0f / X, 1.0f / Y);
 	}
 	
 	
@@ -798,13 +717,13 @@ public class Vector2D implements Comparable<Vector2D>
 	/**
 	 * Raise the vector's components to a given power
 	 */
-	public Vector2D toPowerOf(int power)
+	public Vector2 toPowerOf(int power)
 	{
 		float x = 1, y = 1;
 		
 		//base case
 		if (power == 0)
-			return new Vector2D(x, y);
+			return new Vector2(x, y);
 		
 		//is power less than 0?
 		if (power < 0)
@@ -827,13 +746,8 @@ public class Vector2D implements Comparable<Vector2D>
 		}
 		
 		//return
-		return new Vector2D(x, y);
+		return new Vector2(x, y);
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -847,9 +761,6 @@ public class Vector2D implements Comparable<Vector2D>
 	{
 		return "(X = " + Float.toString(X) + ", Y = " + Float.toString(Y) + ")";
 	}
-	
-	
-	
 	
 	
 	

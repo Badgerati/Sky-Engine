@@ -1,6 +1,6 @@
 package sky.engine.graphics.bounds;
 
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 import sky.engine.physics.collisions.Projection;
 
 /**
@@ -28,11 +28,11 @@ public class BoundingCircle extends Bounding
 	/** 
 	 * Create a new bounding circle
 	 */	
-	public BoundingCircle(Vector2D position, float radius)
+	public BoundingCircle(Vector2 position, float radius)
 	{
 		super(position);
 		Radius = radius;
-		vertices = new Vector2D[2];
+		vertices = new Vector2[2];
 		isCircle = true;
 	}
 	
@@ -44,7 +44,7 @@ public class BoundingCircle extends Bounding
 	{
 		super(x, y);
 		Radius = radius;
-		vertices = new Vector2D[2];
+		vertices = new Vector2[2];
 		isCircle = true;
 	}
 	
@@ -62,13 +62,13 @@ public class BoundingCircle extends Bounding
 	 * Project this bounding circle onto the given axis
 	 */
 	@Override
-	public Projection project(Vector2D axis)
+	public Projection project(Vector2 axis)
 	{
 		float rvx = Radius * axis.X;
 		float rvy = Radius * axis.Y;
 
-		this.vertices[0] = new Vector2D(Position.X + rvx, Position.Y + rvy);
-		this.vertices[1] = new Vector2D(Position.X - rvx, Position.Y - rvy);
+		this.vertices[0] = new Vector2(Position.X + rvx, Position.Y + rvy);
+		this.vertices[1] = new Vector2(Position.X - rvx, Position.Y - rvy);
 		
 		float min = axis.dot(vertices[0]);
 		float max = min;
@@ -122,7 +122,7 @@ public class BoundingCircle extends Bounding
 	 * Has the Bounding Circle been intersected by a point?
 	 */
 	@Override
-	public boolean contains(Vector2D point)
+	public boolean contains(Vector2 point)
 	{
 		float sqrmag = Position.squaredMagnitude(point);
 		float sqrradius = (Radius * Radius);

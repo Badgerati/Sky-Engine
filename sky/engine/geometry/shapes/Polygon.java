@@ -5,7 +5,7 @@ import java.util.Random;
 import android.graphics.Matrix;
 import android.graphics.Path;
 
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 import sky.engine.math.Angle;
 
 /**
@@ -34,20 +34,12 @@ public class Polygon extends Shape
 	
 	
 	
-	
-	
-	
-	
-	/********************************************
-	 * 			PUBLIC CONSTRUCTORS
-	 ********************************************/
-	
 	/**
 	 * Create new instance of a geometric polygon
 	 */
-	public Polygon(Vector2D position, Vector2D[] vertices)
+	public Polygon(Vector2[] vertices)
 	{
-		super(position);
+		super(Vector2.getCentre(vertices));
 		initialise(vertices);
 	}
 	
@@ -55,17 +47,7 @@ public class Polygon extends Shape
 	/**
 	 * Create new instance of a geometric polygon
 	 */
-	public Polygon(Vector2D[] vertices)
-	{
-		super(Vector2D.getCentre(vertices));
-		initialise(vertices);
-	}
-	
-	
-	/**
-	 * Create new instance of a geometric polygon
-	 */
-	public Polygon(Vector2D position, int noOfVertices, float size)
+	public Polygon(Vector2 position, int noOfVertices, float size)
 	{
 		super(position);
 		generateVertices(noOfVertices, size, size);
@@ -75,9 +57,67 @@ public class Polygon extends Shape
 	/**
 	 * Creates new instance of a randomised geometric polygon
 	 */
-	public Polygon(Vector2D position, int noOfVertices, float minSize, float maxSize)
+	public Polygon(Vector2 position, int noOfVertices, float minSize, float maxSize)
 	{
 		super(position);
+		generateVertices(noOfVertices, minSize, maxSize);
+	}
+	
+	
+	/**
+	 * Create new instance of a geometric polygon, with only a position
+	 */
+	protected Polygon(Vector2 position)
+	{
+		super(position);
+	}
+	
+	
+	/**
+	 * Create new instance of a geometric polygon, with only a position
+	 */
+	protected Polygon(Vector2 position, Vector2 velocity, float mass)
+	{
+		super(position, velocity, mass);
+	}
+	
+	
+	/**
+	 * Create new instance of a geometric polygon
+	 */
+	protected Polygon(Vector2 position, Vector2[] vertices, Vector2 velocity, float mass)
+	{
+		super(position, velocity, mass);
+		initialise(vertices);
+	}
+	
+	
+	/**
+	 * Create new instance of a geometric polygon
+	 */
+	public Polygon(Vector2[] vertices, Vector2 velocity, float mass)
+	{
+		super(Vector2.getCentre(vertices), velocity, mass);
+		initialise(vertices);
+	}
+	
+	
+	/**
+	 * Create new instance of a geometric polygon
+	 */
+	public Polygon(Vector2 position, int noOfVertices, float size, Vector2 velocity, float mass)
+	{
+		super(position, velocity, mass);
+		generateVertices(noOfVertices, size, size);
+	}
+	
+	
+	/**
+	 * Creates new instance of a randomised geometric polygon
+	 */
+	public Polygon(Vector2 position, int noOfVertices, float minSize, float maxSize, Vector2 velocity, float mass)
+	{
+		super(position, velocity, mass);
 		generateVertices(noOfVertices, minSize, maxSize);
 	}
 	
@@ -87,80 +127,9 @@ public class Polygon extends Shape
 	 */
 	public Polygon(Polygon poly)
 	{
-		super(poly.Position);
+		super(poly.Position, poly.Velocity, poly.Mass);
 		initialise(poly.vertices);
 	}
-	
-	
-	
-	
-	
-
-	
-	/********************************************
-	 * 			PROTECTED CONSTRUCTORS
-	 ********************************************/
-	
-	/**
-	 * Create new instance of a geometric polygon, with only a position
-	 */
-	protected Polygon(Vector2D position)
-	{
-		super(position);
-	}
-	
-	
-	/**
-	 * Create new instance of a geometric polygon, with only a position
-	 */
-	protected Polygon(Vector2D position, Vector2D velocity, float mass)
-	{
-		super(position, velocity, mass);
-	}
-	
-	
-	/**
-	 * Create new instance of a geometric polygon
-	 */
-	protected Polygon(Vector2D position, Vector2D[] vertices, Vector2D velocity, float mass)
-	{
-		super(position, velocity, mass);
-		initialise(vertices);
-	}
-	
-	
-	/**
-	 * Create new instance of a geometric polygon
-	 */
-	protected Polygon(Vector2D[] vertices, Vector2D velocity, float mass)
-	{
-		super(Vector2D.getCentre(vertices), velocity, mass);
-		initialise(vertices);
-	}
-	
-	
-	/**
-	 * Create new instance of a geometric polygon
-	 */
-	protected Polygon(Vector2D position, int noOfVertices, float size, Vector2D velocity, float mass)
-	{
-		super(position, velocity, mass);
-		generateVertices(noOfVertices, size, size);
-	}
-	
-	
-	/**
-	 * Creates new instance of a randomised geometric polygon
-	 */
-	protected Polygon(Vector2D position, int noOfVertices, float minSize, float maxSize, Vector2D velocity, float mass)
-	{
-		super(position, velocity, mass);
-		generateVertices(noOfVertices, minSize, maxSize);
-	}
-	
-	
-	
-	
 	
 	
 	
@@ -172,17 +141,13 @@ public class Polygon extends Shape
 	/**
 	 * Initialises the vertices of this geometric polygon
 	 */
-	private void initialise(Vector2D[] vertices)
+	private void initialise(Vector2[] vertices)
 	{
-		this.vertices = new Vector2D[vertices.length];
+		this.vertices = new Vector2[vertices.length];
 		
 		for (int i = 0; i < vertices.length; i++)
 			this.vertices[i] = vertices[i].clone();
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -195,19 +160,19 @@ public class Polygon extends Shape
 	 */
 	private void generateVertices(int noOfVertices, float minSize, float maxSize)
 	{
-		vertices = new Vector2D[noOfVertices];
+		vertices = new Vector2[noOfVertices];
 		Random rand = new Random();
 		float degrees = 360.0f / noOfVertices;
 		float range = maxSize - minSize;
 		float x = (Angle.sin(0) * ((rand.nextFloat() * range) + minSize));
 		float y = (Angle.cos(0) * ((rand.nextFloat() * range) - minSize));
 		
-		vertices[0] = new Vector2D(x, y);
+		vertices[0] = new Vector2(x, y);
 		for (int i = 1; i < noOfVertices; i++)
 		{
 			x = (Angle.sin((int)(degrees * i)) * ((rand.nextFloat() * range) + minSize));
 			y = (Angle.cos((int)(degrees * i)) * ((rand.nextFloat() * range) - minSize));
-			vertices[i] = new Vector2D(x, y);
+			vertices[i] = new Vector2(x, y);
 		}
 		
 		for (int i = 0; i < vertices.length; i++)
@@ -220,23 +185,13 @@ public class Polygon extends Shape
 	
 	
 	
-	
-	
-	
-	
-	
 	/**
 	 * Clone this geometric polygon
 	 */
 	public Polygon clone()
 	{
-		return new Polygon(this.Position, this.vertices);
+		return new Polygon(this);
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -269,10 +224,6 @@ public class Polygon extends Shape
 	
 	
 	
-	
-	
-	
-	
 	/**
 	 * Returns the perimeter of this geometric polygon
 	 */
@@ -293,10 +244,6 @@ public class Polygon extends Shape
 	
 	
 	
-	
-	
-	
-
 	
 	
 	/**
@@ -320,11 +267,15 @@ public class Polygon extends Shape
 	}
 	
 	
+	
+	
+	
+	
 	/**
 	 * Rotate this geometric polygon at the given origin
 	 */
 	@Override
-	public void rotate(int degree, Vector2D origin)
+	public void rotate(int degree, Vector2 origin)
 	{
 		super.rotate(degree, origin);
 		
@@ -342,11 +293,6 @@ public class Polygon extends Shape
 	
 	
 	
-	
-	
-	
-	
-	
 
 	
 	
@@ -360,36 +306,36 @@ public class Polygon extends Shape
 		
 		if (matrix != null)
 		{
-			Vector2D scaleVel = Velocity.mulScalar(dt);
+			Vector2 scaleVel = Velocity.mulScalar(dt);
 			matrix.reset();
 			matrix.postTranslate(scaleVel.X, scaleVel.Y);
 			
 			polygon.transform(matrix);
 		}
 	}
+	
+	
+	
+	
 	
 	
 	/**
 	 * Integrate this geometric polygon
 	 */
 	@Override
-	public void integrate(Vector2D velocity, float dt)
+	public void integrate(Vector2 velocity, float dt)
 	{
 		super.integrate(velocity, dt);
 		
 		if (matrix != null)
 		{
-			Vector2D scaleVel = velocity.mulScalar(dt);
+			Vector2 scaleVel = velocity.mulScalar(dt);
 			matrix.reset();
 			matrix.postTranslate(scaleVel.X, scaleVel.Y);
 			
 			polygon.transform(matrix);
 		}
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -401,9 +347,9 @@ public class Polygon extends Shape
 	 * Set the position of this geometric polygon
 	 */
 	@Override
-	public void setPosition(Vector2D position)
+	public void setPosition(Vector2 position)
 	{
-		Vector2D delta = position.sub(Position);
+		Vector2 delta = position.sub(Position);
 		super.setPosition(position);
 		
 		if (matrix != null)
@@ -414,12 +360,6 @@ public class Polygon extends Shape
 			polygon.transform(matrix);
 		}
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	

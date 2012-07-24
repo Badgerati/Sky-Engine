@@ -48,6 +48,12 @@ public interface Item
 	
 	
 	/**
+	 * Returns the value of the item.
+	 */
+	public int value();
+	
+	
+	/**
 	 * Does the item equal the given one?
 	 */
 	@Override

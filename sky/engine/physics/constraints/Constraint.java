@@ -1,6 +1,6 @@
 package sky.engine.physics.constraints;
 
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 import sky.engine.physics.bodies.RigidBody;
 
 /**
@@ -56,7 +56,7 @@ public abstract class Constraint
 	/**
 	 * Apply impulse
 	 */
-	public void applyImpulse(Vector2D impulse)
+	public void applyImpulse(Vector2 impulse)
 	{
 		bodyA.Velocity = bodyA.Velocity.add(impulse.mulScalar(bodyA.getInverseMass()));
 		bodyB.Velocity = bodyB.Velocity.sub(impulse.mulScalar(bodyB.getInverseMass()));
@@ -66,7 +66,7 @@ public abstract class Constraint
 	/**
 	 * Apply impulse
 	 */
-	public static void applyImpulse(RigidBody bodyA, RigidBody bodyB, Vector2D impulse)
+	public static void applyImpulse(RigidBody bodyA, RigidBody bodyB, Vector2 impulse)
 	{
 		bodyA.Velocity = bodyA.Velocity.add(impulse.mulScalar(bodyA.getInverseMass()));
 		bodyB.Velocity = bodyB.Velocity.sub(impulse.mulScalar(bodyB.getInverseMass()));

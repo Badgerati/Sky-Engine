@@ -1,6 +1,6 @@
 package sky.engine.graphics.bounds;
 
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 
 /**
  * 
@@ -15,25 +15,25 @@ public class BoundingTri extends BoundingPoly
 	/**
 	 * Create new instance of a bounding triangle
 	 */
-	public BoundingTri(Vector2D v1, Vector2D v2, Vector2D v3)
+	public BoundingTri(Vector2 v1, Vector2 v2, Vector2 v3)
 	{
-		super(new Vector2D[] { v1.clone(), v2.clone(), v3.clone() });
+		super(new Vector2[] { v1.clone(), v2.clone(), v3.clone() });
 	}
 	
 
 	/**
 	 * Create new instance of a bounding triangle
 	 */
-	public BoundingTri(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3)
+	public BoundingTri(Vector2 position, Vector2 v1, Vector2 v2, Vector2 v3)
 	{
-		super(position, new Vector2D[] { v1.clone(), v2.clone(), v3.clone() });
+		super(position, new Vector2[] { v1.clone(), v2.clone(), v3.clone() });
 	}
 	
 	
 	/**
 	 * Create new instance of a bounding triangle
 	 */
-	public BoundingTri(Vector2D[] vertices)
+	public BoundingTri(Vector2[] vertices)
 	{
 		super(vertices);
 		
@@ -45,7 +45,7 @@ public class BoundingTri extends BoundingPoly
 	/**
 	 * Create new instance of a bounding triangle
 	 */
-	public BoundingTri(Vector2D position, Vector2D[] vertices)
+	public BoundingTri(Vector2 position, Vector2[] vertices)
 	{
 		super(position, vertices);
 		
@@ -57,7 +57,7 @@ public class BoundingTri extends BoundingPoly
 	/**
 	 * Create new instance of a bounding triangle on lengths of 3 sides
 	 */
-	public BoundingTri(Vector2D position, float sidex, float sidey, float sidez)
+	public BoundingTri(Vector2 position, float sidex, float sidey, float sidez)
 	{
 		super(position);
 		build(sidex, sidey, sidez);
@@ -100,10 +100,10 @@ public class BoundingTri extends BoundingPoly
 		float height = sidex * (float)Math.sin(AngleA);
 		
 		//vertices
-		vertices = new Vector2D[3];
-		vertices[0] = new Vector2D(0, height * -0.5f);
-		vertices[1] = new Vector2D((float)Math.cos(AngleB) * sidey, height * 0.5f);
-		vertices[2] = new Vector2D(-(float)Math.cos(AngleA) * sidex, height * 0.5f);
+		vertices = new Vector2[3];
+		vertices[0] = new Vector2(0, height * -0.5f);
+		vertices[1] = new Vector2((float)Math.cos(AngleB) * sidey, height * 0.5f);
+		vertices[2] = new Vector2(-(float)Math.cos(AngleA) * sidex, height * 0.5f);
 
 		for (int i = 0; i < vertices.length; i++)
 			vertices[i].integrate(Position);

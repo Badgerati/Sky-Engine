@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 import sky.engine.math.Angle;
 import android.graphics.Canvas;
 
@@ -25,7 +25,7 @@ public class Trail
 	/**
 	 * point where trail is to happen
 	 */
-	private Vector2D mOrigin = null;
+	private Vector2 mOrigin = null;
 	
 	
 	/**
@@ -68,7 +68,7 @@ public class Trail
 	/**
 	 * Create new instance of a Trail object
 	 */
-	public Trail(Vector2D position, int lifetime, int create, float speed, int colour)
+	public Trail(Vector2 position, int lifetime, int create, float speed, int colour)
 	{		
 		mOrigin = position;
 		toCreate = create;
@@ -94,11 +94,11 @@ public class Trail
 	private Particle generateNewParticle()
 	{
 		//position
-		Vector2D position = mOrigin;
+		Vector2 position = mOrigin;
 		
 		//angle of trajectory
 		int tempangle = rand.nextInt(359);
-		Vector2D velocity = new Vector2D((float)(rand.nextDouble() * mSpeed) * Angle.sin(tempangle),
+		Vector2 velocity = new Vector2((float)(rand.nextDouble() * mSpeed) * Angle.sin(tempangle),
 								      (float)(rand.nextDouble() * mSpeed) * Angle.cos(tempangle));
 		float angle = (float)(tempangle * Angle.TO_RADIANS);
 		

@@ -1,12 +1,11 @@
 package sky.engine.graphics.drawable.shapes;
 
-import android.graphics.Canvas;
-import android.graphics.Matrix;
-import android.graphics.Path;
 import sky.engine.geometry.shapes.Box;
-import sky.engine.geometry.vectors.Vector2D;
-import sky.engine.graphics.Colour;
-import sky.engine.graphics.paints.ShapePaint;
+import sky.engine.geometry.vectors.Vector2;
+import sky.engine.graphics.paints.Blur;
+import sky.engine.graphics.paints.Fill;
+import sky.engine.graphics.paints.Outline;
+import android.graphics.Canvas;
 
 /**
  * 
@@ -16,193 +15,95 @@ import sky.engine.graphics.paints.ShapePaint;
  */
 public class DrawableBox extends Box implements DrawableShape
 {
-	/**
-	 * Graphical Paint to paint this Graphical Box
-	 */
-	public ShapePaint Paint = null;
-	
-	
-	
-	
-	
-
-
-	
-
-
 	
 	/**
-	 * Create new instance of a default Graphical Box
+	 * Fill paint used for the box
 	 */
-	public DrawableBox(Vector2D position, float width, float height)
+	protected Fill fillpaint = null;
+	
+	
+	/**
+	 * Outline paint used for the box
+	 */
+	protected Outline outlinepaint = null;
+	
+	
+	/**
+	 * Blur paint used for the box
+	 */
+	protected Blur blurpaint = null;
+	
+	
+	
+	
+	
+
+	
+	/**
+	 * Create new instance of a box
+	 */
+	public DrawableBox(Vector2 position, float width, float height)
 	{
 		super(position, width, height);
-		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
-		initialise();
+		outlinepaint = new Outline();
 	}
 
 	
 	/**
-	 * Create new instance of a default Graphical Box
+	 * Create new instance of a box
 	 */
-	public DrawableBox(Vector2D position, float width, float height, Vector2D velocity, float mass)
+	public DrawableBox(Vector2 position, float width, float height, Vector2 velocity, float mass)
 	{
 		super(position, width, height, velocity, mass);
-		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
-		initialise();
+		outlinepaint = new Outline();
 	}
 	
 	
 	/**
-	 * Create new instance of a Graphical Box
+	 * Create new instance of a box
 	 */
-	public DrawableBox(Vector2D position, float width, float height, int fill, int outline)
+	public DrawableBox(Vector2 position, float width, float height, Fill fill, Outline outline, Blur blur)
 	{
 		super(position, width, height);
-		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
-		initialise();
+		fillpaint = fill;
+		outlinepaint = outline;
+		blurpaint = blur;
 	}
 	
 	
 	/**
-	 * Create new instance of a Graphical Box
+	 * Create new instance of a box
 	 */
-	public DrawableBox(Vector2D position, float width, float height, int fill, int outline, Vector2D velocity, float mass)
+	public DrawableBox(Vector2 position, float width, float height, Fill fill, Outline outline, Blur blur, Vector2 velocity, float mass)
 	{
 		super(position, width, height, velocity, mass);
-		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
-		initialise();
+		fillpaint = fill;
+		outlinepaint = outline;
+		blurpaint = blur;
 	}
 	
 	
 	/**
-	 * Create new instance of a Graphical Box
+	 * Create new instance of a box
 	 */
-	public DrawableBox(Vector2D position, float width, float height, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
+	public DrawableBox(Vector2 position, float width, float height, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias)
+	{
+		super(position, width, height);
+		fillpaint = new Fill(fill, antialias);
+		outlinepaint = new Outline(outline, outlinewidth, antialias);
+		blurpaint = new Blur(blur, blurwidth, blurradius);
+	}
+	
+	
+	/**
+	 * Create new instance of a box
+	 */
+	public DrawableBox(Vector2 position, float width, float height, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias, Vector2 velocity, float mass)
 	{
 		super(position, width, height, velocity, mass);
-		Paint = new ShapePaint(fill, outline, true, outlinewidth, antialias);
-		initialise();
-	}
-
-	
-	
-
-
-	
-	
-	/**
-	 * Create new instance of a default Graphical Box
-	 */
-	public DrawableBox(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4)
-	{
-		super(position, v1, v2, v3, v4);
-		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a default Graphical Box
-	 */
-	public DrawableBox(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, Vector2D velocity, float mass)
-	{
-		super(position, v1, v2, v3, v4, velocity, mass);
-		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a Graphical Box
-	 */
-	public DrawableBox(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, int fill, int outline)
-	{
-		super(position, v1, v2, v3, v4);
-		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a Graphical Box
-	 */
-	public DrawableBox(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, int fill, int outline, Vector2D velocity, float mass)
-	{
-		super(position, v1, v2, v3, v4, velocity, mass);
-		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a Graphical Box
-	 */
-	public DrawableBox(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
-	{
-		super(position, v1, v2, v3, v4, velocity, mass);
-		Paint = new ShapePaint(fill, outline, true, outlinewidth, antialias);
-		initialise();
-	}
-
-	
-	
-
-
-	
-	
-	/**
-	 * Create new instance of a default Graphical Box
-	 */
-	public DrawableBox(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, Vector2D velocity, float mass)
-	{
-		super(v1, v2, v3, v4, velocity, mass);
-		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a default Graphical Box
-	 */
-	public DrawableBox(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4)
-	{
-		super(v1, v2, v3, v4);
-		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a Graphical Box
-	 */
-	public DrawableBox(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, int fill, int outline)
-	{
-		super(v1, v2, v3, v4);
-		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a Graphical Box
-	 */
-	public DrawableBox(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, int fill, int outline, Vector2D velocity, float mass)
-	{
-		super(v1, v2, v3, v4, velocity, mass);
-		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a Graphical Box
-	 */
-	public DrawableBox(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
-	{
-		super(v1, v2, v3, v4, velocity, mass);
-		Paint = new ShapePaint(fill, outline, true, outlinewidth, antialias);
-		initialise();
+		fillpaint = new Fill(fill, antialias);
+		outlinepaint = new Outline(outline, outlinewidth, antialias);
+		blurpaint = new Blur(blur, blurwidth, blurradius);
 	}
 	
 	
@@ -211,13 +112,14 @@ public class DrawableBox extends Box implements DrawableShape
 	
 	
 	/**
-	 * Create new instance of a Graphical Box
+	 * Create new instance of a box
 	 */
-	public DrawableBox(DrawableBox gbox)
+	public DrawableBox(DrawableBox box)
 	{
-		super(gbox.Position, gbox.vertices[0], gbox.vertices[1], gbox.vertices[2], gbox.vertices[3], gbox.Velocity, gbox.Mass);
-		Paint = new ShapePaint(gbox.Paint);
-		initialise();
+		super(box.Position, box.Width, box.Height, box.Velocity, box.Mass);
+		fillpaint = new Fill(box.fillpaint);
+		outlinepaint = new Outline(box.outlinepaint);
+		blurpaint = new Blur(box.blurpaint);
 	}
 	
 	
@@ -225,104 +127,69 @@ public class DrawableBox extends Box implements DrawableShape
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
-	 * Initialises the path of this Graphical Box via the vertices
-	 */
-	private void initialise()
-	{
-		if (polygon == null)
-		{
-			polygon = new Path();
-			matrix = new Matrix();
-		}
-		
-		polygon.reset();
-		polygon.moveTo(vertices[0].X, vertices[0].Y);
-		for (int i = 1; i < vertices.length; i++)
-		{
-			polygon.lineTo(vertices[i].X, vertices[i].Y);
-		}
-		polygon.close();
-	}
-	
-	
-	
-	
-	
-
-	
-	
-	/**
-	 * Set the box's height
-	 */
-	@Override
-	public void setHeight(float height)
-	{
-		super.setHeight(height);
-		initialise();
-	}
-	
-	
-	/**
-	 * Set the box's width
-	 */
-	@Override
-	public void setWidth(float width)
-	{
-		super.setWidth(width);
-		initialise();
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/**
-	 * Clone this Graphical Box
+	 * Clone this box
 	 */
 	public DrawableBox clone()
 	{
 		return new DrawableBox(this);
 	}
 	
+	
+	
+	
+	
+	/**
+	 * Returns the paint used to fill this box
+	 */
+	public Fill fill()
+	{
+		return fillpaint;
+	}
+	
+	
+	/**
+	 * Returns the paint used for the outline of this box
+	 */
+	public Outline outline()
+	{
+		return outlinepaint;
+	}
+	
+	
+	/**
+	 * Returns the paint used for the blurring effect of this box
+	 */
+	public Blur blur()
+	{
+		return blurpaint;
+	}
+	
 
 	
 	
 	
 	
 	
-	
-	
-	
-	
-	
 	/**
-	 * Draw this Graphical Box
+	 * Draw this box
 	 */
 	public void draw(Canvas canvas)
 	{
-		if (Paint.ShowOutline)
-			canvas.drawPath(polygon, Paint.OutlinePaint);
-		
-		canvas.drawPath(polygon, Paint.FillPaint);
+		if (blurpaint != null)
+		{
+			canvas.drawRect(vertices[0].X, vertices[0].Y, vertices[2].X, vertices[2].Y, blurpaint);
+		}
+
+		if (outlinepaint != null)
+		{
+			canvas.drawRect(vertices[0].X, vertices[0].Y, vertices[2].X, vertices[2].Y, outlinepaint);
+		}
+
+		if (fillpaint != null)
+		{
+			canvas.drawRect(vertices[0].X, vertices[0].Y, vertices[2].X, vertices[2].Y, fillpaint);
+		}
 	}
 	
 	

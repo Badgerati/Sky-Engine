@@ -1,7 +1,9 @@
 package sky.engine.graphics.drawable.sprites;
 
 import sky.engine.components.Size;
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
+import sky.engine.graphics.bounds.Bounding;
+import sky.engine.graphics.bounds.BoundingOval;
 import sky.engine.math.Angle;
 import sky.engine.physics.bodies.RigidBody;
 import android.graphics.Bitmap;
@@ -67,12 +69,21 @@ public class Sprite extends RigidBody
 	
 	
 	/**
+	 * Should this sprite be drawn?
+	 */
+	protected boolean hidden = false;
+	
+	
+	/**
 	 * Paint object for the sprite
 	 */
 	protected Paint paint = null;
 	
 	
-	
+	/**
+	 * Bounding Volume generated automatically for the whole sprite
+	 */
+	protected BoundingOval spriteBound = null;
 	
 	
 	
@@ -85,45 +96,55 @@ public class Sprite extends RigidBody
 	/**
 	 * Create an instance of a Sprite
 	 */
-	public Sprite(Bitmap bitmap, Vector2D position, float scale)
+	public Sprite(Bitmap bitmap, Vector2 position, float scale)
 	{
-		super(position, Vector2D.zeros(), 0);
-		initialise(bitmap, position, scale, scale);
+		super(position, Vector2.zeros(), 0);
+		initialise(bitmap, scale, scale);
 	}
 	
 	
 	/**
 	 * Create an instance of a Sprite with velocity and mass
 	 */
-	public Sprite(Bitmap bitmap, Vector2D position, float scale, Vector2D velocity, float mass)
+	public Sprite(Bitmap bitmap, Vector2 position, float scale, Vector2 velocity, float mass)
 	{
 		super(position, velocity, mass);
-		initialise(bitmap, position, scale, scale);
+		initialise(bitmap, scale, scale);
 	}
 	
 	
 	/**
 	 * Create an instance of a Sprite
 	 */
-	public Sprite(Bitmap bitmap, Vector2D position, float scalewidth, float scaleheight)
+	public Sprite(Bitmap bitmap, Vector2 position, float scalewidth, float scaleheight)
 	{
-		super(position, Vector2D.zeros(), 0);
-		initialise(bitmap, position, scalewidth, scaleheight);
+		super(position, Vector2.zeros(), 0);
+		initialise(bitmap, scalewidth, scaleheight);
 	}
 	
 	
 	/**
 	 * Create an instance of a Sprite with velocity and mass
 	 */
-	public Sprite(Bitmap bitmap, Vector2D position, float scalewidth, float scaleheight, Vector2D velocity, float mass)
+	public Sprite(Bitmap bitmap, Vector2 position, float scalewidth, float scaleheight, Vector2 velocity, float mass)
 	{
 		super(position, velocity, mass);
-		initialise(bitmap, position, scalewidth, scaleheight);
+		initialise(bitmap, scalewidth, scaleheight);
 	}
 	
 	
 	
 	
+	
+	
+	
+	/**
+	 * Set the Sprite
+	 */
+	public void set(Bitmap bitmap, float scalewidth, float scaleheight)
+	{
+		initialise(bitmap, scalewidth, scaleheight);
+	}
 	
 	
 	
@@ -134,9 +155,8 @@ public class Sprite extends RigidBody
 	/**
 	 * Initialise the sprite
 	 */
-	private void initialise(Bitmap bitmap, Vector2D position, float scalewidth, float scaleheight)
+	private void initialise(Bitmap bitmap, float scalewidth, float scaleheight)
 	{
-		
 		sprite = bitmap;
 		
 		Width = bitmap.getWidth();
@@ -148,6 +168,8 @@ public class Sprite extends RigidBody
 		sourceRectangle = new Rect(0, 0, (int)Width, (int)Height);
 		destination = new RectF(0, 0, 0, 0);
 		
+		this.spriteBound = new BoundingOval(Position, Width * 0.5f * scaleWidth, Height * 0.5f * scaleHeight);
+		
 		paint = new Paint();
 	}
 	
@@ -155,6 +177,27 @@ public class Sprite extends RigidBody
 	
 	
 	
+	
+	/**
+	 * Hide the sprite.
+	 */
+	public void hide()
+	{
+		hidden = true;
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Show the sprite.
+	 */
+	public void show()
+	{
+		hidden = false;
+	}
 	
 	
 	
@@ -170,9 +213,14 @@ public class Sprite extends RigidBody
 		if (height > 0)
 		{
 			Height = height;
+			spriteBound.yRadius = Height * 0.5f * scaleHeight;
 			sourceRectangle.bottom = (int)height;
 		}
 	}
+	
+	
+	
+	
 	
 	
 	/**
@@ -183,9 +231,14 @@ public class Sprite extends RigidBody
 		if (width > 0)
 		{
 			Width = width;
+			spriteBound.xRadius = Width * 0.5f * scaleWidth;
 			sourceRectangle.right = (int)width;
 		}
 	}
+	
+	
+	
+	
 	
 	
 	/**
@@ -196,6 +249,10 @@ public class Sprite extends RigidBody
 		setWidth(width);
 		setHeight(height);
 	}
+	
+	
+	
+	
 	
 	
 	/**
@@ -213,11 +270,6 @@ public class Sprite extends RigidBody
 	
 	
 	
-	
-	
-	
-	
-	
 	/**
 	 * Returns height of a sprite
 	 */
@@ -225,6 +277,10 @@ public class Sprite extends RigidBody
 	{
 		return Height;
 	}
+	
+	
+	
+	
 	
 	
 	/**
@@ -236,6 +292,10 @@ public class Sprite extends RigidBody
 	}
 	
 	
+	
+	
+	
+	
 	/**
 	 * Returns size of a sprite
 	 */
@@ -243,11 +303,6 @@ public class Sprite extends RigidBody
 	{
 		return new Size(Width, Height);
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -265,6 +320,10 @@ public class Sprite extends RigidBody
 	}
 	
 	
+	
+	
+	
+	
 	/**
 	 * Set scale of sprite across its width
 	 */
@@ -274,6 +333,10 @@ public class Sprite extends RigidBody
 	}
 	
 	
+	
+	
+	
+	
 	/**
 	 * Set scale of sprite across its height
 	 */
@@ -281,6 +344,10 @@ public class Sprite extends RigidBody
 	{
 		this.scaleHeight = scaleheight;
 	}
+	
+	
+	
+	
 	
 	
 	/**
@@ -294,6 +361,9 @@ public class Sprite extends RigidBody
 	
 	
 	
+	
+	
+	
 	/**
 	 * Returns scale of sprite across its width
 	 */
@@ -301,6 +371,9 @@ public class Sprite extends RigidBody
 	{
 		return scaleWidth;
 	}
+	
+	
+	
 	
 	
 	/**
@@ -316,10 +389,6 @@ public class Sprite extends RigidBody
 	
 	
 	
-	
-	
-	
-	
 	/**
 	 * Set sprite's bitmap
 	 */
@@ -329,6 +398,9 @@ public class Sprite extends RigidBody
 	}
 	
 	
+	
+	
+	
 	/**
 	 * Returns sprite's bitmap
 	 */
@@ -336,12 +408,6 @@ public class Sprite extends RigidBody
 	{
 		return sprite;
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -362,6 +428,9 @@ public class Sprite extends RigidBody
 	}
 	
 	
+	
+	
+	
 	/**
 	 * Returns sprite's opacity
 	 */
@@ -369,11 +438,6 @@ public class Sprite extends RigidBody
 	{
 		return paint.getAlpha();
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -390,6 +454,8 @@ public class Sprite extends RigidBody
 	
 	
 	
+	
+	
 	/**
 	 * Returns current rotation of sprite
 	 */
@@ -403,40 +469,70 @@ public class Sprite extends RigidBody
 	
 	
 	
-	
-	
-	
-	
-	
-	
 	/**
-	 * Set the X position of this sprite, editing it to be central
+	 * 
+	 */
+	@Override
+	public void integrate(float dt)
+	{
+		super.integrate(dt);
+		spriteBound.setPosition(Position);
+	}
+
+	
+	
+	
+
+	/**
+	 * 
+	 */
+	@Override
+	public void integrate(Vector2 velocity, float dt)
+	{
+		super.integrate(velocity, dt);
+		spriteBound.setPosition(Position);
+	}
+
+	
+	
+	
+
+	/**
+	 * 
 	 */
 	@Override
 	public void setXPosition(float value)
 	{
-		Position.X = value - (Width * 0.5f);
+		super.setXPosition(value);
+		spriteBound.setPosition(Position);
 	}
 
 	
+	
+	
+
 	/**
-	 * Set the Y position of this sprite, editing it to be central
+	 * 
 	 */
 	@Override
 	public void setYPosition(float value)
 	{
-		Position.Y = value - (Height * 0.5f);
+		super.setYPosition(value);
+		spriteBound.setPosition(Position);
 	}
 
 	
+	
+	
+
 	/**
-	 * Set the X and Y position of this sprite, editing it to be central
+	 * 
 	 */
 	@Override
-	public void setPosition(Vector2D position)
+	public void setPosition(Vector2 position)
 	{
-		Position.X = position.X - (Width * 0.5f);
-		Position.Y = position.Y - (Height * 0.5f);
+		super.setPosition(position);
+		spriteBound.setPosition(Position);
 	}
 	
 	
@@ -444,10 +540,33 @@ public class Sprite extends RigidBody
 	
 	
 	
-	
-	
+	/**
+	 * Returns the bounding volume of the Sprite
+	 */
+	public Bounding spritebound()
+	{
+		return spriteBound;
+	}
 	
 
+
+	
+	
+	
+	
+	/**
+	 * Update the sprite - mainly for velocity usage
+	 */
+	public void update()
+	{
+		this.integrate(1);
+		spriteBound.setPosition(Position);
+	}
+	
+	
+	
+	
+	
 	
 	
 	/**
@@ -455,20 +574,22 @@ public class Sprite extends RigidBody
 	 */
 	public void draw(Canvas canvas)
 	{
-		destination.left = (int)(Position.X - ((Width * 0.5) * scaleWidth));
-		destination.top = (int)(Position.Y - ((Height * 0.5) * scaleHeight));
-		destination.right = (int)(Position.X + ((Width * 0.5) * scaleWidth));
-		destination.bottom = (int)(Position.Y + ((Height * 0.5) * scaleHeight));		
-		
-		canvas.save();
-		canvas.rotate(rotation, Position.X, Position.Y);
-		canvas.drawBitmap(sprite, sourceRectangle, destination, paint);
-		canvas.restore();
+		if (!hidden)
+		{
+			destination.left = (int)(Position.X - ((Width * 0.5) * scaleWidth));
+			destination.top = (int)(Position.Y - ((Height * 0.5) * scaleHeight));
+			destination.right = (int)(Position.X + ((Width * 0.5) * scaleWidth));
+			destination.bottom = (int)(Position.Y + ((Height * 0.5) * scaleHeight));		
+			
+			canvas.save();
+			canvas.rotate(rotation, Position.X, Position.Y);
+			canvas.drawBitmap(sprite, sourceRectangle, destination, paint);
+			canvas.restore();
+			
+			//DrawableOval o = new DrawableOval(spriteBound.getPosition(), spriteBound.xRadius, spriteBound.yRadius, null, new Outline(Colour.RED), null);
+			//o.draw(canvas);
+		}
 	}
-	
-	
-	
-	
 	
 	
 	

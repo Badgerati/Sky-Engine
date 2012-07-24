@@ -1,5 +1,6 @@
 package sky.engine.graphics.paints;
 
+import android.graphics.BlurMaskFilter;
 import android.graphics.Paint;
 
 /**
@@ -17,34 +18,51 @@ public class ShapePaint
 	
 	
 	/**
-	 * Fill paint of the Graphical Paint
+	 * Default blur width
+	 */
+	public static final float DEFAULT_BLUR_WIDTH = 15.0f;
+	
+	
+	/**
+	 * Default blur radius
+	 */
+	public static final float DEFAULT_BLUR_RADIUS = 15.0f;
+	
+	
+	/**
+	 * Fill paint
 	 */
 	public Paint FillPaint = new Paint();
 	
 	
 	/**
-	 * Outline paint of the Graphical Paint
+	 * Outline paint
 	 */
 	public Paint OutlinePaint = new Paint();
 	
 	
 	/**
-	 * Width of the outline
+	 * Blur paint
 	 */
-	private float OutlineWidth;
+	public Paint BlurPaint = new Paint();
 	
 	
 	/**
-	 * Does this Graphical Paint have an outline?
+	 * Does this Paint have an outline?
 	 */
 	public boolean ShowOutline = false;
 	
 	
 	/**
+	 * Does this Paint have a blur?
+	 */
+	public boolean ShowBlur = false;
+	
+	
+	/**
 	 * Is this Graphical Paint being anti-aliased?
 	 */
-	private boolean AntiAliasing;
-	
+	protected boolean AntiAliasing = false;
 	
 	
 	
@@ -53,25 +71,50 @@ public class ShapePaint
 	
 	
 
+
 	
 	/**
 	 * Create new instance of a Graphical Paint
 	 */
-	public ShapePaint(int fillcolour, int outlinecolour, boolean showoutline, float outlinewidth, boolean antialias)
+	public ShapePaint(int fillcolour, boolean antialias)
 	{
-		//fill
-		FillPaint.setStyle(Paint.Style.FILL);
-		FillPaint.setColor(fillcolour);
-		
-		//outline
-		OutlinePaint.setStyle(Paint.Style.STROKE);
-		OutlinePaint.setColor(outlinecolour);
-		OutlineWidth = outlinewidth;
-		OutlinePaint.setStrokeWidth(OutlineWidth);
-		ShowOutline = showoutline;
-		
-		//anti-aliasing
-		AntiAliasing = antialias;
+		this.initialise(fillcolour, 0, 0, false, false, 0, 0, 1, antialias);
+	}
+
+	
+	/**
+	 * Create new instance of a Graphical Paint
+	 */
+	public ShapePaint(int fillcolour, int outlinecolour, boolean antialias)
+	{
+		this.initialise(fillcolour, outlinecolour, 0, true, false, DEFAULT_OUTLINE_WIDTH, 0, 1, antialias);
+	}
+
+	
+	/**
+	 * Create new instance of a Graphical Paint
+	 */
+	public ShapePaint(int fillcolour, int outlinecolour, int blurcolour, boolean antialias)
+	{
+		this.initialise(fillcolour, outlinecolour, blurcolour, true, true, DEFAULT_OUTLINE_WIDTH, DEFAULT_BLUR_WIDTH, DEFAULT_BLUR_RADIUS, antialias);
+	}
+
+	
+	/**
+	 * Create new instance of a Graphical Paint
+	 */
+	public ShapePaint(int fillcolour, int outlinecolour, float outlinewidth, boolean antialias)
+	{
+		this.initialise(fillcolour, outlinecolour, 0, true, false, outlinewidth, 0, 1, antialias);
+	}
+
+	
+	/**
+	 * Create new instance of a Graphical Paint
+	 */
+	public ShapePaint(int fillcolour, int outlinecolour, int blurcolour, float outlinewidth, float blurwidth, float blurradius, boolean antialias)
+	{
+		this.initialise(fillcolour, outlinecolour, blurcolour, true, true, outlinewidth, blurwidth, blurradius, antialias);
 	}
 	
 	
@@ -80,25 +123,84 @@ public class ShapePaint
 	 */
 	public ShapePaint(ShapePaint gpaint)
 	{
-		//fill
-		FillPaint.setStyle(gpaint.FillPaint.getStyle());
-		FillPaint.setColor(gpaint.FillPaint.getColor());
+		FillPaint.set(gpaint.FillPaint);
+		OutlinePaint.set(gpaint.OutlinePaint);
+		BlurPaint.set(gpaint.BlurPaint);
 		
-		//outline
-		OutlinePaint.setStyle(gpaint.OutlinePaint.getStyle());
-		OutlinePaint.setColor(gpaint.OutlinePaint.getColor());
-		OutlineWidth = gpaint.OutlineWidth;
-		OutlinePaint.setStrokeWidth(OutlineWidth);
-		ShowOutline = gpaint.ShowOutline;
-		
-		//anti-aliasing
-		AntiAliasing = gpaint.AntiAliasing;
+		this.setAntiAliasing(gpaint.AntiAliasing);
+		this.ShowOutline = gpaint.ShowOutline;
+		this.ShowBlur = gpaint.ShowBlur;
 	}
 	
 	
 	
 	
 	
+	
+
+	
+	
+	/**
+	 * Initialise the paint
+	 */
+	private void initialise(int fillcolour, int outlinecolour, int blurcolour, boolean showoutline, boolean showblur,
+			float outlinewidth, float blurwidth, float blurradius, boolean antialias)
+	{
+		//fill
+		FillPaint.setStyle(Paint.Style.FILL);
+		FillPaint.setColor(fillcolour);
+		
+		//outline
+		OutlinePaint.setStyle(Paint.Style.STROKE);
+		OutlinePaint.setColor(outlinecolour);
+		OutlinePaint.setStrokeWidth(outlinewidth);
+		ShowOutline = showoutline;
+		
+		//blur
+		BlurPaint.setColor(blurcolour);
+		BlurPaint.setStrokeWidth(blurwidth);
+		BlurPaint.setMaskFilter(new BlurMaskFilter(blurradius, BlurMaskFilter.Blur.OUTER));
+		ShowBlur = showblur;
+		
+		//anti-aliasing
+		this.setAntiAliasing(antialias);
+	}
+
+	
+	
+	
+	
+	
+	
+	/**
+	 * Set the radius of the blur
+	 */
+	public void setBlurRadius(float radius)
+	{
+		BlurPaint.setMaskFilter(new BlurMaskFilter(radius, BlurMaskFilter.Blur.NORMAL));
+	}
+	
+	
+	
+
+	
+	
+	/**
+	 * Set the stroke width of the blur
+	 */
+	public void setBlurWidth(float width)
+	{
+		BlurPaint.setStrokeWidth(width);
+	}
+	
+	
+	/**
+	 * Returns the stroke width of the blur
+	 */
+	public float getBlurWidth()
+	{
+		return BlurPaint.getStrokeWidth();
+	}
 	
 	
 	
@@ -112,7 +214,6 @@ public class ShapePaint
 	 */
 	public void setOutlineWidth(float width)
 	{
-		OutlineWidth = width;
 		OutlinePaint.setStrokeWidth(width);
 	}
 	
@@ -122,7 +223,7 @@ public class ShapePaint
 	 */
 	public float getOutlineWidth()
 	{
-		return OutlineWidth;
+		return OutlinePaint.getStrokeWidth();
 	}
 	
 	
@@ -131,9 +232,6 @@ public class ShapePaint
 	
 	
 	
-	
-	
-
 	
 	
 	/**
@@ -162,12 +260,8 @@ public class ShapePaint
 	
 	
 	
-	
-	
-	
-	
 	/**
-	 * Set fill colour of the Graphical Paint
+	 * Set fill colour of the Paint
 	 */
 	public void setFillColour(int colour)
 	{
@@ -176,28 +270,7 @@ public class ShapePaint
 	
 	
 	/**
-	 * Set outline colour of the Graphical Paint
-	 */
-	public void setOutlineColour(int colour)
-	{
-		OutlinePaint.setColor(colour);
-		
-	}
-	
-	
-	/**
-	 * Set colour of the Graphical Paint
-	 */
-	public void setColour(int fillColour, int outlineColour)
-	{
-		FillPaint.setColor(outlineColour);
-		OutlinePaint.setColor(fillColour);
-	}
-	
-	
-	
-	/**
-	 * Returns fill colour of the Graphical Paint
+	 * Returns fill colour of the Paint
 	 */
 	public int getFillColour()
 	{
@@ -205,8 +278,21 @@ public class ShapePaint
 	}
 	
 	
+	
+	
+	
+	
 	/**
-	 * Returns outline colour of the Graphical Paint
+	 * Set outline colour of the Paint
+	 */
+	public void setOutlineColour(int colour)
+	{
+		OutlinePaint.setColor(colour);
+	}
+	
+	
+	/**
+	 * Returns outline colour of the Paint
 	 */
 	public int getOutlineColour()
 	{
@@ -218,8 +304,41 @@ public class ShapePaint
 	
 	
 	
+	/**
+	 * Set Blur colour of the Paint
+	 */
+	public void setBlurColour(int colour)
+	{
+		BlurPaint.setColor(colour);
+	}
 	
-
+	
+	/**
+	 * Returns Blur colour of the Paint
+	 */
+	public int getBlurColour()
+	{
+		return BlurPaint.getColor();
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Set colour of the Paint
+	 */
+	public void setColour(int fillColour, int outlineColour, int blurcolour)
+	{
+		FillPaint.setColor(outlineColour);
+		OutlinePaint.setColor(fillColour);
+		BlurPaint.setColor(blurcolour);
+	}
+	
+	
+	
+	
 	
 	
 	
@@ -233,31 +352,25 @@ public class ShapePaint
 	
 	
 	/**
-	 * Set the outline alpha value
-	 */
-	public void setOutlineAlpha(int alpha)
-	{
-		OutlinePaint.setAlpha(alpha);
-	}
-	
-	
-	/**
-	 * Set the alpha value
-	 */
-	public void setAlpha(int fillalpha, int outlinealpha)
-	{
-		FillPaint.setAlpha(fillalpha);
-		OutlinePaint.setAlpha(outlinealpha);
-	}
-
-	
-	
-	/**
 	 * Returns the fill alpha value
 	 */
 	public int getFillAlpha()
 	{
 		return FillPaint.getAlpha();
+	}
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Set the outline alpha value
+	 */
+	public void setOutlineAlpha(int alpha)
+	{
+		OutlinePaint.setAlpha(alpha);
 	}
 	
 	
@@ -268,6 +381,46 @@ public class ShapePaint
 	{
 		return OutlinePaint.getAlpha();
 	}
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Set the Blur alpha value
+	 */
+	public void setBlurAlpha(int alpha)
+	{
+		BlurPaint.setAlpha(alpha);
+	}
+	
+	
+	/**
+	 * Returns the Blur alpha value
+	 */
+	public int getBlurAlpha()
+	{
+		return BlurPaint.getAlpha();
+	}
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Set the alpha value
+	 */
+	public void setAlpha(int fillalpha, int outlinealpha, int bluralpha)
+	{
+		FillPaint.setAlpha(fillalpha);
+		OutlinePaint.setAlpha(outlinealpha);
+		BlurPaint.setAlpha(bluralpha);
+	}
+
 	
 	
 	

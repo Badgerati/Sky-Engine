@@ -1,9 +1,10 @@
 package sky.engine.graphics.drawable.shapes;
 
 import sky.engine.geometry.shapes.Oval;
-import sky.engine.geometry.vectors.Vector2D;
-import sky.engine.graphics.Colour;
-import sky.engine.graphics.paints.ShapePaint;
+import sky.engine.geometry.vectors.Vector2;
+import sky.engine.graphics.paints.Blur;
+import sky.engine.graphics.paints.Fill;
+import sky.engine.graphics.paints.Outline;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
@@ -15,10 +16,23 @@ import android.graphics.RectF;
  */
 public class DrawableOval extends Oval implements DrawableShape
 {
+	
 	/**
-	 * Paint to paint this Drawable Oval
+	 * Fill paint used for the oval
 	 */
-	public ShapePaint Paint = null;
+	protected Fill fillpaint = null;
+	
+	
+	/**
+	 * Outline paint used for the oval
+	 */
+	protected Outline outlinepaint = null;
+	
+	
+	/**
+	 * Blur paint used for the oval
+	 */
+	protected Blur blurpaint = null;
 	
 	
 	/**
@@ -37,56 +51,75 @@ public class DrawableOval extends Oval implements DrawableShape
 
 	
 	/**
-	 * Create new instance of a default Drawable Oval
+	 * Create new instance of an oval
 	 */
-	public DrawableOval(Vector2D position, float xradius, float yradius)
+	public DrawableOval(Vector2 position, float xradius, float yradius)
 	{
 		super(position, xradius, yradius);
-		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		outlinepaint = new Outline();
 		setRect();
 	}
 
 	
 	/**
-	 * Create new instance of a default Drawable Oval
+	 * Create new instance of an oval
 	 */
-	public DrawableOval(Vector2D position, float xradius, float yradius, Vector2D velocity, float mass)
+	public DrawableOval(Vector2 position, float xradius, float yradius, Vector2 velocity, float mass)
 	{
 		super(position, xradius, yradius, velocity, mass);
-		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		outlinepaint = new Outline();
 		setRect();
 	}
 	
 	
 	/**
-	 * Create new instance of a Drawable Oval
+	 * Create new instance of an oval
 	 */
-	public DrawableOval(Vector2D position, float xradius, float yradius, int fill, int outline)
+	public DrawableOval(Vector2 position, float xradius, float yradius, Fill fill, Outline outline, Blur blur)
 	{
 		super(position, xradius, yradius);
-		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		fillpaint = fill;
+		outlinepaint = outline;
+		blurpaint = blur;
 		setRect();
 	}
 	
 	
 	/**
-	 * Create new instance of a Drawable Oval
+	 * Create new instance of an oval
 	 */
-	public DrawableOval(Vector2D position, float xradius, float yradius, int fill, int outline, Vector2D velocity, float mass)
+	public DrawableOval(Vector2 position, float xradius, float yradius, Fill fill, Outline outline, Blur blur, Vector2 velocity, float mass)
 	{
 		super(position, xradius, yradius, velocity, mass);
-		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		fillpaint = fill;
+		outlinepaint = outline;
+		blurpaint = blur;
 		setRect();
 	}
 	
 	
 	/**
-	 * Create new instance of a Drawable Oval
+	 * Create new instance of an oval
 	 */
-	public DrawableOval(Vector2D position, float xradius, float yradius, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
+	public DrawableOval(Vector2 position, float xradius, float yradius, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias)
+	{
+		super(position, xradius, yradius);
+		fillpaint = new Fill(fill, antialias);
+		outlinepaint = new Outline(outline, outlinewidth, antialias);
+		blurpaint = new Blur(blur, blurwidth, blurradius);
+		setRect();
+	}
+	
+	
+	/**
+	 * Create new instance of an oval
+	 */
+	public DrawableOval(Vector2 position, float xradius, float yradius, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias, Vector2 velocity, float mass)
 	{
 		super(position, xradius, yradius, velocity, mass);
-		Paint = new ShapePaint(fill, outline, true, outlinewidth, antialias);
+		fillpaint = new Fill(fill, antialias);
+		outlinepaint = new Outline(outline, outlinewidth, antialias);
+		blurpaint = new Blur(blur, blurwidth, blurradius);
 		setRect();
 	}
 	
@@ -94,12 +127,14 @@ public class DrawableOval extends Oval implements DrawableShape
 	
 	
 	/**
-	 * Create new instance of a Drawable Oval
+	 * Create new instance of an oval
 	 */
 	public DrawableOval(DrawableOval oval)
 	{
 		super(oval.Position, oval.xRadius, oval.yRadius, oval.Velocity, oval.Mass);
-		Paint = new ShapePaint(oval.Paint);
+		fillpaint = new Fill(oval.fillpaint);
+		outlinepaint = new Outline(oval.outlinepaint);
+		blurpaint = new Blur(oval.blurpaint);
 		setRect();
 	}
 	
@@ -108,11 +143,8 @@ public class DrawableOval extends Oval implements DrawableShape
 	
 	
 	
-	
-	
-	
 	/**
-	 * 
+	 * Set the rectangular bounds
 	 */
 	private void setRect()
 	{
@@ -125,23 +157,46 @@ public class DrawableOval extends Oval implements DrawableShape
 	
 	
 	
-	
-	
-	
-	
-	
-	
 	/**
-	 * Clone this Drawable Oval
+	 * Clone this oval
 	 */
 	public DrawableOval clone()
 	{
 		return new DrawableOval(this);
 	}
 	
+	
+	
 
 	
 	
+	/**
+	 * Returns the paint used to fill this oval
+	 */
+	public Fill fill()
+	{
+		return fillpaint;
+	}
+	
+	
+	/**
+	 * Returns the paint used for the outline of this oval
+	 */
+	public Outline outline()
+	{
+		return outlinepaint;
+	}
+	
+	
+	/**
+	 * Returns the paint used for the blurring effect of this oval
+	 */
+	public Blur blur()
+	{
+		return blurpaint;
+	}
+	
+
 	
 	
 	
@@ -176,10 +231,51 @@ public class DrawableOval extends Oval implements DrawableShape
 	
 	
 	
-	
-	
 	/**
-	 * Integrate the position of this shape
+	 * Set the X position of the oval
+	 */
+	@Override
+	public void setXPosition(float value)
+	{
+		super.setXPosition(value);
+		setRect();
+	}
+
+	
+	
+	
+
+	/**
+	 * Set the Y position of the oval
+	 */
+	@Override
+	public void setYPosition(float value)
+	{
+		super.setYPosition(value);
+		setRect();
+	}
+
+	
+	
+	
+
+	/**
+	 * Set the position of the oval
+	 */
+	@Override
+	public void setPosition(Vector2 position)
+	{
+		super.setPosition(position);
+		setRect();
+	}
+	
+	
+	
+	
+
+
+	/**
+	 * Integrate the position of this oval
 	 */
 	@Override
 	public void integrate(float dt)
@@ -189,11 +285,14 @@ public class DrawableOval extends Oval implements DrawableShape
 	}
 
 	
+	
+	
+	
 	/**
-	 * Integrate the position of this shape
+	 * Integrate the position of this oval
 	 */
 	@Override
-	public void integrate(Vector2D velocity, float dt)
+	public void integrate(Vector2 velocity, float dt)
 	{
 		super.integrate(velocity, dt);
 		setRect();
@@ -203,25 +302,26 @@ public class DrawableOval extends Oval implements DrawableShape
 	
 	
 	
-	
-	
-	
-	
-	
 	/**
-	 * Draw this Drawable Oval to a given canvas
+	 * Draw this oval
 	 */
 	public void draw(Canvas canvas)
 	{
-		if (Paint.ShowOutline)
-			canvas.drawOval(rect, Paint.OutlinePaint);
+		if (blurpaint != null)
+		{
+			canvas.drawOval(rect, blurpaint);
+		}
 		
-		canvas.drawOval(rect, Paint.FillPaint);
+		if (outlinepaint != null)
+		{
+			canvas.drawOval(rect, outlinepaint);
+		}
+		
+		if (fillpaint != null)
+		{
+			canvas.drawOval(rect, fillpaint);
+		}
 	}
-	
-	
-	
-	
 	
 	
 	

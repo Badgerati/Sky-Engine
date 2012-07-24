@@ -1,7 +1,7 @@
 package sky.engine.graphics.bounds;
 
 import sky.engine.components.Size;
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 
 /**
  * 
@@ -16,7 +16,7 @@ public class BoundingBox extends BoundingPoly
 	/** 
 	 * Create a new bounding box
 	 */
-	public BoundingBox(Vector2D position, float width, float height)
+	public BoundingBox(Vector2 position, float width, float height)
 	{
 		super(position);
 		build(width, height);
@@ -26,7 +26,7 @@ public class BoundingBox extends BoundingPoly
 	/** 
 	 * Create a new bounding box
 	 */
-	public BoundingBox(Vector2D position, Size size)
+	public BoundingBox(Vector2 position, Size size)
 	{
 		super(position);
 		build(size.Width, size.Height);
@@ -36,25 +36,25 @@ public class BoundingBox extends BoundingPoly
 	/** 
 	 * Create a new bounding box
 	 */
-	public BoundingBox(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4)
+	public BoundingBox(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4)
 	{		
-		super(new Vector2D[] { v1.clone(), v2.clone(), v3.clone(), v4.clone() });
+		super(new Vector2[] { v1.clone(), v2.clone(), v3.clone(), v4.clone() });
 	}
 	
 
 	/** 
 	 * Create a new bounding box
 	 */
-	public BoundingBox(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4)
+	public BoundingBox(Vector2 position, Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4)
 	{
-		super(position, new Vector2D[] { v1.clone(), v2.clone(), v3.clone(), v4.clone() });
+		super(position, new Vector2[] { v1.clone(), v2.clone(), v3.clone(), v4.clone() });
 	}
 	
 
 	/** 
 	 * Create a new bounding box
 	 */
-	public BoundingBox(Vector2D[] vertices)
+	public BoundingBox(Vector2[] vertices)
 	{
 		super(vertices);
 		
@@ -66,7 +66,7 @@ public class BoundingBox extends BoundingPoly
 	/** 
 	 * Create a new bounding box
 	 */
-	public BoundingBox(Vector2D position, Vector2D[] vertices)
+	public BoundingBox(Vector2 position, Vector2[] vertices)
 	{
 		super(position, vertices);
 		
@@ -90,12 +90,12 @@ public class BoundingBox extends BoundingPoly
 	 */
 	private void build(float width, float height)
 	{
-		this.vertices = new Vector2D[4];
+		this.vertices = new Vector2[4];
 		
-		this.vertices[0] = new Vector2D(width * -0.5f, height * -0.5f);
-		this.vertices[1] = new Vector2D(width * 0.5f, height * -0.5f);
-		this.vertices[2] = new Vector2D(width * 0.5f, height * 0.5f);
-		this.vertices[3] = new Vector2D(width * -0.5f, height * 0.5f);
+		this.vertices[0] = new Vector2(width * -0.5f, height * -0.5f);
+		this.vertices[1] = new Vector2(width * 0.5f, height * -0.5f);
+		this.vertices[2] = new Vector2(width * 0.5f, height * 0.5f);
+		this.vertices[3] = new Vector2(width * -0.5f, height * 0.5f);
 		
 		for (int i = 0; i < this.vertices.length; i++)
 			this.vertices[i].integrate(Position);
@@ -115,10 +115,10 @@ public class BoundingBox extends BoundingPoly
 	 * Returns this bounding box's axes
 	 */
 	@Override
-	public Vector2D[] getAxes()
+	public Vector2[] getAxes()
 	{
-		Vector2D[] axes = new Vector2D[2];
-		Vector2D edge, normal;
+		Vector2[] axes = new Vector2[2];
+		Vector2 edge, normal;
 		
 		for (int i = 0; i < 2; i++)
 		{

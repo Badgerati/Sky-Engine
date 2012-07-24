@@ -1,7 +1,7 @@
 package sky.engine.graphics.drawable.sprites;
 
 import sky.engine.components.Size;
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
@@ -16,96 +16,91 @@ public class AnimatedSprite extends Sprite
 	/**
 	 * fps of animation
 	 */
-	private int fps;
+	protected int fps;
 	
 	
 	/**
 	 * total number of frames of the animation.
 	 */
-	private int frameCount;
+	protected int frameCount;
 	
 	
 	/**
 	 * Number of rows in the animation
 	 */
-	private int rows;
+	protected int rows;
 	
 	
 	/**
 	 * Number of columns in the animation
 	 */
-	private int columns;
+	protected int columns;
 	
 	
 	/**
 	 * current frame the animation is on
 	 */
-	private int currentFrame;
+	protected int currentFrame;
 	
 	
 	/**
 	 * current row the animation is in
 	 */
-	private int currentRow;
+	protected int currentRow;
 	
 	
 	/**
 	 * current column the animation is in
 	 */
-	private int currentColumn;
+	protected int currentColumn;
 	
 	
 	/**
 	 * starting frame of the animation
 	 */
-	private int startFrame;
+	protected int startFrame;
 	
 	
 	/**
 	 * first frame of the animation
 	 */
-	private int firstFrame;
+	protected int firstFrame;
 	
 	
 	/**
 	 * last frame of the animation	
 	 */
-	private int lastFrame;
+	protected int lastFrame;
 	
 	
 	/**
 	 * direction the animation plays out
 	 */
-	private int direction;
+	protected int direction;
 	
 	
 	/**
 	 * frame timer for use with fps
 	 */
-	private long frameTimer;
+	protected long frameTimer;
 	
 	
 	/**
 	 * should we loop the animation?
 	 */
-	private boolean looping, playing, stopped;
+	protected boolean looping, playing, stopped;
 	
 	
 	
 	
 	
 	
-	
-	
-	
-	
-
 	
 	
 	/**
 	 * Create a new instance of an AnimatedSprite
 	 */
-	public AnimatedSprite(Bitmap bitmap, Vector2D position, float scale, int rows, int columns, int fps)
+	public AnimatedSprite(Bitmap bitmap, Vector2 position, float scale, int rows, int columns, int fps)
 	{
 		super(bitmap, position, scale);
 		initialise(rows, columns, fps);
@@ -115,7 +110,7 @@ public class AnimatedSprite extends Sprite
 	/**
 	 * Create a new instance of an AnimatedSprite with velocity and mass
 	 */
-	public AnimatedSprite(Bitmap bitmap, Vector2D position, float scale, int rows, int columns, int fps, Vector2D velocity, float mass)
+	public AnimatedSprite(Bitmap bitmap, Vector2 position, float scale, int rows, int columns, int fps, Vector2 velocity, float mass)
 	{
 		super(bitmap, position, scale, velocity, mass);
 		initialise(rows, columns, fps);
@@ -126,6 +121,14 @@ public class AnimatedSprite extends Sprite
 	
 	
 	
+	/**
+	 * Set the Animated Sprite
+	 */
+	public void  set(Bitmap bitmap, float scale, int rows, int columns, int fps)
+	{
+		super.set(bitmap, scale, scale);
+		initialise(rows, columns, fps);
+	}
 	
 	
 	
@@ -151,6 +154,9 @@ public class AnimatedSprite extends Sprite
 		Height = Height / rows;
 		
 		setSource();
+
+		this.spriteBound.xRadius = Width * 0.5f * scaleWidth;
+		this.spriteBound.yRadius = Height * 0.5f * scaleHeight;
 		
 		this.fps = 1000 / fps;
 		frameTimer = 0;
@@ -159,14 +165,6 @@ public class AnimatedSprite extends Sprite
 		playing = true;
 		stopped = false;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -182,9 +180,14 @@ public class AnimatedSprite extends Sprite
 		if (width > 0)
 		{
 			Width = width;
+			this.spriteBound.xRadius = Width * 0.5f * scaleWidth;
 			setSource();
 		}
 	}
+	
+	
+	
+	
 	
 	
 	/**
@@ -196,9 +199,14 @@ public class AnimatedSprite extends Sprite
 		if (height > 0)
 		{
 			Height = height;
+			this.spriteBound.yRadius = Height * 0.5f * scaleHeight;
 			setSource();
 		}
 	}
+	
+	
+	
+	
 	
 	
 	/**
@@ -210,6 +218,9 @@ public class AnimatedSprite extends Sprite
 		setWidth(width);
 		setHeight(height);
 	}
+	
+	
+	
 	
 	
 	/**
@@ -228,13 +239,6 @@ public class AnimatedSprite extends Sprite
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Set FPS of animation
 	 */
@@ -245,6 +249,10 @@ public class AnimatedSprite extends Sprite
 	}
 	
 	
+	
+	
+	
+	
 	/**
 	 * Returns FPS
 	 */
@@ -252,9 +260,6 @@ public class AnimatedSprite extends Sprite
 	{
 		return fps;
 	}
-	
-	
-	
 	
 	
 	
@@ -275,6 +280,10 @@ public class AnimatedSprite extends Sprite
 	}
 	
 	
+	
+	
+	
+	
 	/**
 	 * Returns number of frames
 	 */
@@ -282,12 +291,6 @@ public class AnimatedSprite extends Sprite
 	{
 		return frameCount;
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -306,6 +309,9 @@ public class AnimatedSprite extends Sprite
 	
 	
 	
+	
+	
+	
 	/**
 	 * pause the animation
 	 */
@@ -314,6 +320,9 @@ public class AnimatedSprite extends Sprite
 		playing = false;
 		stopped = false;
 	}
+	
+	
+	
 	
 	
 	
@@ -326,6 +335,9 @@ public class AnimatedSprite extends Sprite
 		playing = false;
 		currentFrame = startFrame;
 	}
+	
+	
+	
 	
 	
 	
@@ -342,14 +354,6 @@ public class AnimatedSprite extends Sprite
 	
 	
 	
-	
-
-	
-	
-	
-	
-	
-	
 	/**
 	 * Is the animation playing?
 	 */
@@ -357,6 +361,9 @@ public class AnimatedSprite extends Sprite
 	{
 		return playing;
 	}
+	
+	
+	
 	
 	
 	
@@ -373,6 +380,8 @@ public class AnimatedSprite extends Sprite
 	
 	
 	
+	
+	
 	/**
 	 * Is the animation stopped?
 	 */
@@ -386,6 +395,9 @@ public class AnimatedSprite extends Sprite
 	
 	
 	
+	
+	
+	
 	/**
 	 * Is the animation looping?
 	 */
@@ -393,13 +405,6 @@ public class AnimatedSprite extends Sprite
 	{
 		return looping;
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -430,6 +435,9 @@ public class AnimatedSprite extends Sprite
 	}
 	
 	
+	
+	
+	
 	/**
 	 * Returns the current frame of animation
 	 */
@@ -437,10 +445,6 @@ public class AnimatedSprite extends Sprite
 	{
 		return currentFrame;
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -469,6 +473,10 @@ public class AnimatedSprite extends Sprite
 	}
 	
 	
+	
+	
+	
+	
 	/**
 	 * Returns the starting frame of animation
 	 */
@@ -476,11 +484,6 @@ public class AnimatedSprite extends Sprite
 	{
 		return startFrame;
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -504,6 +507,10 @@ public class AnimatedSprite extends Sprite
 	}
 	
 	
+	
+	
+	
+	
 	/**
 	 * returns first frame of animation
 	 */
@@ -511,9 +518,6 @@ public class AnimatedSprite extends Sprite
 	{
 		return firstFrame;
 	}
-	
-	
-	
 	
 	
 	
@@ -537,6 +541,10 @@ public class AnimatedSprite extends Sprite
 	}
 	
 	
+	
+	
+	
+	
 	/**
 	 * returns last frame of animation
 	 */
@@ -544,11 +552,6 @@ public class AnimatedSprite extends Sprite
 	{
 		return lastFrame;
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -565,6 +568,10 @@ public class AnimatedSprite extends Sprite
 	}
 	
 	
+	
+	
+	
+	
 	/**
 	 * Returns number of columns of animation
 	 */
@@ -572,12 +579,6 @@ public class AnimatedSprite extends Sprite
 	{
 		return columns;
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -599,6 +600,10 @@ public class AnimatedSprite extends Sprite
 	}
 	
 	
+	
+	
+	
+	
 	/**
 	 * Returns direction of animation
 	 */
@@ -606,13 +611,6 @@ public class AnimatedSprite extends Sprite
 	{
 		return direction;
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -640,17 +638,15 @@ public class AnimatedSprite extends Sprite
 	
 	
 	
-	
-	
-	
-	 
-	
-	
 	/**
 	 * Update the sprite to move along a frame
 	 */
 	public void update(long gameTime)
 	{
+		//update main sprite
+		super.update();
+		
+		//update frame
 		if (playing && (gameTime > frameTimer + fps))
 		{
 			//integrate to next frame
@@ -707,11 +703,6 @@ public class AnimatedSprite extends Sprite
 	
 	
 	
-	
-	
-	
-	
-	
 
 	
 	
@@ -722,9 +713,6 @@ public class AnimatedSprite extends Sprite
 	{
 		super.draw(canvas);
 	}
-	
-	
-	
 	
 	
 	

@@ -1,7 +1,9 @@
 package sky.engine.graphics.drawable.shapes;
 
-import sky.engine.geometry.vectors.Vector2D;
-import sky.engine.graphics.paints.ShapePaint;
+import sky.engine.geometry.vectors.Vector2;
+import sky.engine.graphics.paints.Blur;
+import sky.engine.graphics.paints.Fill;
+import sky.engine.graphics.paints.Outline;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
@@ -39,9 +41,8 @@ public class DrawableRoundBox extends DrawableBox
 	
 	
 	
-	
 	/**
-	 * Create new instance of a default Drawable Round Box
+	 * Create new instance of a Round Box
 	 */
 	public DrawableRoundBox(DrawableBox box, float rx, float ry)
 	{
@@ -50,15 +51,10 @@ public class DrawableRoundBox extends DrawableBox
 	}
 	
 	
-	
-
-	
-
-	
 	/**
-	 * Create new instance of a default Graphical Box
+	 * Create new instance of a Round Box
 	 */
-	public DrawableRoundBox(Vector2D position, float width, float height, float rx, float ry)
+	public DrawableRoundBox(Vector2 position, float width, float height, float rx, float ry)
 	{
 		super(position, width, height);
 		intialise(rx, ry);
@@ -66,9 +62,9 @@ public class DrawableRoundBox extends DrawableBox
 
 	
 	/**
-	 * Create new instance of a default Graphical Box
+	 * Create new instance of a Round Box
 	 */
-	public DrawableRoundBox(Vector2D position, float width, float height, float rx, float ry, Vector2D velocity, float mass)
+	public DrawableRoundBox(Vector2 position, float width, float height, float rx, float ry, Vector2 velocity, float mass)
 	{
 		super(position, width, height, velocity, mass);
 		intialise(rx, ry);
@@ -76,141 +72,41 @@ public class DrawableRoundBox extends DrawableBox
 	
 	
 	/**
-	 * Create new instance of a Graphical Box
+	 * Create new instance of a Round Box
 	 */
-	public DrawableRoundBox(Vector2D position, float width, float height, float rx, float ry, int fill, int outline)
+	public DrawableRoundBox(Vector2 position, float width, float height, float rx, float ry, Fill fill, Outline outline, Blur blur)
 	{
-		super(position, width, height, fill, outline);
+		super(position, width, height, fill, outline, blur);
 		intialise(rx, ry);
 	}
 	
 	
 	/**
-	 * Create new instance of a Graphical Box
+	 * Create new instance of a Round Box
 	 */
-	public DrawableRoundBox(Vector2D position, float width, float height, float rx, float ry, int fill, int outline, Vector2D velocity, float mass)
+	public DrawableRoundBox(Vector2 position, float width, float height, float rx, float ry, Fill fill, Outline outline, Blur blur, Vector2 velocity, float mass)
 	{
-		super(position, width, height, fill, outline, velocity, mass);
+		super(position, width, height, fill, outline, blur, velocity, mass);
 		intialise(rx, ry);
 	}
 	
 	
 	/**
-	 * Create new instance of a Graphical Box
+	 * Create new instance of a Round Box
 	 */
-	public DrawableRoundBox(Vector2D position, float width, float height, float rx, float ry, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
+	public DrawableRoundBox(Vector2 position, float width, float height, float rx, float ry, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias)
 	{
-		super(position, width, height, fill, outline, outlinewidth, antialias, velocity, mass);
-		intialise(rx, ry);
-	}
-
-	
-	
-
-
-	
-	
-	/**
-	 * Create new instance of a default Graphical Box
-	 */
-	public DrawableRoundBox(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, float rx, float ry)
-	{
-		super(position, v1, v2, v3, v4);
+		super(position, width, height, fill, outline, blur, outlinewidth, blurwidth, blurradius, antialias);
 		intialise(rx, ry);
 	}
 	
 	
 	/**
-	 * Create new instance of a default Graphical Box
+	 * Create new instance of a Round Box
 	 */
-	public DrawableRoundBox(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, float rx, float ry, Vector2D velocity, float mass)
+	public DrawableRoundBox(Vector2 position, float width, float height, float rx, float ry, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias, Vector2 velocity, float mass)
 	{
-		super(position, v1, v2, v3, v4, velocity, mass);
-		intialise(rx, ry);
-	}
-	
-	
-	/**
-	 * Create new instance of a Graphical Box
-	 */
-	public DrawableRoundBox(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, float rx, float ry, int fill, int outline)
-	{
-		super(position, v1, v2, v3, v4, fill, outline);
-		intialise(rx, ry);
-	}
-	
-	
-	/**
-	 * Create new instance of a Graphical Box
-	 */
-	public DrawableRoundBox(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, float rx, float ry, int fill, int outline, Vector2D velocity, float mass)
-	{
-		super(position, v1, v2, v3, v4, fill, outline, velocity, mass);
-		intialise(rx, ry);
-	}
-	
-	
-	/**
-	 * Create new instance of a Graphical Box
-	 */
-	public DrawableRoundBox(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, float rx, float ry, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
-	{
-		super(position, v1, v2, v3, v4, fill, outline, outlinewidth, antialias, velocity, mass);
-		intialise(rx, ry);
-	}
-
-	
-	
-
-
-	
-	
-	/**
-	 * Create new instance of a default Graphical Box
-	 */
-	public DrawableRoundBox(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, float rx, float ry, Vector2D velocity, float mass)
-	{
-		super(v1, v2, v3, v4, velocity, mass);
-		intialise(rx, ry);
-	}
-	
-	
-	/**
-	 * Create new instance of a default Graphical Box
-	 */
-	public DrawableRoundBox(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4,  float rx, float ry)
-	{
-		super(v1, v2, v3, v4);
-		intialise(rx, ry);
-	}
-	
-	
-	/**
-	 * Create new instance of a Graphical Box
-	 */
-	public DrawableRoundBox(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, float rx, float ry, int fill, int outline)
-	{
-		super(v1, v2, v3, v4, fill, outline);
-		intialise(rx, ry);
-	}
-	
-	
-	/**
-	 * Create new instance of a Graphical Box
-	 */
-	public DrawableRoundBox(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, float rx, float ry, int fill, int outline, Vector2D velocity, float mass)
-	{
-		super(v1, v2, v3, v4, fill, outline, velocity, mass);
-		intialise(rx, ry);
-	}
-	
-	
-	/**
-	 * Create new instance of a Graphical Box
-	 */
-	public DrawableRoundBox(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, float rx, float ry, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
-	{
-		super(v1, v2, v3, v4, fill, outline, outlinewidth, antialias, velocity, mass);
+		super(position, width, height, fill, outline, blur, outlinewidth, blurwidth, blurradius, antialias, velocity, mass);
 		intialise(rx, ry);
 	}
 	
@@ -220,21 +116,16 @@ public class DrawableRoundBox extends DrawableBox
 	
 	
 	/**
-	 * Create new instance of a Graphical Box
+	 * Create new instance of a Round Box
 	 */
 	public DrawableRoundBox(DrawableRoundBox rbox)
 	{
-		super(rbox.Position, rbox.vertices[0], rbox.vertices[1], rbox.vertices[2], rbox.vertices[3], rbox.Velocity, rbox.Mass);
-		Paint = new ShapePaint(rbox.Paint);
+		super(rbox.Position, rbox.Width, rbox.Height, rbox.Velocity, rbox.Mass);
+		fillpaint = new Fill(rbox.fillpaint);
+		outlinepaint = new Outline(rbox.outlinepaint);
+		blurpaint = new Blur(rbox.blurpaint);
 		intialise(rbox.xRadius, rbox.yRadius);
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -247,12 +138,12 @@ public class DrawableRoundBox extends DrawableBox
 	 */
 	private void intialise(float rx, float ry)
 	{
-		//radii
 		xRadius = rx;
 		yRadius = ry;
-		
 		setRect();
 	}
+	
+	
 	
 	
 	
@@ -271,17 +162,8 @@ public class DrawableRoundBox extends DrawableBox
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
-	 * Clone this Drawable Round Box
+	 * Clone this Round Box
 	 */
 	public DrawableRoundBox clone()
 	{
@@ -290,6 +172,49 @@ public class DrawableRoundBox extends DrawableBox
 	
 	
 	
+	
+	
+	
+	/**
+	 * Set the X position of the shape
+	 */
+	@Override
+	public void setXPosition(float value)
+	{
+		super.setXPosition(value);
+		setRect();
+	}
+
+	
+	
+	
+	
+
+	/**
+	 * Set the Y position of the shape
+	 */
+	@Override
+	public void setYPosition(float value)
+	{
+		super.setYPosition(value);
+		setRect();
+	}
+
+	
+	
+	
+	
+
+	/**
+	 * Set the position of the shape
+	 */
+	@Override
+	public void setPosition(Vector2 position)
+	{
+		super.setPosition(position);
+		setRect();
+	}
+
 	
 	
 	
@@ -306,11 +231,15 @@ public class DrawableRoundBox extends DrawableBox
 	}
 
 	
+	
+	
+	
+	
 	/**
 	 * Integrate the position of this shape
 	 */
 	@Override
-	public void integrate(Vector2D velocity, float dt)
+	public void integrate(Vector2 velocity, float dt)
 	{
 		super.integrate(velocity, dt);
 		setRect();
@@ -321,26 +250,27 @@ public class DrawableRoundBox extends DrawableBox
 	
 	
 	
-	
-	
-	
-	
-	
-	
 	/**
-	 * Draw this Drawable Round Box
+	 * Draw this Round Box
 	 */
 	@Override
 	public void draw(Canvas canvas)
 	{
-		if (Paint.ShowOutline)
-			canvas.drawRoundRect(rect, xRadius, yRadius, Paint.OutlinePaint);
-		
-		canvas.drawRoundRect(rect, xRadius, yRadius, Paint.FillPaint);
+		if (blurpaint != null)
+		{
+			canvas.drawRoundRect(rect, xRadius, yRadius, blurpaint);
+		}
+
+		if (outlinepaint != null)
+		{
+			canvas.drawRoundRect(rect, xRadius, yRadius, outlinepaint);
+		}
+
+		if (fillpaint != null)
+		{
+			canvas.drawRoundRect(rect, xRadius, yRadius, fillpaint);
+		}
 	}
-	
-	
-	
 	
 	
 	

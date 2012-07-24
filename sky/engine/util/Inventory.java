@@ -13,13 +13,33 @@ import sky.engine.components.Pair;
 public interface Inventory
 {
 	/**
-	 * Possible errors.
+	 * Unknown errors should never really occur. If they done, well, who knows...
 	 */
 	public static final int ERROR_UNKNOWN = -1;
+	
+	/**
+	 * No error has occurred, and everything was successful.
+	 */
 	public static final int ERROR_NONE = 0;
+	
+	/**
+	 * The inventory is full of items, and you cannot carry anymore.
+	 */
 	public static final int ERROR_BAGS_FULL = 1;
+	
+	/**
+	 * You are carrying too much weight already, and cannot carry anymore.
+	 */
 	public static final int ERROR_OVER_BURDENED = 2;
+	
+	/**
+	 * Maximum amount of gold has been reached.
+	 */
 	public static final int ERROR_GOLD_CAPPED = 3;
+	
+	/**
+	 * There is no gold left in the inventory.
+	 */
 	public static final int ERROR_INSUFFICIENT_GOLD = 4;
 	
 	

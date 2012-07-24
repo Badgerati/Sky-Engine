@@ -1,9 +1,10 @@
 package sky.engine.graphics.drawable.shapes;
 
 import sky.engine.geometry.shapes.Arc;
-import sky.engine.geometry.vectors.Vector2D;
-import sky.engine.graphics.Colour;
-import sky.engine.graphics.paints.ShapePaint;
+import sky.engine.geometry.vectors.Vector2;
+import sky.engine.graphics.paints.Blur;
+import sky.engine.graphics.paints.Fill;
+import sky.engine.graphics.paints.Outline;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
@@ -15,10 +16,23 @@ import android.graphics.RectF;
  */
 public class DrawableArc extends Arc implements DrawableShape
 {
+	
 	/**
-	 * Paint to paint this Drawable Arc
+	 * Fill paint used for the arc
 	 */
-	public ShapePaint Paint = null;
+	protected Fill fillpaint = null;
+	
+	
+	/**
+	 * Outline paint used for the arc
+	 */
+	protected Outline outlinepaint = null;
+	
+	
+	/**
+	 * Blur paint used for the arc
+	 */
+	protected Blur blurpaint = null;
 	
 	
 	/**
@@ -28,7 +42,7 @@ public class DrawableArc extends Arc implements DrawableShape
 	
 	
 	/**
-	 * Draw the lines going towards the center of the arc?
+	 * Draw the lines going towards the centre of the arc?
 	 */
 	public boolean UseCenterLines = true;
 	
@@ -37,62 +51,78 @@ public class DrawableArc extends Arc implements DrawableShape
 	
 	
 	
-	
-	
-
 
 	
 	/**
-	 * Create new instance of a default Drawable Arc
+	 * Create new instance of a arc
 	 */
-	public DrawableArc(Vector2D position, float radius, float startangle, float sweepangle)
+	public DrawableArc(Vector2 position, float radius, float startangle, float sweepangle)
 	{
 		super(position, radius, startangle, sweepangle);
-		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		outlinepaint = new Outline();
 		setRect();
 	}
 
 	
 	/**
-	 * Create new instance of a default Drawable Arc
+	 * Create new instance of a arc
 	 */
-	public DrawableArc(Vector2D position, float radius, float startangle, float sweepangle, Vector2D velocity, float mass)
+	public DrawableArc(Vector2 position, float radius, float startangle, float sweepangle, Vector2 velocity, float mass)
 	{
 		super(position, radius, startangle, sweepangle, velocity, mass);
-		Paint = new ShapePaint(Colour.TRANSPARENT, Colour.WHITE, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		outlinepaint = new Outline();
 		setRect();
 	}
 	
 	
 	/**
-	 * Create new instance of a Drawable Arc
+	 * Create new instance of a arc
 	 */
-	public DrawableArc(Vector2D position, float radius, float startangle, float sweepangle, int fill, int outline)
+	public DrawableArc(Vector2 position, float radius, float startangle, float sweepangle, Fill fill, Outline outline, Blur blur)
 	{
 		super(position, radius, startangle, sweepangle);
-		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		fillpaint = fill;
+		outlinepaint = outline;
+		blurpaint = blur;
 		setRect();
 	}
 	
 	
 	/**
-	 * Create new instance of a Drawable Arc
+	 * Create new instance of a arc
 	 */
-	public DrawableArc(Vector2D position, float radius, float startangle, float sweepangle, int fill, int outline, Vector2D velocity, float mass)
+	public DrawableArc(Vector2 position, float radius, float startangle, float sweepangle, Fill fill, Outline outline, Blur blur, Vector2 velocity, float mass)
 	{
 		super(position, radius, startangle, sweepangle, velocity, mass);
-		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		fillpaint = fill;
+		outlinepaint = outline;
+		blurpaint = blur;
 		setRect();
 	}
 	
 	
 	/**
-	 * Create new instance of a Drawable Arc
+	 * Create new instance of a arc
 	 */
-	public DrawableArc(Vector2D position, float radius, float startangle, float sweepangle, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
+	public DrawableArc(Vector2 position, float radius, float startangle, float sweepangle, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias)
+	{
+		super(position, radius, startangle, sweepangle);
+		fillpaint = new Fill(fill, antialias);
+		outlinepaint = new Outline(outline, outlinewidth, antialias);
+		blurpaint = new Blur(blur, blurwidth, blurradius);
+		setRect();
+	}
+	
+	
+	/**
+	 * Create new instance of a arc
+	 */
+	public DrawableArc(Vector2 position, float radius, float startangle, float sweepangle, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias, Vector2 velocity, float mass)
 	{
 		super(position, radius, startangle, sweepangle, velocity, mass);
-		Paint = new ShapePaint(fill, outline, true, outlinewidth, antialias);
+		fillpaint = new Fill(fill, antialias);
+		outlinepaint = new Outline(outline, outlinewidth, antialias);
+		blurpaint = new Blur(blur, blurwidth, blurradius);
 		setRect();
 	}
 	
@@ -100,17 +130,16 @@ public class DrawableArc extends Arc implements DrawableShape
 	
 	
 	/**
-	 * Create new instance of a Drawable Arc
+	 * Create new instance of a arc
 	 */
 	public DrawableArc(DrawableArc arc)
 	{
 		super(arc.Position, arc.Radius, arc.StartAngle, arc.SweepAngle, arc.Velocity, arc.Mass);
-		Paint = new ShapePaint(arc.Paint);
+		fillpaint = new Fill(arc.fillpaint);
+		outlinepaint = new Outline(arc.outlinepaint);
+		blurpaint = new Blur(arc.blurpaint);
 		setRect();
 	}
-	
-	
-	
 	
 	
 	
@@ -133,13 +162,8 @@ public class DrawableArc extends Arc implements DrawableShape
 	
 	
 	
-	
-	
-	
-	
-	
 	/**
-	 * Clone this Drawable Arc
+	 * Clone this arc
 	 */
 	public DrawableArc clone()
 	{
@@ -147,6 +171,35 @@ public class DrawableArc extends Arc implements DrawableShape
 	}
 	
 	
+	
+
+	
+	
+	/**
+	 * Returns the paint used to fill this arc
+	 */
+	public Fill fill()
+	{
+		return fillpaint;
+	}
+	
+	
+	/**
+	 * Returns the paint used for the outline of this arc
+	 */
+	public Outline outline()
+	{
+		return outlinepaint;
+	}
+	
+	
+	/**
+	 * Returns the paint used for the blurring effect of this arc
+	 */
+	public Blur blur()
+	{
+		return blurpaint;
+	}
 	
 	
 	
@@ -168,10 +221,51 @@ public class DrawableArc extends Arc implements DrawableShape
 	
 	
 	
+	/**
+	 * Set the X position of the arc
+	 */
+	@Override
+	public void setXPosition(float value)
+	{
+		super.setXPosition(value);
+		setRect();
+	}
+
+	
+	
+	
+
+	/**
+	 * Set the Y position of the arc
+	 */
+	@Override
+	public void setYPosition(float value)
+	{
+		super.setYPosition(value);
+		setRect();
+	}
+
+	
+	
+	
+
+	/**
+	 * Set the position of the arc
+	 */
+	@Override
+	public void setPosition(Vector2 position)
+	{
+		super.setPosition(position);
+		setRect();
+	}
+	
+	
+	
+	
 	
 	
 	/**
-	 * Integrate the position of this shape
+	 * Integrate the position of this arc
 	 */
 	@Override
 	public void integrate(float dt)
@@ -181,11 +275,14 @@ public class DrawableArc extends Arc implements DrawableShape
 	}
 
 	
+	
+	
+	
 	/**
-	 * Integrate the position of this shape
+	 * Integrate the position of this arc
 	 */
 	@Override
-	public void integrate(Vector2D velocity, float dt)
+	public void integrate(Vector2 velocity, float dt)
 	{
 		super.integrate(velocity, dt);
 		setRect();
@@ -197,18 +294,25 @@ public class DrawableArc extends Arc implements DrawableShape
 	
 	
 	
-	
-	
-	
 	/**
-	 * Draw this Drawable Arc to a given canvas
+	 * Draw this arc
 	 */
 	public void draw(Canvas canvas)
 	{
-		if (Paint.ShowOutline)
-			canvas.drawArc(rect, StartAngle, SweepAngle, UseCenterLines, Paint.OutlinePaint);
-		
-		canvas.drawArc(rect, StartAngle, SweepAngle, UseCenterLines, Paint.FillPaint);
+		if (blurpaint != null)
+		{
+			canvas.drawArc(rect, StartAngle, SweepAngle, UseCenterLines, blurpaint);
+		}
+
+		if (outlinepaint != null)
+		{
+			canvas.drawArc(rect, StartAngle, SweepAngle, UseCenterLines, outlinepaint);
+		}
+
+		if (fillpaint != null)
+		{
+			canvas.drawArc(rect, StartAngle, SweepAngle, UseCenterLines, fillpaint);
+		}
 	}
 	
 	

@@ -2,7 +2,7 @@ package sky.engine.geometry.shapes;
 
 import sky.engine.geometry.ConvexHull;
 import sky.engine.geometry.Triangulation;
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 import sky.engine.math.Angle;
 import sky.engine.physics.bodies.RigidBody;
 import sky.engine.physics.collisions.MTV;
@@ -32,10 +32,7 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	/**
 	 * List of vertices for the shape
 	 */
-	protected Vector2D[] vertices = null;
-	
-	
-	
+	protected Vector2[] vertices = null;
 	
 	
 	
@@ -47,24 +44,19 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	/**
 	 * Create new instance of a shape
 	 */
-	public Shape(Vector2D position)
+	public Shape(Vector2 position)
 	{
-		super(position, Vector2D.zeros(), 1);
+		super(position, Vector2.zeros(), 1);
 	}
 	
 	
 	/**
 	 * Create new instance of a shape that has mass and velocity
 	 */
-	public Shape(Vector2D position, Vector2D velocity, float mass)
+	public Shape(Vector2 position, Vector2 velocity, float mass)
 	{
 		super(position, velocity, mass);
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -83,35 +75,16 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	
 	
 	
-	
-	
 	/**
 	 * Returns the shape's vertices
 	 */
-	public Vector2D[] vertices()
+	public Vector2[] vertices()
 	{
 		return vertices;
 	}
 	
 	
 	
-	
-	
-	
-	
-	/**
-	 * Set the vertices of the shape.
-	 */
-	public void setVertices(Vector2D[] vertices)
-	{
-		this.vertices = Vector2D.clone(vertices);
-	}
-	
-	
-	
-	
-	
-
 	
 	
 
@@ -130,10 +103,15 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	}
 
 	
+	
+	
+	
+	
+	
 	/**
 	 * Rotate the shape at the given origin on given degree (and its vertices, if any)
 	 */
-	public void rotate(int degree, Vector2D origin)
+	public void rotate(int degree, Vector2 origin)
 	{
 		degreesOfRotation = Angle.confineDegree(degreesOfRotation + degree);
 		Position.rotate(degree, origin);
@@ -142,10 +120,6 @@ public abstract class Shape extends RigidBody implements GeometricShape
 			if (vertices[i] != null)
 				vertices[i].rotate(degree, origin);
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -165,21 +139,13 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	
 	
 	
-	
-	
-	
 	/**
-	 * Returns the area of this Shape. Should be overriden.
+	 * Returns the area of this Shape. Should be overridden.
 	 */
 	public float area()
 	{
 		return 0;
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -204,11 +170,15 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	}
 	
 	
+	
+	
+	
+	
 	/**
 	 * Integrate the position of this shape (and its vertices, if any)
 	 */
 	@Override
-	public void integrate(Vector2D velocity, float dt)
+	public void integrate(Vector2 velocity, float dt)
 	{
 		super.integrate(velocity, dt);
 		
@@ -221,6 +191,30 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	}
 	
 	
+
+	
+	
+	
+	/**
+	 * Set X position of shape (and its vertices, if any)
+	 */
+	@Override
+	public void setXPosition(float value)
+	{
+		this.setPosition(new Vector2(value, Position.Y));
+	}
+	
+	
+	
+	
+	/**
+	 * Set Y position of shape (and its vertices, if any)
+	 */
+	@Override
+	public void setYPosition(float value)
+	{
+		this.setPosition(new Vector2(Position.X, value));
+	}
 	
 	
 	
@@ -231,9 +225,9 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	 * Set position of shape (and its vertices, if any)
 	 */
 	@Override
-	public void setPosition(Vector2D position)
+	public void setPosition(Vector2 position)
 	{
-		Vector2D delta = position.sub(Position);
+		Vector2 delta = position.sub(Position);
 		super.setPosition(position);
 
 		if (vertices != null)
@@ -243,9 +237,6 @@ public abstract class Shape extends RigidBody implements GeometricShape
 					vertices[i].integrate(delta);
 		}
 	}
-	
-	
-	
 	
 	
 	
@@ -267,9 +258,7 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	
 	
 	
-	
-	
-	
+
 	
 	/**
 	 * Returns a ConvexHull of this shape, fails if vertex count is less than 2.
@@ -286,8 +275,6 @@ public abstract class Shape extends RigidBody implements GeometricShape
 
 	
 	
-	
-
 	
 	
 	/**
@@ -317,14 +304,10 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	
 	
 	
-	
-	
-	
-	
 	/**
 	 * Is the given point contained within this shape?
 	 */
-	public boolean contains(Vector2D point)
+	public boolean contains(Vector2 point)
 	{
 		return SATCollision.contains(this, point);
 	}
@@ -334,18 +317,13 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	
 	
 	
-	
-	
-	
-	
-	
 	/**
 	 * Returns this shape's axes
 	 */
-	public Vector2D[] getAxes()
+	public Vector2[] getAxes()
 	{
-		Vector2D[] axes = new Vector2D[vertices.length];
-		Vector2D edge, normal;
+		Vector2[] axes = new Vector2[vertices.length];
+		Vector2 edge, normal;
 		
 		for (int i = 0; i < vertices.length; i++)
 		{
@@ -364,15 +342,10 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	
 	
 	
-	
-	
-	
-	
-	
 	/**
 	 * Projects the this shape's vertices onto the given axis
 	 */
-	public Projection project(Vector2D axis)
+	public Projection project(Vector2 axis)
 	{	
 		float min = axis.dot(vertices[0]);
 		float max = min;
@@ -388,10 +361,6 @@ public abstract class Shape extends RigidBody implements GeometricShape
 		
 		return new Projection(min, max);
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -416,9 +385,6 @@ public abstract class Shape extends RigidBody implements GeometricShape
 		string += ")";
 		return string;
 	}
-	
-	
-	
 	
 	
 }

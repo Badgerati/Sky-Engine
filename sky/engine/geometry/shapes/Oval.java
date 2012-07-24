@@ -1,6 +1,6 @@
 package sky.engine.geometry.shapes;
 
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 import sky.engine.physics.collisions.Projection;
 
 /**
@@ -27,25 +27,29 @@ public class Oval extends Shape
 	
 	
 	
-
-	
-	
-
-	
-	
-	/********************************************
-	 * 			PUBLIC CONSTRUCTORS
-	 ********************************************/
 	
 	/**
 	 * Create new instance of a Geometric Oval
 	 */
-	public Oval(Vector2D position, float xradius, float yradius)
+	public Oval(Vector2 position, float xradius, float yradius)
 	{
 		super(position);
 		xRadius = xradius;
 		yRadius = yradius;
-		vertices = new Vector2D[2];
+		vertices = new Vector2[2];
+		isCircle = true;
+	}
+
+	
+	/**
+	 * Create new instance of a Geometric Oval
+	 */
+	public Oval(Vector2 position, float xradius, float yradius, Vector2 velocity, float mass)
+	{
+		super(position, velocity, mass);
+		xRadius = xradius;
+		yRadius = yradius;
+		vertices = new Vector2[2];
 		isCircle = true;
 	}
 	
@@ -55,40 +59,12 @@ public class Oval extends Shape
 	 */
 	public Oval(Oval oval)
 	{
-		super(oval.Position);
+		super(oval.Position, oval.Velocity, oval.Mass);
 		xRadius = oval.xRadius;
 		yRadius = oval.xRadius;
-		vertices = new Vector2D[2];
+		vertices = new Vector2[2];
 		isCircle = true;
 	}
-
-	
-	
-	
-	
-	
-	
-
-	
-	/********************************************
-	 * 			PROTECTED CONSTRUCTORS
-	 ********************************************/
-	
-	/**
-	 * Create new instance of a Geometric Oval
-	 */
-	protected Oval(Vector2D position, float xradius, float yradius, Vector2D velocity, float mass)
-	{
-		super(position, velocity, mass);
-		xRadius = xradius;
-		yRadius = yradius;
-		vertices = new Vector2D[2];
-		isCircle = true;
-	}
-	
-	
-	
-	
 	
 	
 	
@@ -102,11 +78,8 @@ public class Oval extends Shape
 	 */
 	public Oval clone()
 	{
-		return new Oval(Position, xRadius, yRadius);
+		return new Oval(this);
 	}
-	
-	
-	
 	
 	
 	
@@ -126,7 +99,6 @@ public class Oval extends Shape
 	
 	
 	
-	
 	/**
 	 * 
 	 */
@@ -139,8 +111,6 @@ public class Oval extends Shape
 	
 	
 	
-	
-	
 	/**
 	 * 
 	 */
@@ -148,8 +118,6 @@ public class Oval extends Shape
 	{
 		return xRadius;
 	}
-	
-	
 	
 	
 	
@@ -170,23 +138,13 @@ public class Oval extends Shape
 	
 	
 	
-	
-	
-	
-	
-	
 	/**
 	 * Return the approx circumference of this oval
 	 */
 	public float circumference()
 	{
-		return 2 * (float)Math.PI * (float)Math.sqrt( ((xRadius * xRadius) + (yRadius * yRadius)) * 0.5f );
+		return 2 * (float)Math.PI * android.util.FloatMath.sqrt( ((xRadius * xRadius) + (yRadius * yRadius)) * 0.5f );
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -207,21 +165,17 @@ public class Oval extends Shape
 	
 	
 	
-	
-	
-	
-	
 	/**
 	 * Project this oval onto the given axis
 	 */
 	@Override
-	public Projection project(Vector2D axis)
+	public Projection project(Vector2 axis)
 	{
 		float rvx = xRadius * axis.X;
 		float rvy = yRadius * axis.Y;
 
-		this.vertices[0] = new Vector2D(Position.X + rvx, Position.Y + rvy);
-		this.vertices[1] = new Vector2D(Position.X - rvx, Position.Y - rvy);
+		this.vertices[0] = new Vector2(Position.X + rvx, Position.Y + rvy);
+		this.vertices[1] = new Vector2(Position.X - rvx, Position.Y - rvy);
 		
 		float min = axis.dot(vertices[0]);
 		float max = min;

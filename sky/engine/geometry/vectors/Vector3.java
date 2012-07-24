@@ -10,7 +10,7 @@ import sky.engine.math.Angle;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public class Vector3D implements Comparable<Vector3D>
+public class Vector3 implements Comparable<Vector3>
 {
 	/**
 	 * X component of this vector
@@ -33,8 +33,8 @@ public class Vector3D implements Comparable<Vector3D>
 	/**
 	 * Comparator object for a Vector.	
 	 */
-	public static final Comparator<Vector3D> VECTOR3D_COMPARATOR = new Comparator<Vector3D>() {
-		public int compare(Vector3D v1, Vector3D v2) {
+	public static final Comparator<Vector3> VECTOR3D_COMPARATOR = new Comparator<Vector3>() {
+		public int compare(Vector3 v1, Vector3 v2) {
 			return v1.compareTo(v2);
 		}
 	};
@@ -53,7 +53,7 @@ public class Vector3D implements Comparable<Vector3D>
 	/**
 	 * Create a new 3D Vector object
 	 */
-	public Vector3D()
+	public Vector3()
 	{
 		X = 0;
 		Y = 0;
@@ -64,7 +64,7 @@ public class Vector3D implements Comparable<Vector3D>
 	/**
 	 * Create a new 3D Vector object
 	 */
-	public Vector3D(float x, float y, float z)
+	public Vector3(float x, float y, float z)
 	{
 		X = x;
 		Y = y;
@@ -75,7 +75,7 @@ public class Vector3D implements Comparable<Vector3D>
 	/**
 	 * Create a new 3D Vector object
 	 */
-	public Vector3D(Vector2D vector)
+	public Vector3(Vector2 vector)
 	{
 		X = vector.X;
 		Y = vector.Y;
@@ -86,7 +86,7 @@ public class Vector3D implements Comparable<Vector3D>
 	/**
 	 * Create a new 3D Vector object
 	 */
-	public Vector3D(Vector2D vector, float z)
+	public Vector3(Vector2 vector, float z)
 	{
 		X = vector.X;
 		Y = vector.Y;
@@ -97,7 +97,7 @@ public class Vector3D implements Comparable<Vector3D>
 	/**
 	 * Create a new 3D Vector object
 	 */
-	public Vector3D(Vector3D vector)
+	public Vector3(Vector3 vector)
 	{
 		X = vector.X;
 		Y = vector.Y;
@@ -130,7 +130,7 @@ public class Vector3D implements Comparable<Vector3D>
 	/**
 	 * Set X, Y and Z components
 	 */
-	public void set(Vector2D vector, float z)
+	public void set(Vector2 vector, float z)
 	{
 		X = vector.X;
 		Y = vector.Y;
@@ -141,7 +141,7 @@ public class Vector3D implements Comparable<Vector3D>
 	/**
 	 * Set X, Y and Z components
 	 */
-	public void set(Vector3D vector)
+	public void set(Vector3 vector)
 	{
 		X = vector.X;
 		Y = vector.Y;
@@ -159,18 +159,18 @@ public class Vector3D implements Comparable<Vector3D>
 	/**
 	 * Clone this vector
 	 */
-	public Vector3D clone()
+	public Vector3 clone()
 	{
-		return new Vector3D(this.X, this.Y, this.Z);
+		return new Vector3(this.X, this.Y, this.Z);
 	}
 	
 	
 	/**
 	 * Clones the given vector array
 	 */
-	public static Vector3D[] clone(Vector3D[] vectors)
+	public static Vector3[] clone(Vector3[] vectors)
 	{
-		Vector3D[] v = new Vector3D[vectors.length];
+		Vector3[] v = new Vector3[vectors.length];
 		
 		for (int i = 0; i < vectors.length; i++)
 		{
@@ -213,7 +213,7 @@ public class Vector3D implements Comparable<Vector3D>
 	{
 		try
 		{
-			Vector3D v2 = (Vector3D)o;
+			Vector3 v2 = (Vector3)o;
 			return (X == v2.X && Y == v2.Y && Z == v2.Z);
 		}
 		catch (Exception e)
@@ -235,7 +235,7 @@ public class Vector3D implements Comparable<Vector3D>
 	 * Compares this Vector to another given Vector. Returns 0 if they are equal, -1 if this
 	 * Vector is less than the given vector, and 1 if this Vector is greater than it.
 	 */
-	public int compareTo(Vector3D v2)
+	public int compareTo(Vector3 v2)
 	{
 		//greater than given
 		if  (X > v2.X || Y > v2.Y || Z > v2.Z)
@@ -315,9 +315,9 @@ public class Vector3D implements Comparable<Vector3D>
 	/**
 	 * returns a vector of zeros
 	 */
-	public static Vector3D zeros()
+	public static Vector3 zeros()
 	{
-		return new Vector3D(0, 0, 0);
+		return new Vector3(0, 0, 0);
 	}
 	
 	
@@ -342,7 +342,7 @@ public class Vector3D implements Comparable<Vector3D>
 	/**
 	 * Returns the magnitude of the distance between this vector and another.
 	 */
-	public float magnitude(Vector3D v2)
+	public float magnitude(Vector3 v2)
 	{
 		float x = X - v2.X;
 		float y = Y - v2.Y;
@@ -364,7 +364,7 @@ public class Vector3D implements Comparable<Vector3D>
 	/**
 	 * Returns the squared magnitude of this vector to another.
 	 */
-	public float squaredMagnitude(Vector3D v2)
+	public float squaredMagnitude(Vector3 v2)
 	{
 		float x = X - v2.X;
 		float y = Y - v2.Y;
@@ -406,9 +406,9 @@ public class Vector3D implements Comparable<Vector3D>
 	/**
 	 * Returns the midpoint of this vector to another vector
 	 */
-	public Vector3D midpoint(Vector3D v2)
+	public Vector3 midpoint(Vector3 v2)
 	{
-		return new Vector3D( (X + v2.X) * 0.5f, (Y + v2.Y) * 0.5f, (Z + v2.Z) * 0.5f  ); 
+		return new Vector3( (X + v2.X) * 0.5f, (Y + v2.Y) * 0.5f, (Z + v2.Z) * 0.5f  ); 
 	}
 	
 	
@@ -422,9 +422,9 @@ public class Vector3D implements Comparable<Vector3D>
 	 * For example, the 8 vertices of a cube will return the centre point of
 	 * the cube.
 	 */
-	public static Vector3D getCentre(Vector3D[] vectors)
+	public static Vector3 getCentre(Vector3[] vectors)
 	{
-		Vector3D centre = new Vector3D();
+		Vector3 centre = new Vector3();
 		
 		for (int i = 0; i < vectors.length; i++)
 		{
@@ -495,7 +495,7 @@ public class Vector3D implements Comparable<Vector3D>
 	/**
 	 * Integrate this vector by given velocity
 	 */
-	public void integrate(Vector2D velocity)
+	public void integrate(Vector2 velocity)
 	{
 		X += velocity.X;
 		Y += velocity.Y;
@@ -505,7 +505,7 @@ public class Vector3D implements Comparable<Vector3D>
 	/**
 	 * Integrate this vector by given velocity
 	 */
-	public void integrate(Vector3D velocity)
+	public void integrate(Vector3 velocity)
 	{
 		X += velocity.X;
 		Y += velocity.Y;
@@ -533,30 +533,30 @@ public class Vector3D implements Comparable<Vector3D>
 	 *******************************************/
 	
 	/** Add a vector to this vector */
-	public Vector3D add(Vector3D vector)
+	public Vector3 add(Vector3 vector)
 	{
-		return new Vector3D(X + vector.X, Y + vector.Y, Z + vector.Z);
+		return new Vector3(X + vector.X, Y + vector.Y, Z + vector.Z);
 	}
 
 	
 	/** Subtract the given vector from this vector */
-	public Vector3D sub(Vector3D vector)
+	public Vector3 sub(Vector3 vector)
 	{
-		return new Vector3D(X - vector.X, Y - vector.Y, Z - vector.Z);
+		return new Vector3(X - vector.X, Y - vector.Y, Z - vector.Z);
 	}
 
 	
 	/** Multiply a vector to this vector */
-	public Vector3D mul(Vector3D vector)
+	public Vector3 mul(Vector3 vector)
 	{
-		return new Vector3D(X * vector.X, Y * vector.Y, Z * vector.Z);
+		return new Vector3(X * vector.X, Y * vector.Y, Z * vector.Z);
 	}
 
 	
 	/** Divide this vector by the given vector */
-	public Vector3D div(Vector3D vector)
+	public Vector3 div(Vector3 vector)
 	{
-		return new Vector3D(X / vector.X, Y / vector.Y, Z / vector.Z);
+		return new Vector3(X / vector.X, Y / vector.Y, Z / vector.Z);
 	}
 	
 	
@@ -571,30 +571,30 @@ public class Vector3D implements Comparable<Vector3D>
 	
 	
 	/** Add a vector to this vector */
-	public Vector3D add(Vector2D vector)
+	public Vector3 add(Vector2 vector)
 	{
-		return new Vector3D(X + vector.X, Y + vector.Y, Z);
+		return new Vector3(X + vector.X, Y + vector.Y, Z);
 	}
 
 	
 	/** Subtract the given vector from this vector */
-	public Vector3D sub(Vector2D vector)
+	public Vector3 sub(Vector2 vector)
 	{
-		return new Vector3D(X - vector.X, Y - vector.Y, Z);
+		return new Vector3(X - vector.X, Y - vector.Y, Z);
 	}
 
 	
 	/** Multiply a vector to this vector */
-	public Vector3D mul(Vector2D vector)
+	public Vector3 mul(Vector2 vector)
 	{
-		return new Vector3D(X * vector.X, Y * vector.Y, Z);
+		return new Vector3(X * vector.X, Y * vector.Y, Z);
 	}
 
 	
 	/** Divide this vector by the given vector */
-	public Vector3D div(Vector2D vector)
+	public Vector3 div(Vector2 vector)
 	{
-		return new Vector3D(X / vector.X, Y / vector.Y, Z);
+		return new Vector3(X / vector.X, Y / vector.Y, Z);
 	}
 	
 	
@@ -606,32 +606,32 @@ public class Vector3D implements Comparable<Vector3D>
 	
 	
 	/** multiply by scalar */
-	public Vector3D mulScalar(float value)
+	public Vector3 mulScalar(float value)
 	{
-		return new Vector3D(X * value, Y * value, Z * value);
+		return new Vector3(X * value, Y * value, Z * value);
 	}
 	
 	
 	/** multiply by scalar */
-	public Vector3D mulScalar(float x, float y, float z)
+	public Vector3 mulScalar(float x, float y, float z)
 	{
-		return new Vector3D(X * x, Y * y, Z * z);
+		return new Vector3(X * x, Y * y, Z * z);
 	}
 	
 	
 	
 	
 	/** divide by scalar */
-	public Vector3D divScalar(float value)
+	public Vector3 divScalar(float value)
 	{
-		return new Vector3D(X / value, Y / value, Z / value);
+		return new Vector3(X / value, Y / value, Z / value);
 	}
 	
 	
 	/** divide by scalar */
-	public Vector3D divScalar(float x, float y, float z)
+	public Vector3 divScalar(float x, float y, float z)
 	{
-		return new Vector3D(X / x, Y / y, Z / z);
+		return new Vector3(X / x, Y / y, Z / z);
 	}
 	
 	
@@ -645,7 +645,7 @@ public class Vector3D implements Comparable<Vector3D>
 	/**
 	 * dot product
 	 */
-	public float dot(Vector3D vector)
+	public float dot(Vector3 vector)
 	{
 		return (X * vector.X) + (Y * vector.Y) + (Z * vector.Z);
 	}
@@ -655,12 +655,12 @@ public class Vector3D implements Comparable<Vector3D>
 	/**
 	 * cross product
 	 */
-	public Vector3D cross(Vector3D vector)
+	public Vector3 cross(Vector3 vector)
 	{
 		float Cx = (Y * vector.Z) - (Z * vector.Y);
 		float Cy = (Z * vector.X) - (X * vector.Z);
 		float Cz = (X * vector.Y) - (Y * vector.X);
-		return new Vector3D(Cx, Cy, Cz);
+		return new Vector3(Cx, Cy, Cz);
 	}
 	
 	
@@ -672,29 +672,29 @@ public class Vector3D implements Comparable<Vector3D>
 	
 	
 	/** Square the vector's components */
-	public Vector3D square()
+	public Vector3 square()
 	{
-		return new Vector3D(X * X, Y * Y, Z * Z);
+		return new Vector3(X * X, Y * Y, Z * Z);
 	}
 	
 	
 	
 	/** Inverse the vector's components */
-	public Vector3D inverse()
+	public Vector3 inverse()
 	{
-		return new Vector3D(1.0f / X, 1.0f / Y, 1.0f / Z);
+		return new Vector3(1.0f / X, 1.0f / Y, 1.0f / Z);
 	}
 	
 	
 	
 	/** Raise the vector's components to a given power */
-	public Vector3D toPowerOf(int power)
+	public Vector3 toPowerOf(int power)
 	{
 		float x = 1, y = 1, z = 1;
 		
 		//base case
 		if (power == 0)
-			return new Vector3D(x, y, z);
+			return new Vector3(x, y, z);
 		
 		//is power less than 0?
 		if (power < 0)
@@ -719,7 +719,7 @@ public class Vector3D implements Comparable<Vector3D>
 		}
 		
 		//return
-		return new Vector3D(x, y, z);
+		return new Vector3(x, y, z);
 	}
 	
 	

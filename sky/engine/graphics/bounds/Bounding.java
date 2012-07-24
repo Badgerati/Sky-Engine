@@ -3,7 +3,7 @@ package sky.engine.graphics.bounds;
 import sky.engine.geometry.ConvexHull;
 import sky.engine.geometry.Triangulation;
 import sky.engine.geometry.shapes.GeometricShape;
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 import sky.engine.math.Angle;
 import sky.engine.physics.collisions.MTV;
 import sky.engine.physics.collisions.Projection;
@@ -19,13 +19,13 @@ public abstract class Bounding implements GeometricShape
 	/**
 	 * Position of the bound
 	 */
-	protected Vector2D Position = null;
+	protected Vector2 Position = null;
 	
 	
 	/**
 	 * Vertices of this bound
 	 */
-	protected Vector2D[] vertices = null;
+	protected Vector2[] vertices = null;
 	
 	
 	/**
@@ -53,7 +53,7 @@ public abstract class Bounding implements GeometricShape
 	/**
 	 * Create new instance of a Bounding Volume
 	 */
-	protected Bounding(Vector2D position)
+	protected Bounding(Vector2 position)
 	{
 		Position = position.clone();
 	}
@@ -64,7 +64,7 @@ public abstract class Bounding implements GeometricShape
 	 */
 	protected Bounding(float x, float y)
 	{
-		Position = new Vector2D(x, y);
+		Position = new Vector2(x, y);
 	}
 	
 	
@@ -93,7 +93,7 @@ public abstract class Bounding implements GeometricShape
 	/**
 	 * Rotate the bound at the given origin on given degree
 	 */
-	public void rotate(int degree, Vector2D origin)
+	public void rotate(int degree, Vector2 origin)
 	{
 		degreesOfRotation = Angle.confineDegree(degreesOfRotation + degree);
 		Position.rotate(degree, origin);
@@ -117,7 +117,7 @@ public abstract class Bounding implements GeometricShape
 	/**
 	 * Integrate the position of this bound (and it's vertices, if any)
 	 */
-	public void integrate(Vector2D velocity, float dt)
+	public void integrate(Vector2 velocity, float dt)
 	{
 		Position.integrate(velocity.mulScalar(dt));
 		
@@ -130,7 +130,7 @@ public abstract class Bounding implements GeometricShape
 	}
 	
 	
-	
+
 	
 	
 	
@@ -139,13 +139,37 @@ public abstract class Bounding implements GeometricShape
 	/**
 	 * Set position of bound
 	 */
-	public void setPosition(Vector2D position)
+	public void setPosition(float x, float y)
 	{
-		Vector2D diff = position.sub(Position);
+		Vector2 delta = new Vector2();
+		delta.X = x - Position.X;
+		delta.Y = y - Position.Y;
+		
+		Position.X = x;
+		Position.Y = y;
+
+		if (vertices != null)
+		{
+			for (int i = 0; i < vertices.length; i++)
+				if (vertices[i] != null)
+					vertices[i].integrate(delta);
+		}
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Set position of bound
+	 */
+	public void setPosition(Vector2 position)
+	{
+		Vector2 diff = position.sub(Position);
 		
 		Position.X = position.X;
 		Position.Y = position.Y;
-
+		
 		if (vertices != null)
 		{
 			for (int i = 0; i < vertices.length; i++)
@@ -165,7 +189,7 @@ public abstract class Bounding implements GeometricShape
 	/**
 	 * Get the bound's position
 	 */
-	public Vector2D getPosition()
+	public Vector2 getPosition()
 	{
 		return Position;
 	}
@@ -179,23 +203,9 @@ public abstract class Bounding implements GeometricShape
 	/**
 	 * Returns the vertices of this bound.
 	 */
-	public Vector2D[] vertices()
+	public Vector2[] vertices()
 	{
 		return vertices;
-	}
-	
-	
-	
-	
-	
-	
-	
-	/**
-	 * Set the vertices of the bound.
-	 */
-	public void setVertices(Vector2D[] vertices)
-	{
-		this.vertices = Vector2D.clone(vertices);
 	}
 	
 	
@@ -289,7 +299,7 @@ public abstract class Bounding implements GeometricShape
 	/**
 	 * Is the given point contained within this bound?
 	 */
-	public boolean contains(Vector2D point)
+	public boolean contains(Vector2 point)
 	{
 		return SATCollision.contains(this, point);
 	}
@@ -307,10 +317,10 @@ public abstract class Bounding implements GeometricShape
 	/**
 	 * Returns this bound's axes
 	 */
-	public Vector2D[] getAxes()
+	public Vector2[] getAxes()
 	{
-		Vector2D[] axes = new Vector2D[vertices.length];
-		Vector2D edge, normal;
+		Vector2[] axes = new Vector2[vertices.length];
+		Vector2 edge, normal;
 		
 		for (int i = 0; i < vertices.length; i++)
 		{
@@ -337,7 +347,7 @@ public abstract class Bounding implements GeometricShape
 	/**
 	 * Projects the this bound's vertices onto the given axis
 	 */
-	public Projection project(Vector2D axis)
+	public Projection project(Vector2 axis)
 	{	
 		float min = axis.dot(vertices[0]);
 		float max = min;

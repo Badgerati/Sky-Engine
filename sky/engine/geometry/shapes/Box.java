@@ -1,6 +1,6 @@
 package sky.engine.geometry.shapes;
 
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 
 /**
  * 
@@ -8,16 +8,16 @@ import sky.engine.geometry.vectors.Vector2D;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public class Box extends Polygon
+public class Box extends Shape
 {
 	/**
-	 * Width of Rectangle
+	 * Width of box
 	 */
 	protected float Width;
 	
 	
 	/**
-	 * Height of Rectangle
+	 * Height of box
 	 */
 	protected float Height;
 	
@@ -26,22 +26,11 @@ public class Box extends Polygon
 	
 	
 	
-
-	
-	
-	
-
-
-	
-	
-	/********************************************
-	 * 			PUBLIC CONSTRUCTORS
-	 ********************************************/
 	
 	/**
-	 * Create new instance of a geometric Rectangle
+	 * Create new instance of a box
 	 */
-	public Box(Vector2D position, float width, float height)
+	public Box(Vector2 position, float width, float height)
 	{
 		super(position);
 		Width = width;
@@ -51,53 +40,9 @@ public class Box extends Polygon
 
 	
 	/**
-	 * Create new instance of a geometric Rectangle
+	 * Create new instance of a box
 	 */
-	public Box(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4)
-	{
-		super(position, new Vector2D[] { v1.clone(), v2.clone(), v3.clone(), v4.clone() });
-		Width = v1.magnitude(v2);
-		Height = v2.magnitude(v3);
-	}
-
-	
-	/**
-	 * Create new instance of a geometric Rectangle
-	 */
-	public Box(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4)
-	{
-		super(new Vector2D[] { v1.clone(), v2.clone(), v3.clone(), v4.clone() });
-		Width = v1.magnitude(v2);
-		Height = v2.magnitude(v3);
-	}
-	
-	
-	/**
-	 * Create new geometric Rectangle from another geometric rectangle
-	 */
-	public Box(Box rect)
-	{
-		super(rect.Position, Vector2D.clone(rect.vertices));
-		Width = rect.Width;
-		Height = rect.Height;
-	}
-
-	
-	
-	
-	
-	
-	
-
-	
-	/********************************************
-	 * 			PROTECTED CONSTRUCTORS
-	 ********************************************/
-	
-	/**
-	 * Create new instance of a geometric Rectangle
-	 */
-	protected Box(Vector2D position, float width, float height, Vector2D velocity, float mass)
+	public Box(Vector2 position, float width, float height, Vector2 velocity, float mass)
 	{
 		super(position, velocity, mass);
 		Width = width;
@@ -107,24 +52,12 @@ public class Box extends Polygon
 
 	
 	/**
-	 * Create new instance of a geometric Rectangle
+	 * Create new instance of a box
 	 */
-	protected Box(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, Vector2D velocity, float mass)
+	public Box(Box box)
 	{
-		super(position, new Vector2D[] { v1.clone(), v2.clone(), v3.clone(), v4.clone() }, velocity, mass);
-		Width = v1.magnitude(v2);
-		Height = v2.magnitude(v3);
-	}
-
-	
-	/**
-	 * Create new instance of a geometric Rectangle
-	 */
-	protected Box(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4, Vector2D velocity, float mass)
-	{
-		super(new Vector2D[] { v1.clone(), v2.clone(), v3.clone(), v4.clone() }, velocity, mass);
-		Width = v1.magnitude(v2);
-		Height = v2.magnitude(v3);
+		super(box.Position, box.Velocity, box.Mass);
+		build(box.Width, box.Height);
 	}
 	
 	
@@ -133,20 +66,13 @@ public class Box extends Polygon
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
 	/**
-	 * Clone this rectangle
+	 * Clone this box
 	 */
 	@Override
 	public Box clone()
 	{
-		return new Box(Position, vertices[0], vertices[1], vertices[2], vertices[3]);
+		return new Box(this);
 	}
 	
 	
@@ -155,29 +81,22 @@ public class Box extends Polygon
 	
 	
 	
-	
-	
-	
-	
-	
 	/**
-	 * build rectangle from width and height
+	 * build box from width and height
 	 */
 	private void build(float width, float height)
 	{		
-		vertices = new Vector2D[4];
+		vertices = new Vector2[4];
 		
-		vertices[0] = new Vector2D(width * -0.5f, height * -0.5f);
-		vertices[1] = new Vector2D(width * 0.5f, height * -0.5f);
-		vertices[2] = new Vector2D(width * 0.5f, height * 0.5f);
-		vertices[3] = new Vector2D(width * -0.5f, height * 0.5f);
+		vertices[0] = new Vector2(width * -0.5f, height * -0.5f);
+		vertices[1] = new Vector2(width * 0.5f, height * -0.5f);
+		vertices[2] = new Vector2(width * 0.5f, height * 0.5f);
+		vertices[3] = new Vector2(width * -0.5f, height * 0.5f);
 
 		for (int i = 0; i < vertices.length; i++)
 			vertices[i].integrate(Position);
 	}
 
-	
-	
 	
 	
 	
@@ -194,6 +113,22 @@ public class Box extends Polygon
 	}
 	
 	
+
+	
+	
+	/**
+	 * Get the box's height
+	 */
+	public float getHeight()
+	{
+		return Height;
+	}
+	
+	
+	
+	
+	
+	
 	/**
 	 * Set the box's width
 	 */
@@ -206,17 +141,6 @@ public class Box extends Polygon
 	
 	
 	
-	
-
-	
-	
-	/**
-	 * Get the box's height
-	 */
-	public float getHeight()
-	{
-		return Height;
-	}
 	
 	
 	/**
@@ -232,16 +156,9 @@ public class Box extends Polygon
 	
 	
 	
-	
-	
-	
-	
-	
-	
 	/**
-	 * Returns the perimeter of the rectangle
+	 * Returns the perimeter of the box
 	 */
-	@Override
 	public float perimeter()
 	{
 		return ((Width * 2) + (Height * 2));
@@ -253,12 +170,8 @@ public class Box extends Polygon
 	
 	
 	
-	
-	
-	
-	
 	/**
-	 * Returns the area of the rectangle
+	 * Returns the area of the box
 	 */
 	@Override
 	public float area()
@@ -271,19 +184,14 @@ public class Box extends Polygon
 	
 	
 	
-	
-	
-	
-	
-	
 	/**
-	 * Returns this rectangles axes
+	 * Returns this box axes
 	 */
 	@Override
-	public Vector2D[] getAxes()
+	public Vector2[] getAxes()
 	{
-		Vector2D[] axes = new Vector2D[2];
-		Vector2D edge, normal;
+		Vector2[] axes = new Vector2[2];
+		Vector2 edge, normal;
 		
 		for (int i = 0; i < 2; i++)
 		{
@@ -295,9 +203,6 @@ public class Box extends Polygon
 		
 		return axes;
 	}
-	
-	
-	
 	
 	
 	

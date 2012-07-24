@@ -1,9 +1,10 @@
 package sky.engine.graphics.drawable.shapes;
 
 import sky.engine.geometry.shapes.Line;
-import sky.engine.geometry.vectors.Vector2D;
-import sky.engine.graphics.Colour;
-import sky.engine.graphics.paints.ShapePaint;
+import sky.engine.geometry.vectors.Vector2;
+import sky.engine.graphics.paints.Blur;
+import sky.engine.graphics.paints.Fill;
+import sky.engine.graphics.paints.Outline;
 import android.graphics.Canvas;
 
 /**
@@ -14,16 +15,23 @@ import android.graphics.Canvas;
  */
 public class DrawableLine extends Line implements DrawableShape
 {
+	
 	/**
-	 * Graphical Paint to paint this Graphical Line
+	 * Fill paint used for the line
 	 */
-	public ShapePaint Paint = null;
+	protected Fill fillpaint = null;
 	
 	
+	/**
+	 * Outline paint used for the line
+	 */
+	protected Outline outlinepaint = null;
 	
 	
-	
-	
+	/**
+	 * Blur paint used for the line
+	 */
+	protected Blur blurpaint = null;
 	
 	
 	
@@ -32,106 +40,70 @@ public class DrawableLine extends Line implements DrawableShape
 
 	
 	/**
-	 * Create new instance of a default Graphical Line
+	 * Create new instance of a line
 	 */
-	public DrawableLine(Vector2D position, Vector2D v1, Vector2D v2)
-	{
-		super(position, v1, v2);
-		Paint = new ShapePaint(Colour.WHITE, 0, false, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
-	}
-
-	
-	/**
-	 * Create new instance of a default Graphical Line
-	 */
-	public DrawableLine(Vector2D position, Vector2D v1, Vector2D v2, Vector2D velocity, float mass)
-	{
-		super(position, v1, v2, velocity, mass);
-		Paint = new ShapePaint(Colour.WHITE, 0, false, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
-	}
-	
-	
-	/**
-	 * Create new instance of a Graphical Line
-	 */
-	public DrawableLine(Vector2D position, Vector2D v1, Vector2D v2, int fill, int outline)
-	{
-		super(position, v1, v2);
-		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
-	}
-	
-	
-	/**
-	 * Create new instance of a Graphical Line
-	 */
-	public DrawableLine(Vector2D position, Vector2D v1, Vector2D v2, int fill, int outline, Vector2D velocity, float mass)
-	{
-		super(position, v1, v2, velocity, mass);
-		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
-	}
-	
-	
-	/**
-	 * Create new instance of a Graphical Line
-	 */
-	public DrawableLine(Vector2D position, Vector2D v1, Vector2D v2, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
-	{
-		super(position, v1, v2, velocity, mass);
-		Paint = new ShapePaint(fill, outline, true, outlinewidth, antialias);
-	}
-	
-	
-	
-
-	
-	
-	/**
-	 * Create new instance of a default Graphical Line
-	 */
-	public DrawableLine(Vector2D v1, Vector2D v2)
+	public DrawableLine(Vector2 v1, Vector2 v2)
 	{
 		super(v1, v2);
-		Paint = new ShapePaint(Colour.WHITE, 0, false, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		fillpaint = new Fill();
 	}
-	
+
 	
 	/**
-	 * Create new instance of a default Graphical Line
+	 * Create new instance of a line
 	 */
-	public DrawableLine(Vector2D v1, Vector2D v2, Vector2D velocity, float mass)
+	public DrawableLine(Vector2 v1, Vector2 v2, Vector2 velocity, float mass)
 	{
 		super(v1, v2, velocity, mass);
-		Paint = new ShapePaint(Colour.WHITE, 0, false, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		fillpaint = new Fill();
 	}
 	
 	
 	/**
-	 * Create new instance of a Graphical Line
+	 * Create new instance of a line
 	 */
-	public DrawableLine(Vector2D v1, Vector2D v2, int fill, int outline)
+	public DrawableLine(Vector2 v1, Vector2 v2, Fill fill, Outline outline, Blur blur)
 	{
 		super(v1, v2);
-		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		fillpaint = fill;
+		outlinepaint = outline;
+		blurpaint = blur;
 	}
 	
 	
 	/**
-	 * Create new instance of a Graphical Line
+	 * Create new instance of a line
 	 */
-	public DrawableLine(Vector2D v1, Vector2D v2, int fill, int outline, Vector2D velocity, float mass)
+	public DrawableLine(Vector2 v1, Vector2 v2, Fill fill, Outline outline, Blur blur, Vector2 velocity, float mass)
 	{
 		super(v1, v2, velocity, mass);
-		Paint = new ShapePaint(fill, outline, true, ShapePaint.DEFAULT_OUTLINE_WIDTH, true);
+		fillpaint = fill;
+		outlinepaint = outline;
+		blurpaint = blur;
 	}
 	
 	
 	/**
-	 * Create new instance of a Graphical Line
+	 * Create new instance of a line
 	 */
-	public DrawableLine(Vector2D v1, Vector2D v2, int fill, int outline, float outlinewidth, boolean antialias, Vector2D velocity, float mass)
+	public DrawableLine(Vector2 v1, Vector2 v2, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias)
+	{
+		super(v1, v2);
+		fillpaint = new Fill(fill, antialias);
+		outlinepaint = new Outline(outline, outlinewidth, antialias);
+		blurpaint = new Blur(blur, blurwidth, blurradius);
+	}
+	
+	
+	/**
+	 * Create new instance of a line
+	 */
+	public DrawableLine(Vector2 v1, Vector2 v2, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias, Vector2 velocity, float mass)
 	{
 		super(v1, v2, velocity, mass);
-		Paint = new ShapePaint(fill, outline, true, outlinewidth, antialias);
+		fillpaint = new Fill(fill, antialias);
+		outlinepaint = new Outline(outline, outlinewidth, antialias);
+		blurpaint = new Blur(blur, blurwidth, blurradius);
 	}
 
 	
@@ -139,14 +111,16 @@ public class DrawableLine extends Line implements DrawableShape
 	
 	
 	
-
 	/**
-	 * Create new instance of a Graphical Line
+	 * Create new instance of a line
 	 */
-	public DrawableLine(DrawableLine gline)
+	public DrawableLine(DrawableLine line)
 	{
-		super(gline.Position, gline.vertices[0], gline.vertices[1], gline.Velocity, gline.Mass);
-		Paint = new ShapePaint(gline.Paint);
+		super(line.vertices[0], line.vertices[1], line.Velocity, line.Mass);
+		Position = line.Position.clone();
+		fillpaint = new Fill(line.fillpaint);
+		outlinepaint = new Outline(line.outlinepaint);
+		blurpaint = new Blur(line.blurpaint);
 	}
 	
 	
@@ -154,17 +128,8 @@ public class DrawableLine extends Line implements DrawableShape
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
-	 * Clone this Graphical Line
+	 * Clone this line
 	 */
 	public DrawableLine clone()
 	{
@@ -174,10 +139,33 @@ public class DrawableLine extends Line implements DrawableShape
 	
 	
 	
+
+	
+	/**
+	 * Returns the paint used to fill this line
+	 */
+	public Fill fill()
+	{
+		return fillpaint;
+	}
 	
 	
+	/**
+	 * Returns the paint used for the outline of this line
+	 */
+	public Outline outline()
+	{
+		return outlinepaint;
+	}
 	
 	
+	/**
+	 * Returns the paint used for the blurring effect of this line
+	 */
+	public Blur blur()
+	{
+		return blurpaint;
+	}
 	
 	
 	
@@ -185,18 +173,25 @@ public class DrawableLine extends Line implements DrawableShape
 	
 	
 	/**
-	 * Draw this line to a given canvas
+	 * Draw this line
 	 */
 	public void draw(Canvas canvas)
 	{
-		if (Paint.ShowOutline)
-			canvas.drawLine(vertices[0].X, vertices[0].Y, vertices[1].X, vertices[1].Y, Paint.OutlinePaint);
-		
-		canvas.drawLine(vertices[0].X, vertices[0].Y, vertices[1].X, vertices[1].Y, Paint.FillPaint);
+		if (blurpaint != null)
+		{
+			canvas.drawLine(vertices[0].X, vertices[0].Y, vertices[1].X, vertices[1].Y, blurpaint);
+		}
+
+		if (outlinepaint != null)
+		{
+			canvas.drawLine(vertices[0].X, vertices[0].Y, vertices[1].X, vertices[1].Y, outlinepaint);
+		}
+
+		if (fillpaint != null)
+		{
+			canvas.drawLine(vertices[0].X, vertices[0].Y, vertices[1].X, vertices[1].Y, fillpaint);
+		}
 	}
-	
-	
-	
 	
 	
 

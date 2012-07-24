@@ -4,7 +4,7 @@ import java.util.Random;
 
 import sky.engine.geometry.ConvexHull;
 import sky.engine.geometry.Triangulation;
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 import sky.engine.math.Angle;
 
 /**
@@ -22,9 +22,9 @@ public class BoundingPoly extends Bounding
 	/**
 	 * Create new instance of a Bounding Polygon
 	 */
-	public BoundingPoly(Vector2D[] vertices)
+	public BoundingPoly(Vector2[] vertices)
 	{
-		super(Vector2D.getCentre(vertices));
+		super(Vector2.getCentre(vertices));
 		initialise(vertices);
 	}
 	
@@ -32,7 +32,7 @@ public class BoundingPoly extends Bounding
 	/**
 	 * Create new instance of a Bounding Polygon
 	 */
-	public BoundingPoly(Vector2D position, Vector2D[] vertices)
+	public BoundingPoly(Vector2 position, Vector2[] vertices)
 	{
 		super(position);
 		initialise(vertices);
@@ -42,7 +42,7 @@ public class BoundingPoly extends Bounding
 	/**
 	 * Create new instance of a bounding polygon
 	 */
-	public BoundingPoly(Vector2D position, int noOfVertices, float size)
+	public BoundingPoly(Vector2 position, int noOfVertices, float size)
 	{
 		super(position);
 		generateVertices(noOfVertices, size, size);
@@ -52,7 +52,7 @@ public class BoundingPoly extends Bounding
 	/**
 	 * Create new instance of a bounding polygon, with only a position
 	 */
-	protected BoundingPoly(Vector2D position)
+	protected BoundingPoly(Vector2 position)
 	{
 		super(position);
 	}
@@ -69,9 +69,9 @@ public class BoundingPoly extends Bounding
 	/**
 	 * Initialises the vertices of this bounding polygon
 	 */
-	private void initialise(Vector2D[] vertices)
+	private void initialise(Vector2[] vertices)
 	{
-		this.vertices = new Vector2D[vertices.length];
+		this.vertices = new Vector2[vertices.length];
 		
 		for (int i = 0; i < vertices.length; i++)
 			this.vertices[i] = vertices[i].clone();
@@ -90,19 +90,19 @@ public class BoundingPoly extends Bounding
 	 */
 	private void generateVertices(int noOfVertices, float minSize, float maxSize)
 	{
-		vertices = new Vector2D[noOfVertices];
+		vertices = new Vector2[noOfVertices];
 		Random rand = new Random();
 		float degrees = 360.0f / noOfVertices;
 		float range = maxSize - minSize;
 		float x = Angle.sin(0) * ((rand.nextFloat() * range) + minSize);
 		float y = Angle.cos(0) * ((rand.nextFloat() * range) - minSize);
 		
-		vertices[0] = new Vector2D(x, y);
+		vertices[0] = new Vector2(x, y);
 		for (int i = 1; i < noOfVertices; i++)
 		{
 			x = Angle.sin((int)(degrees * i)) * ((rand.nextFloat() * range) + minSize);
 			y = Angle.cos((int)(degrees * i)) * ((rand.nextFloat() * range) - minSize);
-			vertices[i] = new Vector2D(x, y);
+			vertices[i] = new Vector2(x, y);
 		}
 		
 		for (int i = 0; i < vertices.length; i++)

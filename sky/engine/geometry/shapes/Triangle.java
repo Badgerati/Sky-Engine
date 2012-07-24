@@ -1,6 +1,6 @@
 package sky.engine.geometry.shapes;
 
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 
 public class Triangle extends Polygon
 {
@@ -45,32 +45,12 @@ public class Triangle extends Polygon
 	
 	
 	
-	
-	
-	
-
-	
-	
-	/********************************************
-	 * 			PUBLIC CONSTRUCTORS
-	 ********************************************/
-	
 	/**
 	 * Create new instance of a Triangle on vertices
 	 */
-	public Triangle(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3)
+	public Triangle(Vector2 v1, Vector2 v2, Vector2 v3)
 	{
-		super(position, new Vector2D[] { v1.clone(), v2.clone(), v3.clone() });
-		build(v1, v2, v3);
-	}
-
-	
-	/**
-	 * Create new instance of a Triangle on vertices
-	 */
-	public Triangle(Vector2D v1, Vector2D v2, Vector2D v3)
-	{
-		super(new Vector2D[] { v1.clone(), v2.clone(), v3.clone() });
+		super(new Vector2[] { v1, v2, v3 });
 		build(v1, v2, v3);
 	}
 
@@ -78,9 +58,39 @@ public class Triangle extends Polygon
 	/**
 	 * Create new instance of a Triangle on lengths of 3 sides
 	 */
-	public Triangle(Vector2D position, float sidex, float sidey, float sidez)
+	public Triangle(Vector2 position, float sidex, float sidey, float sidez)
 	{
 		super(position);
+		build(sidex, sidey, sidez);
+	}
+
+	
+	/**
+	 * Create new instance of a Triangle on vertices
+	 */
+	protected Triangle(Vector2 position, Vector2 v1, Vector2 v2, Vector2 v3, Vector2 velocity, float mass)
+	{
+		super(position, new Vector2[] { v1, v2, v3 }, velocity, mass);
+		build(v1, v2, v3);
+	}
+
+	
+	/**
+	 * Create new instance of a Triangle on vertices
+	 */
+	public Triangle(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 velocity, float mass)
+	{
+		super(new Vector2[] { v1, v2, v3 }, velocity, mass);
+		build(v1, v2, v3);
+	}
+
+	
+	/**
+	 * Create new instance of a Triangle on lengths of 3 sides - scalene
+	 */
+	public Triangle(Vector2 position, float sidex, float sidey, float sidez, Vector2 velocity, float mass)
+	{
+		super(position, velocity, mass);
 		build(sidex, sidey, sidez);
 	}
 	
@@ -90,7 +100,7 @@ public class Triangle extends Polygon
 	 */
 	public Triangle(Triangle triangle)
 	{
-		super(triangle.Position, Vector2D.clone(triangle.vertices));
+		super(triangle.Position, triangle.vertices, triangle.Velocity, triangle.Mass);
 		
 		SideX = triangle.SideX;
 		SideY = triangle.SideY;
@@ -99,55 +109,6 @@ public class Triangle extends Polygon
 		AngleB = triangle.AngleB;
 		AngleC = triangle.AngleC;
 	}
-
-	
-	
-	
-	
-	
-	
-
-	
-	/********************************************
-	 * 			PROTECTED CONSTRUCTORS
-	 ********************************************/
-	
-	/**
-	 * Create new instance of a Triangle on vertices
-	 */
-	protected Triangle(Vector2D position, Vector2D v1, Vector2D v2, Vector2D v3, Vector2D velocity, float mass)
-	{
-		super(position, new Vector2D[] { v1.clone(), v2.clone(), v3.clone() }, velocity, mass);
-		build(v1, v2, v3);
-	}
-
-	
-	/**
-	 * Create new instance of a Triangle on vertices
-	 */
-	protected Triangle(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D velocity, float mass)
-	{
-		super(new Vector2D[] { v1.clone(), v2.clone(), v3.clone() }, velocity, mass);
-		build(v1, v2, v3);
-	}
-
-	
-	/**
-	 * Create new instance of a Triangle on lengths of 3 sides - scalene
-	 */
-	protected Triangle(Vector2D position, float sidex, float sidey, float sidez, Vector2D velocity, float mass)
-	{
-		super(position, velocity, mass);
-		build(sidex, sidey, sidez);
-	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -170,18 +131,10 @@ public class Triangle extends Polygon
 	
 	
 	
-	
-	
-
-	
-	
-	
-	
-	
 	/**
 	 * Build the triangle from 3 vertices
 	 */
-	private void build(Vector2D v1, Vector2D v2, Vector2D v3)
+	private void build(Vector2 v1, Vector2 v2, Vector2 v3)
 	{
 		//lengths of the sides
 		SideX = v1.magnitude(v2);
@@ -197,6 +150,7 @@ public class Triangle extends Polygon
 		AngleB = (float)Math.acos((tempy + tempz - tempx) / (2 * SideY * SideZ));
 		AngleC = (float)Math.acos((tempy + tempx - tempz) / (2 * SideX * SideY));
 	}
+	
 	
 	
 	
@@ -233,18 +187,14 @@ public class Triangle extends Polygon
 		float height = sidex * (float)Math.sin(AngleA);
 		
 		//vertices
-		vertices = new Vector2D[3];
-		vertices[0] = new Vector2D(0, height * -0.5f);
-		vertices[1] = new Vector2D((float)Math.cos(AngleB) * sidey, height * 0.5f);
-		vertices[2] = new Vector2D(-(float)Math.cos(AngleA) * sidex, height * 0.5f);
+		vertices = new Vector2[3];
+		vertices[0] = new Vector2(0, height * -0.5f);
+		vertices[1] = new Vector2((float)Math.cos(AngleB) * sidey, height * 0.5f);
+		vertices[2] = new Vector2(-(float)Math.cos(AngleA) * sidex, height * 0.5f);
 
 		for (int i = 0; i < vertices.length; i++)
 			vertices[i].integrate(Position);
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -267,10 +217,6 @@ public class Triangle extends Polygon
 	
 	
 	
-	
-	
-	
-	
 	/**
 	 * Returns the area of the triangle
 	 */
@@ -279,11 +225,6 @@ public class Triangle extends Polygon
 	{
 		return 0.5f * SideX * SideY * (float)Math.sin(AngleC);
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -325,11 +266,6 @@ public class Triangle extends Polygon
 	
 	
 	
-	
-	
-
-	
-	
 	/**
 	 * Returns the angle A
 	 */
@@ -355,11 +291,6 @@ public class Triangle extends Polygon
 	{
 		return AngleC;
 	}
-	
-	
-	
-	
-	
 	
 	
 	

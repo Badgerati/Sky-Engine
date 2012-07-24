@@ -3,7 +3,7 @@ package sky.engine.geometry;
 import java.util.HashMap;
 
 import sky.engine.geometry.shapes.Polygon;
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 import sky.engine.graphics.bounds.BoundingPoly;
 import sky.engine.graphics.drawable.shapes.DrawablePolygon;
 import sky.engine.util.MultiList;
@@ -40,7 +40,7 @@ public class ConvexHull
 	/**
 	 * The convex hull's vertices.
 	 */
-	protected Vector2D[] hullvertices = null;
+	protected Vector2[] hullvertices = null;
 	
 	
 	
@@ -62,7 +62,7 @@ public class ConvexHull
 	 * 
 	 * @param vertices - Array of vertices to construct the convex hull.
 	 */
-	public ConvexHull(Vector2D[] vertices)
+	public ConvexHull(Vector2[] vertices)
 	{
 		boolean bool = construct(vertices);
 		
@@ -79,33 +79,28 @@ public class ConvexHull
 	
 	
 	
-	
-	
 	/**
 	 * Constructs the convex hull of the given vertices. 2 or more vertices must be given.
 	 * 
 	 * @param vertices - Array of vertices to construct the convex hull.
 	 * @return Whether the construction was successful.
 	 */
-	public boolean construct(Vector2D[] vertices)
+	public boolean construct(Vector2[] vertices)
 	{
 		if (vertices.length <= 1)
 			return false;
 		
 		//sort the vertices into ascending order
-		SortedList<Vector2D> sorted = new SortedList<Vector2D>(vertices);
+		SortedList<Vector2> sorted = new SortedList<Vector2>(vertices);
 		
-		Vector2D[] temp1 = quickHull(vertices, sorted.getFirst(), sorted.getLast());
-		Vector2D[] temp2 = quickHull(vertices, sorted.getLast(), sorted.getFirst());
+		Vector2[] temp1 = quickHull(vertices, sorted.getFirst(), sorted.getLast());
+		Vector2[] temp2 = quickHull(vertices, sorted.getLast(), sorted.getFirst());
 		
 		hullvertices = SEArrays.merge(temp1, temp2);
 		SEArrays.reverse(hullvertices); //to make it right-winding
 		
 		return true;
 	}
-	
-	
-	
 	
 	
 	
@@ -122,28 +117,25 @@ public class ConvexHull
 	 * @param end
 	 * @return
 	 */
-	protected Vector2D[] quickHull(Vector2D[] points, Vector2D start, Vector2D end)
+	protected Vector2[] quickHull(Vector2[] points, Vector2 start, Vector2 end)
 	{
 		MultiList pointsLeftOfLine = getVertexDistanceIndicators(start, end, points);
-		Vector2D newMaximalPoint = getVertexWithMaximumDistanceFromLine(pointsLeftOfLine);
+		Vector2 newMaximalPoint = getVertexWithMaximumDistanceFromLine(pointsLeftOfLine);
 		
 		if (newMaximalPoint == null)
 		{
-			return new Vector2D[] { end };
+			return new Vector2[] { end };
 		}
 		else
 		{
-			Vector2D[] newPoints = getVerticesFromVertexDistanceSet(pointsLeftOfLine);
-			Vector2D[] temp1 = quickHull(newPoints, start, newMaximalPoint);
-			Vector2D[] temp2 = quickHull(newPoints, newMaximalPoint, end);
+			Vector2[] newPoints = getVerticesFromVertexDistanceSet(pointsLeftOfLine);
+			Vector2[] temp1 = quickHull(newPoints, start, newMaximalPoint);
+			Vector2[] temp2 = quickHull(newPoints, newMaximalPoint, end);
 			
-			Vector2D[] array = SEArrays.merge(temp1, temp2);			
+			Vector2[] array = SEArrays.merge(temp1, temp2);			
 			return array;
 		}
 	}
-	
-	
-	
 	
 	
 	
@@ -161,16 +153,13 @@ public class ConvexHull
 	 * @param point
 	 * @return
 	 */
-	protected float calculateDistanceIndicator(Vector2D start, Vector2D end, Vector2D point)
+	protected float calculateDistanceIndicator(Vector2 start, Vector2 end, Vector2 point)
 	{
-		Vector2D line = end.sub(start);
-		Vector2D topoint = point.sub(start);
+		Vector2 line = end.sub(start);
+		Vector2 topoint = point.sub(start);
 		
 		return ((topoint.Y * line.X) - (topoint.X * line.Y));
 	}
-	
-	
-	
 	
 	
 	
@@ -187,7 +176,7 @@ public class ConvexHull
 	 * @param vertices
 	 * @return
 	 */
-	protected MultiList getVertexDistanceIndicators(Vector2D start, Vector2D end, Vector2D[] vertices)
+	protected MultiList getVertexDistanceIndicators(Vector2 start, Vector2 end, Vector2[] vertices)
 	{
 		MultiList indicators = new MultiList();
 		float distance = 0;
@@ -217,18 +206,16 @@ public class ConvexHull
 	
 	
 	
-	
-	
 	/**
 	 * 
 	 * 
 	 * @param vertexDistanceSet
 	 * @return
 	 */
-	protected Vector2D getVertexWithMaximumDistanceFromLine(MultiList vertexDistanceSet)
+	protected Vector2 getVertexWithMaximumDistanceFromLine(MultiList vertexDistanceSet)
 	{
 		float maxDistance = 0;
-		Vector2D maxPoint = null;
+		Vector2 maxPoint = null;
 		
 		for (int i = 0; i < vertexDistanceSet.size(); i++)
 		{
@@ -237,7 +224,7 @@ public class ConvexHull
 			if ((Float)temp.get(DISTANCE) > maxDistance)
 			{
 				maxDistance = (Float)temp.get(DISTANCE);
-				maxPoint = (Vector2D)temp.get(VERTEX);
+				maxPoint = (Vector2)temp.get(VERTEX);
 			}
 		}
 		
@@ -250,35 +237,23 @@ public class ConvexHull
 	
 	
 	
-	
-	
-	
-	
-	
 	/**
 	 * 
 	 * 
 	 * @param vertexDistanceSet
 	 * @return
 	 */
-	protected Vector2D[] getVerticesFromVertexDistanceSet(MultiList vertexDistanceSet)
+	protected Vector2[] getVerticesFromVertexDistanceSet(MultiList vertexDistanceSet)
 	{
-		Vector2D[] points = new Vector2D[vertexDistanceSet.size()];
+		Vector2[] points = new Vector2[vertexDistanceSet.size()];
 		
 		for (int i = 0; i < vertexDistanceSet.size(); i++)
 		{
-			points[i] = (Vector2D)vertexDistanceSet.get(i).get(VERTEX);
+			points[i] = (Vector2)vertexDistanceSet.get(i).get(VERTEX);
 		}
 		
 		return points;
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -291,14 +266,10 @@ public class ConvexHull
 	 * 
 	 * @return Array of vertices.
 	 */
-	public final Vector2D[] asVertices()
+	public final Vector2[] asVertices()
 	{
 		return hullvertices;
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -317,10 +288,6 @@ public class ConvexHull
 		
 		return new Polygon(hullvertices);
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -346,9 +313,6 @@ public class ConvexHull
 	
 	
 	
-	
-	
-	
 	/**
 	 * Returns convex hull as a bounding polygon.
 	 * 
@@ -361,13 +325,6 @@ public class ConvexHull
 		
 		return new BoundingPoly(hullvertices);
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

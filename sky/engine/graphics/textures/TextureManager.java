@@ -12,24 +12,24 @@ import android.graphics.BitmapFactory;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public class TextureManager
+public abstract class TextureManager
 {
 	/**
 	 * HashMap of all loaded textures.
 	 */
-	private HashMap<Integer, Texture> loadedTextures = null;
+	private static HashMap<Integer, Texture> loadedTextures = null;
 	
 	
 	/**
 	 * HashMap to map user given IDs to actual Texture IDs.
 	 */
-	private HashMap<Integer, Integer> textureIDs = null;
+	private static HashMap<Integer, Integer> textureIDs = null;
 	
 	
 	/**
 	 * Resource manager to help load Bitmaps.
 	 */
-	private Resources globalResource = null;
+	private static Resources globalResource = null;
 	
 	
 	
@@ -40,10 +40,30 @@ public class TextureManager
 
 	
 	
+	///**
+	// * Create a new TextureManager object
+	// */
+	//public TextureManager()
+	//{
+	//	loadedTextures = new HashMap<Integer, Texture>();
+	//	textureIDs = new HashMap<Integer, Integer>();
+	//}
+	
+	
+	///**
+	// * Create a new TextureManager object
+	// */
+	//public TextureManager(Resources globalres)
+	//{
+	//	loadedTextures = new HashMap<Integer, Texture>();
+	//	textureIDs = new HashMap<Integer, Integer>();
+	//	globalResource = globalres;
+	//}
+
 	/**
-	 * Create a new TextureManager object
+	 * 
 	 */
-	public TextureManager()
+	public static void initialise()
 	{
 		loadedTextures = new HashMap<Integer, Texture>();
 		textureIDs = new HashMap<Integer, Integer>();
@@ -51,9 +71,9 @@ public class TextureManager
 	
 	
 	/**
-	 * Create a new TextureManager object
+	 * 
 	 */
-	public TextureManager(Resources globalres)
+	public static void initialise(Resources globalres)
 	{
 		loadedTextures = new HashMap<Integer, Texture>();
 		textureIDs = new HashMap<Integer, Integer>();
@@ -73,7 +93,7 @@ public class TextureManager
 	/**
 	 * Load and add a Texture to the set of all Textures, from a given Resource.
 	 */
-	public Texture load(Resources res, int resourceID, int textureID)
+	public static Texture load(Resources res, int resourceID, int textureID)
 	{
 		if (loadedTextures.containsKey(resourceID))
 			return getTextureByResourceID(resourceID);
@@ -93,7 +113,7 @@ public class TextureManager
 	/**
 	 * Load and add a Texture to the set of all Textures, from the global Resource.
 	 */
-	public Texture load(int resourceID, int textureID)
+	public static Texture load(int resourceID, int textureID)
 	{
 		if (globalResource == null)
 			throw new Error("No global resource set for TextureManager.");
@@ -124,7 +144,7 @@ public class TextureManager
 	/**
 	 * Sets the global Resource to use when loading textures.
 	 */
-	public void setGlobalResource(Resources globalres)
+	public static void setGlobalResource(Resources globalres)
 	{
 		globalResource = globalres;
 	}
@@ -140,7 +160,7 @@ public class TextureManager
 	/**
 	 * Clears the currently loaded textures, keeping the global Resource.
 	 */
-	public void clear()
+	public static void clear()
 	{
 		loadedTextures = new HashMap<Integer, Texture>();
 		textureIDs = new HashMap<Integer, Integer>();
@@ -157,7 +177,7 @@ public class TextureManager
 	/**
 	 * Returns the number of loaded textures
 	 */
-	public int size()
+	public static int size()
 	{
 		return loadedTextures.size();
 	}
@@ -174,7 +194,7 @@ public class TextureManager
 	/**
 	 * Returns a Texture given the resourceID.
 	 */
-	public Texture getTextureByResourceID(int resourceID)
+	public static Texture getTextureByResourceID(int resourceID)
 	{
 		return loadedTextures.get(resourceID);
 	}
@@ -183,7 +203,7 @@ public class TextureManager
 	/**
 	 * Returns a Texture given the user generated textureID.
 	 */
-	public Texture getTextureByTextureID(int textureID)
+	public static Texture getTextureByTextureID(int textureID)
 	{
 		return loadedTextures.get(textureIDs.get(textureID));
 	}
@@ -200,7 +220,7 @@ public class TextureManager
 	 * Deletes a Texture with the given textureID. Returns the removed Texture, or
 	 * null if no mapping was found.
 	 */
-	public Texture removeTexture(int textureID)
+	public static Texture removeTexture(int textureID)
 	{
 		if (!textureIDs.containsKey(textureID))
 		{
@@ -225,7 +245,7 @@ public class TextureManager
 	/**
 	 * Returns a Set of all current textureIDs.
 	 */
-	public Set<Integer> getTextureIDs()
+	public static Set<Integer> getTextureIDs()
 	{
 		if (textureIDs != null) {
 			return textureIDs.keySet();
@@ -238,7 +258,7 @@ public class TextureManager
 	/**
 	 * Returns a Set of all current resourceIDs.
 	 */
-	public Set<Integer> getResourceIDs()
+	public static Set<Integer> getResourceIDs()
 	{
 		if (loadedTextures != null) {
 			return loadedTextures.keySet();
@@ -259,20 +279,10 @@ public class TextureManager
 	/**
 	 * Returns the current global Resource.
 	 */
-	public final Resources getGlobalResource()
+	public static final Resources getGlobalResource()
 	{
 		return globalResource;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

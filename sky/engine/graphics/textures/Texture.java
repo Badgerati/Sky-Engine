@@ -13,9 +13,7 @@ public class Texture
 	/**
 	 * Bitmap for this texture.
 	 */
-	private final Bitmap bitmap;
-	
-	
+	protected final Bitmap bitmap;
 	
 	
 	
@@ -36,7 +34,6 @@ public class Texture
 	
 	
 	
-	
 	/**
 	 * Clones this texture
 	 */
@@ -50,9 +47,6 @@ public class Texture
 	
 	
 	
-	
-	
-
 	
 	/**
 	 * Does this Texture equal another?
@@ -76,9 +70,6 @@ public class Texture
 	
 	
 	
-	
-	
-	
 	/**
 	 * Generates a hash code for this Texture.
 	 */
@@ -87,9 +78,6 @@ public class Texture
 	{
 		return this.bitmap.hashCode();
 	}
-	
-	
-	
 	
 	
 	
@@ -106,9 +94,6 @@ public class Texture
 	
 	
 	
-	
-	
-	
 
 	
 	/**
@@ -118,8 +103,6 @@ public class Texture
 	{
 		return bitmap.getHeight();
 	}
-	
-	
 	
 	
 	

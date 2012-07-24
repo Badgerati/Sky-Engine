@@ -1,6 +1,6 @@
 package sky.engine.physics;
 
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 import sky.engine.math.Angle;
 
 /**
@@ -28,17 +28,17 @@ public abstract class Momentum
 	/**
 	 * Given a velocity and mass, return momentum as vector
 	 */
-	public static Vector2D asVector(Vector2D velocity, float mass)
+	public static Vector2 asVector(Vector2 velocity, float mass)
 	{
-		return new Vector2D(mass * velocity.X, mass * velocity.Y);
+		return new Vector2(mass * velocity.X, mass * velocity.Y);
 	}
 	
-	public static Vector2D asVector(Vector2D[] velocities, float[] masses)
+	public static Vector2 asVector(Vector2[] velocities, float[] masses)
 	{
 		if (velocities.length != masses.length)
 			return null;
 		
-		Vector2D totalP = new Vector2D();
+		Vector2 totalP = new Vector2();
 		
 		for (int i = 0; i < velocities.length; i++)
 		{
@@ -62,16 +62,16 @@ public abstract class Momentum
 	/**
 	 * Given the velocity and mass, return momentum as magnitude
 	 */
-	public static float asMagnitude(Vector2D velocity, float mass)
+	public static float asMagnitude(Vector2 velocity, float mass)
 	{
 		float pX = mass * velocity.X;
 		float pY = mass * velocity.Y;
 		return (float)Math.sqrt( (pX*pX) + (pY*pY) );
 	}
 	
-	public static float asMagnitude(Vector2D[] velocities, float[] masses)
+	public static float asMagnitude(Vector2[] velocities, float[] masses)
 	{
-		Vector2D totalP = asVector(velocities, masses);
+		Vector2 totalP = asVector(velocities, masses);
 		if (totalP == null)
 			return 0.0f;
 		
@@ -91,7 +91,7 @@ public abstract class Momentum
 	/**
 	 * Given a momentum vector, return angle of direction of momentum
 	 */
-	public static float asAngle(Vector2D momentum)
+	public static float asAngle(Vector2 momentum)
 	{
 		return Angle.arctan(momentum.X, -momentum.Y);
 	}
@@ -110,17 +110,17 @@ public abstract class Momentum
 	/**
 	 * Given 2 velocities and masses, calculate the velocities after an elastic collision
 	 */	
-	public static Vector2D[] elasticCollision(Vector2D vel1, float mass1, Vector2D vel2, float mass2)
+	public static Vector2[] elasticCollision(Vector2 vel1, float mass1, Vector2 vel2, float mass2)
 	{		
-		Vector2D initP = new Vector2D( (vel1.X * mass1) + (vel2.X * mass2),
+		Vector2 initP = new Vector2( (vel1.X * mass1) + (vel2.X * mass2),
 							(vel1.Y * mass1) + (vel2.Y * mass2) );
 		
-		Vector2D initV = new Vector2D( -(vel2.X - vel1.X), -(vel2.Y - vel1.Y) );
+		Vector2 initV = new Vector2( -(vel2.X - vel1.X), -(vel2.Y - vel1.Y) );
 		
-		Vector2D finalVa = new Vector2D( (initP.X - (mass2 * initV.X)) / (mass1 + mass2), (initP.Y - (mass2 * initV.Y)) / (mass1 + mass2) );
-		Vector2D finalVb = new Vector2D( (initP.X - (mass1 * finalVa.X)) / mass2, (initP.Y - (mass1 * finalVa.Y)) / mass2 );
+		Vector2 finalVa = new Vector2( (initP.X - (mass2 * initV.X)) / (mass1 + mass2), (initP.Y - (mass2 * initV.Y)) / (mass1 + mass2) );
+		Vector2 finalVb = new Vector2( (initP.X - (mass1 * finalVa.X)) / mass2, (initP.Y - (mass1 * finalVa.Y)) / mass2 );
 		
-		return new Vector2D[] { finalVa, finalVb };
+		return new Vector2[] { finalVa, finalVb };
 	}
 	
 	
@@ -133,17 +133,17 @@ public abstract class Momentum
 	/**
 	 * Given 2 velocities, calculate the velocities after an elastic collision with constant mass
 	 */
-	public static Vector2D[] elasticCollision(Vector2D vel1, Vector2D vel2)
+	public static Vector2[] elasticCollision(Vector2 vel1, Vector2 vel2)
 	{		
-		Vector2D initP = new Vector2D( (vel1.X * CONSTANT_MASS) + (vel2.X * CONSTANT_MASS),
+		Vector2 initP = new Vector2( (vel1.X * CONSTANT_MASS) + (vel2.X * CONSTANT_MASS),
 							(vel1.Y * CONSTANT_MASS) + (vel2.Y * CONSTANT_MASS) );
 		
-		Vector2D initV = new Vector2D( -(vel2.X - vel1.X), -(vel2.Y - vel1.Y) );
+		Vector2 initV = new Vector2( -(vel2.X - vel1.X), -(vel2.Y - vel1.Y) );
 		
-		Vector2D finalVa = new Vector2D( (initP.X - (CONSTANT_MASS * initV.X)), (initP.Y - (CONSTANT_MASS * initV.Y)) );
-		Vector2D finalVb = new Vector2D( (initP.X - (CONSTANT_MASS * finalVa.X)) * 2.0f, (initP.Y - (CONSTANT_MASS * finalVa.Y)) * 2.0f );
+		Vector2 finalVa = new Vector2( (initP.X - (CONSTANT_MASS * initV.X)), (initP.Y - (CONSTANT_MASS * initV.Y)) );
+		Vector2 finalVb = new Vector2( (initP.X - (CONSTANT_MASS * finalVa.X)) * 2.0f, (initP.Y - (CONSTANT_MASS * finalVa.Y)) * 2.0f );
 		
-		return new Vector2D[] { finalVa, finalVb };
+		return new Vector2[] { finalVa, finalVb };
 		
 	}
 	

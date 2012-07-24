@@ -1,6 +1,6 @@
 package sky.engine.geometry.shapes;
 
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 
 /**
  * 
@@ -11,62 +11,34 @@ import sky.engine.geometry.vectors.Vector2D;
 public class Line extends Shape
 {
 
-	
-	/********************************************
-	 * 			PUBLIC CONSTRUCTORS
-	 ********************************************/
-	
 	/**
 	 * Create new instance of a line
 	 */
-	public Line(Vector2D position, Vector2D v1, Vector2D v2)
-	{
-		super(position);
-		initialise(v1, v2);
-	}
-	
-	
-	/**
-	 * Create new instance of a line
-	 */
-	public Line(Vector2D v1, Vector2D v2)
+	public Line(Vector2 v1, Vector2 v2)
 	{
 		super(v1.midpoint(v2));
 		initialise(v1, v2);
 	}
 	
-
-	
-	
-
-	
-	/********************************************
-	 * 			PROTECTED CONSTRUCTORS
-	 ********************************************/
 	
 	/**
 	 * Create new instance of a line
 	 */
-	protected Line(Vector2D position, Vector2D v1, Vector2D v2, Vector2D velocity, float mass)
-	{
-		super(position, velocity, mass);
-		initialise(v1, v2);
-	}
-	
-	
-	/**
-	 * Create new instance of a line
-	 */
-	protected Line(Vector2D v1, Vector2D v2, Vector2D velocity, float mass)
+	public Line(Vector2 v1, Vector2 v2, Vector2 velocity, float mass)
 	{
 		super(v1.midpoint(v2), velocity, mass);
 		initialise(v1, v2);
 	}
 	
 	
-	
-	
-	
+	/**
+	 * Create new instance of a line
+	 */
+	public Line(Line line)
+	{
+		super(line.Position, line.Velocity, line.Mass);
+		initialise(line.vertices[0], line.vertices[1]);
+	}
 	
 	
 	
@@ -76,18 +48,12 @@ public class Line extends Shape
 	/**
 	 * Initialise the vertices of this line
 	 */
-	private void initialise(Vector2D v1, Vector2D v2)
+	private void initialise(Vector2 v1, Vector2 v2)
 	{
-		vertices = new Vector2D[2];
+		vertices = new Vector2[2];
 		vertices[0] = v1.clone();
 		vertices[1] = v2.clone();
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -99,15 +65,8 @@ public class Line extends Shape
 	 */
 	public Line clone()
 	{
-		return new Line(this.Position, vertices[0], vertices[1]);
+		return new Line(this);
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -125,24 +84,13 @@ public class Line extends Shape
 	
 	
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Returns the true midpoint of this line
 	 */
-	public Vector2D midpoint()
+	public Vector2 midpoint()
 	{
-		return new Vector2D((vertices[0].X + vertices[1].X) * 0.5f, (vertices[0].Y + vertices[1].Y) * 0.5f);
+		return new Vector2((vertices[0].X + vertices[1].X) * 0.5f, (vertices[0].Y + vertices[1].Y) * 0.5f);
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -164,8 +112,6 @@ public class Line extends Shape
 	
 	
 	
-	
-	
 	/**
 	 * Returns the y-intercept of this line.
 	 */
@@ -175,7 +121,6 @@ public class Line extends Shape
 		float ydiff = vertices[1].Y - vertices[0].Y;
 		return ((vertices[0].Y * xdiff) - (vertices[0].X * ydiff)) / -xdiff;
 	}
-	
 	
 	
 	

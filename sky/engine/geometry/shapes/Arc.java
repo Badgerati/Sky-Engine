@@ -1,6 +1,6 @@
 package sky.engine.geometry.shapes;
 
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 import sky.engine.math.Angle;
 
 /**
@@ -27,20 +27,11 @@ public class Arc extends Circle
 	
 	
 	
-
-	
-	
-
-	
-	
-	/********************************************
-	 * 			PUBLIC CONSTRUCTORS
-	 ********************************************/
 	
 	/**
 	 * Create new instance of a Geometric Arc
 	 */
-	public Arc(Vector2D position, float radius, float startangle, float sweepangle)
+	public Arc(Vector2 position, float radius, float startangle, float sweepangle)
 	{
 		super(position, radius);
 		StartAngle = startangle;
@@ -59,31 +50,15 @@ public class Arc extends Circle
 	}
 
 	
-	
-	
-	
-	
-	
-
-	
-	/********************************************
-	 * 			PROTECTED CONSTRUCTORS
-	 ********************************************/
-	
 	/**
 	 * Create new instance of a Geometric Arc
 	 */
-	protected Arc(Vector2D position, float radius, float startangle, float sweepangle, Vector2D velocity, float mass)
+	public Arc(Vector2 position, float radius, float startangle, float sweepangle, Vector2 velocity, float mass)
 	{
 		super(position, radius, velocity, mass);
 		StartAngle = startangle;
 		SweepAngle = sweepangle;
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -105,11 +80,6 @@ public class Arc extends Circle
 	
 	
 	
-	
-	
-	
-	
-	
 	/**
 	 * Return the circumference of this arc
 	 */
@@ -124,10 +94,6 @@ public class Arc extends Circle
 	
 	
 	
-	
-	
-	
-	
 	/**
 	 * Return the area of this arc
 	 */
@@ -136,7 +102,6 @@ public class Arc extends Circle
 	{
 		return ((SweepAngle * Angle.TO_RADIANS) * 0.5f) * (Radius * Radius);
 	}
-	
 	
 	
 	

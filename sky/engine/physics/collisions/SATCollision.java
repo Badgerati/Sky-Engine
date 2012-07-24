@@ -1,7 +1,7 @@
 package sky.engine.physics.collisions;
 
 import sky.engine.geometry.shapes.GeometricShape;
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 
 /**
  * 
@@ -18,14 +18,14 @@ public abstract class SATCollision
 	public static boolean intersect(GeometricShape shape1, GeometricShape shape2)
 	{
 		//initialise the set of axes for both shapes
-		Vector2D[] axes1 = null, axes2 = null;
+		Vector2[] axes1 = null, axes2 = null;
 		
 		
 		//Are both shapes circles?
 		if (shape1.isCircle() && shape2.isCircle())
 		{
 			//generate axes
-			axes1 = new Vector2D[1];
+			axes1 = new Vector2[1];
 			axes1[0] = shape1.getPosition().sub(shape2.getPosition());
 			axes1[0].normalise();
 		}
@@ -35,10 +35,10 @@ public abstract class SATCollision
 		else if (shape1.isCircle())
 		{
 			//get vertex closest to centre of circle
-			Vector2D closest = getClosest(shape1, shape2);
+			Vector2 closest = getClosest(shape1, shape2);
 			
 			//get axes from circle and closest vertex
-			axes1 = new Vector2D[1];
+			axes1 = new Vector2[1];
 			axes1[0] = shape1.getPosition().sub(closest);
 			axes1[0].normalise();
 		}
@@ -48,10 +48,10 @@ public abstract class SATCollision
 		else if (shape2.isCircle())
 		{
 			//get vertex closest to centre of circle
-			Vector2D closest = getClosest(shape2, shape1);
+			Vector2 closest = getClosest(shape2, shape1);
 			
 			//get axes from circle and closest vertex
-			axes2 = new Vector2D[1];
+			axes2 = new Vector2[1];
 			axes2[0] = shape2.getPosition().sub(closest);
 			axes2[0].normalise();
 		}
@@ -65,10 +65,10 @@ public abstract class SATCollision
 		if (axes2 == null && !shape2.isCircle())
 			axes2 = shape2.getAxes();
 		else if (axes2 == null)
-			axes2 = new Vector2D[0];
+			axes2 = new Vector2[0];
 
 		//axis and projections
-		Vector2D axis;
+		Vector2 axis;
 		Projection p1, p2;
 		
 
@@ -116,14 +116,14 @@ public abstract class SATCollision
 	public static MTV getIntersection(GeometricShape shape1, GeometricShape shape2)
 	{
 		//initialise the set of axes for both bounds
-		Vector2D[] axes1 = null, axes2 = null;
+		Vector2[] axes1 = null, axes2 = null;
 		
 		
 		//Are both shapes circles?
 		if (shape1.isCircle() && shape2.isCircle())
 		{
 			//generate axes
-			axes1 = new Vector2D[1];
+			axes1 = new Vector2[1];
 			axes1[0] = shape1.getPosition().sub(shape2.getPosition());
 			axes1[0].normalise();
 		}
@@ -133,10 +133,10 @@ public abstract class SATCollision
 		else if (shape1.isCircle())
 		{
 			//get vertex closest to centre of circle
-			Vector2D closest = getClosest(shape1, shape2);
+			Vector2 closest = getClosest(shape1, shape2);
 			
 			//get axes from circle and closest vertex
-			axes1 = new Vector2D[1];
+			axes1 = new Vector2[1];
 			axes1[0] = shape1.getPosition().sub(closest);
 			axes1[0].normalise();
 		}
@@ -146,10 +146,10 @@ public abstract class SATCollision
 		else if (shape2.isCircle())
 		{
 			//get vertex closest to centre of circle
-			Vector2D closest = getClosest(shape2, shape1);
+			Vector2 closest = getClosest(shape2, shape1);
 			
 			//get axes from circle and closest vertex
-			axes2 = new Vector2D[1];
+			axes2 = new Vector2[1];
 			axes2[0] = shape2.getPosition().sub(closest);
 			axes2[0].normalise();
 		}
@@ -163,15 +163,15 @@ public abstract class SATCollision
 		if (axes2 == null && !shape2.isCircle())
 			axes2 = shape2.getAxes();
 		else
-			axes2 = new Vector2D[0];
+			axes2 = new Vector2[0];
 		
 		//MTV values
 		float overlap = 0xFFFFFF;
-		Vector2D smallest = null;
+		Vector2 smallest = null;
 		float o;
 		
 		//axis and projections
-		Vector2D axis;
+		Vector2 axis;
 		Projection p1, p2;
 		
 		
@@ -261,17 +261,17 @@ public abstract class SATCollision
 	/**
 	 * Check to see if the shape contains the point
 	 */
-	public static boolean contains(GeometricShape shape, Vector2D point)
+	public static boolean contains(GeometricShape shape, Vector2 point)
 	{
 		//initialise the set of axes for the bound
-		Vector2D[] axes = null;
+		Vector2[] axes = null;
 		
 		
 		//Is the bound a circle?
 		if (shape.isCircle())
 		{
 			//generate axes
-			axes = new Vector2D[1];
+			axes = new Vector2[1];
 			axes[0] = shape.getPosition().sub(point);
 			axes[0].normalise();
 		}
@@ -283,7 +283,7 @@ public abstract class SATCollision
 			axes = shape.getAxes();
 
 		//axis and projections
-		Vector2D axis;
+		Vector2 axis;
 		Projection p1, p2;
 		
 		
@@ -319,11 +319,11 @@ public abstract class SATCollision
 	 * Given two shapes, where the first is a circle. Return the closest vertex from
 	 * the second shapes.
 	 */
-	private static Vector2D getClosest(GeometricShape circle, GeometricShape shape)
+	private static Vector2 getClosest(GeometricShape circle, GeometricShape shape)
 	{
-		Vector2D centre = circle.getPosition();
-		Vector2D[] shapeverts = shape.vertices();
-		Vector2D closest = shapeverts[0];
+		Vector2 centre = circle.getPosition();
+		Vector2[] shapeverts = shape.vertices();
+		Vector2 closest = shapeverts[0];
 		
 		float mag = centre.squaredMagnitude(shapeverts[0]);
 		float tempMag = 0;

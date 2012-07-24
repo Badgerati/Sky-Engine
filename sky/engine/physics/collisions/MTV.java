@@ -1,6 +1,6 @@
 package sky.engine.physics.collisions;
 
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 
 /**
  * 
@@ -13,7 +13,7 @@ public class MTV
 	/**
 	 * Axis with smallest overlap to move shapes along
 	 */
-	private final Vector2D axis;
+	private final Vector2 axis;
 	
 	
 	/**
@@ -31,7 +31,7 @@ public class MTV
 	/**
 	 * Construct a new MTV object
 	 */
-	public MTV(Vector2D axis, float overlap)
+	public MTV(Vector2 axis, float overlap)
 	{
 		this.axis = axis;
 		this.overlap = overlap;
@@ -47,7 +47,7 @@ public class MTV
 	/**
 	 * Returns the axis
 	 */
-	public Vector2D getAxis()
+	public Vector2 getAxis()
 	{
 		return axis;
 	}

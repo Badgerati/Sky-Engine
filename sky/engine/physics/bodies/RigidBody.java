@@ -1,6 +1,6 @@
 package sky.engine.physics.bodies;
 
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 
 /**
  * A RigidBody is an object that has a position, velocity and mass.
@@ -19,13 +19,13 @@ public abstract class RigidBody
 	/**
 	 * position of the body
 	 */
-	protected Vector2D Position = null;
+	protected Vector2 Position = null;
 	
 	
 	/**
 	 * velocity of the body
 	 */
-	public Vector2D Velocity = null;
+	public Vector2 Velocity = null;
 	
 	
 	/**
@@ -45,11 +45,6 @@ public abstract class RigidBody
 	
 	
 	
-	
-	
-
-	
-	
 	/**
 	 * Create instance of new RigidBody object.
 	 * 
@@ -57,7 +52,7 @@ public abstract class RigidBody
 	 * @param velocity - Velocity of the body.
 	 * @param mass - Current mass of the body (cannot be negative).
 	 */
-	public RigidBody(Vector2D position, Vector2D velocity, float mass)
+	public RigidBody(Vector2 position, Vector2 velocity, float mass)
 	{
 		if (mass < 0)
 			throw new Error("Mass cannot be negative.");
@@ -81,10 +76,10 @@ public abstract class RigidBody
 	 * 
 	 * @param position - Position of the body.
 	 */
-	public RigidBody(Vector2D position)
+	public RigidBody(Vector2 position)
 	{
 		Position = position.clone();
-		Velocity = Vector2D.zeros();
+		Velocity = Vector2.zeros();
 		Mass = INFINITE_MASS;
 		InverseMass = 0;
 	}
@@ -93,9 +88,6 @@ public abstract class RigidBody
 	
 	
 	
-	
-	
-
 	
 	
 	/**
@@ -110,15 +102,10 @@ public abstract class RigidBody
 	/**
 	 * Integrate the body in the direction of the given velocity
 	 */
-	public void integrate(Vector2D velocity, float dt)
+	public void integrate(Vector2 velocity, float dt)
 	{
 		Position.integrate(velocity.mulScalar(dt));
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -147,16 +134,10 @@ public abstract class RigidBody
 	/**
 	 * Returns the position of the body
 	 */
-	public Vector2D getPosition()
+	public Vector2 getPosition()
 	{
 		return Position.clone();
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -184,7 +165,7 @@ public abstract class RigidBody
 	/**
 	 * Set the position of this body
 	 */
-	public void setPosition(Vector2D position)
+	public void setPosition(Vector2 position)
 	{
 		Position.X = position.X;
 		Position.Y = position.Y;
@@ -193,10 +174,6 @@ public abstract class RigidBody
 	
 	
 	
-	
-	
-	
-
 	
 	
 	
@@ -222,6 +199,8 @@ public abstract class RigidBody
 	
 	
 	
+	
+	
 	/**
 	 * Set inverse mass of body
 	 */
@@ -239,12 +218,6 @@ public abstract class RigidBody
 	{
 		return InverseMass;
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	

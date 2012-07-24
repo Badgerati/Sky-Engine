@@ -2,7 +2,7 @@ package sky.engine.geometry.shapes;
 
 import sky.engine.geometry.ConvexHull;
 import sky.engine.geometry.Triangulation;
-import sky.engine.geometry.vectors.Vector2D;
+import sky.engine.geometry.vectors.Vector2;
 import sky.engine.physics.collisions.MTV;
 import sky.engine.physics.collisions.Projection;
 
@@ -19,13 +19,7 @@ public interface GeometricShape
 	/**
 	 * Returns the vertices of this shape.
 	 */
-	public Vector2D[] vertices();
-	
-	
-	/**
-	 * Set the vertices of the shape.
-	 */
-	public void setVertices(Vector2D[] vertices);
+	public Vector2[] vertices();
 	
 	
 	/**
@@ -37,7 +31,7 @@ public interface GeometricShape
 	/**
 	 * Returns the central position of the shape.
 	 */
-	public Vector2D getPosition();
+	public Vector2 getPosition();
 	
 	
 	/**
@@ -55,13 +49,13 @@ public interface GeometricShape
 	/**
 	 * Returns the axes of this shape.
 	 */
-	public Vector2D[] getAxes();
+	public Vector2[] getAxes();
 	
 	
 	/**
 	 * Projects the shape's vertices onto the given axis.
 	 */
-	public Projection project(Vector2D axis);
+	public Projection project(Vector2 axis);
 	
 	
 	/**
@@ -79,7 +73,7 @@ public interface GeometricShape
 	/**
 	 * Does the geometric shape contain the given point?
 	 */
-	public boolean contains(Vector2D point);
+	public boolean contains(Vector2 point);
 	
 	
 	
