@@ -1,4 +1,4 @@
-Sky Engine v0.9.1
+Sky Engine v0.9.2
 ===================
 
 Sky Engine is a basic 2D Games Engine for use with Android Development, programmed in Java. It is still
@@ -32,6 +32,18 @@ descriptions etc. missing.
 
 Updates and Fixes
 -----------------
+
+Version 0.9.2
+
+	* Modified Box and DrawableBox. They not longer extends Polygon, and can only be constructed by width and height.
+	* Added new Quad and DrawableQuad to replace the vertex construction of the old Box/DrawableBox.
+	* Added new DrawablePoint to draw a point (pixel) to the screen.
+	* Renamed Vector2D and Vector3D to Vector2 and Vector3, respectively.
+	* Added new Circumcircle class to help generate the smallest bounding circle around a given point-set. Algorithm is my own.
+	* Added new Text and CustomText classes. Currently they don't do much apart from allow quicker re-usable text. (Text may get removed later on, so use CustomText for now).
+	* Added new Fill, Outline and Blur paint objects to help with easier drawable shape constructions.
+	* All drawable shapes now allow for a blur effect - a sort of slight glowing around the edges of the shapes.
+
 
 Version 0.9.1
 
