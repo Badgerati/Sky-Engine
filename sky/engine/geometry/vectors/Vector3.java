@@ -33,7 +33,7 @@ public class Vector3 implements Comparable<Vector3>
 	/**
 	 * Comparator object for a Vector.	
 	 */
-	public static final Comparator<Vector3> VECTOR3D_COMPARATOR = new Comparator<Vector3>() {
+	public static final Comparator<Vector3> VECTOR3_COMPARATOR = new Comparator<Vector3>() {
 		public int compare(Vector3 v1, Vector3 v2) {
 			return v1.compareTo(v2);
 		}

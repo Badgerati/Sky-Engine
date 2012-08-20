@@ -34,6 +34,12 @@ public class DrawableCircle extends Circle implements DrawableShape
 	protected Blur blurpaint = null;
 	
 	
+	/**
+	 * Is this shape to be hidden?
+	 */
+	protected boolean hidden = false;
+	
+	
 	
 	
 	
@@ -66,9 +72,9 @@ public class DrawableCircle extends Circle implements DrawableShape
 	public DrawableCircle(Vector2 position, float radius, Fill fill, Outline outline, Blur blur)
 	{
 		super(position, radius);
-		fillpaint = fill;
-		outlinepaint = outline;
-		blurpaint = blur;
+		fillpaint = fill == null ? null : new Fill(fill);
+		outlinepaint = outline == null ? null : new Outline(outline);
+		blurpaint = blur == null ? null : new Blur(blur);
 	}
 	
 	
@@ -78,9 +84,9 @@ public class DrawableCircle extends Circle implements DrawableShape
 	public DrawableCircle(Vector2 position, float radius, Fill fill, Outline outline, Blur blur, Vector2 velocity, float mass)
 	{
 		super(position, radius, velocity, mass);
-		fillpaint = fill;
-		outlinepaint = outline;
-		blurpaint = blur;
+		fillpaint = fill == null ? null : new Fill(fill);
+		outlinepaint = outline == null ? null : new Outline(outline);
+		blurpaint = blur == null ? null : new Blur(blur);
 	}
 	
 	
@@ -174,25 +180,52 @@ public class DrawableCircle extends Circle implements DrawableShape
 	
 	
 	
+	/**
+	 * Hides the shape
+	 */
+	public void hide()
+	{
+		hidden = true;
+	}
+	
+	
+	
+	/**
+	 * Shows the shape
+	 */
+	public void show()
+	{
+		hidden = false;
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * Draw this circle
 	 */
 	public void draw(Canvas canvas)
 	{
-		if (blurpaint != null)
+		if (!hidden)
 		{
-			canvas.drawCircle(Position.X, Position.Y, Radius, blurpaint);
-		}
-		
-		if (outlinepaint != null)
-		{
-			canvas.drawCircle(Position.X, Position.Y, Radius, outlinepaint);
-		}
-		
-		if (fillpaint != null)
-		{
-			canvas.drawCircle(Position.X, Position.Y, Radius, fillpaint);
+			if (blurpaint != null)
+			{
+				canvas.drawCircle(Position.X, Position.Y, Radius, blurpaint);
+			}
+			
+			if (outlinepaint != null)
+			{
+				canvas.drawCircle(Position.X, Position.Y, Radius, outlinepaint);
+			}
+			
+			if (fillpaint != null)
+			{
+				canvas.drawCircle(Position.X, Position.Y, Radius, fillpaint);
+			}
 		}
 	}
 

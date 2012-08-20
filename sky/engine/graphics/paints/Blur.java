@@ -100,6 +100,17 @@ public class Blur extends Paint
 	
 	
 	
+	/**
+	 * Sets the blur
+	 */
+	public void set(Blur paint)
+	{
+		initialise(paint.getColor(), paint.getStrokeWidth(), paint.getBlurRadius(), paint.getBlurStyle());
+	}
+	
+	
+	
+	
 	
 	
 	

@@ -118,7 +118,7 @@ public class Circle extends Shape
 	 */
 	public float circumference()
 	{
-		return ((float)Math.PI * Radius);
+		return ((float)Math.PI * 2.0f * Radius);
 	}
 	
 	

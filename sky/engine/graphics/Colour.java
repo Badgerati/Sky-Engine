@@ -25,6 +25,9 @@ public abstract class Colour extends Color
 	//Blues
 	public static final int DODGER_BLUE = 0xff1e90ff;
 	public static final int CORNFLOWER_BLUE = 0xff6495ed;
+	public static final int STEEL_BLUE = 0xff4682B4;
+	public static final int DARK_STEEL_BLUE = 0xff36648B;
+	public static final int CADET_BLUE = 0xff5F9EA0;
 	
 	
 	

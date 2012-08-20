@@ -1,4 +1,4 @@
-package sky.engine.graphics.drawable;
+package sky.engine.text;
 
 import sky.engine.geometry.vectors.Vector2;
 import android.graphics.Canvas;
@@ -140,7 +140,7 @@ public class CustomText
 	/**
 	 * Set a shadow for the text
 	 */
-	public void setShadow(int colour, float radius, float offsetx, float offsety)
+	public void setShadow(float radius, float offsetx, float offsety, int colour)
 	{
 		paint.setShadowLayer(radius, offsetx, offsety, colour);
 	}

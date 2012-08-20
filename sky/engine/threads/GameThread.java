@@ -431,7 +431,7 @@ public class GameThread extends Thread
 			//Else we're paused
 			else if (currentState == STATE_PAUSE)
 			{
-				try { Thread.sleep(100); }
+				try { Thread.sleep(700); }
 				catch (InterruptedException e) { }
 			}
 			

@@ -28,7 +28,7 @@ public class Vector2 implements Comparable<Vector2>
 	/**
 	 * Comparator object for a Vector2D.	
 	 */
-	public static final Comparator<Vector2> VECTOR2D_COMPARATOR = new Comparator<Vector2>() {
+	public static final Comparator<Vector2> VECTOR2_COMPARATOR = new Comparator<Vector2>() {
 		public int compare(Vector2 v1, Vector2 v2) {
 			return v1.compareTo(v2);
 		}
@@ -601,7 +601,7 @@ public class Vector2 implements Comparable<Vector2>
 	/**
 	 * multiply by scalar
 	 */
-	public Vector2 mulScalar(float x, float y)
+	public Vector2 mul(float x, float y)
 	{
 		return new Vector2(X * x, Y * y);
 	}
@@ -621,7 +621,7 @@ public class Vector2 implements Comparable<Vector2>
 	/**
 	 * divide by scalar
 	 */
-	public Vector2 divScalar(float x, float y)
+	public Vector2 div(float x, float y)
 	{
 		return new Vector2(X / x, Y / y);
 	}
@@ -641,7 +641,7 @@ public class Vector2 implements Comparable<Vector2>
 	/**
 	 * add by scalar
 	 */
-	public Vector2 addScalar(float x, float y)
+	public Vector2 add(float x, float y)
 	{
 		return new Vector2(X + x, Y + y);
 	}
@@ -661,14 +661,14 @@ public class Vector2 implements Comparable<Vector2>
 	/**
 	 * sub by scalar
 	 */
-	public Vector2 subScalar(float x, float y)
+	public Vector2 sub(float x, float y)
 	{
 		return new Vector2(X - x, Y - y);
 	}
 	
 	
 	
-	
+
 	
 	
 	/**
@@ -682,6 +682,16 @@ public class Vector2 implements Comparable<Vector2>
 	
 	
 	/**
+	 * dot product
+	 */
+	public float dot(float x, float y)
+	{
+		return (X * x) + (Y * y);
+	}
+	
+	
+	
+	/**
 	 * cross product
 	 */
 	public float cross(Vector2 vector)
@@ -690,6 +700,14 @@ public class Vector2 implements Comparable<Vector2>
 	}
 	
 	
+	
+	/**
+	 * cross product
+	 */
+	public float cross(float x, float y)
+	{
+		return ((X * y) - (Y * x));
+	}
 	
 	
 	
@@ -753,7 +771,6 @@ public class Vector2 implements Comparable<Vector2>
 	
 	
 	
-	
 	/**
 	 * Returns string representation of this vector
 	 */
@@ -761,7 +778,6 @@ public class Vector2 implements Comparable<Vector2>
 	{
 		return "(X = " + Float.toString(X) + ", Y = " + Float.toString(Y) + ")";
 	}
-	
 	
 	
 

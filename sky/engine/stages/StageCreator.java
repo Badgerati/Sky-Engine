@@ -1,9 +1,13 @@
 package sky.engine.stages;
 
 import sky.engine.audio.SoundManager;
+import sky.engine.components.Size;
+import sky.engine.game.GameActivity;
 import sky.engine.geometry.vectors.Vector3;
 import sky.engine.graphics.textures.TextureManager;
+import sky.engine.surfaces.GameSurface;
 import sky.engine.threads.GameThread;
+import sky.engine.ui.buttons.PauseButton;
 import android.content.Context;
 
 /**
@@ -21,27 +25,39 @@ public class StageCreator
 	
 	
 	/**
-	 * Game thread for ending the game.
+	 * Surface of the whole game.
 	 */
-	protected GameThread thread = null;
-	
-	
-	///**
-	// * Texture Manager.
-	// */
-	//protected TextureManager texturemanager = null;
+	protected GameSurface gamesurface = null;
 	
 	
 	/**
-	 * Sound Manager.
+	 * Activity the game is running under
 	 */
-	protected SoundManager soundmanager = null;
+	protected GameActivity activity = null;
+	
+	
+	/**
+	 * Game thread for ending the game.
+	 */
+	protected GameThread thread = null;
 	
 	
 	/**
 	 * Vector to store the values from the accelerometer.
 	 */
 	protected Vector3 accelerometer = null;
+	
+	
+	/**
+	 * Pause button
+	 */	
+	public static PauseButton pausebutton = null;
+	
+	
+	/**
+	 * Size of the screen
+	 */
+	public Size screensize = null;
 	
 	
 	
@@ -56,13 +72,16 @@ public class StageCreator
 	/**
 	 * Create a new stage instance
 	 */
-	public StageCreator(Context context, GameThread thread)
+	public StageCreator(GameActivity activity, GameSurface surface, GameThread thread)
 	{
-		this.context = context;
+		this.activity = activity;
+		this.gamesurface = surface;
+		this.context = surface.getContext();
 		this.thread = thread;
-		//this.texturemanager = new TextureManager(context.getResources());
+		
 		TextureManager.initialise(context.getResources());
-		this.soundmanager = new SoundManager(context, 10, 100, SoundManager.STREAM_MUSIC);
+		SoundManager.initialise(context, 10, SoundManager.STREAM_MUSIC, 100);
+		
 		this.accelerometer = new Vector3();
 	}
 	

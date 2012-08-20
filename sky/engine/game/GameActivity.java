@@ -1,6 +1,7 @@
 package sky.engine.game;
 
 import sky.engine.sensors.Accelerometer;
+import sky.engine.stages.StageCreator;
 import sky.engine.stages.StageLoop;
 import sky.engine.surfaces.GameSurface;
 import sky.engine.threads.GameThread;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 
 /**
  * 
@@ -28,6 +30,12 @@ public class GameActivity extends Activity
 	
 	
 	/**
+	 * Main Frame Layout for UI overlaying
+	 */
+	protected FrameLayout framelayout = null;
+	
+	
+	/**
 	 * Main game thread
 	 */
 	protected GameThread thread = null;
@@ -37,12 +45,6 @@ public class GameActivity extends Activity
 	 * Pausing dialogue
 	 */
 	protected AlertDialog pausedDialog = null;
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -67,12 +69,6 @@ public class GameActivity extends Activity
     
     
     
-    
-    
-    
-    
-    
-    
     /**
      * 
      */
@@ -86,10 +82,6 @@ public class GameActivity extends Activity
     
     
     
-    
-    
-    
-    
     /**
      * 
      */
@@ -97,10 +89,6 @@ public class GameActivity extends Activity
     {
         gamesurface.createThread();
     }
-    
-    
-    
-    
     
     
     
@@ -117,10 +105,6 @@ public class GameActivity extends Activity
     
     
     
-    
-    
-    
-    
     /**
      * Set the thread to run
      */
@@ -128,10 +112,6 @@ public class GameActivity extends Activity
     {
     	thread.setRunning();
     }
-    
-    
-    
-    
     
     
     
@@ -147,12 +127,6 @@ public class GameActivity extends Activity
 	
 	
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Stop this activity from restarting
 	 */
@@ -161,11 +135,6 @@ public class GameActivity extends Activity
 	{
 		super.onConfigurationChanged(newConfig);
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -184,22 +153,24 @@ public class GameActivity extends Activity
 	        	   .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
 	        		   public void onClick(DialogInterface dialog, int which) {
 	        			   dialog.cancel();
-	        			   onResume();
-	        			   thread.unpause();
+	        			   resume();
 	        		   }
 	        	   })
+	        	   .setNeutralButton("Retry", new DialogInterface.OnClickListener() {
+					   public void onClick(DialogInterface dialog, int which) {
+						   dialog.cancel();
+						   restart();
+					   }
+				   })
 			 	   .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
 					   public void onClick(DialogInterface dialog, int which) {
-						   gamesurface.destroyThread();
 						   dialog.cancel();
-						   setResult(RESULT_OK);
-						   finish();
+						   quit();
 					   }
 				   });
 	        pausedDialog = builder.create();
 			pausedDialog.show();
-			
-			thread.pause();
+			pause();
 		}
 		
 		super.onPause();
@@ -208,6 +179,61 @@ public class GameActivity extends Activity
 	
 	
 	
+	
+	/**
+	 * Pause the activity
+	 */
+	public void pause()
+	{
+		if (StageCreator.pausebutton != null)
+			StageCreator.pausebutton.pause();
+		else
+			thread.pause();
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Resume the activity
+	 */
+	public void resume()
+	{
+	   onResume();
+	   if (StageCreator.pausebutton != null)
+		   StageCreator.pausebutton.unpause();
+	   else
+		   thread.unpause();
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Quit the activity
+	 */
+	public void quit()
+	{
+	   gamesurface.destroyThread();
+	   setResult(RESULT_OK);
+	   finish();
+	}
+	
+	
+	
+	
+	/**
+	 * Retry the activity (restart)
+	 */
+	public void restart()
+	{
+		gamesurface.destroyThread();
+		createThread();
+		startThread();
+		runThread();
+	}
 	
 	
 	
@@ -227,10 +253,6 @@ public class GameActivity extends Activity
 	
 	
 	
-	
-	
-	
-	
 	/**
 	 * Override back button to pause on press
 	 */
@@ -245,10 +267,6 @@ public class GameActivity extends Activity
 		
 		return super.onKeyDown(keyCode, event);
 	}
-	
-	
-	
-	
 	
 	
 	

@@ -72,6 +72,12 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	
 	
 	/**
+	 * Centre point of the screen
+	 */
+	public static Size ScreenCentre = null;
+	
+	
+	/**
 	 * Have the stage been set?
 	 */
 	private boolean stagesSet = false;
@@ -235,6 +241,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	public void surfaceCreated(SurfaceHolder holder)
 	{
 		ScreenSize = new Size(getWidth(), getHeight());
+		ScreenCentre = ScreenSize.mulScalar(0.5f);
 		surfaceCreated = true;
 	}
 	
@@ -245,11 +252,12 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	
 	
 	/**
-	 * Store size of surface.
+	 * Store size of surface, including the centre point of the screen.
 	 */
 	public void getSize()
 	{
 		ScreenSize = new Size(getWidth(), getHeight());
+		ScreenCentre = ScreenSize.mulScalar(0.5f);
 	}
 	
 	
@@ -354,12 +362,12 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	@Override
 	public boolean onTouchEvent(MotionEvent event)
 	{
-		if (stagesSet) {
+		if (stagesSet && contentLoaded)
+		{
 			return stages.handleTouchInput(event);
 		}
-		else {
-			return true;
-		}
+		
+		return true;
 	}
 	
 	
@@ -508,7 +516,8 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	 */
 	public void update(long gameTime)
 	{
-		if (stagesSet) {
+		if (stagesSet && contentLoaded)
+		{
 			stages.update(gameTime);
 		}
 	}
@@ -526,7 +535,8 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	 */
 	public void draw(Canvas canvas)
 	{		
-		if (stagesSet) {
+		if (stagesSet && contentLoaded)
+		{
 			stages.draw(canvas);
 		}
 	}
@@ -539,7 +549,8 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	{
 		canvas.drawColor(cls);
 		
-		if (stagesSet) {
+		if (stagesSet && contentLoaded)
+		{
 			stages.draw(canvas);
 		}
 	}

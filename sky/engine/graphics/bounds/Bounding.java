@@ -1,10 +1,11 @@
 package sky.engine.graphics.bounds;
 
+import sky.engine.geometry.Circumcircle;
 import sky.engine.geometry.ConvexHull;
 import sky.engine.geometry.Triangulation;
-import sky.engine.geometry.shapes.GeometricShape;
 import sky.engine.geometry.vectors.Vector2;
 import sky.engine.math.Angle;
+import sky.engine.physics.bodies.CollidableBody;
 import sky.engine.physics.collisions.MTV;
 import sky.engine.physics.collisions.Projection;
 import sky.engine.physics.collisions.SATCollision;
@@ -14,7 +15,7 @@ import sky.engine.physics.collisions.SATCollision;
  * 
  * @author Matthew Kelly (Badgerati).
  */
-public abstract class Bounding implements GeometricShape
+public abstract class Bounding implements CollidableBody
 {
 	/**
 	 * Position of the bound
@@ -46,10 +47,6 @@ public abstract class Bounding implements GeometricShape
 	
 	
 	
-	
-	
-	
-	
 	/**
 	 * Create new instance of a Bounding Volume
 	 */
@@ -73,10 +70,6 @@ public abstract class Bounding implements GeometricShape
 	
 
 	
-	
-	
-
-	
 	/**
 	 * Rotate the bound at the origin on given degree
 	 */
@@ -88,6 +81,10 @@ public abstract class Bounding implements GeometricShape
 			if (vertices[i] != null)
 				vertices[i].rotate(degree, Position);
 	}
+	
+	
+	
+	
 	
 	
 	/**
@@ -102,12 +99,6 @@ public abstract class Bounding implements GeometricShape
 			if (vertices[i] != null)
 				vertices[i].rotate(degree, origin);
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -129,32 +120,6 @@ public abstract class Bounding implements GeometricShape
 		}
 	}
 	
-	
-
-	
-	
-	
-	
-	
-	/**
-	 * Set position of bound
-	 */
-	public void setPosition(float x, float y)
-	{
-		Vector2 delta = new Vector2();
-		delta.X = x - Position.X;
-		delta.Y = y - Position.Y;
-		
-		Position.X = x;
-		Position.Y = y;
-
-		if (vertices != null)
-		{
-			for (int i = 0; i < vertices.length; i++)
-				if (vertices[i] != null)
-					vertices[i].integrate(delta);
-		}
-	}
 	
 	
 	
@@ -183,6 +148,32 @@ public abstract class Bounding implements GeometricShape
 	
 	
 	
+	/**
+	 * Set X position of bound
+	 */
+	public void setXPosition(float x)
+	{
+		Vector2 pos = new Vector2(x, Position.Y);
+		setPosition(pos);
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Set Y position of bound
+	 */
+	public void setYPosition(float y)
+	{
+		Vector2 pos = new Vector2(Position.X, y);
+		setPosition(pos);
+	}
+	
+
+	
+	
 	
 	
 	
@@ -192,6 +183,30 @@ public abstract class Bounding implements GeometricShape
 	public Vector2 getPosition()
 	{
 		return Position;
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Get the bound's X position
+	 */
+	public float getXPosition()
+	{
+		return Position.X;
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Get the bound's Y position
+	 */
+	public float getYPosition()
+	{
+		return Position.Y;
 	}
 	
 	
@@ -213,30 +228,36 @@ public abstract class Bounding implements GeometricShape
 	
 	
 	
-
-	
 	
 	/**
-	 * Triangulate this bound, fails if vertex count is less than 3. Base of
-	 * Bounding always returns null.
+	 * Triangulate this bound, fails if vertex count is less than 3. An array of
+	 * Bounding Triangles is returned.
 	 */
 	public BoundingTri[] triangulateAsBound()
 	{
-		return null;
+		if (isCircle || vertices == null)
+			return null;
+		
+		return new Triangulation(this.vertices).asBounding();
 	}
+	
+	
+	
+	
+	
 	
 	
 	/**
-	 * Triangulate this bound, fails if vertex count is less than 3. Base of
-	 * Bounding always returns null.
+	 * Triangulate this bound, fails if vertex count is less than 3. A Triangulation
+	 * object is returned.
 	 */
 	public Triangulation triangulate()
 	{
-		return null;
+		if (isCircle || vertices == null)
+			return null;
+		
+		return new Triangulation(this.vertices);
 	}
-	
-	
-	
 	
 	
 	
@@ -249,8 +270,16 @@ public abstract class Bounding implements GeometricShape
 	 */
 	public BoundingPoly convexAsBound()
 	{
-		return null;
+		if (isCircle || vertices == null)
+			return null;
+		
+		return new ConvexHull(this.vertices).asBounding();
 	}
+	
+	
+	
+	
+	
 	
 	
 	/**
@@ -259,10 +288,46 @@ public abstract class Bounding implements GeometricShape
 	 */
 	public ConvexHull convexhull()
 	{
-		return null;
+		if (isCircle || vertices == null)
+			return null;
+		
+		return new ConvexHull(this.vertices);
 	}
 	
 	
+	
+
+	
+	
+	/**
+	 * Convex hull this bound, fails if vertex count is less than 2. A Bounding
+	 * Polygon is returned.
+	 */
+	public BoundingCircle circumcircleAsBound()
+	{
+		if (isCircle || vertices == null)
+			return null;
+		
+		return new Circumcircle(this.vertices).asBounding();
+	}
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Circumcircle this bound, fails if vertex count is less than 2. A Circumcircle
+	 * object is returned.
+	 */
+	public Circumcircle circumcircle()
+	{
+		if (isCircle || vertices == null)
+			return null;
+		
+		return new Circumcircle(this.vertices);
+	}
 	
 	
 	
@@ -273,24 +338,25 @@ public abstract class Bounding implements GeometricShape
 	/**
 	 * Does the given bound intersect this bound?
 	 */
-	public boolean intersect(GeometricShape bound)
+	public boolean intersect(CollidableBody bound)
 	{
 		return SATCollision.intersect(this, bound);
 	}
 	
 	
+	
+	
+	
+	
+	
 	/**
 	 * Get the amount of intersection between the given bound and this bound
 	 */
-	public MTV getIntersection(GeometricShape bound)
+	public MTV getIntersection(CollidableBody bound)
 	{
 		return SATCollision.getIntersection(this, bound);
 	}
-	
-	
-	
-	
-	
+
 	
 	
 	
@@ -308,6 +374,13 @@ public abstract class Bounding implements GeometricShape
 	
 	
 	
+	/**
+	 * Is the given point contained within this bound?
+	 */
+	public boolean contains(float x, float y)
+	{
+		return SATCollision.contains(this, x, y);
+	}
 	
 	
 	
@@ -332,11 +405,6 @@ public abstract class Bounding implements GeometricShape
 		
 		return axes;
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -370,9 +438,6 @@ public abstract class Bounding implements GeometricShape
 	
 	
 	
-	
-	
-	
 	/**
 	 * Get the current degree of rotation
 	 */
@@ -386,10 +451,6 @@ public abstract class Bounding implements GeometricShape
 
 	
 	
-	
-	
-	
-	
 	/**
 	 * Is this bound a circle?
 	 */
@@ -397,10 +458,5 @@ public abstract class Bounding implements GeometricShape
 	{
 		return isCircle;
 	}
-	
-	
-	
-	
-	
 
 }

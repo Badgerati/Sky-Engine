@@ -36,6 +36,12 @@ public class DrawableQuad extends Quad implements DrawableShape
 	protected Blur blurpaint = null;
 	
 	
+	/**
+	 * Is this shape to be hidden?
+	 */
+	protected boolean hidden = false;
+	
+	
 	
 	
 	
@@ -69,9 +75,9 @@ public class DrawableQuad extends Quad implements DrawableShape
 	public DrawableQuad(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4, Fill fill, Outline outline, Blur blur)
 	{
 		super(v1, v2, v3, v4);
-		fillpaint = fill;
-		outlinepaint = outline;
-		blurpaint = blur;
+		fillpaint = fill == null ? null : new Fill(fill);
+		outlinepaint = outline == null ? null : new Outline(outline);
+		blurpaint = blur == null ? null : new Blur(blur);
 		initialise();
 	}
 	
@@ -82,9 +88,9 @@ public class DrawableQuad extends Quad implements DrawableShape
 	public DrawableQuad(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4, Fill fill, Outline outline, Blur blur, Vector2 velocity, float mass)
 	{
 		super(v1, v2, v3, v4, velocity, mass);
-		fillpaint = fill;
-		outlinepaint = outline;
-		blurpaint = blur;
+		fillpaint = fill == null ? null : new Fill(fill);
+		outlinepaint = outline == null ? null : new Outline(outline);
+		blurpaint = blur == null ? null : new Blur(blur);
 		initialise();
 	}
 	
@@ -200,6 +206,30 @@ public class DrawableQuad extends Quad implements DrawableShape
 		return blurpaint;
 	}
 	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Hides the shape
+	 */
+	public void hide()
+	{
+		hidden = true;
+	}
+	
+	
+	
+	/**
+	 * Shows the shape
+	 */
+	public void show()
+	{
+		hidden = false;
+	}
+	
 
 	
 	
@@ -211,19 +241,22 @@ public class DrawableQuad extends Quad implements DrawableShape
 	 */
 	public void draw(Canvas canvas)
 	{
-		if (blurpaint != null)
+		if (!hidden)
 		{
-			canvas.drawPath(polygon, blurpaint);
-		}
-
-		if (outlinepaint != null)
-		{
-			canvas.drawPath(polygon, outlinepaint);
-		}
-
-		if (fillpaint != null)
-		{
-			canvas.drawPath(polygon, fillpaint);
+			if (blurpaint != null)
+			{
+				canvas.drawPath(polygon, blurpaint);
+			}
+	
+			if (outlinepaint != null)
+			{
+				canvas.drawPath(polygon, outlinepaint);
+			}
+	
+			if (fillpaint != null)
+			{
+				canvas.drawPath(polygon, fillpaint);
+			}
 		}
 	}
 	

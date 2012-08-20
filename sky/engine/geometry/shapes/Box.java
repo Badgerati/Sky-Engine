@@ -33,8 +33,6 @@ public class Box extends Shape
 	public Box(Vector2 position, float width, float height)
 	{
 		super(position);
-		Width = width;
-		Height = height;
 		build(width, height);
 	}
 
@@ -45,8 +43,6 @@ public class Box extends Shape
 	public Box(Vector2 position, float width, float height, Vector2 velocity, float mass)
 	{
 		super(position, velocity, mass);
-		Width = width;
-		Height = height;
 		build(width, height);
 	}
 
@@ -85,7 +81,10 @@ public class Box extends Shape
 	 * build box from width and height
 	 */
 	private void build(float width, float height)
-	{		
+	{
+		Width = width;
+		Height = height;
+		
 		vertices = new Vector2[4];
 		
 		vertices[0] = new Vector2(width * -0.5f, height * -0.5f);

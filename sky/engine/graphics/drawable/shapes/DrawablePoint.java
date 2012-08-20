@@ -34,6 +34,12 @@ public class DrawablePoint extends Shape implements DrawableShape
 	protected Blur blurpaint = null;
 	
 	
+	/**
+	 * Is this shape to be hidden?
+	 */
+	protected boolean hidden = false;
+	
+	
 	
 	
 	
@@ -69,9 +75,9 @@ public class DrawablePoint extends Shape implements DrawableShape
 	public DrawablePoint(Vector2 position, Fill fill, Outline outline, Blur blur)
 	{
 		super(position);
-		fillpaint = fill;
-		outlinepaint = outline;
-		blurpaint = blur;
+		fillpaint = fill == null ? null : new Fill(fill);
+		outlinepaint = outline == null ? null : new Outline(outline);
+		blurpaint = blur == null ? null : new Blur(blur);
 		initialise(position);
 	}
 	
@@ -82,9 +88,9 @@ public class DrawablePoint extends Shape implements DrawableShape
 	public DrawablePoint(Vector2 position, Fill fill, Outline outline, Blur blur, Vector2 velocity, float mass)
 	{
 		super(position, velocity, mass);
-		fillpaint = fill;
-		outlinepaint = outline;
-		blurpaint = blur;
+		fillpaint = fill == null ? null : new Fill(fill);
+		outlinepaint = outline == null ? null : new Outline(outline);
+		blurpaint = blur == null ? null : new Blur(blur);
 		initialise(position);
 	}
 	
@@ -193,24 +199,51 @@ public class DrawablePoint extends Shape implements DrawableShape
 	
 	
 	
+	
+	/**
+	 * Hides the shape
+	 */
+	public void hide()
+	{
+		hidden = true;
+	}
+	
+	
+	
+	/**
+	 * Shows the shape
+	 */
+	public void show()
+	{
+		hidden = false;
+	}
+	
+	
+	
+	
+	
+	
 	/**
 	 * Draw this point
 	 */
 	public void draw(Canvas canvas)
 	{
-		if (blurpaint != null)
+		if (!hidden)
 		{
-			canvas.drawPoint(Position.X, Position.Y, blurpaint);
-		}
-		
-		if (outlinepaint != null)
-		{
-			canvas.drawPoint(Position.X, Position.Y, outlinepaint);
-		}
-		
-		if (fillpaint != null)
-		{
-			canvas.drawPoint(Position.X, Position.Y, fillpaint);
+			if (blurpaint != null)
+			{
+				canvas.drawPoint(Position.X, Position.Y, blurpaint);
+			}
+			
+			if (outlinepaint != null)
+			{
+				canvas.drawPoint(Position.X, Position.Y, outlinepaint);
+			}
+			
+			if (fillpaint != null)
+			{
+				canvas.drawPoint(Position.X, Position.Y, fillpaint);
+			}
 		}
 	}
 	

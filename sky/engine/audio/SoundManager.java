@@ -13,18 +13,13 @@ import android.media.SoundPool;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public class SoundManager
+public abstract class SoundManager
 {
-	/**
-	 * Constant for audio stream of music playback
-	 */
-	public static final int STREAM_MUSIC = 0x00000003;
-	
 	
 	/**
-	 * Constant for audio stream of notifications
+	 * Constant for audio stream of system sounds
 	 */
-	public static final int STREAM_NOTIFICATIONS = 0x00000005;
+	public static final int STREAM_SYSTEM = 0x00000001;
 	
 	
 	/**
@@ -34,9 +29,9 @@ public class SoundManager
 	
 	
 	/**
-	 * Constant for audio stream of system sounds
+	 * Constant for audio stream of music playback
 	 */
-	public static final int STREAM_SYSTEM = 0x00000001;
+	public static final int STREAM_MUSIC = 0x00000003;
 	
 	
 	/**
@@ -46,29 +41,33 @@ public class SoundManager
 	
 	
 	/**
+	 * Constant for audio stream of notifications
+	 */
+	public static final int STREAM_NOTIFICATIONS = 0x00000005;
+	
+	
+	/**
 	 * The sound pool to load sounds and play them
 	 */
-	private SoundPool soundpool = null;
+	protected static SoundPool soundpool = null;
 	
 	
 	/**
 	 * Audio Manager to deal with volume	
 	 */
-	private AudioManager audiomanager = null;
+	protected static AudioManager audiomanager = null;
 	
 	
 	/**
 	 * Sound pool map for the sounds loaded into this sound manager
 	 */
-	private HashMap<Integer, Integer> soundpoolMap = null;
+	protected static HashMap<Integer, Integer> sounds = null;
 	
 	
 	/**
 	 * Context to help load sounds
 	 */
-	private Context context = null;
-	
-	
+	protected static Context context = null;
 	
 	
 	
@@ -78,19 +77,15 @@ public class SoundManager
 	
 	
 	/**
-	 * Create a new SoundManager object
+	 * Initialises the Sound Manager
 	 */
-	public SoundManager(Context context, int maxStreams, int soundQuality, int streamType)
+	public static void initialise(Context context, int maxstreams, int streamType, int streamQuality)
 	{
-		this.context = context;
-		
-		soundpool = new SoundPool(maxStreams, streamType, soundQuality);
+		SoundManager.context = context;
+		soundpool = new SoundPool(maxstreams, streamType, streamQuality);
 		audiomanager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
-		
-		soundpoolMap = new HashMap<Integer, Integer>();
+		sounds = new HashMap<Integer, Integer>();
 	}
-	
-	
 	
 	
 	
@@ -102,12 +97,10 @@ public class SoundManager
 	/**
 	 * Load sound into soundpool
 	 */
-	public void loadSound(int soundID, int soundResID, int priority)
+	public static void load(int resourceID, int soundID, int priority)
 	{
-		soundpoolMap.put(soundID, soundpool.load(context, soundResID, priority));
+		sounds.put(soundID, soundpool.load(context, resourceID, priority));
 	}
-	
-	
 	
 	
 	
@@ -119,10 +112,10 @@ public class SoundManager
 	 * Returns current Set of Sound IDs used. Null is returned if SoundPool does
 	 * not exist.
 	 */
-	public Set<Integer> getSoundIDs()
+	public static Set<Integer> getSoundIDs()
 	{
-		if (soundpoolMap != null) {
-			return soundpoolMap.keySet();
+		if (sounds != null) {
+			return sounds.keySet();
 		}
 		
 		return null;
@@ -135,31 +128,24 @@ public class SoundManager
 	
 	
 	
-	
-	
 	/**
 	 * Play sound from soundpool with given ID at volume level
 	 */
-	public void playSound(int soundID, float volumelevel)
+	public static void play(int soundID, float volumelevel)
 	{
 		float streamVolumeCurrent = audiomanager.getStreamVolume(AudioManager.STREAM_MUSIC);
 		float streamVolumeMax = audiomanager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);    
 		float volume = (streamVolumeCurrent / streamVolumeMax) * volumelevel;
 		
 		//Play the sound with the correct volume
-		if (soundpool != null && soundpoolMap != null)
+		if (soundpool != null && sounds != null)
 		{
 			try {
-				soundpool.play(soundpoolMap.get(soundID), volume, volume, 1, 0, 1f);
+				soundpool.play(sounds.get(soundID), volume, volume, 1, 0, 1f);
 			}
 			catch (Exception e) { }
 		}
 	}
-	
-	
-	
-	
-	
 	
 	
 	

@@ -1,5 +1,6 @@
-package sky.engine.geometry.shapes;
+package sky.engine.physics.bodies;
 
+import sky.engine.geometry.Circumcircle;
 import sky.engine.geometry.ConvexHull;
 import sky.engine.geometry.Triangulation;
 import sky.engine.geometry.vectors.Vector2;
@@ -13,7 +14,7 @@ import sky.engine.physics.collisions.Projection;
  * @author Matthew Kelly (Badgerati)
  *
  */
-public interface GeometricShape
+public interface CollidableBody
 {
 	
 	/**
@@ -47,6 +48,12 @@ public interface GeometricShape
 	
 	
 	/**
+	 * Returns the Circumcircle of this shape.
+	 */
+	public Circumcircle circumcircle();
+	
+	
+	/**
 	 * Returns the axes of this shape.
 	 */
 	public Vector2[] getAxes();
@@ -61,19 +68,25 @@ public interface GeometricShape
 	/**
 	 * Does the geometric shape intersect with the other given one?
 	 */
-	public boolean intersect(GeometricShape shape);
+	public boolean intersect(CollidableBody shape);
 	
 	
 	/**
 	 * Returns the amount of intersection between the geometric shapes.
 	 */
-	public MTV getIntersection(GeometricShape shape);
+	public MTV getIntersection(CollidableBody shape);
 	
 	
 	/**
 	 * Does the geometric shape contain the given point?
 	 */
 	public boolean contains(Vector2 point);
+	
+	
+	/**
+	 * Does the geometric shape contain the given point?
+	 */
+	public boolean contains(float x, float y);
 	
 	
 	

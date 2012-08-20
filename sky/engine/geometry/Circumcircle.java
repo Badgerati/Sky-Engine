@@ -151,9 +151,9 @@ public class Circumcircle
 	
 	
 	/**
-	 * Returns Circumcircle as a bounding Circle.
+	 * Returns Circumcircle as a bounding circle.
 	 * 
-	 * @return A Bounding Polygon.
+	 * @return A Bounding Circle.
 	 */
 	public BoundingCircle asBounding()
 	{

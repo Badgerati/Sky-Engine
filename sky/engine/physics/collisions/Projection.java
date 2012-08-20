@@ -94,7 +94,7 @@ public class Projection
 	 */
 	public boolean contains(Projection p2)
 	{
-		if (min < p2.min && max > p2.max)
+		if (min <= p2.min && max >= p2.max)
 			return true;
 		else
 			return false;

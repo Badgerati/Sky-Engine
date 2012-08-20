@@ -47,11 +47,6 @@ public class FileManager
 	
 	
 	
-	
-	
-	
-	
-	
 	/**
 	 * Create a new instance of a FileManager
 	 * 
@@ -69,22 +64,16 @@ public class FileManager
 	
 	
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Read in the lines of the file, returning the lines
 	 * 
 	 * @return List of lines read from the file.
 	 * @throws FileNotFoundException
 	 */
-	public ArrayList<String> readFromFile() throws FileNotFoundException
+	public ArrayList<String> read()
 	{
 		//create lines
-		ArrayList<String> lines = new ArrayList<String>();
+		ArrayList<String> lines = null;
 		
 		
 		//try to read lines in
@@ -96,7 +85,7 @@ public class FileManager
 			BufferedReader br = new BufferedReader(in);
 			
 			//create and clear lines
-			lines.clear();
+			lines = new ArrayList<String>();
 			
 			//read file in
 			String line = "";
@@ -110,18 +99,14 @@ public class FileManager
 			in.close();
 			fis.close();
 		}
+		catch (FileNotFoundException e) { }
 		catch (IOException e) { }
 		catch (Exception e) { }
 		
 		
 		//return lines read, even if it's null
 		return lines;		
-	}
-	
-	
-	
-	
-	
+	}	
 	
 	
 	
@@ -135,7 +120,7 @@ public class FileManager
 	 * @param mode Mode you wish to write with. Either MODE_APPEND or MODE_OVERWRITE
 	 * @throws FileNotFoundException
 	 */
-	public void writeToFile(byte[] bytesToWrite, int mode) throws FileNotFoundException
+	public void write(byte[] bytesToWrite, int mode)
 	{
 		//try to write bytes
 		try
@@ -149,16 +134,16 @@ public class FileManager
 			//close file
 			fos.close();
 		}
-		catch (IOException e)
-		{
-			
-		}
-		catch (Exception e)
-		{
-			
-		}
-		
+		catch (FileNotFoundException e) { }
+		catch (IOException e) { }
+		catch (Exception e) { }
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 	/**
@@ -168,14 +153,10 @@ public class FileManager
 	 * @param mode Mode you wish to write with. Either MODE_APPEND or MODE_OVERWRITE
 	 * @throws FileNotFoundException
 	 */
-	public void writeToFile(String stringToWrite, int mode) throws FileNotFoundException
+	public void write(String stringToWrite, int mode)
 	{
-		writeToFile(stringToWrite.getBytes(), mode);
+		write(stringToWrite.getBytes(), mode);
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -188,7 +169,7 @@ public class FileManager
 	 * 
 	 * @throws FileNotFoundException
 	 */
-	public void clearFile() throws FileNotFoundException
+	public void clear()
 	{
 		try
 		{
@@ -197,23 +178,15 @@ public class FileManager
 			fos.write(blank.getBytes());
 			fos.close();
 		}
-		catch (IOException e)
-		{
-			
-		}
-		catch (Exception e)
-		{
-			
-		}
+		catch (FileNotFoundException e) { }
+		catch (IOException e) { }
+		catch (Exception e) { }
 	}
 	
 	
 	
 	
-	
-	
-	
-	
+
 	
 	
 	/**
@@ -221,15 +194,10 @@ public class FileManager
 	 * 
 	 * @return Returns whether the file was deleted successfully or not
 	 */
-	public boolean deleteFile()
+	public boolean delete()
 	{
 		return context.deleteFile(filename);
 	}
-	
-	
-	
-	
-	
 	
 	
 

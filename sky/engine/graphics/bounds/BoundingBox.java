@@ -9,8 +9,23 @@ import sky.engine.geometry.vectors.Vector2;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public class BoundingBox extends BoundingPoly
+public class BoundingBox extends Bounding
 {
+	/**
+	 * Width of bounding box
+	 */
+	protected float Width;
+	
+	
+	/**
+	 * Height of bounding box
+	 */
+	protected float Height;
+	
+	
+	
+	
+	
 
 
 	/** 
@@ -32,52 +47,6 @@ public class BoundingBox extends BoundingPoly
 		build(size.Width, size.Height);
 	}
 	
-
-	/** 
-	 * Create a new bounding box
-	 */
-	public BoundingBox(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4)
-	{		
-		super(new Vector2[] { v1.clone(), v2.clone(), v3.clone(), v4.clone() });
-	}
-	
-
-	/** 
-	 * Create a new bounding box
-	 */
-	public BoundingBox(Vector2 position, Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4)
-	{
-		super(position, new Vector2[] { v1.clone(), v2.clone(), v3.clone(), v4.clone() });
-	}
-	
-
-	/** 
-	 * Create a new bounding box
-	 */
-	public BoundingBox(Vector2[] vertices)
-	{
-		super(vertices);
-		
-		if (vertices.length != 4)
-			throw new Error("You must supply exactly 4 vertices for a BoundingBox.");
-	}
-	
-
-	/** 
-	 * Create a new bounding box
-	 */
-	public BoundingBox(Vector2 position, Vector2[] vertices)
-	{
-		super(position, vertices);
-		
-		if (vertices.length != 4)
-			throw new Error("You must supply exactly 4 vertices for a BoundingBox.");
-	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -90,20 +59,73 @@ public class BoundingBox extends BoundingPoly
 	 */
 	private void build(float width, float height)
 	{
-		this.vertices = new Vector2[4];
+		Width = width;
+		Height = height;
 		
-		this.vertices[0] = new Vector2(width * -0.5f, height * -0.5f);
-		this.vertices[1] = new Vector2(width * 0.5f, height * -0.5f);
-		this.vertices[2] = new Vector2(width * 0.5f, height * 0.5f);
-		this.vertices[3] = new Vector2(width * -0.5f, height * 0.5f);
+		vertices = new Vector2[4];
 		
-		for (int i = 0; i < this.vertices.length; i++)
+		vertices[0] = new Vector2(width * -0.5f, height * -0.5f);
+		vertices[1] = new Vector2(width * 0.5f, height * -0.5f);
+		vertices[2] = new Vector2(width * 0.5f, height * 0.5f);
+		vertices[3] = new Vector2(width * -0.5f, height * 0.5f);
+		
+		for (int i = 0; i < vertices.length; i++)
 			this.vertices[i].integrate(Position);
+	}
+
+	
+	
+	
+
+	
+	
+	/**
+	 * Set the bounding box's height
+	 */
+	public void setHeight(float height)
+	{
+		Height = height;
+		build(Width, Height);
+	}
+	
+	
+
+	
+	
+	/**
+	 * Get the bounding box's height
+	 */
+	public float getHeight()
+	{
+		return Height;
 	}
 	
 	
 	
 	
+	
+	
+	/**
+	 * Set the bounding box's width
+	 */
+	public void setWidth(float width)
+	{
+		Width = width;
+		build(Width, Height);
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Get the bounding box's width
+	 */
+	public float getWidth()
+	{
+		return Width;
+	}
 	
 	
 	
@@ -137,18 +159,15 @@ public class BoundingBox extends BoundingPoly
 	
 	
 	
-	
-	
-	
-	
-	
 	/**
 	 * Has the bounding box been intersected by a point?
+	 * 
+	 * @deprecated
 	 */
-	/*public boolean _contains(Vector2D point)
+	public boolean _contains(Vector2 point)
 	{
-		Vector2D diff = this.Position.sub(point);
-		Vector2D squaredDiff = diff.square();
+		Vector2 diff = this.Position.sub(point);
+		Vector2 squaredDiff = diff.square();
 	
 		float width = (Width * 0.5f) * (Width * 0.5f);
 		float height = (Height * 0.5f) * (Height * 0.5f);
@@ -157,7 +176,7 @@ public class BoundingBox extends BoundingPoly
 			return true;
 		else
 			return false;
-	}*/
+	}
 	
 	
 	

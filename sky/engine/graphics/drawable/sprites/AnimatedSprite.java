@@ -61,10 +61,10 @@ public class AnimatedSprite extends Sprite
 	protected int startFrame;
 	
 	
-	/**
-	 * first frame of the animation
-	 */
-	protected int firstFrame;
+	///**
+	// * first frame of the animation
+	// */
+	//protected int firstFrame;
 	
 	
 	/**
@@ -146,7 +146,7 @@ public class AnimatedSprite extends Sprite
 		
 		currentFrame = 0;
 		startFrame = 0;
-		firstFrame = 0;
+		//firstFrame = 0;
 		lastFrame = frameCount;
 		direction = 1;
 		
@@ -418,8 +418,8 @@ public class AnimatedSprite extends Sprite
 	public void setCurrentFrame(int frame)
 	{
 		//is the frame less than first frame?
-		if (frame < firstFrame)
-			currentFrame = firstFrame;
+		if (frame < startFrame)
+			currentFrame = startFrame;
 		
 		//else, is it greater than last frame?
 		else if (frame >= lastFrame)
@@ -458,8 +458,8 @@ public class AnimatedSprite extends Sprite
 	public void setStartFrame(int frame)
 	{
 		//is the frame less than the first frame?
-		if (frame < firstFrame)
-			startFrame = firstFrame;
+		if (frame < 0)
+			startFrame = 0;
 		
 		//else, is it greater than last frame?
 		else if (frame >= lastFrame)
@@ -490,34 +490,34 @@ public class AnimatedSprite extends Sprite
 	
 	
 	
-	/**
-	 * Set first frame of the animation. This is not where the animation starts,
-	 * but the literal first frame of the animation as beginning extreme end
-	 */
-	public void setFirstFrame(int frame)
-	{
-		if (frame < 0)
-			firstFrame = 0;
-		
-		else if (frame > lastFrame)
-			firstFrame = lastFrame;
-		
-		else
-			firstFrame = frame;
-	}
-	
-	
-	
-	
-	
-	
-	/**
-	 * returns first frame of animation
-	 */
-	public int getFirstFrame()
-	{
-		return firstFrame;
-	}
+	///**
+	// * Set first frame of the animation. This is not where the animation starts,
+	// * but the literal first frame of the animation as beginning extreme end
+	// */
+	//public void setFirstFrame(int frame)
+	//{
+	//	if (frame < 0)
+	//		firstFrame = 0;
+	//	
+	//	else if (frame > lastFrame)
+	//		firstFrame = lastFrame;
+	//	
+	//	else
+	//		firstFrame = frame;
+	//}
+	//
+	//
+	//
+	//
+	//
+	//
+	///**
+	// * returns first frame of animation
+	// */
+	//public int getFirstFrame()
+	//{
+	//	return firstFrame;
+	//}
 	
 	
 	
@@ -655,7 +655,7 @@ public class AnimatedSprite extends Sprite
 			
 			
 			//wrap frames back to start frame if we reach either extreme end
-			if (currentFrame >= lastFrame || currentFrame < firstFrame)
+			if (currentFrame >= lastFrame)
 			{				
 				//if we aren't looping and reach an extreme end, then pause
 				if (!looping)
@@ -686,7 +686,7 @@ public class AnimatedSprite extends Sprite
 					if (direction < 0)
 						currentFrame = lastFrame - 1;
 					else
-						currentFrame = firstFrame;
+						currentFrame = startFrame;
 				}
 			}
 			

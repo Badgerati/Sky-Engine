@@ -1,9 +1,11 @@
 package sky.engine.geometry.shapes;
 
+import sky.engine.geometry.Circumcircle;
 import sky.engine.geometry.ConvexHull;
 import sky.engine.geometry.Triangulation;
 import sky.engine.geometry.vectors.Vector2;
 import sky.engine.math.Angle;
+import sky.engine.physics.bodies.CollidableBody;
 import sky.engine.physics.bodies.RigidBody;
 import sky.engine.physics.collisions.MTV;
 import sky.engine.physics.collisions.Projection;
@@ -15,7 +17,7 @@ import sky.engine.physics.collisions.SATCollision;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public abstract class Shape extends RigidBody implements GeometricShape
+public abstract class Shape extends RigidBody implements CollidableBody
 {
 	/**
 	 * Current degrees of rotation of this shape
@@ -33,9 +35,6 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	 * List of vertices for the shape
 	 */
 	protected Vector2[] vertices = null;
-	
-	
-	
 	
 	
 
@@ -61,8 +60,6 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	
 	
 	
-	
-	
 	/**
 	 * Is this shape a circle?
 	 */
@@ -70,7 +67,6 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	{
 		return isCircle;
 	}
-	
 	
 	
 	
@@ -86,10 +82,6 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	
 	
 	
-	
-
-
-	
 	/**
 	 * Rotate the shape on the origin on given degree (and its vertices, if any)
 	 */
@@ -102,8 +94,6 @@ public abstract class Shape extends RigidBody implements GeometricShape
 				vertices[i].rotate(degree, Position);
 	}
 
-	
-	
 	
 	
 	
@@ -125,7 +115,6 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	
 	
 	
-	
 	/**
 	 * Get the current degree of rotation of shape
 	 */
@@ -133,8 +122,6 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	{
 		return degreesOfRotation;
 	}
-	
-	
 	
 	
 	
@@ -149,8 +136,6 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	
 	
 	
-	
-
 	
 	
 	/**
@@ -172,8 +157,6 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	
 	
 	
-	
-	
 	/**
 	 * Integrate the position of this shape (and its vertices, if any)
 	 */
@@ -190,8 +173,6 @@ public abstract class Shape extends RigidBody implements GeometricShape
 		}
 	}
 	
-	
-
 	
 	
 	
@@ -220,7 +201,6 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	
 	
 	
-	
 	/**
 	 * Set position of shape (and its vertices, if any)
 	 */
@@ -242,7 +222,6 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	
 	
 	
-	
 	/**
 	 * Returns a Triangulation of this shape, fails if vertex count is less than 3.
 	 */
@@ -258,8 +237,6 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	
 	
 	
-
-	
 	/**
 	 * Returns a ConvexHull of this shape, fails if vertex count is less than 2.
 	 */
@@ -272,15 +249,27 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	}
 	
 	
-
-	
 	
 	
 	
 	/**
+	 * Returns a Circumcircle of this shape, fails if vertex count is less than 2.
+	 */
+	public Circumcircle circumcircle()
+	{
+		if (isCircle || vertices == null)
+			return null;
+		
+		return new Circumcircle(vertices);
+	}
+	
+	
+
+	
+	/**
 	 * Does the given shape intersect this shape?
 	 */
-	public boolean intersect(GeometricShape shape2)
+	public boolean intersect(CollidableBody shape2)
 	{
 		return SATCollision.intersect(this, shape2);
 	}
@@ -289,17 +278,13 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	
 
 	
-	
-	
 	/**
 	 * Get the amount of intersection between the given shape and this shape
 	 */
-	public MTV getIntersection(GeometricShape shape2)
+	public MTV getIntersection(CollidableBody shape2)
 	{
 		return SATCollision.getIntersection(this, shape2);
 	}
-	
-	
 	
 	
 	
@@ -313,6 +298,15 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	}
 	
 	
+	
+	
+	/**
+	 * Is the given point contained within this shape?
+	 */
+	public boolean contains(float x, float y)
+	{
+		return SATCollision.contains(this, x, y);
+	}
 	
 	
 	
@@ -340,8 +334,6 @@ public abstract class Shape extends RigidBody implements GeometricShape
 	
 	
 	
-	
-	
 	/**
 	 * Projects the this shape's vertices onto the given axis
 	 */
@@ -361,7 +353,6 @@ public abstract class Shape extends RigidBody implements GeometricShape
 		
 		return new Projection(min, max);
 	}
-	
 	
 	
 	

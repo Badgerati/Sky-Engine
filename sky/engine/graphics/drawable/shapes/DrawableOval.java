@@ -36,6 +36,12 @@ public class DrawableOval extends Oval implements DrawableShape
 	
 	
 	/**
+	 * Is this shape to be hidden?
+	 */
+	protected boolean hidden = false;
+	
+	
+	/**
 	 * Rectangular bounds to help draw the oval
 	 */
 	protected RectF rect = null;
@@ -78,9 +84,9 @@ public class DrawableOval extends Oval implements DrawableShape
 	public DrawableOval(Vector2 position, float xradius, float yradius, Fill fill, Outline outline, Blur blur)
 	{
 		super(position, xradius, yradius);
-		fillpaint = fill;
-		outlinepaint = outline;
-		blurpaint = blur;
+		fillpaint = fill == null ? null : new Fill(fill);
+		outlinepaint = outline == null ? null : new Outline(outline);
+		blurpaint = blur == null ? null : new Blur(blur);
 		setRect();
 	}
 	
@@ -91,9 +97,9 @@ public class DrawableOval extends Oval implements DrawableShape
 	public DrawableOval(Vector2 position, float xradius, float yradius, Fill fill, Outline outline, Blur blur, Vector2 velocity, float mass)
 	{
 		super(position, xradius, yradius, velocity, mass);
-		fillpaint = fill;
-		outlinepaint = outline;
-		blurpaint = blur;
+		fillpaint = fill == null ? null : new Fill(fill);
+		outlinepaint = outline == null ? null : new Outline(outline);
+		blurpaint = blur == null ? null : new Blur(blur);
 		setRect();
 	}
 	
@@ -194,6 +200,30 @@ public class DrawableOval extends Oval implements DrawableShape
 	public Blur blur()
 	{
 		return blurpaint;
+	}
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Hides the shape
+	 */
+	public void hide()
+	{
+		hidden = true;
+	}
+	
+	
+	
+	/**
+	 * Shows the shape
+	 */
+	public void show()
+	{
+		hidden = false;
 	}
 	
 
@@ -307,19 +337,22 @@ public class DrawableOval extends Oval implements DrawableShape
 	 */
 	public void draw(Canvas canvas)
 	{
-		if (blurpaint != null)
+		if (!hidden)
 		{
-			canvas.drawOval(rect, blurpaint);
-		}
-		
-		if (outlinepaint != null)
-		{
-			canvas.drawOval(rect, outlinepaint);
-		}
-		
-		if (fillpaint != null)
-		{
-			canvas.drawOval(rect, fillpaint);
+			if (blurpaint != null)
+			{
+				canvas.drawOval(rect, blurpaint);
+			}
+			
+			if (outlinepaint != null)
+			{
+				canvas.drawOval(rect, outlinepaint);
+			}
+			
+			if (fillpaint != null)
+			{
+				canvas.drawOval(rect, fillpaint);
+			}
 		}
 	}
 	

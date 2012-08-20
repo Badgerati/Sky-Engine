@@ -2,8 +2,6 @@ package sky.engine.graphics.bounds;
 
 import java.util.Random;
 
-import sky.engine.geometry.ConvexHull;
-import sky.engine.geometry.Triangulation;
 import sky.engine.geometry.vectors.Vector2;
 import sky.engine.math.Angle;
 
@@ -63,9 +61,6 @@ public class BoundingPoly extends Bounding
 	
 	
 	
-	
-	
-	
 	/**
 	 * Initialises the vertices of this bounding polygon
 	 */
@@ -108,81 +103,6 @@ public class BoundingPoly extends Bounding
 		for (int i = 0; i < vertices.length; i++)
 			vertices[i].integrate(Position);
 	}
-	
-	
-	
-	
-	
-	
-
-	
-	
-	/**
-	 * Triangulate this bound, fails if vertex count is less than 3. An array of
-	 * Bounding Triangles is returned.
-	 */
-	@Override
-	public BoundingTri[] triangulateAsBound()
-	{
-		if (vertices == null)
-			return null;
-		
-		return new Triangulation(this.vertices).asBounding();
-	}
-	
-	
-	/**
-	 * Triangulate this bound, fails if vertex count is less than 3. A Triangulation
-	 * object is returned.
-	 */
-	@Override
-	public Triangulation triangulate()
-	{
-		if (vertices == null)
-			return null;
-		
-		return new Triangulation(this.vertices);
-	}
-	
-	
-	
-	
-	
-	
-
-	
-	
-	/**
-	 * Convex hull this bound, fails if vertex count is less than 2. A Bounding
-	 * Polygon is returned.
-	 */
-	@Override
-	public BoundingPoly convexAsBound()
-	{
-		if (vertices == null)
-			return null;
-		
-		return new ConvexHull(this.vertices).asBounding();
-	}
-	
-	
-	/**
-	 * Convex hull this bound, fails if vertex count is less than 2. A ConvexHull
-	 * object is returned.
-	 */
-	@Override
-	public ConvexHull convexhull()
-	{
-		if (vertices == null)
-			return null;
-		
-		return new ConvexHull(this.vertices);
-	}
-	
-	
-	
-	
-	
 	
 	
 	

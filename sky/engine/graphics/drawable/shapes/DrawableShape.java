@@ -36,4 +36,16 @@ public interface DrawableShape
 	 */
 	public Blur blur();
 	
+	
+	/**
+	 * Sets the shape to be hidden
+	 */
+	public void hide();
+	
+	
+	/**
+	 * Sets the shape to be shown
+	 */
+	public void show();
+	
 }

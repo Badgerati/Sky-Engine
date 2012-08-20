@@ -36,6 +36,12 @@ public class DrawableTriangle extends Triangle implements DrawableShape
 	protected Blur blurpaint = null;
 	
 	
+	/**
+	 * Is this shape to be hidden?
+	 */
+	protected boolean hidden = false;
+	
+	
 	
 	
 
@@ -69,9 +75,9 @@ public class DrawableTriangle extends Triangle implements DrawableShape
 	public DrawableTriangle(Vector2 v1, Vector2 v2, Vector2 v3, Fill fill, Outline outline, Blur blur)
 	{
 		super(v1, v2, v3);
-		fillpaint = fill;
-		outlinepaint = outline;
-		blurpaint = blur;
+		fillpaint = fill == null ? null : new Fill(fill);
+		outlinepaint = outline == null ? null : new Outline(outline);
+		blurpaint = blur == null ? null : new Blur(blur);
 		initialise();
 	}
 	
@@ -82,9 +88,9 @@ public class DrawableTriangle extends Triangle implements DrawableShape
 	public DrawableTriangle(Vector2 v1, Vector2 v2, Vector2 v3, Fill fill, Outline outline, Blur blur, Vector2 velocity, float mass)
 	{
 		super(v1, v2, v3, velocity, mass);
-		fillpaint = fill;
-		outlinepaint = outline;
-		blurpaint = blur;
+		fillpaint = fill == null ? null : new Fill(fill);
+		outlinepaint = outline == null ? null : new Outline(outline);
+		blurpaint = blur == null ? null : new Blur(blur);
 		initialise();
 	}
 	
@@ -148,9 +154,9 @@ public class DrawableTriangle extends Triangle implements DrawableShape
 	public DrawableTriangle(Vector2 position, float sidex, float sidey, float sidez, Fill fill, Outline outline, Blur blur)
 	{
 		super(position, sidex, sidey, sidez);
-		fillpaint = fill;
-		outlinepaint = outline;
-		blurpaint = blur;
+		fillpaint = fill == null ? null : new Fill(fill);
+		outlinepaint = outline == null ? null : new Outline(outline);
+		blurpaint = blur == null ? null : new Blur(blur);
 		initialise();
 	}
 	
@@ -161,9 +167,9 @@ public class DrawableTriangle extends Triangle implements DrawableShape
 	public DrawableTriangle(Vector2 position, float sidex, float sidey, float sidez, Fill fill, Outline outline, Blur blur, Vector2 velocity, float mass)
 	{
 		super(position, sidex, sidey, sidez, velocity, mass);
-		fillpaint = fill;
-		outlinepaint = outline;
-		blurpaint = blur;
+		fillpaint = fill == null ? null : new Fill(fill);
+		outlinepaint = outline == null ? null : new Outline(outline);
+		blurpaint = blur == null ? null : new Blur(blur);
 		initialise();
 	}
 	
@@ -285,6 +291,30 @@ public class DrawableTriangle extends Triangle implements DrawableShape
 		return blurpaint;
 	}
 	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Hides the shape
+	 */
+	public void hide()
+	{
+		hidden = true;
+	}
+	
+	
+	
+	/**
+	 * Shows the shape
+	 */
+	public void show()
+	{
+		hidden = false;
+	}
+	
 
 	
 	
@@ -297,19 +327,22 @@ public class DrawableTriangle extends Triangle implements DrawableShape
 	 */
 	public void draw(Canvas canvas)
 	{
-		if (blurpaint != null)
+		if (!hidden)
 		{
-			canvas.drawPath(polygon, blurpaint);
-		}
-
-		if (outlinepaint != null)
-		{
-			canvas.drawPath(polygon, outlinepaint);
-		}
-
-		if (fillpaint != null)
-		{
-			canvas.drawPath(polygon, fillpaint);
+			if (blurpaint != null)
+			{
+				canvas.drawPath(polygon, blurpaint);
+			}
+	
+			if (outlinepaint != null)
+			{
+				canvas.drawPath(polygon, outlinepaint);
+			}
+	
+			if (fillpaint != null)
+			{
+				canvas.drawPath(polygon, fillpaint);
+			}
 		}
 	}
 	

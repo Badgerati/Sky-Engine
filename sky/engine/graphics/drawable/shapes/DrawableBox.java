@@ -34,6 +34,12 @@ public class DrawableBox extends Box implements DrawableShape
 	protected Blur blurpaint = null;
 	
 	
+	/**
+	 * Is this shape to be hidden?
+	 */
+	protected boolean hidden = false;
+	
+	
 	
 	
 	
@@ -65,9 +71,9 @@ public class DrawableBox extends Box implements DrawableShape
 	public DrawableBox(Vector2 position, float width, float height, Fill fill, Outline outline, Blur blur)
 	{
 		super(position, width, height);
-		fillpaint = fill;
-		outlinepaint = outline;
-		blurpaint = blur;
+		fillpaint = fill == null ? null : new Fill(fill);
+		outlinepaint = outline == null ? null : new Outline(outline);
+		blurpaint = blur == null ? null : new Blur(blur);
 	}
 	
 	
@@ -77,9 +83,9 @@ public class DrawableBox extends Box implements DrawableShape
 	public DrawableBox(Vector2 position, float width, float height, Fill fill, Outline outline, Blur blur, Vector2 velocity, float mass)
 	{
 		super(position, width, height, velocity, mass);
-		fillpaint = fill;
-		outlinepaint = outline;
-		blurpaint = blur;
+		fillpaint = fill == null ? null : new Fill(fill);
+		outlinepaint = outline == null ? null : new Outline(outline);
+		blurpaint = blur == null ? null : new Blur(blur);
 	}
 	
 	
@@ -165,6 +171,30 @@ public class DrawableBox extends Box implements DrawableShape
 		return blurpaint;
 	}
 	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Hides the shape
+	 */
+	public void hide()
+	{
+		hidden = true;
+	}
+	
+	
+	
+	/**
+	 * Shows the shape
+	 */
+	public void show()
+	{
+		hidden = false;
+	}
+	
 
 	
 	
@@ -176,19 +206,22 @@ public class DrawableBox extends Box implements DrawableShape
 	 */
 	public void draw(Canvas canvas)
 	{
-		if (blurpaint != null)
+		if (!hidden)
 		{
-			canvas.drawRect(vertices[0].X, vertices[0].Y, vertices[2].X, vertices[2].Y, blurpaint);
-		}
-
-		if (outlinepaint != null)
-		{
-			canvas.drawRect(vertices[0].X, vertices[0].Y, vertices[2].X, vertices[2].Y, outlinepaint);
-		}
-
-		if (fillpaint != null)
-		{
-			canvas.drawRect(vertices[0].X, vertices[0].Y, vertices[2].X, vertices[2].Y, fillpaint);
+			if (blurpaint != null)
+			{
+				canvas.drawRect(vertices[0].X, vertices[0].Y, vertices[2].X, vertices[2].Y, blurpaint);
+			}
+	
+			if (outlinepaint != null)
+			{
+				canvas.drawRect(vertices[0].X, vertices[0].Y, vertices[2].X, vertices[2].Y, outlinepaint);
+			}
+	
+			if (fillpaint != null)
+			{
+				canvas.drawRect(vertices[0].X, vertices[0].Y, vertices[2].X, vertices[2].Y, fillpaint);
+			}
 		}
 	}
 	

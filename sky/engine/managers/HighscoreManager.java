@@ -1,7 +1,5 @@
 package sky.engine.managers;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -53,13 +51,6 @@ public class HighscoreManager
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Construct a new instance of a High Score Manager
 	 */
@@ -80,24 +71,25 @@ public class HighscoreManager
 	
 	
 	
-	
-	
-	
 	/**
 	 * Read the records from the file
 	 */
-	public void readRecords() throws FileNotFoundException
+	public boolean readRecords()
 	{
 		//get the lines from the file
 		ArrayList<String> lines = null;
 		
 		try
 		{
-			lines = fileManager.readFromFile();
+			lines = fileManager.read();
+			if (lines == null || lines.size() == 0) {
+				return false;	
+			}
 		}
-		catch (IOException e) { }
-		catch (Exception e) { }
-		
+		catch (Exception e)
+		{
+			return false;
+		}
 		
 		//loop through each line and store the records appropriately
 		String name;
@@ -108,8 +100,8 @@ public class HighscoreManager
 		{
 			//tempRecord.clear();
 			
-			name = lines.get(i).trim().replace("Name=", "");
-			score = Long.parseLong(lines.get(i+1).trim().replace("Score=", ""));
+			name = lines.get(i).trim().replace("[Name] = ", "");
+			score = Long.parseLong(lines.get(i+1).trim().replace("[Score] = ", ""));
 			
 			Records.add(new String[] { NAME, SCORE }, new Object[] { name, score });
 			
@@ -118,12 +110,9 @@ public class HighscoreManager
 			
 			//Records.add(tempRecord);
 		}
+		
+		return true;
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -135,7 +124,7 @@ public class HighscoreManager
 	 * Write the records to file, limited to the Number of Entries the High Score table
 	 * is suppose to contain.
 	 */
-	public void writeRecords() throws FileNotFoundException
+	public void writeRecords()
 	{
 		//create the string to write
 		String stringToWrite = "";
@@ -144,8 +133,8 @@ public class HighscoreManager
 		for (int i = 0; i < numberOfEntries; i++)
 		{
 			tempRecord = Records.get(i);
-			stringToWrite += "Name=" + (String)tempRecord.get(NAME) + "\n"
-							+ "Score=" + Long.toString((Long)tempRecord.get(SCORE));
+			stringToWrite += "[Name] = " + (String)tempRecord.get(NAME) + "\n"
+							+ "[Score] = " + Long.toString((Long)tempRecord.get(SCORE));
 			
 			if (i != numberOfEntries - 1)
 				stringToWrite += "\n";
@@ -154,16 +143,10 @@ public class HighscoreManager
 		//write it
 		try
 		{
-			fileManager.writeToFile(stringToWrite, FileManager.MODE_OVERWRITE);
+			fileManager.write(stringToWrite, FileManager.MODE_OVERWRITE);
 		}
-		catch (IOException e) { }
 		catch (Exception e) { }
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -172,20 +155,14 @@ public class HighscoreManager
 	/**
 	 * Clear all records from the file
 	 */
-	public void clearRecords() throws FileNotFoundException
+	public void clearRecords()
 	{
 		try
 		{
-			fileManager.clearFile();
+			fileManager.clear();
 		}
-		catch (IOException e) { }
 		catch (Exception e) { }
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -199,10 +176,6 @@ public class HighscoreManager
 	{
 		return Records;
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -241,12 +214,6 @@ public class HighscoreManager
 		//finally, if we even get here, return false
 		return false;
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -325,13 +292,6 @@ public class HighscoreManager
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Update the positioning info of the records
 	 */
@@ -359,15 +319,6 @@ public class HighscoreManager
 			Records.get(numberOfEntries).put(NAME, "XX.\t" + temp[temp.length-1]);
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 

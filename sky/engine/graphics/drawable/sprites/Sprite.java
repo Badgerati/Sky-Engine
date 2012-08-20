@@ -2,7 +2,6 @@ package sky.engine.graphics.drawable.sprites;
 
 import sky.engine.components.Size;
 import sky.engine.geometry.vectors.Vector2;
-import sky.engine.graphics.bounds.Bounding;
 import sky.engine.graphics.bounds.BoundingOval;
 import sky.engine.math.Angle;
 import sky.engine.physics.bodies.RigidBody;
@@ -264,14 +263,14 @@ public class Sprite extends RigidBody
 		setHeight(size.Height);
 	}
 	
-	
+
 	
 	
 	
 	
 	
 	/**
-	 * Returns height of a sprite
+	 * Returns the original height of a sprite
 	 */
 	public float getHeight()
 	{
@@ -282,9 +281,21 @@ public class Sprite extends RigidBody
 	
 	
 	
+	/**
+	 * Returns the scaled height of a sprite
+	 */
+	public float getScaledHeight()
+	{
+		return Height * scaleHeight;
+	}
+
+	
+	
+	
+	
 	
 	/**
-	 * Returns width of a sprite
+	 * Returns the original width of a sprite
 	 */
 	public float getWidth()
 	{
@@ -295,13 +306,37 @@ public class Sprite extends RigidBody
 	
 	
 	
+	/**
+	 * Returns the scaled width of a sprite
+	 */
+	public float getScaledWidth()
+	{
+		return Width * scaleWidth;
+	}
+
+	
+	
+	
+	
 	
 	/**
-	 * Returns size of a sprite
+	 * Returns the original size of a sprite
 	 */
 	public Size getSize()
 	{
 		return new Size(Width, Height);
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Returns the scaled size of a sprite
+	 */
+	public Size getScaledSize()
+	{
+		return new Size(Width * scaleWidth, Height * scaleHeight);
 	}
 	
 	
@@ -543,7 +578,7 @@ public class Sprite extends RigidBody
 	/**
 	 * Returns the bounding volume of the Sprite
 	 */
-	public Bounding spritebound()
+	public BoundingOval spritebound()
 	{
 		return spriteBound;
 	}

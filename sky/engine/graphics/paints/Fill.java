@@ -52,6 +52,19 @@ public class Fill extends Paint
 	
 	
 	
+	/**
+	 * Sets the fill
+	 */
+	public void set(Fill paint)
+	{
+		initialise(paint.getColor(), paint.isAntiAlias());
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	/**

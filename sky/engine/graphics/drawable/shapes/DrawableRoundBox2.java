@@ -119,7 +119,7 @@ public class DrawableRoundBox2 extends DrawableBox
 		Vector2 arcpos4 = new Vector2(Position.X - quaterX, Position.Y + quaterY);
 		
 		if (r1 > 0) {
-			arcs[0] = new DrawableArc(arcpos1.addScalar(tmpr1, tmpr1), r1, 180, 90, velocity, mass);
+			arcs[0] = new DrawableArc(arcpos1.add(tmpr1, tmpr1), r1, 180, 90, velocity, mass);
 			arcs[0].fillpaint = this.fillpaint;
 			arcs[0].outlinepaint = this.outlinepaint;
 			arcs[0].blurpaint = this.blurpaint;
@@ -127,7 +127,7 @@ public class DrawableRoundBox2 extends DrawableBox
 		}
 		
 		if (r2 > 0) {
-			arcs[1] = new DrawableArc(arcpos2.addScalar(-tmpr2, tmpr2), r2, 270, 90, velocity, mass);
+			arcs[1] = new DrawableArc(arcpos2.add(-tmpr2, tmpr2), r2, 270, 90, velocity, mass);
 			arcs[1].fillpaint = this.fillpaint;
 			arcs[1].outlinepaint = this.outlinepaint;
 			arcs[1].blurpaint = this.blurpaint;
@@ -135,7 +135,7 @@ public class DrawableRoundBox2 extends DrawableBox
 		}
 		
 		if (r3 > 0) {
-			arcs[2] = new DrawableArc(arcpos3.addScalar(-tmpr3, -tmpr3), r3, 0, 90, velocity, mass);
+			arcs[2] = new DrawableArc(arcpos3.add(-tmpr3, -tmpr3), r3, 0, 90, velocity, mass);
 			arcs[2].fillpaint = this.fillpaint;
 			arcs[2].outlinepaint = this.outlinepaint;
 			arcs[2].blurpaint = this.blurpaint;
@@ -143,7 +143,7 @@ public class DrawableRoundBox2 extends DrawableBox
 		}
 		
 		if (r4 > 0) {
-			arcs[3] = new DrawableArc(arcpos4.addScalar(tmpr4, -tmpr4), r4, 90, 90, velocity, mass);
+			arcs[3] = new DrawableArc(arcpos4.add(tmpr4, -tmpr4), r4, 90, 90, velocity, mass);
 			arcs[3].fillpaint = this.fillpaint;
 			arcs[3].outlinepaint = this.outlinepaint;
 			arcs[3].blurpaint = this.blurpaint;
@@ -157,22 +157,22 @@ public class DrawableRoundBox2 extends DrawableBox
 		Outline lineout = new Outline(this.outlinepaint);
 		Blur lineblur = new Blur(this.blurpaint);
 		
-		lines[0] = new DrawableLine(arcpos1.addScalar(tmpr1, 0), arcpos2.subScalar(tmpr2, 0), velocity, mass);
+		lines[0] = new DrawableLine(arcpos1.add(tmpr1, 0), arcpos2.sub(tmpr2, 0), velocity, mass);
 		lines[0].fillpaint = null;
 		lines[0].outlinepaint = lineout;
 		lines[0].blurpaint = lineblur;
 		
-		lines[1] = new DrawableLine(arcpos2.addScalar(0, tmpr2), arcpos3.subScalar(0, tmpr3), velocity, mass);
+		lines[1] = new DrawableLine(arcpos2.add(0, tmpr2), arcpos3.sub(0, tmpr3), velocity, mass);
 		lines[1].fillpaint = null;
 		lines[1].outlinepaint = lineout;
 		lines[1].blurpaint = lineblur;
 		
-		lines[2] = new DrawableLine(arcpos3.subScalar(tmpr3, 0), arcpos4.addScalar(tmpr4, 0), velocity, mass);
+		lines[2] = new DrawableLine(arcpos3.sub(tmpr3, 0), arcpos4.add(tmpr4, 0), velocity, mass);
 		lines[2].fillpaint = null;
 		lines[2].outlinepaint = lineout;
 		lines[2].blurpaint = lineblur;
 		
-		lines[3] = new DrawableLine(arcpos4.subScalar(0, tmpr4), arcpos1.addScalar(0, tmpr1), velocity, mass);
+		lines[3] = new DrawableLine(arcpos4.sub(0, tmpr4), arcpos1.add(0, tmpr1), velocity, mass);
 		lines[3].fillpaint = null;
 		lines[3].outlinepaint = lineout;
 		lines[3].blurpaint = lineblur;

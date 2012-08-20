@@ -1,7 +1,7 @@
 package sky.engine.physics.collisions;
 
-import sky.engine.geometry.shapes.GeometricShape;
 import sky.engine.geometry.vectors.Vector2;
+import sky.engine.physics.bodies.CollidableBody;
 
 /**
  * 
@@ -15,7 +15,7 @@ public abstract class SATCollision
 	/**
 	 * Check for a collision/intersection between two shapes
 	 */
-	public static boolean intersect(GeometricShape shape1, GeometricShape shape2)
+	public static boolean intersect(CollidableBody shape1, CollidableBody shape2)
 	{
 		//initialise the set of axes for both shapes
 		Vector2[] axes1 = null, axes2 = null;
@@ -55,7 +55,6 @@ public abstract class SATCollision
 			axes2[0] = shape2.getPosition().sub(closest);
 			axes2[0].normalise();
 		}
-		
 		
 		
 		//continue as normal for collision		
@@ -101,19 +100,11 @@ public abstract class SATCollision
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Returns the amount the shapes are intersecting by. Values returned are the
 	 * distance and direction to move shapes to stop intersection
 	 */
-	public static MTV getIntersection(GeometricShape shape1, GeometricShape shape2)
+	public static MTV getIntersection(CollidableBody shape1, CollidableBody shape2)
 	{
 		//initialise the set of axes for both bounds
 		Vector2[] axes1 = null, axes2 = null;
@@ -153,9 +144,8 @@ public abstract class SATCollision
 			axes2[0] = shape2.getPosition().sub(closest);
 			axes2[0].normalise();
 		}
-		
-		
-		
+
+
 		//continue as normal for collision		
 		if (axes1 == null)
 			axes1 = shape1.getAxes();
@@ -252,6 +242,13 @@ public abstract class SATCollision
 	
 	
 	
+	/**
+	 * Check to see if the shape contains the point
+	 */
+	public static boolean contains(CollidableBody shape, Vector2 point)
+	{
+		return contains(shape, point.X, point.Y);
+	}
 	
 	
 	
@@ -261,7 +258,7 @@ public abstract class SATCollision
 	/**
 	 * Check to see if the shape contains the point
 	 */
-	public static boolean contains(GeometricShape shape, Vector2 point)
+	public static boolean contains(CollidableBody shape, float x, float y)
 	{
 		//initialise the set of axes for the bound
 		Vector2[] axes = null;
@@ -272,14 +269,13 @@ public abstract class SATCollision
 		{
 			//generate axes
 			axes = new Vector2[1];
-			axes[0] = shape.getPosition().sub(point);
+			axes[0] = shape.getPosition().sub(x, y);
 			axes[0].normalise();
 		}
 		
 		
-		
 		//continue as normal for collision			
-		if (axes != null)
+		if (axes == null)
 			axes = shape.getAxes();
 
 		//axis and projections
@@ -291,7 +287,7 @@ public abstract class SATCollision
 		{
 			axis = axes[i];
 			p1 = shape.project(axis);
-			float min = axis.dot(point);
+			float min = axis.dot(x, y);
 			p2 = new Projection(min, min);
 			
 			if (!p1.contains(p2))
@@ -307,19 +303,11 @@ public abstract class SATCollision
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Given two shapes, where the first is a circle. Return the closest vertex from
 	 * the second shapes.
 	 */
-	private static Vector2 getClosest(GeometricShape circle, GeometricShape shape)
+	private static Vector2 getClosest(CollidableBody circle, CollidableBody shape)
 	{
 		Vector2 centre = circle.getPosition();
 		Vector2[] shapeverts = shape.vertices();
