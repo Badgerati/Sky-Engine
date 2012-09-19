@@ -1,14 +1,14 @@
 package sky.engine.io;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 
 /**
  * 
@@ -16,47 +16,19 @@ import android.content.Context;
  * @author Matthew Kelly (Badgerati - Cadaeic Studios)
  *
  */
-public class FileManager
+public class FileAssetManager extends FileManager
 {
-	/**
-	 * constant value for writing to a file, overwriting if it exists and creating if it doesn't
-	 */
-	public static final int MODE_OVERWRITE = 0x00000000;
-	
+
 	
 	/**
-	 * constant value writing to a file, appending data to its end
-	 */
-	public static final int MODE_APPEND = 0x00008000;
-	
-	
-	/**
-	 * name of the file this manager is associated with
-	 */
-	protected String filename;
-	
-	
-	/**
-	 * context to help read/write files
-	 */
-	protected Context context = null;
-	
-	
-	
-	
-	
-	
-	
-	/**
-	 * Create a new instance of a FileManager
+	 * Create a new instance of a FileAssetManager
 	 * 
 	 * @param context A Context object to associate this file manager with.
 	 * @param filename Name of the file you want to associate this file manager with.
 	 */
-	public FileManager(Context context, String filename)
+	public FileAssetManager(Context context, String filename)
 	{
-		this.filename = filename;
-		this.context = context;
+		super(context, filename);
 	}
 	
 	
@@ -70,6 +42,7 @@ public class FileManager
 	 * @return List of lines read from the file.
 	 * @throws FileNotFoundException
 	 */
+	@Override
 	public ArrayList<String> read()
 	{
 		//create lines
@@ -80,8 +53,9 @@ public class FileManager
 		try
 		{
 			//open file
-			FileInputStream fis = context.openFileInput(filename);
-			InputStreamReader in = new InputStreamReader(fis);
+			AssetManager am = context.getAssets();
+			InputStream is = am.open(filename);
+			InputStreamReader in = new InputStreamReader(is);
 			BufferedReader br = new BufferedReader(in);
 			
 			//create and clear lines
@@ -97,7 +71,7 @@ public class FileManager
 			//close file
 			br.close();
 			in.close();
-			fis.close();
+			is.close();
 		}
 		catch (FileNotFoundException e) { }
 		catch (IOException e) { }
@@ -120,23 +94,10 @@ public class FileManager
 	 * @param mode Mode you wish to write with. Either MODE_APPEND or MODE_OVERWRITE
 	 * @throws FileNotFoundException
 	 */
+	@Override
 	public void write(byte[] bytesToWrite, int mode)
 	{
-		//try to write bytes
-		try
-		{
-			//open file
-			FileOutputStream fos = context.openFileOutput(filename, mode);
-			
-			//write bytes
-			fos.write(bytesToWrite);
-	
-			//close file
-			fos.close();
-		}
-		catch (FileNotFoundException e) { }
-		catch (IOException e) { }
-		catch (Exception e) { }
+		return;
 	}
 	
 	
@@ -153,6 +114,7 @@ public class FileManager
 	 * @param mode Mode you wish to write with. Either MODE_APPEND or MODE_OVERWRITE
 	 * @throws FileNotFoundException
 	 */
+	@Override
 	public void write(String stringToWrite, int mode)
 	{
 		write(stringToWrite.getBytes(), mode);
@@ -169,18 +131,10 @@ public class FileManager
 	 * 
 	 * @throws FileNotFoundException
 	 */
+	@Override
 	public void clear()
 	{
-		try
-		{
-			String blank = "";
-			FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
-			fos.write(blank.getBytes());
-			fos.close();
-		}
-		catch (FileNotFoundException e) { }
-		catch (IOException e) { }
-		catch (Exception e) { }
+		return;
 	}
 	
 	
@@ -194,11 +148,10 @@ public class FileManager
 	 * 
 	 * @return Returns whether the file was deleted successfully or not
 	 */
+	@Override
 	public boolean delete()
 	{
-		return context.deleteFile(filename);
+		return false;
 	}
 	
-	
-
 }

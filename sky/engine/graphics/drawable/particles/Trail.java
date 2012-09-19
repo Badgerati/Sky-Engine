@@ -146,6 +146,16 @@ public class Trail
 	
 	
 	
+	/**
+	 * Set trail position	
+	 */
+	public void setPosition(Vector2 position)
+	{
+		mOrigin = position.clone();
+	}
+	
+	
+	
 	
 	
 	

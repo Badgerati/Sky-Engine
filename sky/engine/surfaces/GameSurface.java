@@ -443,7 +443,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	 */
 	public void onSensorChanged(SensorEvent event)
 	{
-		if (stagesSet && contentLoaded) {
+		if (stagesSet && contentLoaded && event != null) {
 			stages.handleAccelInput(event);
 		}
 	}

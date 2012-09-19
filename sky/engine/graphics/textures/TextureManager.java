@@ -51,7 +51,7 @@ public abstract class TextureManager
 		globalResource = globalres;
 	}
 	
-	
+
 	
 
 	
@@ -75,12 +75,39 @@ public abstract class TextureManager
 	
 	
 	/**
+	 * Load a Texture from the global Resource.
+	 */
+	public static Texture load(int resourceID)
+	{
+		//no global resource
+		if (globalResource == null) {
+			throw new Error("No global resource set for TextureManager, please initialise(global)" +
+								"the TextureManager or call setGlobalResource(global).");
+		}
+		
+		//load texture
+		Texture texture = new Texture(BitmapFactory.decodeStream(globalResource.openRawResource(resourceID)));
+		return texture;
+	}
+	
+	
+	/**
 	 * Load and add a Texture to the set of all Textures, from a given Resource.
 	 */
 	public static Texture load(Resources res, int resourceID, int textureID)
 	{
 		Texture texture = new Texture(BitmapFactory.decodeStream(res.openRawResource(resourceID)));
 		textures.put(textureID, texture);
+		return texture;
+	}
+	
+	
+	/**
+	 * Load a Texture from a given Resource.
+	 */
+	public static Texture load(Resources res, int resourceID)
+	{
+		Texture texture = new Texture(BitmapFactory.decodeStream(res.openRawResource(resourceID)));
 		return texture;
 	}
 	

@@ -1,23 +1,23 @@
 package sky.engine.ui.buttons;
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import sky.engine.components.Size;
 import sky.engine.geometry.vectors.Vector2;
-import sky.engine.graphics.Colour;
-import sky.engine.graphics.bounds.BoundingCircle;
-import sky.engine.graphics.drawable.shapes.DrawableCircle;
+import sky.engine.graphics.bounds.Bounding;
+import sky.engine.graphics.drawable.shapes.DrawableShape;
 import sky.engine.graphics.paints.Blur;
 import sky.engine.graphics.paints.Fill;
 import sky.engine.graphics.paints.Outline;
+import sky.engine.graphics.paints.Paints;
 import sky.engine.surfaces.GameSurface;
 import sky.engine.text.Text;
 import sky.engine.threads.GameThread;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 
 /**
  * 
  * 
- * @author Matthew Kelly (Badgerati)
+ * @author Matthew Kelly (Badgerati - Cadaeic Studios)
  *
  */
 public class PauseButton
@@ -26,13 +26,13 @@ public class PauseButton
 	/**
 	 * 
 	 */
-	protected static final String PAUSED_BTN_TEXT = "||";
+	public static final String PAUSED_BTN_TEXT = "||";
 	
 	
 	/**
 	 * 
 	 */
-	protected static final String RESUME_BTN_TEXT = ">";
+	public static final String RESUME_BTN_TEXT = ">";
 	
 	
 	/**
@@ -50,19 +50,19 @@ public class PauseButton
 	/**
 	 * 
 	 */
-	protected DrawableCircle pauseBtn = null;
+	protected DrawableShape pauseBtn = null;
 	
 	
 	/**
 	 * 
 	 */
-	public BoundingCircle pauseBound = null;
+	public Bounding pauseBound = null;
 	
 	
 	/**
 	 * 
 	 */
-	protected BasicButton test = null;
+	protected BasicButton paused_dialog = null;
 	
 	
 	/**
@@ -84,7 +84,7 @@ public class PauseButton
 	/**
 	 * 
 	 */
-	protected Paint textpaint = null;
+	public Paint textpaint = null;
 	
 	
 	/**
@@ -93,39 +93,16 @@ public class PauseButton
 	protected boolean paused = false;
 	
 	
-	
-	
-
+	/**
+	 * 
+	 */
+	private float textsize = 0;
 	
 	
 	/**
 	 * 
 	 */
-	public PauseButton(GameThread thread, Vector2 position)
-	{
-		initialise(thread, 25, 31, position, Colour.WHITE, Colour.BLACK, 0, Colour.DODGER_BLUE,
-				Colour.BLACK, Colour.CORNFLOWER_BLUE, Colour.BLACK);		
-	}
 	
-	
-	/**
-	 * 
-	 */
-	public PauseButton(GameThread thread, float radius, float textsize, Vector2 position)
-	{
-		initialise(thread, radius, textsize, position, Colour.WHITE, Colour.BLACK, 0, Colour.DODGER_BLUE,
-				Colour.BLACK, Colour.CORNFLOWER_BLUE, Colour.BLACK);
-	}
-	
-	
-	/**
-	 * 
-	 */
-	public PauseButton(GameThread thread, float radius, float textsize, Vector2 position, int ifill,
-			int ioutline, int iblur, int pfill, int poutline, int pblur, int tcolour)
-	{
-		initialise(thread, radius, textsize, position, ifill, ioutline, iblur, pfill, poutline, pblur, tcolour);
-	}
 	
 	
 	
@@ -134,34 +111,31 @@ public class PauseButton
 	/**
 	 * 
 	 */
-	private void initialise(GameThread thread, float radius, float textsize, Vector2 position, int ifill,
-			int ioutline, int iblur, int pfill, int poutline, int pblur, int tcolour)
+	public PauseButton(GameThread thread, float textsize, int tcolour, Vector2 position,
+			Paints p_initial, Paints p_pause)
 	{
 		this.thread = thread;
 		this.position = position.clone();
 		
-		pauseBound = new BoundingCircle(position, radius + 25);
-		
+		this.textsize = textsize;
 		textpaint = new Paint();
 		textpaint.setColor(tcolour);
 		textpaint.setAntiAlias(true);
 		textpaint.setTextSize(textsize);
 		
-		initfill = new Fill(ifill);
-		initoutline = new Outline(ioutline);
-		initblur = new Blur(iblur);
+		initfill = p_initial.fill();
+		initoutline = p_initial.outline();
+		initblur = p_initial.blur();
 		
-		pausefill = new Fill(pfill);
-		pauseoutline = new Outline(poutline, 4);
-		pauseblur = new Blur(pblur);	
-
-		pauseBtn = new DrawableCircle(position, radius, initfill, initoutline, initblur);
+		pausefill = p_pause.fill();
+		pauseoutline = p_pause.outline();
+		pauseblur = p_pause.blur();
 		
 		Size s = GameSurface.ScreenCentre;
-		test = new BasicButton(s.asVector2D(), 230, 80, 5, 5);
-		test.setTitle("PAUSED", 60, Colour.BLACK);
-		test.setNormalStyle(pausefill, pauseoutline, pauseblur);
-		test.Focusable = false;
+		paused_dialog = new BasicButton(s.asVector2D(), 230, 80, 5, 5);
+		paused_dialog.setText("PAUSED", 60, pauseoutline.getColor());
+		paused_dialog.setNormalStyle(pausefill, pauseoutline, pauseblur);
+		paused_dialog.Focusable = false;
 	}
 	
 	
@@ -208,10 +182,13 @@ public class PauseButton
 	 */
 	public void pause()
 	{
-		pauseBtn.fill().set(pausefill);
-		pauseBtn.outline().set(pauseoutline);
-		pauseBtn.blur().set(pauseblur);
+		if (pauseBtn.fill() != null) pauseBtn.fill().set(pausefill);
+		if (pauseBtn.outline() != null) pauseBtn.outline().set(pauseoutline);
+		if (pauseBtn.blur() != null) pauseBtn.blur().set(pauseblur);
 		paused = true;
+		
+		textpaint.setColor(pauseoutline.getColor());
+		textpaint.setTextSize(textsize + 5f);
 	}
 	
 	
@@ -223,11 +200,14 @@ public class PauseButton
 	 */
 	public void unpause()
 	{
-		pauseBtn.fill().set(initfill);
-		pauseBtn.outline().set(initoutline);
-		pauseBtn.blur().set(initblur);
+		if (pauseBtn.fill() != null) pauseBtn.fill().set(initfill);
+		if (pauseBtn.outline() != null) pauseBtn.outline().set(initoutline);
+		if (pauseBtn.blur() != null) pauseBtn.blur().set(initblur);
 		paused = false;
-		thread.unpause();		
+		thread.unpause();
+
+		textpaint.setColor(initoutline.getColor());
+		textpaint.setTextSize(textsize);
 	}
 	
 	
@@ -243,16 +223,16 @@ public class PauseButton
 
 		if (paused)
 		{
-			Text.drawText(canvas, RESUME_BTN_TEXT, position.X + 2, position.Y - 2,
-					Colour.BLACK, 45, true);
+			Text.drawText(canvas, RESUME_BTN_TEXT, position.X, position.Y - 6,
+					textpaint, true);
 			
-			test.draw(canvas);			
+			paused_dialog.draw(canvas);			
 			thread.pause();
 		}
 		else
 		{
-			Text.drawText(canvas, PAUSED_BTN_TEXT, position.X, position.Y,
-					Colour.BLACK, 31, true);
+			Text.drawText(canvas, PAUSED_BTN_TEXT, position.X, position.Y - 7,
+					textpaint, true);
 		}
 	}
 	

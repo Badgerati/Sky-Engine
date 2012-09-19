@@ -119,12 +119,32 @@ public abstract class Text
 	 */
 	public static void drawText(Canvas canvas, String text, float x, float y, Paint paint, boolean centre)
 	{
-		if (centre) {
-			x = x - (paint.measureText(text) * 0.5f);
-			Paint.FontMetrics fm = paint.getFontMetrics();
-			y = y + ((fm.bottom - fm.top) * 0.36f);
+		Paint.FontMetrics fm = paint.getFontMetrics();
+		float height = (fm.bottom - fm.top);
+		
+		float ox = x;
+		
+		String[] lines = null;
+		if (text.contains("\n"))
+			lines = text.split("\n");
+		else
+			lines = text.split("##");
+		
+		if (centre)
+		{
+			y = y - (height * (lines.length - 1) * 0.5f);
 		}
-		canvas.drawText(text, x, y, paint);
+		
+		for (String line : lines)
+		{
+			if (centre)
+			{
+				ox = x - (paint.measureText(line) * 0.5f);
+				y = y + (height * 0.5f);
+			}
+			canvas.drawText(line, ox, y, paint);
+			y = y + (height * 0.8f);
+		}
 	}
 	
 	
@@ -136,20 +156,30 @@ public abstract class Text
 		opaint.setColor(colour);
 		opaint.setTextSize(textsize);
 		Paint.FontMetrics fm = opaint.getFontMetrics();
+		float height = (fm.bottom - fm.top);
 		
 		float ox = x;
 		
-		String[] lines = text.split("\n");
-
+		String[] lines = null;
+		if (text.contains("\n"))
+			lines = text.split("\n");
+		else
+			lines = text.split("##");
+		
+		if (centre)
+		{
+			y = y - (height * (lines.length - 1) * 0.5f);
+		}
+		
 		for (String line : lines)
 		{
 			if (centre)
 			{
 				ox = x - (opaint.measureText(line) * 0.5f);
-				y = y + ((fm.bottom - fm.top) * 0.36f);
+				y = y + (height * 0.25f);
 			}
 			canvas.drawText(line, ox, y, opaint);
-			y = y + textsize;
+			y = y + (height * 0.8f);
 		}
 	}
 	
@@ -178,13 +208,28 @@ public abstract class Text
 	{
 		ospaint.setColor(colour);
 		ospaint.setTextSize(textsize);
+		Paint.FontMetrics fm = ospaint.getFontMetrics();
+		float height = (fm.bottom - fm.top);
+		
+		float ox = x;
+		
+		String[] lines = null;
+		if (text.contains("\n"))
+			lines = text.split("\n");
+		else
+			lines = text.split("##");
+		y = y - (height * (lines.length - 1) * 0.68f);
 
-		if (centre) {
-			x = x - (ospaint.measureText(text) * 0.5f);
-			Paint.FontMetrics fm = ospaint.getFontMetrics();
-			y = y + ((fm.bottom - fm.top) * 0.36f);
+		for (String line : lines)
+		{
+			if (centre)
+			{
+				ox = x - (ospaint.measureText(line) * 0.5f);
+				y = y + (height * 0.36f);
+			}
+			canvas.drawText(line, ox, y, ospaint);
+			y = y + height * 0.8f;
 		}
-		canvas.drawText(text, x, y, ospaint);
 	}
 
 }

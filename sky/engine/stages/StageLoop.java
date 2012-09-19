@@ -42,5 +42,17 @@ public interface StageLoop
 	 * Draw everything
 	 */
 	public void draw(Canvas canvas);
+	
+	
+	/**
+	 * Pause all possible timers, and other things
+	 */
+	public void pause();
+	
+	
+	/**
+	 * Resumes all possible timers, and other things
+	 */
+	public void resume();
 
 }

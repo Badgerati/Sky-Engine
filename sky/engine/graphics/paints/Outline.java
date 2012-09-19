@@ -87,6 +87,8 @@ public class Outline extends Paint
 	 */
 	public void set(Outline paint)
 	{
+		if (paint == null) return;
+		
 		initialise(paint.getColor(), paint.getStrokeWidth(), paint.isAntiAlias());
 	}
 	

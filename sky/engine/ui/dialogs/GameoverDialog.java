@@ -59,12 +59,6 @@ public class GameoverDialog extends DrawableRoundBox
 	protected BasicButton quitbtn = null;
 	
 	
-	/**
-	 * Dialog background
-	 */
-	//protected DrawableRoundBox background = null;
-	
-	
 	
 	
 	
@@ -149,10 +143,10 @@ public class GameoverDialog extends DrawableRoundBox
 		Vector2 pos = new Vector2(x, y);
 		
 		retrybtn = new BasicButton(pos, Width * 0.45f, height, 5, 5);
-		retrybtn.setTitle(text, tsize, tcolour);
+		retrybtn.setText(text, tsize, tcolour);
 		
-		retrybtn.setNormalStyle(style.normal().fill(), style.normal().outline(), style.normal().blur());
-		retrybtn.setFocusStyle(style.focused().fill(), style.focused().outline(), style.focused().blur());
+		retrybtn.setNormalStyle(style.normal().fill(), style.normal().outline(), null);
+		retrybtn.setFocusStyle(style.focused().fill(), style.focused().outline(), null);
 	}
 	
 	
@@ -182,10 +176,10 @@ public class GameoverDialog extends DrawableRoundBox
 		Vector2 pos = new Vector2(x, y);
 		
 		quitbtn = new BasicButton(pos, Width * 0.45f, height, 5, 5);
-		quitbtn.setTitle(text, tsize, tcolour);
+		quitbtn.setText(text, tsize, tcolour);
 		
-		quitbtn.setNormalStyle(style.normal().fill(), style.normal().outline(), style.normal().blur());
-		quitbtn.setFocusStyle(style.focused().fill(), style.focused().outline(), style.focused().blur());
+		quitbtn.setNormalStyle(style.normal().fill(), style.normal().outline(), null);
+		quitbtn.setFocusStyle(style.focused().fill(), style.focused().outline(), null);
 	}
 	
 	
@@ -243,12 +237,22 @@ public class GameoverDialog extends DrawableRoundBox
 		super.draw(canvas);
 		
 		//title
-		Text.drawText(canvas, title, Position.X, Position.Y - (Height * 0.5f) + titlepaint.getTextSize(),
-				titlepaint.getColor(), titlepaint.getTextSize(), true);
+		Text.drawText(canvas,
+					  title,
+					  Position.X,
+					  Position.Y - (Height * 0.5f) + titlepaint.getTextSize(),
+					  titlepaint.getColor(),
+					  titlepaint.getTextSize(),
+					  true);
 		
 		//text
-		Text.drawText(canvas, text, Position.X, Position.Y - (Height * 0.20f) + textpaint.getTextSize(),
-				textpaint.getColor(), textpaint.getTextSize(), true);
+		Text.drawText(canvas,
+					  text,
+					  Position.X,
+					  Position.Y/* - (Height * 0.20f) + textpaint.getTextSize()*/,
+					  textpaint.getColor(),
+					  textpaint.getTextSize(),
+					  true);
 		
 		
 		//buttons

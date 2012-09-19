@@ -13,9 +13,9 @@ import android.graphics.Paint;
 import android.view.MotionEvent;
 
 /**
- * TODO: Create default styles
  * 
- * @author Matthew Kelly (Badgerati)
+ * 
+ * @author Matthew Kelly (Badgerati - Cadaeic Studios)
  *
  */
 public class BasicButton extends DrawableRoundBox
@@ -78,6 +78,16 @@ public class BasicButton extends DrawableRoundBox
 	
 	
 
+
+	
+	/**
+	 * Create new instance of a Basic Button
+	 */
+	public BasicButton(Vector2 position, float width, float height)
+	{
+		super(position, width, height, 5, 5);
+		initialise(position, width, height);
+	}
 	
 	
 	/**
@@ -121,7 +131,7 @@ public class BasicButton extends DrawableRoundBox
 	/**
 	 * Set text details
 	 */
-	public void setTitle(String text, float size, int colour)
+	public void setText(String text, float size, int colour)
 	{
 		this.text = text;
 		textpaint.setTextSize(size);
@@ -146,12 +156,38 @@ public class BasicButton extends DrawableRoundBox
 	
 	
 	
+	
+	/**
+	 * Set the normal style of the button
+	 */
+	public void setNormalStyle(Paints style)
+	{
+		normalstyle = new Paints(style);
+		this.fillpaint = normalstyle.fill();
+		this.outlinepaint = normalstyle.outline();
+		this.blurpaint = normalstyle.blur();
+	}
+	
+	
+	
+	
 	/**
 	 * Set the focused style of the button
 	 */
 	public void setFocusStyle(Fill fill, Outline outline, Blur blur)
 	{
 		focusstyle = new Paints(fill, outline, blur);
+	}
+	
+	
+	
+	
+	/**
+	 * Set the focused style of the button
+	 */
+	public void setFocusStyle(Paints style)
+	{
+		focusstyle = new Paints(style);
 	}
 	
 	

@@ -57,6 +57,8 @@ public class Fill extends Paint
 	 */
 	public void set(Fill paint)
 	{
+		if (paint == null) return;
+		
 		initialise(paint.getColor(), paint.isAntiAlias());
 	}
 	

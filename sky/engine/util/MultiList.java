@@ -76,6 +76,24 @@ public class MultiList extends ArrayList<ObjectMap>
 	
 	
 	/**
+	 * Add 2 new key-value pairs to the MultiList.
+	 * 
+	 * @param key1 - First key to add.
+	 * @param value1 - First value to add.
+	 * @param key2 - Second key to add.
+	 * @param value2 - Second value to add.
+	 * @return Whether operation was successful.
+	 */
+	public boolean add(Object key1, Object value1, Object key2, Object value2)
+	{
+		ObjectMap temp = new ObjectMap();
+		temp.put(key1, value1);
+		temp.put(key2, value2);
+		return this.add(temp);		
+	}
+	
+	
+	/**
 	 * Add a new key-value pair to an existing array at the given index.
 	 * 
 	 * @param index - Index of array to insert given pair to.

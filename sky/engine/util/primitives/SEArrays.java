@@ -1,5 +1,7 @@
 package sky.engine.util.primitives;
 
+import java.util.Random;
+
 /**
  * SEArrays extends the Arrays class, and exploits further methods that can be applied to
  * arrays. Such as reversing and array or merging arrays together.
@@ -39,10 +41,6 @@ public abstract class SEArrays extends Arrays
 	
 	
 	
-	
-	
-	
-	
 	/**
 	 * Merge the given arrays together.
 	 * 
@@ -70,11 +68,6 @@ public abstract class SEArrays extends Arrays
 	
 	
 	
-	
-	
-	
-	
-	
 	/**
 	 * Reverses the elements of the given array.
 	 * 
@@ -91,6 +84,24 @@ public abstract class SEArrays extends Arrays
 	
 	
 	
+	/**
+	 * Randomises the elements of the given array.
+	 * 
+	 * @param array - Array to randomise.
+	 */
+	public static <T> void randomise(T[] array)
+	{
+		Random rand= new Random();
+		int length = array.length;
+		int s, e;
+		
+		for (int i = 0; i < length; i++)
+		{
+			s = rand.nextInt(length);
+			e = rand.nextInt(length);
+			SEArrays.swap(array, s, e);
+		}
+	}
 	
 	
 	

@@ -620,9 +620,6 @@ public class Sprite extends RigidBody
 			canvas.rotate(rotation, Position.X, Position.Y);
 			canvas.drawBitmap(sprite, sourceRectangle, destination, paint);
 			canvas.restore();
-			
-			//DrawableOval o = new DrawableOval(spriteBound.getPosition(), spriteBound.xRadius, spriteBound.yRadius, null, new Outline(Colour.RED), null);
-			//o.draw(canvas);
 		}
 	}
 	

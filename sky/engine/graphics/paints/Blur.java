@@ -72,6 +72,15 @@ public class Blur extends Paint
 	/**
 	 * Create new instance of a BlurPaint
 	 */
+	public Blur(int colour, float radius)
+	{
+		initialise(colour, DEFAULT_BLUR_WIDTH, radius, DEFAULT_BLUR_STYLE);
+	}
+	
+	
+	/**
+	 * Create new instance of a BlurPaint
+	 */
 	public Blur(int colour, float width, float radius)
 	{
 		initialise(colour, width, radius, DEFAULT_BLUR_STYLE);
@@ -105,6 +114,8 @@ public class Blur extends Paint
 	 */
 	public void set(Blur paint)
 	{
+		if (paint == null) return;
+		
 		initialise(paint.getColor(), paint.getStrokeWidth(), paint.getBlurRadius(), paint.getBlurStyle());
 	}
 	

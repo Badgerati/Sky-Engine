@@ -43,6 +43,36 @@ public class Paints
 	
 	
 	
+	
+	
+	
+	/**
+	 * Create a new Paints object
+	 */
+	public Paints(int fill, int outline, int blur)
+	{
+		Fillpaint = new Fill(fill);
+		Outlinepaint = new Outline(outline);
+		Blurpaint = new Blur(blur);
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Create a new Paints object
+	 */
+	public Paints(Paints paints)
+	{
+		Fillpaint = paints.fill();
+		Outlinepaint = paints.outline();
+		Blurpaint = paints.blur();
+	}
+	
+	
+	
 
 	
 	

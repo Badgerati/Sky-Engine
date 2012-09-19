@@ -61,12 +61,6 @@ public class AnimatedSprite extends Sprite
 	protected int startFrame;
 	
 	
-	///**
-	// * first frame of the animation
-	// */
-	//protected int firstFrame;
-	
-	
 	/**
 	 * last frame of the animation	
 	 */
@@ -146,7 +140,6 @@ public class AnimatedSprite extends Sprite
 		
 		currentFrame = 0;
 		startFrame = 0;
-		//firstFrame = 0;
 		lastFrame = frameCount;
 		direction = 1;
 		
@@ -484,40 +477,6 @@ public class AnimatedSprite extends Sprite
 	{
 		return startFrame;
 	}
-	
-	
-	
-	
-	
-	
-	///**
-	// * Set first frame of the animation. This is not where the animation starts,
-	// * but the literal first frame of the animation as beginning extreme end
-	// */
-	//public void setFirstFrame(int frame)
-	//{
-	//	if (frame < 0)
-	//		firstFrame = 0;
-	//	
-	//	else if (frame > lastFrame)
-	//		firstFrame = lastFrame;
-	//	
-	//	else
-	//		firstFrame = frame;
-	//}
-	//
-	//
-	//
-	//
-	//
-	//
-	///**
-	// * returns first frame of animation
-	// */
-	//public int getFirstFrame()
-	//{
-	//	return firstFrame;
-	//}
 	
 	
 	

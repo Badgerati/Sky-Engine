@@ -1,7 +1,6 @@
 package sky.engine.game;
 
 import sky.engine.sensors.Accelerometer;
-import sky.engine.stages.StageCreator;
 import sky.engine.stages.StageLoop;
 import sky.engine.surfaces.GameSurface;
 import sky.engine.threads.GameThread;
@@ -47,6 +46,14 @@ public class GameActivity extends Activity
 	protected AlertDialog pausedDialog = null;
 	
 	
+	/**
+	 * The stage currently being played
+	 */
+	protected StageLoop stage = null;
+	
+	
+	
+	
 	
 	
 	
@@ -63,6 +70,7 @@ public class GameActivity extends Activity
         //fullscreen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
     
     
@@ -122,6 +130,7 @@ public class GameActivity extends Activity
     protected void setStage(StageLoop stage)
     {
         gamesurface.setStage(stage);
+        this.stage = stage;
     }
 	
 	
@@ -185,10 +194,7 @@ public class GameActivity extends Activity
 	 */
 	public void pause()
 	{
-		if (StageCreator.pausebutton != null)
-			StageCreator.pausebutton.pause();
-		else
-			thread.pause();
+		stage.pause();
 	}
 	
 	
@@ -201,10 +207,7 @@ public class GameActivity extends Activity
 	public void resume()
 	{
 	   onResume();
-	   if (StageCreator.pausebutton != null)
-		   StageCreator.pausebutton.unpause();
-	   else
-		   thread.unpause();
+	   stage.resume();
 	}
 	
 	

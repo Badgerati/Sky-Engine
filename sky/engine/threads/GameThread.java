@@ -33,7 +33,7 @@ public class GameThread extends Thread
 	/**
 	 * FPS constants
 	 */
-	protected static final int MAX_FPS = 50;
+	public static final int MAX_FPS = 50;
 	protected static final int MAX_FRAME_SKIPS = 5;
 	protected static final int FRAME_PERIOD = 1000 / MAX_FPS;
 	

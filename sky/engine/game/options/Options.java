@@ -1,6 +1,5 @@
 package sky.engine.game.options;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -50,6 +49,8 @@ public abstract class Options
 	 */
 	public static boolean read(Context context, String filename)
 	{
+		optionsmap = new HashMap<String, String>();
+		
 		try
 		{
 			FileManager fm = new FileManager(context, filename);
@@ -99,7 +100,7 @@ public abstract class Options
 	/**
 	 * Clears the options file
 	 */
-	public static void clear(Context context, String filename) throws FileNotFoundException
+	public static void clear(Context context, String filename)
 	{
 		FileManager fm = new FileManager(context, filename);
 		fm.clear();
@@ -115,6 +116,9 @@ public abstract class Options
 	 */
 	public static void set(String variable, String value)
 	{
+		if (optionsmap == null)
+			optionsmap = new HashMap<String, String>(); 
+		
 		optionsmap.put(variable.toUpperCase(), value);
 	}
 	
@@ -127,6 +131,9 @@ public abstract class Options
 	 */
 	public static String get(String variable)
 	{
+		if (optionsmap == null)
+			return "";
+		
 		return optionsmap.get(variable.toUpperCase());
 	}
 	

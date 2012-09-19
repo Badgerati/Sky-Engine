@@ -7,7 +7,7 @@ import android.graphics.Paint;
 /**
  * 
  * 
- * @author Matthew Kelly (Badgerati)
+ * @author Matthew Kelly (Badgerati - Cadaeic Studios)
  *
  */
 public class CustomText
@@ -25,9 +25,15 @@ public class CustomText
 	
 	
 	/**
+	 * Should the text be centred?
+	 */
+	public boolean centreText = true;
+	
+	
+	/**
 	 * Paint object to use
 	 */
-	protected Paint paint = null;
+	public Paint textpaint = null;
 	
 	
 	
@@ -38,33 +44,13 @@ public class CustomText
 	/**
 	 * Create new instance of some Custom Text
 	 */
-	public CustomText(int colour, int textsize)
+	public CustomText(String text, Vector2 position, int colour, float size)
 	{
-		paint = new Paint();
-		paint.setColor(colour);
-		paint.setTextSize(textsize);
-	}
-	
-	
-	/**
-	 * Create new instance of some Custom Text
-	 */
-	public CustomText(String text, Vector2 position, int colour, int textsize)
-	{
-		paint = new Paint();
-		paint.setColor(colour);
-		paint.setTextSize(textsize);
+		textpaint = new Paint();
+		textpaint.setColor(colour);
+		textpaint.setTextSize(size);
 		Position = position.clone();
 		this.text = text;
-	}
-	
-	
-	/**
-	 * Create new instance of some Custom Text
-	 */
-	public CustomText(Paint paint)
-	{
-		this.paint = new Paint(paint);
 	}
 	
 	
@@ -73,37 +59,10 @@ public class CustomText
 	 */
 	public CustomText(String text, Vector2 position, Paint paint)
 	{
-		this.paint = new Paint(paint);
+		this.textpaint = new Paint(paint);
 		Position = position.clone();
 		this.text = text;
 	}
-	
-	
-	/**
-	 * Create new instance of some Custom Text
-	 */
-	public CustomText(int colour, int textsize, float radius, float offsetx, float offsety, int scolour)
-	{
-		paint = new Paint();
-		paint.setColor(colour);
-		paint.setTextSize(textsize);
-		paint.setShadowLayer(radius, offsetx, offsety, scolour);
-	}
-	
-	
-	/**
-	 * Create new instance of some Custom Text
-	 */
-	public CustomText(String text, Vector2 position, int colour, int textsize, int scolour, float radius, float offsetx, float offsety)
-	{
-		paint = new Paint();
-		paint.setColor(colour);
-		paint.setTextSize(textsize);
-		paint.setShadowLayer(radius, offsetx, offsety, scolour);
-		Position = position.clone();
-		this.text = text;
-	}
-	
 	
 	
 	
@@ -115,9 +74,8 @@ public class CustomText
 	 */
 	public void setTextSize(int textsize)
 	{
-		paint.setTextSize(textsize);
+		textpaint.setTextSize(textsize);
 	}
-	
 	
 	
 	
@@ -128,9 +86,19 @@ public class CustomText
 	 */
 	public void setColour(int colour)
 	{
-		paint.setColor(colour);
+		textpaint.setColor(colour);
 	}
 	
+	
+	
+	
+	/**
+	 * Set alpha of the text
+	 */
+	public void setAlpha(int alpha)
+	{
+		textpaint.setAlpha(alpha);
+	}
 	
 	
 	
@@ -142,7 +110,7 @@ public class CustomText
 	 */
 	public void setShadow(float radius, float offsetx, float offsety, int colour)
 	{
-		paint.setShadowLayer(radius, offsetx, offsety, colour);
+		textpaint.setShadowLayer(radius, offsetx, offsety, colour);
 	}
 	
 	
@@ -156,52 +124,33 @@ public class CustomText
 	 */
 	public void draw(Canvas canvas)
 	{
-		canvas.drawText(text, Position.X, Position.Y, paint);
-	}
-	
-	
-	/**
-	 * Draw the text
-	 */
-	public void draw(Canvas canvas, Vector2 position)
-	{
-		canvas.drawText(text, position.X, position.Y, paint);
-	}
-	
-	
-	/**
-	 * Draw the text
-	 */
-	public void draw(Canvas canvas, float x, float y)
-	{
-		canvas.drawText(text, x, y, paint);
-	}
-	
-	
-	/**
-	 * Draw the text
-	 */
-	public void draw(Canvas canvas, String text)
-	{
-		canvas.drawText(text, Position.X, Position.Y, paint);
-	}
-	
-	
-	/**
-	 * Draw the text
-	 */
-	public void draw(Canvas canvas, String text, Vector2 position)
-	{
-		canvas.drawText(text, position.X, position.Y, paint);
-	}
-	
-	
-	/**
-	 * Draw the text
-	 */
-	public void draw(Canvas canvas, String text, float x, float y)
-	{
-		canvas.drawText(text, x, y, paint);
+		Paint.FontMetrics fm = textpaint.getFontMetrics();
+		float height = (fm.bottom - fm.top);
+		float x_offset = Position.X;
+		float y_offset = Position.Y;
+		
+		String[] lines = null;
+		if (text.contains("\n"))
+			lines = text.split("\n");
+		else
+			lines = text.split("##");
+		
+		if (centreText)
+		{
+			y_offset = y_offset - (height * (lines.length - 1) * 0.5f);// * 0.68f);
+		}
+		
+		for (String line : lines)
+		{
+			if (centreText)
+			{
+				x_offset = Position.X - (textpaint.measureText(line) * 0.5f);
+				y_offset += (height * 0.26f);// 0.36f);
+			}
+			
+			canvas.drawText(line, x_offset, y_offset, textpaint);
+			y_offset = y_offset + (height * 0.8f);
+		}
 	}
 	
 	
