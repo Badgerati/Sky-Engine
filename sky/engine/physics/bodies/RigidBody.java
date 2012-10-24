@@ -1,6 +1,6 @@
 package sky.engine.physics.bodies;
 
-import sky.engine.geometry.vectors.Vector2;
+import sky.engine.geometry.vectors.Vector2d;
 
 /**
  * A RigidBody is an object that has a position, velocity and mass.
@@ -19,30 +19,54 @@ public abstract class RigidBody
 	/**
 	 * position of the body
 	 */
-	protected Vector2 Position = null;
+	protected Vector2d Position = null;
 	
 	
 	/**
 	 * velocity of the body
 	 */
-	public Vector2 Velocity = null;
+	public Vector2d Velocity = null;
+	
+	
+	/**
+	 * terminal velocity of the body
+	 */
+	public Vector2d TerminalVelocity = null;
+	
+	
+	/**
+	 * co-efficient of restitution of the body
+	 */
+	public float Restitution = 0;
+	
+	
+	/**
+	 * friction of the body
+	 */
+	public float Friction = 0;
+	
+	
+	/**
+	 * acceleration of the body
+	 */
+	public float Acceleration = 0;
 	
 	
 	/**
 	 * mass of the body
 	 */
-	protected float Mass;
+	protected float Mass = INFINITE_MASS;
 	
 	
 	/**
 	 * Inverse mass of this body
 	 */
-	protected float InverseMass;
+	protected float InverseMass = 0;
 	
 	
 	
 	
-	
+
 	
 	
 	/**
@@ -52,7 +76,7 @@ public abstract class RigidBody
 	 * @param velocity - Velocity of the body.
 	 * @param mass - Current mass of the body (cannot be negative).
 	 */
-	public RigidBody(Vector2 position, Vector2 velocity, float mass)
+	public RigidBody(Vector2d position, Vector2d velocity, float mass)
 	{
 		if (mass < 0)
 			throw new Error("Mass cannot be negative.");
@@ -76,10 +100,10 @@ public abstract class RigidBody
 	 * 
 	 * @param position - Position of the body.
 	 */
-	public RigidBody(Vector2 position)
+	public RigidBody(Vector2d position)
 	{
 		Position = position.clone();
-		Velocity = Vector2.zeros();
+		Velocity = Vector2d.zeros();
 		Mass = INFINITE_MASS;
 		InverseMass = 0;
 	}
@@ -102,7 +126,16 @@ public abstract class RigidBody
 	/**
 	 * Integrate the body in the direction of the given velocity
 	 */
-	public void integrate(Vector2 velocity, float dt)
+	public void integrate(float x, float y, float dt)
+	{
+		Position.integrate(x * dt, y * dt);
+	}
+	
+	
+	/**
+	 * Integrate the body in the direction of the given velocity
+	 */
+	public void integrate(Vector2d velocity, float dt)
 	{
 		Position.integrate(velocity.mulScalar(dt));
 	}
@@ -134,7 +167,7 @@ public abstract class RigidBody
 	/**
 	 * Returns the position of the body
 	 */
-	public Vector2 getPosition()
+	public Vector2d getPosition()
 	{
 		return Position.clone();
 	}
@@ -165,10 +198,20 @@ public abstract class RigidBody
 	/**
 	 * Set the position of this body
 	 */
-	public void setPosition(Vector2 position)
+	public void setPosition(Vector2d position)
 	{
 		Position.X = position.X;
 		Position.Y = position.Y;
+	}
+
+	
+	/**
+	 * Set the position of this body
+	 */
+	public void setPosition(float x, float y)
+	{
+		Position.X = x;
+		Position.Y = y;
 	}
 	
 	
@@ -182,6 +225,11 @@ public abstract class RigidBody
 	 */
 	public void setMass(float mass)
 	{
+		if (mass == INFINITE_MASS) {
+			Mass = INFINITE_MASS;
+			InverseMass = 0f;
+		}
+		
 		Mass = mass;
 		InverseMass = 1.0f / mass;
 	}
@@ -191,7 +239,7 @@ public abstract class RigidBody
 	/**
 	 * Get mass of body
 	 */
-	public float getMass()
+	public float mass()
 	{
 		return Mass;
 	}
@@ -206,6 +254,11 @@ public abstract class RigidBody
 	 */
 	public void setInverseMass(float imass)
 	{
+		if (imass == 0) {
+			Mass = INFINITE_MASS;
+			InverseMass = 0f;
+		}
+		
 		InverseMass = imass;
 		Mass = 1.0f / imass;
 	}
@@ -214,7 +267,7 @@ public abstract class RigidBody
 	/**
 	 * Get inverse mass of body
 	 */
-	public float getInverseMass()
+	public float inverseMass()
 	{
 		return InverseMass;
 	}

@@ -1,6 +1,7 @@
 package sky.engine.threads;
 
-import sky.engine.game.GameLoop;
+import sky.engine.components.time.GameTime;
+import sky.engine.game.IGame;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,7 +34,7 @@ public class GameThread extends Thread
 	/**
 	 * FPS constants
 	 */
-	public static final int MAX_FPS = 50;
+	public static final int MAX_FPS = 60;
 	protected static final int MAX_FRAME_SKIPS = 5;
 	protected static final int FRAME_PERIOD = 1000 / MAX_FPS;
 	
@@ -71,7 +72,7 @@ public class GameThread extends Thread
 	/**
 	 * Handle to the game panel
 	 */
-	private GameLoop gamesurface = null;
+	private IGame gamesurface = null;
 	
 	
 	
@@ -85,7 +86,7 @@ public class GameThread extends Thread
 	/**
 	 * Create new instance of a GameThread
 	 */
-	public GameThread(SurfaceHolder holder, GameLoop panel, Handler handler)
+	public GameThread(SurfaceHolder holder, IGame panel, Handler handler)
 	{
 		super();
 		surfaceHolder = holder;
@@ -127,7 +128,7 @@ public class GameThread extends Thread
 	/**
 	 * Get the current game
 	 */
-	public GameLoop getGame()
+	public IGame getGame()
 	{
 		return gamesurface;
 	}
@@ -218,6 +219,19 @@ public class GameThread extends Thread
 	public boolean isRunning()
 	{
 		return running;
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Returns if the thread is currently paused
+	 */
+	public boolean isPaused()
+	{
+		return currentState == STATE_PAUSE;
 	}
 	
 	
@@ -368,10 +382,17 @@ public class GameThread extends Thread
 		gamesurface.load();
 		
 		//timings for framerate
-		long beginTime;		//time when the cycle began
-		long timeDiff;		//time for a cycle to execute
-		int sleepTime;		//ms to sleep (<0 if we're behind)
-		int framesSkipped;	//number of frames skipped
+		long beginTime = 0;		//time when the cycle began
+		long timeDiff = 0;		//time for a cycle to execute
+		int sleepTime = 0;		//ms to sleep (<0 if we're behind)
+		int framesSkipped = 0;	//number of frames skipped
+		
+		//timings for last updates
+		long timeSinceLastUpdate = 0;
+		long beginTimeOfUpdate = System.currentTimeMillis();
+		
+		//actual GameTime object
+		GameTime gametime = new GameTime(MAX_FPS);
 		
 		//main loop
 		while (running)
@@ -393,8 +414,13 @@ public class GameThread extends Thread
 						beginTime = System.currentTimeMillis();
 						framesSkipped = 0;
 						
+						//update timers
+						timeSinceLastUpdate = System.currentTimeMillis() - beginTimeOfUpdate;
+						beginTimeOfUpdate = System.currentTimeMillis();
+						gametime.update(timeSinceLastUpdate);
+						
 						//update and draw
-						gamesurface.update(beginTime);
+						gamesurface.update(gametime);
 						if (c != null) gamesurface.draw(c);
 						
 						//how long the cycle ran for
@@ -406,12 +432,23 @@ public class GameThread extends Thread
 						{
 							try { Thread.sleep(sleepTime); }
 							catch (InterruptedException e) { }
+							gametime.IsRunningSlowly = false;
+						}
+						
+						//we're running slowly
+						else
+						{
+							gametime.IsRunningSlowly = true;
 						}
 						
 						//we're running a little late, time to catch up!
 						while (sleepTime < 0 && framesSkipped < MAX_FRAME_SKIPS)
 						{
-							gamesurface.update(beginTime);
+							timeSinceLastUpdate = System.currentTimeMillis() - beginTimeOfUpdate;
+							gametime.update(timeSinceLastUpdate);
+							beginTimeOfUpdate = System.currentTimeMillis();
+							
+							gamesurface.update(gametime);
 							sleepTime += FRAME_PERIOD;
 							framesSkipped++;
 						}

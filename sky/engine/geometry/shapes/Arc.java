@@ -1,6 +1,6 @@
 package sky.engine.geometry.shapes;
 
-import sky.engine.geometry.vectors.Vector2;
+import sky.engine.geometry.vectors.Vector2d;
 import sky.engine.math.Angle;
 
 /**
@@ -31,7 +31,7 @@ public class Arc extends Circle
 	/**
 	 * Create new instance of a Geometric Arc
 	 */
-	public Arc(Vector2 position, float radius, float startangle, float sweepangle)
+	public Arc(Vector2d position, float radius, float startangle, float sweepangle)
 	{
 		super(position, radius);
 		StartAngle = startangle;
@@ -53,7 +53,7 @@ public class Arc extends Circle
 	/**
 	 * Create new instance of a Geometric Arc
 	 */
-	public Arc(Vector2 position, float radius, float startangle, float sweepangle, Vector2 velocity, float mass)
+	public Arc(Vector2d position, float radius, float startangle, float sweepangle, Vector2d velocity, float mass)
 	{
 		super(position, radius, velocity, mass);
 		StartAngle = startangle;

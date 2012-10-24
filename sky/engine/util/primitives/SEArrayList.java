@@ -103,4 +103,16 @@ public class SEArrayList<E> extends ArrayList<E>
 	}
 	
 	
+	
+	
+	
+	/**
+	 * Returns a random element contained within this ArrayList.
+	 */
+	public E getRandom()
+	{
+		return this.get(rand.nextInt(this.size()));
+	}
+	
+	
 }

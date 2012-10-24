@@ -1,6 +1,6 @@
 package sky.engine.physics.constraints;
 
-import sky.engine.geometry.vectors.Vector2;
+import sky.engine.geometry.vectors.Vector2d;
 import sky.engine.physics.bodies.RigidBody;
 
 /**
@@ -37,7 +37,7 @@ public abstract class Constraint
 	 */
 	public Constraint(RigidBody bodyA, RigidBody bodyB)
 	{
-		if (bodyA.getInverseMass() == 0 && bodyB.getInverseMass() == 0)
+		if (bodyA.inverseMass() == 0 && bodyB.inverseMass() == 0)
 			throw new Error("Constraint between two infinite mass bodies not allowed");
 		
 		this.bodyA = bodyA;
@@ -56,20 +56,20 @@ public abstract class Constraint
 	/**
 	 * Apply impulse
 	 */
-	public void applyImpulse(Vector2 impulse)
+	public void applyImpulse(Vector2d impulse)
 	{
-		bodyA.Velocity = bodyA.Velocity.add(impulse.mulScalar(bodyA.getInverseMass()));
-		bodyB.Velocity = bodyB.Velocity.sub(impulse.mulScalar(bodyB.getInverseMass()));
+		bodyA.Velocity = bodyA.Velocity.add(impulse.mulScalar(bodyA.inverseMass()));
+		bodyB.Velocity = bodyB.Velocity.sub(impulse.mulScalar(bodyB.inverseMass()));
 	}
 	
 	
 	/**
 	 * Apply impulse
 	 */
-	public static void applyImpulse(RigidBody bodyA, RigidBody bodyB, Vector2 impulse)
+	public static void applyImpulse(RigidBody bodyA, RigidBody bodyB, Vector2d impulse)
 	{
-		bodyA.Velocity = bodyA.Velocity.add(impulse.mulScalar(bodyA.getInverseMass()));
-		bodyB.Velocity = bodyB.Velocity.sub(impulse.mulScalar(bodyB.getInverseMass()));
+		bodyA.Velocity = bodyA.Velocity.add(impulse.mulScalar(bodyA.inverseMass()));
+		bodyB.Velocity = bodyB.Velocity.sub(impulse.mulScalar(bodyB.inverseMass()));
 	}
 	
 	

@@ -1,6 +1,6 @@
 package sky.engine.physics.constraints;
 
-import sky.engine.geometry.vectors.Vector2;
+import sky.engine.geometry.vectors.Vector2d;
 import sky.engine.physics.bodies.RigidBody;
 
 /**
@@ -51,9 +51,9 @@ public class DistanceConstraint extends Constraint
 	public void solve(float dt)
 	{
 		//required info
-		Vector2 axis = bodyB.getPosition().sub(bodyA.getPosition());
+		Vector2d axis = bodyB.getPosition().sub(bodyA.getPosition());
 		float currentDistance = axis.magnitude();
-		Vector2 unitAxis = axis.mulScalar(1 / currentDistance);
+		Vector2d unitAxis = axis.mulScalar(1 / currentDistance);
 		
 		//calc relative velocity in axis, we want to remove this
 		float relVelocity = bodyB.Velocity.sub(bodyA.Velocity).dot(unitAxis);
@@ -61,10 +61,10 @@ public class DistanceConstraint extends Constraint
 		
 		//calc impulse to solve
 		float remove = (relVelocity + relDistance);
-		float impulse = remove / (bodyA.getInverseMass() + bodyB.getInverseMass());
+		float impulse = remove / (bodyA.inverseMass() + bodyB.inverseMass());
 		
 		//impulse vector
-		Vector2 impulseVec = unitAxis.mulScalar(impulse);
+		Vector2d impulseVec = unitAxis.mulScalar(impulse);
 		
 		//apply
 		this.applyImpulse(impulseVec);
@@ -85,9 +85,9 @@ public class DistanceConstraint extends Constraint
 	public static void solve(RigidBody bodyA, RigidBody bodyB, float distance, float dt)
 	{
 		//required info
-		Vector2 axis = bodyB.getPosition().sub(bodyA.getPosition());
+		Vector2d axis = bodyB.getPosition().sub(bodyA.getPosition());
 		float currentDistance = axis.magnitude();
-		Vector2 unitAxis = axis.mulScalar(1 / currentDistance);
+		Vector2d unitAxis = axis.mulScalar(1 / currentDistance);
 		
 		//calc relative velocity in axis, we want to remove this
 		float relVelocity = bodyB.Velocity.sub(bodyA.Velocity).dot(unitAxis);
@@ -95,10 +95,10 @@ public class DistanceConstraint extends Constraint
 		
 		//calc impulse to solve
 		float remove = (relVelocity + relDistance);
-		float impulse = remove / (bodyA.getInverseMass() + bodyB.getInverseMass());
+		float impulse = remove / (bodyA.inverseMass() + bodyB.inverseMass());
 		
 		//impulse vector
-		Vector2 impulseVec = unitAxis.mulScalar(impulse);
+		Vector2d impulseVec = unitAxis.mulScalar(impulse);
 		
 		//apply
 		applyImpulse(bodyA, bodyB, impulseVec);

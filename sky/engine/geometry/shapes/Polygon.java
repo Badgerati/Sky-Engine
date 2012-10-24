@@ -5,7 +5,7 @@ import java.util.Random;
 import android.graphics.Matrix;
 import android.graphics.Path;
 
-import sky.engine.geometry.vectors.Vector2;
+import sky.engine.geometry.vectors.Vector2d;
 import sky.engine.math.Angle;
 
 /**
@@ -37,9 +37,9 @@ public class Polygon extends Shape
 	/**
 	 * Create new instance of a geometric polygon
 	 */
-	public Polygon(Vector2[] vertices)
+	public Polygon(Vector2d[] vertices)
 	{
-		super(Vector2.getCentre(vertices));
+		super(Vector2d.getCentre(vertices));
 		initialise(vertices);
 	}
 	
@@ -47,7 +47,7 @@ public class Polygon extends Shape
 	/**
 	 * Create new instance of a geometric polygon
 	 */
-	public Polygon(Vector2 position, int noOfVertices, float size)
+	public Polygon(Vector2d position, int noOfVertices, float size)
 	{
 		super(position);
 		generateVertices(noOfVertices, size, size);
@@ -57,7 +57,7 @@ public class Polygon extends Shape
 	/**
 	 * Creates new instance of a randomised geometric polygon
 	 */
-	public Polygon(Vector2 position, int noOfVertices, float minSize, float maxSize)
+	public Polygon(Vector2d position, int noOfVertices, float minSize, float maxSize)
 	{
 		super(position);
 		generateVertices(noOfVertices, minSize, maxSize);
@@ -67,7 +67,7 @@ public class Polygon extends Shape
 	/**
 	 * Create new instance of a geometric polygon, with only a position
 	 */
-	protected Polygon(Vector2 position)
+	protected Polygon(Vector2d position)
 	{
 		super(position);
 	}
@@ -76,7 +76,7 @@ public class Polygon extends Shape
 	/**
 	 * Create new instance of a geometric polygon, with only a position
 	 */
-	protected Polygon(Vector2 position, Vector2 velocity, float mass)
+	protected Polygon(Vector2d position, Vector2d velocity, float mass)
 	{
 		super(position, velocity, mass);
 	}
@@ -85,7 +85,7 @@ public class Polygon extends Shape
 	/**
 	 * Create new instance of a geometric polygon
 	 */
-	protected Polygon(Vector2 position, Vector2[] vertices, Vector2 velocity, float mass)
+	protected Polygon(Vector2d position, Vector2d[] vertices, Vector2d velocity, float mass)
 	{
 		super(position, velocity, mass);
 		initialise(vertices);
@@ -95,9 +95,9 @@ public class Polygon extends Shape
 	/**
 	 * Create new instance of a geometric polygon
 	 */
-	public Polygon(Vector2[] vertices, Vector2 velocity, float mass)
+	public Polygon(Vector2d[] vertices, Vector2d velocity, float mass)
 	{
-		super(Vector2.getCentre(vertices), velocity, mass);
+		super(Vector2d.getCentre(vertices), velocity, mass);
 		initialise(vertices);
 	}
 	
@@ -105,7 +105,7 @@ public class Polygon extends Shape
 	/**
 	 * Create new instance of a geometric polygon
 	 */
-	public Polygon(Vector2 position, int noOfVertices, float size, Vector2 velocity, float mass)
+	public Polygon(Vector2d position, int noOfVertices, float size, Vector2d velocity, float mass)
 	{
 		super(position, velocity, mass);
 		generateVertices(noOfVertices, size, size);
@@ -115,7 +115,7 @@ public class Polygon extends Shape
 	/**
 	 * Creates new instance of a randomised geometric polygon
 	 */
-	public Polygon(Vector2 position, int noOfVertices, float minSize, float maxSize, Vector2 velocity, float mass)
+	public Polygon(Vector2d position, int noOfVertices, float minSize, float maxSize, Vector2d velocity, float mass)
 	{
 		super(position, velocity, mass);
 		generateVertices(noOfVertices, minSize, maxSize);
@@ -141,9 +141,9 @@ public class Polygon extends Shape
 	/**
 	 * Initialises the vertices of this geometric polygon
 	 */
-	private void initialise(Vector2[] vertices)
+	private void initialise(Vector2d[] vertices)
 	{
-		this.vertices = new Vector2[vertices.length];
+		this.vertices = new Vector2d[vertices.length];
 		
 		for (int i = 0; i < vertices.length; i++)
 			this.vertices[i] = vertices[i].clone();
@@ -160,19 +160,19 @@ public class Polygon extends Shape
 	 */
 	private void generateVertices(int noOfVertices, float minSize, float maxSize)
 	{
-		vertices = new Vector2[noOfVertices];
+		vertices = new Vector2d[noOfVertices];
 		Random rand = new Random();
 		float degrees = 360.0f / noOfVertices;
 		float range = maxSize - minSize;
 		float x = (Angle.sin(0) * ((rand.nextFloat() * range) + minSize));
 		float y = (Angle.cos(0) * ((rand.nextFloat() * range) - minSize));
 		
-		vertices[0] = new Vector2(x, y);
+		vertices[0] = new Vector2d(x, y);
 		for (int i = 1; i < noOfVertices; i++)
 		{
 			x = (Angle.sin((int)(degrees * i)) * ((rand.nextFloat() * range) + minSize));
 			y = (Angle.cos((int)(degrees * i)) * ((rand.nextFloat() * range) - minSize));
-			vertices[i] = new Vector2(x, y);
+			vertices[i] = new Vector2d(x, y);
 		}
 		
 		for (int i = 0; i < vertices.length; i++)
@@ -275,7 +275,7 @@ public class Polygon extends Shape
 	 * Rotate this geometric polygon at the given origin
 	 */
 	@Override
-	public void rotate(int degree, Vector2 origin)
+	public void rotate(int degree, Vector2d origin)
 	{
 		super.rotate(degree, origin);
 		
@@ -306,7 +306,7 @@ public class Polygon extends Shape
 		
 		if (matrix != null)
 		{
-			Vector2 scaleVel = Velocity.mulScalar(dt);
+			Vector2d scaleVel = Velocity.mulScalar(dt);
 			matrix.reset();
 			matrix.postTranslate(scaleVel.X, scaleVel.Y);
 			
@@ -323,13 +323,13 @@ public class Polygon extends Shape
 	 * Integrate this geometric polygon
 	 */
 	@Override
-	public void integrate(Vector2 velocity, float dt)
+	public void integrate(Vector2d velocity, float dt)
 	{
 		super.integrate(velocity, dt);
 		
 		if (matrix != null)
 		{
-			Vector2 scaleVel = velocity.mulScalar(dt);
+			Vector2d scaleVel = velocity.mulScalar(dt);
 			matrix.reset();
 			matrix.postTranslate(scaleVel.X, scaleVel.Y);
 			
@@ -347,15 +347,40 @@ public class Polygon extends Shape
 	 * Set the position of this geometric polygon
 	 */
 	@Override
-	public void setPosition(Vector2 position)
+	public void setPosition(Vector2d position)
 	{
-		Vector2 delta = position.sub(Position);
+		Vector2d delta = position.sub(Position);
 		super.setPosition(position);
 		
 		if (matrix != null)
 		{
 			matrix.reset();
 			matrix.postTranslate(delta.X, delta.Y);
+			
+			polygon.transform(matrix);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Set the position of this geometric polygon
+	 */
+	@Override
+	public void setPosition(float x, float y)
+	{
+		float dx = x - Position.X;
+		float dy = y - Position.Y;
+		super.setPosition(x, y);
+		
+		if (matrix != null)
+		{
+			matrix.reset();
+			matrix.postTranslate(dx, dy);
 			
 			polygon.transform(matrix);
 		}

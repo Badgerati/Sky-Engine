@@ -1,10 +1,10 @@
 package sky.engine.ui.dialogs;
 
 import sky.engine.game.GameActivity;
-import sky.engine.geometry.vectors.Vector2;
-import sky.engine.graphics.drawable.shapes.DrawableRoundBox;
+import sky.engine.geometry.vectors.Vector2d;
 import sky.engine.graphics.paints.styles.Styles;
-import sky.engine.text.Text;
+import sky.engine.graphics.shapes.DrawableRoundBox;
+import sky.engine.graphics.text.Text;
 import sky.engine.ui.buttons.BasicButton;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -68,7 +68,7 @@ public class GameoverDialog extends DrawableRoundBox
 	/**
 	 * Create new instance of a Gameover Dialog
 	 */
-	public GameoverDialog(GameActivity activity, Vector2 position, float width, float height, Styles style)
+	public GameoverDialog(GameActivity activity, Vector2d position, float width, float height, Styles style)
 	{
 		super(position, width, height, 5, 5, style.normal().fill(), style.normal().outline(), style.normal().blur());
 		initialise(activity);
@@ -78,7 +78,7 @@ public class GameoverDialog extends DrawableRoundBox
 	/**
 	 * Create new instance of a Gameover Dialog
 	 */
-	public GameoverDialog(GameActivity activity, Vector2 position, float width, float height, Styles style, String title)
+	public GameoverDialog(GameActivity activity, Vector2d position, float width, float height, Styles style, String title)
 	{
 		super(position, width, height, 5, 5, style.normal().fill(), style.normal().outline(), style.normal().blur());
 		initialise(activity);
@@ -140,7 +140,7 @@ public class GameoverDialog extends DrawableRoundBox
 	{		
 		float x = Position.X - (Width * 0.25f);
 		float y = Position.Y + (Height * 0.5f) - (height * 0.8f);
-		Vector2 pos = new Vector2(x, y);
+		Vector2d pos = new Vector2d(x, y);
 		
 		retrybtn = new BasicButton(pos, Width * 0.45f, height, 5, 5);
 		retrybtn.setText(text, tsize, tcolour);
@@ -173,7 +173,7 @@ public class GameoverDialog extends DrawableRoundBox
 	{		
 		float x = Position.X + (Width * 0.25f);
 		float y = Position.Y + (Height * 0.5f) - (height * 0.8f);
-		Vector2 pos = new Vector2(x, y);
+		Vector2d pos = new Vector2d(x, y);
 		
 		quitbtn = new BasicButton(pos, Width * 0.45f, height, 5, 5);
 		quitbtn.setText(text, tsize, tcolour);

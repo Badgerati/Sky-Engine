@@ -78,7 +78,7 @@ public abstract class Angle
 	/**
 	 * Refine a given degree to between 0-359
 	 */
-	public static int confineDegree(int degree)
+	public static int wrapAngle(int degree)
 	{
 		while (degree < 0 || degree >= 360)
 		{
@@ -89,6 +89,32 @@ public abstract class Angle
 		}
 		
 		return degree;
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Returns the given radians to degrees
+	 */
+	public static float toDegrees(float rad)
+	{
+		return rad * TO_DEGREES;
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Returns the given degrees to radians
+	 */
+	public static float toRadians(float deg)
+	{
+		return deg * TO_RADIANS;
 	}
 	
 	
@@ -108,7 +134,7 @@ public abstract class Angle
 		
 		//get the sine value wanted
 		int deg = (int)degree;
-		deg = confineDegree(deg);
+		deg = wrapAngle(deg);
 		return SINE[deg];
 	}
 	
@@ -129,7 +155,7 @@ public abstract class Angle
 		
 		//get the sine value wanted
 		int deg = (int)(radians * TO_DEGREES);
-		deg = confineDegree(deg);
+		deg = wrapAngle(deg);
 		return SINE[deg];
 	}
 	
@@ -150,7 +176,7 @@ public abstract class Angle
 		
 		//get the cosine value wanted
 		int deg = (int)degree;
-		deg = confineDegree(deg);
+		deg = wrapAngle(deg);
 		return COSINE[deg];
 	}
 	
@@ -171,7 +197,7 @@ public abstract class Angle
 		
 		//get the cosine value wanted
 		int deg = (int)(radians * TO_DEGREES);
-		deg = confineDegree(deg);
+		deg = wrapAngle(deg);
 		return COSINE[deg];
 	}
 	
@@ -192,7 +218,7 @@ public abstract class Angle
 		
 		//get the tangent value wanted
 		int deg = (int)degree;
-		deg = confineDegree(deg);
+		deg = wrapAngle(deg);
 		return TANGENT[deg];
 	}
 	
@@ -213,7 +239,7 @@ public abstract class Angle
 		
 		//get the tangent value wanted
 		int deg = (int)(radians * TO_DEGREES);
-		deg = confineDegree(deg);
+		deg = wrapAngle(deg);
 		return TANGENT[deg];
 	}
 	

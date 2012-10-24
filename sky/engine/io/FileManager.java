@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
@@ -99,9 +98,10 @@ public class FileManager
 			in.close();
 			fis.close();
 		}
-		catch (FileNotFoundException e) { }
-		catch (IOException e) { }
-		catch (Exception e) { }
+		catch (Exception e)
+		{
+			throw new RuntimeException(e);
+		}
 		
 		
 		//return lines read, even if it's null
@@ -134,9 +134,10 @@ public class FileManager
 			//close file
 			fos.close();
 		}
-		catch (FileNotFoundException e) { }
-		catch (IOException e) { }
-		catch (Exception e) { }
+		catch (Exception e)
+		{
+			throw new RuntimeException(e);
+		}
 	}
 	
 	
@@ -178,9 +179,10 @@ public class FileManager
 			fos.write(blank.getBytes());
 			fos.close();
 		}
-		catch (FileNotFoundException e) { }
-		catch (IOException e) { }
-		catch (Exception e) { }
+		catch (Exception e)
+		{
+			throw new RuntimeException(e);
+		}
 	}
 	
 	

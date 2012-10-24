@@ -3,13 +3,13 @@ package sky.engine.geometry.shapes;
 import sky.engine.geometry.Circumcircle;
 import sky.engine.geometry.ConvexHull;
 import sky.engine.geometry.Triangulation;
-import sky.engine.geometry.vectors.Vector2;
+import sky.engine.geometry.vectors.Vector2d;
 import sky.engine.math.Angle;
-import sky.engine.physics.bodies.CollidableBody;
+import sky.engine.physics.bodies.ICollidableBody;
 import sky.engine.physics.bodies.RigidBody;
-import sky.engine.physics.collisions.MTV;
+import sky.engine.physics.collisions.CollisionDetector;
+import sky.engine.physics.collisions.Contact;
 import sky.engine.physics.collisions.Projection;
-import sky.engine.physics.collisions.SATCollision;
 
 /**
  * 
@@ -17,7 +17,7 @@ import sky.engine.physics.collisions.SATCollision;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public abstract class Shape extends RigidBody implements CollidableBody
+public abstract class Shape extends RigidBody implements ICollidableBody
 {
 	/**
 	 * Current degrees of rotation of this shape
@@ -34,7 +34,7 @@ public abstract class Shape extends RigidBody implements CollidableBody
 	/**
 	 * List of vertices for the shape
 	 */
-	protected Vector2[] vertices = null;
+	protected Vector2d[] vertices = null;
 	
 	
 
@@ -43,16 +43,16 @@ public abstract class Shape extends RigidBody implements CollidableBody
 	/**
 	 * Create new instance of a shape
 	 */
-	public Shape(Vector2 position)
+	public Shape(Vector2d position)
 	{
-		super(position, Vector2.zeros(), 1);
+		super(position, Vector2d.zeros(), 1);
 	}
 	
 	
 	/**
 	 * Create new instance of a shape that has mass and velocity
 	 */
-	public Shape(Vector2 position, Vector2 velocity, float mass)
+	public Shape(Vector2d position, Vector2d velocity, float mass)
 	{
 		super(position, velocity, mass);
 	}
@@ -74,7 +74,7 @@ public abstract class Shape extends RigidBody implements CollidableBody
 	/**
 	 * Returns the shape's vertices
 	 */
-	public Vector2[] vertices()
+	public Vector2d[] vertices()
 	{
 		return vertices;
 	}
@@ -87,7 +87,7 @@ public abstract class Shape extends RigidBody implements CollidableBody
 	 */
 	public void rotate(int degree)
 	{
-		degreesOfRotation = Angle.confineDegree(degreesOfRotation + degree);
+		degreesOfRotation = Angle.wrapAngle(degreesOfRotation + degree);
 		
 		for (int i = 0; i < vertices.length; i++)
 			if (vertices[i] != null)
@@ -101,9 +101,9 @@ public abstract class Shape extends RigidBody implements CollidableBody
 	/**
 	 * Rotate the shape at the given origin on given degree (and its vertices, if any)
 	 */
-	public void rotate(int degree, Vector2 origin)
+	public void rotate(int degree, Vector2d origin)
 	{
-		degreesOfRotation = Angle.confineDegree(degreesOfRotation + degree);
+		degreesOfRotation = Angle.wrapAngle(degreesOfRotation + degree);
 		Position.rotate(degree, origin);
 		
 		for (int i = 0; i < vertices.length; i++)
@@ -161,7 +161,7 @@ public abstract class Shape extends RigidBody implements CollidableBody
 	 * Integrate the position of this shape (and its vertices, if any)
 	 */
 	@Override
-	public void integrate(Vector2 velocity, float dt)
+	public void integrate(Vector2d velocity, float dt)
 	{
 		super.integrate(velocity, dt);
 		
@@ -177,12 +177,31 @@ public abstract class Shape extends RigidBody implements CollidableBody
 	
 	
 	/**
+	 * Integrate the position of this shape (and its vertices, if any)
+	 */
+	@Override
+	public void integrate(float x, float y, float dt)
+	{
+		super.integrate(x, y, dt);
+		
+		if (vertices != null)
+		{
+			for (int i = 0; i < vertices.length; i++)
+				if (vertices[i] != null)
+					vertices[i].integrate(x * dt, y * dt);
+		}
+	}
+	
+	
+	
+	
+	/**
 	 * Set X position of shape (and its vertices, if any)
 	 */
 	@Override
 	public void setXPosition(float value)
 	{
-		this.setPosition(new Vector2(value, Position.Y));
+		this.setPosition(new Vector2d(value, Position.Y));
 	}
 	
 	
@@ -194,7 +213,7 @@ public abstract class Shape extends RigidBody implements CollidableBody
 	@Override
 	public void setYPosition(float value)
 	{
-		this.setPosition(new Vector2(Position.X, value));
+		this.setPosition(new Vector2d(Position.X, value));
 	}
 	
 	
@@ -205,9 +224,9 @@ public abstract class Shape extends RigidBody implements CollidableBody
 	 * Set position of shape (and its vertices, if any)
 	 */
 	@Override
-	public void setPosition(Vector2 position)
+	public void setPosition(Vector2d position)
 	{
-		Vector2 delta = position.sub(Position);
+		Vector2d delta = position.sub(Position);
 		super.setPosition(position);
 
 		if (vertices != null)
@@ -215,6 +234,28 @@ public abstract class Shape extends RigidBody implements CollidableBody
 			for (int i = 0; i < vertices.length; i++)
 				if (vertices[i] != null)
 					vertices[i].integrate(delta);
+		}
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Set position of shape (and its vertices, if any)
+	 */
+	@Override
+	public void setPosition(float x, float y)
+	{
+		float dx = x - Position.X;
+		float dy = y - Position.Y;
+		super.setPosition(x, y);
+
+		if (vertices != null)
+		{
+			for (int i = 0; i < vertices.length; i++)
+				if (vertices[i] != null)
+					vertices[i].integrate(dx, dy);
 		}
 	}
 	
@@ -269,9 +310,9 @@ public abstract class Shape extends RigidBody implements CollidableBody
 	/**
 	 * Does the given shape intersect this shape?
 	 */
-	public boolean intersect(CollidableBody shape2)
+	public boolean intersects(ICollidableBody shape2)
 	{
-		return SATCollision.intersect(this, shape2);
+		return CollisionDetector.intersects(this, shape2);
 	}
 	
 	
@@ -281,9 +322,9 @@ public abstract class Shape extends RigidBody implements CollidableBody
 	/**
 	 * Get the amount of intersection between the given shape and this shape
 	 */
-	public MTV getIntersection(CollidableBody shape2)
+	public Contact intersection(ICollidableBody shape2)
 	{
-		return SATCollision.getIntersection(this, shape2);
+		return CollisionDetector.intersection(this, shape2);
 	}
 	
 	
@@ -292,9 +333,9 @@ public abstract class Shape extends RigidBody implements CollidableBody
 	/**
 	 * Is the given point contained within this shape?
 	 */
-	public boolean contains(Vector2 point)
+	public boolean contains(Vector2d point)
 	{
-		return SATCollision.contains(this, point);
+		return CollisionDetector.contains(this, point);
 	}
 	
 	
@@ -305,7 +346,7 @@ public abstract class Shape extends RigidBody implements CollidableBody
 	 */
 	public boolean contains(float x, float y)
 	{
-		return SATCollision.contains(this, x, y);
+		return CollisionDetector.contains(this, x, y);
 	}
 	
 	
@@ -314,10 +355,10 @@ public abstract class Shape extends RigidBody implements CollidableBody
 	/**
 	 * Returns this shape's axes
 	 */
-	public Vector2[] getAxes()
+	public Vector2d[] axes()
 	{
-		Vector2[] axes = new Vector2[vertices.length];
-		Vector2 edge, normal;
+		Vector2d[] axes = new Vector2d[vertices.length];
+		Vector2d edge, normal;
 		
 		for (int i = 0; i < vertices.length; i++)
 		{
@@ -337,7 +378,7 @@ public abstract class Shape extends RigidBody implements CollidableBody
 	/**
 	 * Projects the this shape's vertices onto the given axis
 	 */
-	public Projection project(Vector2 axis)
+	public Projection project(Vector2d axis)
 	{	
 		float min = axis.dot(vertices[0]);
 		float max = min;

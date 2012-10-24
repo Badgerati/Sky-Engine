@@ -1,9 +1,10 @@
 package sky.engine.surfaces;
 
 import sky.engine.components.Size;
-import sky.engine.game.GameLoop;
+import sky.engine.components.time.GameTime;
+import sky.engine.game.IGame;
 import sky.engine.sensors.Accelerometer;
-import sky.engine.stages.StageLoop;
+import sky.engine.stages.IStage;
 import sky.engine.threads.GameThread;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -27,7 +28,7 @@ import android.view.SurfaceView;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, GameLoop, SensorEventListener
+public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, IGame, SensorEventListener
 {
 	/**
 	 * Holder to the main thread
@@ -38,7 +39,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	/**
 	 * Stages of the game
 	 */
-	private StageLoop stages = null;
+	private IStage stages = null;
 	
 	
 	/**
@@ -284,7 +285,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	/**
 	 * Set the stage to use
 	 */
-	public void setStage(StageLoop stage)
+	public void setStage(IStage stage)
 	{
 		if (!stagesSet)
 		{
@@ -434,6 +435,19 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	
 	
 	
+	/**
+	 * Returns whether the Accelerometer is set
+	 */
+	public boolean accelerometerExists()
+	{
+		return (accelerometer != null);
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -514,11 +528,11 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	/**
 	 * Update the canvas
 	 */
-	public void update(long gameTime)
+	public void update(GameTime gametime)
 	{
 		if (stagesSet && contentLoaded)
 		{
-			stages.update(gameTime);
+			stages.update(gametime);
 		}
 	}
 	
@@ -538,6 +552,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 		if (stagesSet && contentLoaded)
 		{
 			stages.draw(canvas);
+			stages.drawUI(canvas);
 		}
 	}
 	

@@ -1,6 +1,6 @@
 package sky.engine.geometry.shapes;
 
-import sky.engine.geometry.vectors.Vector2;
+import sky.engine.geometry.vectors.Vector2d;
 import sky.engine.physics.collisions.Projection;
 
 /**
@@ -31,12 +31,12 @@ public class Oval extends Shape
 	/**
 	 * Create new instance of a Geometric Oval
 	 */
-	public Oval(Vector2 position, float xradius, float yradius)
+	public Oval(Vector2d position, float xradius, float yradius)
 	{
 		super(position);
 		xRadius = xradius;
 		yRadius = yradius;
-		vertices = new Vector2[2];
+		vertices = new Vector2d[2];
 		isCircle = true;
 	}
 
@@ -44,12 +44,12 @@ public class Oval extends Shape
 	/**
 	 * Create new instance of a Geometric Oval
 	 */
-	public Oval(Vector2 position, float xradius, float yradius, Vector2 velocity, float mass)
+	public Oval(Vector2d position, float xradius, float yradius, Vector2d velocity, float mass)
 	{
 		super(position, velocity, mass);
 		xRadius = xradius;
 		yRadius = yradius;
-		vertices = new Vector2[2];
+		vertices = new Vector2d[2];
 		isCircle = true;
 	}
 	
@@ -62,7 +62,7 @@ public class Oval extends Shape
 		super(oval.Position, oval.Velocity, oval.Mass);
 		xRadius = oval.xRadius;
 		yRadius = oval.xRadius;
-		vertices = new Vector2[2];
+		vertices = new Vector2d[2];
 		isCircle = true;
 	}
 	
@@ -169,13 +169,13 @@ public class Oval extends Shape
 	 * Project this oval onto the given axis
 	 */
 	@Override
-	public Projection project(Vector2 axis)
+	public Projection project(Vector2d axis)
 	{
 		float rvx = xRadius * axis.X;
 		float rvy = yRadius * axis.Y;
 
-		this.vertices[0] = new Vector2(Position.X + rvx, Position.Y + rvy);
-		this.vertices[1] = new Vector2(Position.X - rvx, Position.Y - rvy);
+		this.vertices[0] = new Vector2d(Position.X + rvx, Position.Y + rvy);
+		this.vertices[1] = new Vector2d(Position.X - rvx, Position.Y - rvy);
 		
 		float min = axis.dot(vertices[0]);
 		float max = min;

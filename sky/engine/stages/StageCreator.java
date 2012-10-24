@@ -1,15 +1,22 @@
 package sky.engine.stages;
 
+import java.util.ArrayList;
+
 import sky.engine.audio.SoundManager;
-import sky.engine.components.Randomiser;
 import sky.engine.components.Size;
+import sky.engine.components.time.Timer;
 import sky.engine.game.GameActivity;
-import sky.engine.geometry.vectors.Vector3;
+import sky.engine.geometry.vectors.Vector2d;
+import sky.engine.geometry.vectors.Vector3d;
+import sky.engine.graphics.Colour;
+import sky.engine.graphics.ContentManager;
 import sky.engine.graphics.textures.TextureManager;
+import sky.engine.math.SERandom;
 import sky.engine.surfaces.GameSurface;
 import sky.engine.threads.GameThread;
 import sky.engine.ui.buttons.PauseButton;
 import android.content.Context;
+import android.graphics.Canvas;
 
 /**
  * 
@@ -46,7 +53,13 @@ public class StageCreator
 	/**
 	 * Vector to store the values from the accelerometer.
 	 */
-	protected Vector3 accelerometer = null;
+	protected Vector3d accelerometer = null;
+	
+	
+	/**
+	 * Array of all Timers in the game, for easier dealing
+	 */
+	protected ArrayList<Timer> timers = null;
 	
 	
 	/**
@@ -64,7 +77,7 @@ public class StageCreator
 	/**
 	 * Centre point of the screen
 	 */
-	public Size screencentre = null;
+	public Vector2d screencentre = null;
 	
 	
 	/**
@@ -97,12 +110,14 @@ public class StageCreator
 		this.gamesurface = surface;
 		this.context = surface.getContext();
 		this.thread = thread;
+		this.timers = new ArrayList<Timer>();
 		
-		TextureManager.initialise(context.getResources());
+		ContentManager.initialise(context.getResources());
+		TextureManager.initialise();
 		SoundManager.initialise(context, 10, SoundManager.STREAM_MUSIC, 100);
-		Randomiser.initialise();
+		SERandom.initialise();
 		
-		this.accelerometer = new Vector3();
+		this.accelerometer = new Vector3d();
 	}
 	
 	
@@ -115,8 +130,51 @@ public class StageCreator
 	public void load(Size screensize)
 	{
 		this.screensize = screensize;
-		this.screencentre = screensize.mulScalar(0.5f);
+		this.screencentre = screensize.mulScalar(0.5f).asVector2D();
 		this.screenscale = screensize.div(DEFAULT_SIZE);
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Updates any timers within the game
+	 */
+	public void update()
+	{
+		for (int i = 0; i < timers.size(); i++)
+		{
+			if (timers.get(i).isStarted())
+				timers.get(i).update();
+		}
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Draw any graphics across all stages
+	 * Screen is also defaulted CLS black
+	 */
+	public void draw(Canvas canvas)
+	{
+		canvas.drawColor(Colour.BLACK);
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Draw any graphics across all stages
+	 */
+	public void draw(Canvas canvas, int cls_colour)
+	{
+		canvas.drawColor(cls_colour);
 	}
 	
 	
@@ -128,10 +186,22 @@ public class StageCreator
 	 */
 	public void pause()
 	{
+		//pause timers
+		for (int i = 0; i < timers.size(); i++)
+		{
+			if (timers.get(i).isStarted())
+				timers.get(i).pause();
+		}
+		
+		//pause the game
 		if (pausebutton != null)
+		{
 			pausebutton.pause();
+		}
 		else
+		{
 			thread.pause();
+		}
 	}
 	
 	
@@ -143,10 +213,22 @@ public class StageCreator
 	 */
 	public void resume()
 	{
+		//resume timers
+		for (int i = 0; i < timers.size(); i++)
+		{
+			if (timers.get(i).isPaused())
+				timers.get(i).resume();
+		}
+		
+		//resume the game
 		if (pausebutton != null)
+		{
 			pausebutton.unpause();
+		}
 		else
+		{
 			thread.unpause();
+		}
 	}
 	
 	

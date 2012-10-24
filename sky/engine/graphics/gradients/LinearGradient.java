@@ -1,6 +1,7 @@
 package sky.engine.graphics.gradients;
 
-import sky.engine.geometry.vectors.Vector2;
+import sky.engine.geometry.vectors.Vector2d;
+import sky.engine.graphics.IDrawableComponent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -12,11 +13,11 @@ import android.graphics.Shader;
  * @author Matthew Kelly (Badgerati - Cadaeic Studios)
  *
  */
-public class LinearGradient
+public class LinearGradient implements IDrawableComponent
 {
 	
 	/**
-	 * Paint for ther gradient
+	 * Paint for the gradient
 	 */
 	protected Paint linear_paint = null;
 	
@@ -35,7 +36,7 @@ public class LinearGradient
 	/**
 	 * Create new Linear Gradient
 	 */
-	public LinearGradient(Vector2 startp, Vector2 endp, int[] colours, Shader.TileMode tiles)
+	public LinearGradient(Vector2d startp, Vector2d endp, int[] colours, Shader.TileMode tiles)
 	{
 		Shader shader = new android.graphics.LinearGradient(startp.X, startp.Y,
 				endp.X, endp.Y, colours, null, tiles);
@@ -50,7 +51,7 @@ public class LinearGradient
 	/**
 	 * Set gradient size
 	 */
-	public void setSize(Vector2 startp, Vector2 endp)
+	public void setSize(Vector2d startp, Vector2d endp)
 	{
 		linear_rect = new RectF(startp.X, startp.Y, endp.X, endp.Y);
 	}

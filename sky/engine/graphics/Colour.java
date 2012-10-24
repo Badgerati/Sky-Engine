@@ -45,6 +45,7 @@ public abstract class Colour extends Color
 	
 	//Purples
 	public static final int PURPLE = 0xff9b30ff;
+	public static final int PURPLE_2 = 0xffbb36c7;
 	public static final int FUCHSIA = 0xffff00ff;
 	public static final int BEET = 0xff8e388e;
 	public static final int BLUE_VIOLET = 0xff8a2eb2;

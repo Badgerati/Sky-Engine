@@ -24,13 +24,13 @@ import java.util.ArrayList;
  * 
  * 		[array-index] --> [key, value]
  * 
- * @author Matthew Kelly (Badgerati).
+ * @author Matthew Kelly (Badgerati - Cadaeic Studios)
  *
  */
 public class MultiList extends ArrayList<ObjectMap>
 {
 	/**
-	 * Serial ID.
+	 * Serial ID
 	 */
 	private static final long serialVersionUID = -839815873773099212L;
 	
@@ -38,12 +38,8 @@ public class MultiList extends ArrayList<ObjectMap>
 	
 	
 	
-	
-	
-	
-	
 	/**
-	 * Create new instance of a MultiMap.
+	 * Create new instance of a MultiList
 	 */
 	public MultiList()
 	{
@@ -51,21 +47,15 @@ public class MultiList extends ArrayList<ObjectMap>
 	}
 	
 	
-	
-	
-	
-	
-	
-	
 
 	
 	
 	/**
-	 * Add a new key-value pair to the MultiList.
+	 * Add a new key-value pair
 	 * 
-	 * @param key - Key to add.
-	 * @param value - Value to add.
-	 * @return Whether operation was successful.
+	 * @param key - Key to add
+	 * @param value - Value to add
+	 * @return Whether operation was successful
 	 */
 	public boolean add(Object key, Object value)
 	{
@@ -75,14 +65,17 @@ public class MultiList extends ArrayList<ObjectMap>
 	}
 	
 	
+	
+	
+	
 	/**
-	 * Add 2 new key-value pairs to the MultiList.
+	 * Add 2 new key-value pairs
 	 * 
-	 * @param key1 - First key to add.
-	 * @param value1 - First value to add.
-	 * @param key2 - Second key to add.
-	 * @param value2 - Second value to add.
-	 * @return Whether operation was successful.
+	 * @param key1 - First key to add
+	 * @param value1 - First value to add
+	 * @param key2 - Second key to add
+	 * @param value2 - Second value to add
+	 * @return Whether operation was successful
 	 */
 	public boolean add(Object key1, Object value1, Object key2, Object value2)
 	{
@@ -93,14 +86,16 @@ public class MultiList extends ArrayList<ObjectMap>
 	}
 	
 	
+	
+	
 	/**
-	 * Add a new key-value pair to an existing array at the given index.
+	 * Add a new key-value pair to an existing array at the given index
 	 * 
-	 * @param index - Index of array to insert given pair to.
-	 * @param key - Key to add.
-	 * @param value - Value to add.
-	 * @return Whether operation was successful.
-	 * @throws IndexOutOfBoundsExcepton.
+	 * @param index - Index of array to insert given pair
+	 * @param key - Key to add
+	 * @param value - Value to add
+	 * @return Whether operation was successful
+	 * @throws IndexOutOfBoundsExcepton
 	 */
 	public boolean add(int index, Object key, Object value)
 	{
@@ -112,36 +107,34 @@ public class MultiList extends ArrayList<ObjectMap>
 	}
 	
 	
+	
+	
+	
 	/**
-	 * Add an array of new key-value pairs to the MultiList.
+	 * Add an array of new key-value pairs
 	 * 
-	 * @param keys - Keys to add.
-	 * @param values - Values to add.
-	 * @return Whether operation was successful.
-	 * @throws IndexOutOfBoundsExcepton.
+	 * @param keys - Keys to add
+	 * @param values - Values to add
+	 * @return Whether operation was successful
 	 */
 	public boolean add(Object[] keys, Object[] values)
 	{
-		//if (keys.length != values.length)
-		//	throw new Error("The length of keys must equal the length of values given.");
-		
 		ObjectMap temp = new ObjectMap(keys, values);
-		
-		//for (int i = 0; i < keys.length; i++)
-		//	temp.put(keys[i], values[i]);
-		
 		return this.add(temp);
 	}
 	
 	
+	
+	
+	
 	/**
-	 * Add an array of new key-value pairs to an existing array at the given index.
+	 * Add an array of new key-value pairs to an existing array at the given index
 	 * 
-	 * @param index - Index of array to insert given pairs to.
-	 * @param keys - Keys to add.
-	 * @param values - Values to add.
-	 * @return Whether operation was successful.
-	 * @throws IndexOutOfBoundsExcepton.
+	 * @param index - Index of array to insert given pairs
+	 * @param keys - Keys to add
+	 * @param values - Values to add
+	 * @return Whether operation was successful
+	 * @throws IndexOutOfBoundsExcepton
 	 */
 	public boolean add(int index, Object[] keys, Object[] values)
 	{
@@ -150,21 +143,8 @@ public class MultiList extends ArrayList<ObjectMap>
 		
 		this.get(index).put(keys, values);
 		
-		//if (keys.length != values.length)
-		//	throw new Error("The length of keys must equal the length of values given.");
-		
-		//ObjectMap temp = this.get(index);
-		
-		//for (int i = 0; i < keys.length; i++)
-		//	temp.put(keys[i], values[i]);
-		
 		return true;
 	}
-	
-	
-	
-	
-	
 	
 	
 

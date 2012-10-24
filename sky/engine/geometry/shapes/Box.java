@@ -1,6 +1,6 @@
 package sky.engine.geometry.shapes;
 
-import sky.engine.geometry.vectors.Vector2;
+import sky.engine.geometry.vectors.Vector2d;
 
 /**
  * 
@@ -30,7 +30,7 @@ public class Box extends Shape
 	/**
 	 * Create new instance of a box
 	 */
-	public Box(Vector2 position, float width, float height)
+	public Box(Vector2d position, float width, float height)
 	{
 		super(position);
 		build(width, height);
@@ -40,7 +40,7 @@ public class Box extends Shape
 	/**
 	 * Create new instance of a box
 	 */
-	public Box(Vector2 position, float width, float height, Vector2 velocity, float mass)
+	public Box(Vector2d position, float width, float height, Vector2d velocity, float mass)
 	{
 		super(position, velocity, mass);
 		build(width, height);
@@ -85,12 +85,12 @@ public class Box extends Shape
 		Width = width;
 		Height = height;
 		
-		vertices = new Vector2[4];
+		vertices = new Vector2d[4];
 		
-		vertices[0] = new Vector2(width * -0.5f, height * -0.5f);
-		vertices[1] = new Vector2(width * 0.5f, height * -0.5f);
-		vertices[2] = new Vector2(width * 0.5f, height * 0.5f);
-		vertices[3] = new Vector2(width * -0.5f, height * 0.5f);
+		vertices[0] = new Vector2d(width * -0.5f, height * -0.5f);
+		vertices[1] = new Vector2d(width * 0.5f, height * -0.5f);
+		vertices[2] = new Vector2d(width * 0.5f, height * 0.5f);
+		vertices[3] = new Vector2d(width * -0.5f, height * 0.5f);
 
 		for (int i = 0; i < vertices.length; i++)
 			vertices[i].integrate(Position);
@@ -187,10 +187,10 @@ public class Box extends Shape
 	 * Returns this box axes
 	 */
 	@Override
-	public Vector2[] getAxes()
+	public Vector2d[] axes()
 	{
-		Vector2[] axes = new Vector2[2];
-		Vector2 edge, normal;
+		Vector2d[] axes = new Vector2d[2];
+		Vector2d edge, normal;
 		
 		for (int i = 0; i < 2; i++)
 		{

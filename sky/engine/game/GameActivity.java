@@ -1,7 +1,7 @@
 package sky.engine.game;
 
 import sky.engine.sensors.Accelerometer;
-import sky.engine.stages.StageLoop;
+import sky.engine.stages.IStage;
 import sky.engine.surfaces.GameSurface;
 import sky.engine.threads.GameThread;
 import android.app.Activity;
@@ -10,6 +10,8 @@ import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -49,7 +51,7 @@ public class GameActivity extends Activity
 	/**
 	 * The stage currently being played
 	 */
-	protected StageLoop stage = null;
+	protected IStage stage = null;
 	
 	
 	
@@ -66,11 +68,47 @@ public class GameActivity extends Activity
     	//call super
         super.onCreate(savedInstanceState);
         
-        
         //fullscreen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        
+        //framelayout
+        framelayout = new FrameLayout(this);
+        framelayout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT)); 
+    
+        //game surface
+        gamesurface = new GameSurface(this, null);
+        gamesurface.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+        framelayout.addView(gamesurface);
+
+    	setContentView(framelayout);
+    	
+    	createThread();
+    	startThread();
+    }
+    
+    
+    
+    
+    /**
+     * Add view to framelayout
+     */
+    protected void addView(View view)
+    {
+    	framelayout.addView(view);
+    }
+    
+    
+    
+    
+    
+    /**
+     * Set content view for activity
+     */
+    protected void setContentView()
+    {
+    	setContentView(framelayout);
     }
     
     
@@ -127,7 +165,7 @@ public class GameActivity extends Activity
     /**
      * 
      */
-    protected void setStage(StageLoop stage)
+    protected void setStage(IStage stage)
     {
         gamesurface.setStage(stage);
         this.stage = stage;
@@ -232,9 +270,12 @@ public class GameActivity extends Activity
 	 */
 	public void restart()
 	{
+		boolean acc = gamesurface.accelerometerExists();
+		
 		gamesurface.destroyThread();
 		createThread();
 		startThread();
+		if (acc) createAccelerometer();
 		runThread();
 	}
 	

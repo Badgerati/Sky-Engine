@@ -2,8 +2,8 @@ package sky.engine.components;
 
 import java.util.Comparator;
 
-import sky.engine.geometry.vectors.Vector2;
-import sky.engine.geometry.vectors.Vector3;
+import sky.engine.geometry.vectors.Vector2d;
+import sky.engine.geometry.vectors.Vector3d;
 
 
 
@@ -202,18 +202,18 @@ public class Size implements Comparable<Size>
 	/**
 	 * Returns this size as a 2D vector
 	 */
-	public Vector2 asVector2D()
+	public Vector2d asVector2D()
 	{
-		return new Vector2(Width, Height);
+		return new Vector2d(Width, Height);
 	}
 	
 	
 	/**
 	 * Returns this size as a 3D vector
 	 */
-	public Vector3 asVector3D()
+	public Vector3d asVector3D()
 	{
-		return new Vector3(Width, Height, Depth);
+		return new Vector3d(Width, Height, Depth);
 	}
 	
 	

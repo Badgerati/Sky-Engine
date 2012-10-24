@@ -15,7 +15,7 @@ public class Outline extends Paint
 	/**
 	 * Default outline width
 	 */
-	public static final float DEFAULT_OUTLINE_WIDTH = 2.0f;
+	public static final float DEFAULT_OUTLINE_WIDTH = 5.0f;
 	
 	
 	

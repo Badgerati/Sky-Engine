@@ -1,6 +1,6 @@
 package sky.engine.geometry.shapes;
 
-import sky.engine.geometry.vectors.Vector2;
+import sky.engine.geometry.vectors.Vector2d;
 
 public class Triangle extends Polygon
 {
@@ -48,9 +48,9 @@ public class Triangle extends Polygon
 	/**
 	 * Create new instance of a Triangle on vertices
 	 */
-	public Triangle(Vector2 v1, Vector2 v2, Vector2 v3)
+	public Triangle(Vector2d v1, Vector2d v2, Vector2d v3)
 	{
-		super(new Vector2[] { v1, v2, v3 });
+		super(new Vector2d[] { v1, v2, v3 });
 		build(v1, v2, v3);
 	}
 
@@ -58,7 +58,7 @@ public class Triangle extends Polygon
 	/**
 	 * Create new instance of a Triangle on lengths of 3 sides
 	 */
-	public Triangle(Vector2 position, float sidex, float sidey, float sidez)
+	public Triangle(Vector2d position, float sidex, float sidey, float sidez)
 	{
 		super(position);
 		build(sidex, sidey, sidez);
@@ -68,9 +68,9 @@ public class Triangle extends Polygon
 	/**
 	 * Create new instance of a Triangle on vertices
 	 */
-	protected Triangle(Vector2 position, Vector2 v1, Vector2 v2, Vector2 v3, Vector2 velocity, float mass)
+	protected Triangle(Vector2d position, Vector2d v1, Vector2d v2, Vector2d v3, Vector2d velocity, float mass)
 	{
-		super(position, new Vector2[] { v1, v2, v3 }, velocity, mass);
+		super(position, new Vector2d[] { v1, v2, v3 }, velocity, mass);
 		build(v1, v2, v3);
 	}
 
@@ -78,9 +78,9 @@ public class Triangle extends Polygon
 	/**
 	 * Create new instance of a Triangle on vertices
 	 */
-	public Triangle(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 velocity, float mass)
+	public Triangle(Vector2d v1, Vector2d v2, Vector2d v3, Vector2d velocity, float mass)
 	{
-		super(new Vector2[] { v1, v2, v3 }, velocity, mass);
+		super(new Vector2d[] { v1, v2, v3 }, velocity, mass);
 		build(v1, v2, v3);
 	}
 
@@ -88,7 +88,7 @@ public class Triangle extends Polygon
 	/**
 	 * Create new instance of a Triangle on lengths of 3 sides - scalene
 	 */
-	public Triangle(Vector2 position, float sidex, float sidey, float sidez, Vector2 velocity, float mass)
+	public Triangle(Vector2d position, float sidex, float sidey, float sidez, Vector2d velocity, float mass)
 	{
 		super(position, velocity, mass);
 		build(sidex, sidey, sidez);
@@ -134,7 +134,7 @@ public class Triangle extends Polygon
 	/**
 	 * Build the triangle from 3 vertices
 	 */
-	private void build(Vector2 v1, Vector2 v2, Vector2 v3)
+	private void build(Vector2d v1, Vector2d v2, Vector2d v3)
 	{
 		//lengths of the sides
 		SideX = v1.magnitude(v2);
@@ -187,10 +187,10 @@ public class Triangle extends Polygon
 		float height = sidex * (float)Math.sin(AngleA);
 		
 		//vertices
-		vertices = new Vector2[3];
-		vertices[0] = new Vector2(0, height * -0.5f);
-		vertices[1] = new Vector2((float)Math.cos(AngleB) * sidey, height * 0.5f);
-		vertices[2] = new Vector2(-(float)Math.cos(AngleA) * sidex, height * 0.5f);
+		vertices = new Vector2d[3];
+		vertices[0] = new Vector2d(0, height * -0.5f);
+		vertices[1] = new Vector2d((float)Math.cos(AngleB) * sidey, height * 0.5f);
+		vertices[2] = new Vector2d(-(float)Math.cos(AngleA) * sidex, height * 0.5f);
 
 		for (int i = 0; i < vertices.length; i++)
 			vertices[i].integrate(Position);

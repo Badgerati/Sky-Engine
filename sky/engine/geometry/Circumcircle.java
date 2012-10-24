@@ -1,9 +1,9 @@
 package sky.engine.geometry;
 
 import sky.engine.geometry.shapes.Circle;
-import sky.engine.geometry.vectors.Vector2;
-import sky.engine.graphics.bounds.BoundingCircle;
-import sky.engine.graphics.drawable.shapes.DrawableCircle;
+import sky.engine.geometry.vectors.Vector2d;
+import sky.engine.graphics.shapes.DrawableCircle;
+import sky.engine.physics.bounding.BoundingCircle;
 import sky.engine.util.SortedList;
 
 /**
@@ -29,13 +29,13 @@ public class Circumcircle
 	/**
 	 * Central position of the vertices
 	 */
-	protected Vector2 centre = null;
+	protected Vector2d centre = null;
 	
 	
 	/**
 	 * Vertices associated with this circumcircle
 	 */
-	protected Vector2[] points = null;
+	protected Vector2d[] points = null;
 	
 	
 	
@@ -54,7 +54,7 @@ public class Circumcircle
 	 * Create new instance of a circumcircle from an array of given points. 2 or more
 	 * points must be given.
 	 */
-	public Circumcircle(Vector2[] points)
+	public Circumcircle(Vector2d[] points)
 	{
 		boolean bool = construct(points);
 		
@@ -72,20 +72,20 @@ public class Circumcircle
 	/**
 	 * Constructs an enclosing circumcirlce around the point set
 	 */
-	public boolean construct(Vector2[] points)
+	public boolean construct(Vector2d[] points)
 	{
 		//we need 2 or more, else error
 		if (points.length <= 1)
 			return false;
 		
 		//store vertices
-		this.points = Vector2.clone(points);
+		this.points = Vector2d.clone(points);
 		
 		//quick centre calculation
-		centre = Vector2.getCentre(points);
+		centre = Vector2d.getCentre(points);
 		
 		//algorithm itself
-		SortedList<Vector2> sorted = new SortedList<Vector2>(points);
+		SortedList<Vector2d> sorted = new SortedList<Vector2d>(points);
 		maxdist = sorted.getFirst().magnitude(sorted.getLast());
 		radius = maxdist * 0.5f;
 		
@@ -103,7 +103,7 @@ public class Circumcircle
 	 * 
 	 * @param Array of original points
 	 */
-	public final Vector2[] asPoints()
+	public final Vector2d[] asPoints()
 	{
 		return points;
 	}

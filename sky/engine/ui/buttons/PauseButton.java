@@ -3,15 +3,15 @@ package sky.engine.ui.buttons;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import sky.engine.components.Size;
-import sky.engine.geometry.vectors.Vector2;
-import sky.engine.graphics.bounds.Bounding;
-import sky.engine.graphics.drawable.shapes.DrawableShape;
+import sky.engine.geometry.vectors.Vector2d;
 import sky.engine.graphics.paints.Blur;
 import sky.engine.graphics.paints.Fill;
 import sky.engine.graphics.paints.Outline;
 import sky.engine.graphics.paints.Paints;
+import sky.engine.graphics.shapes.IDrawableShape;
+import sky.engine.graphics.text.Text;
+import sky.engine.physics.bounding.Bounding;
 import sky.engine.surfaces.GameSurface;
-import sky.engine.text.Text;
 import sky.engine.threads.GameThread;
 
 /**
@@ -44,13 +44,13 @@ public class PauseButton
 	/**
 	 * 
 	 */
-	protected Vector2 position = null;
+	protected Vector2d position = null;
 	
 	
 	/**
 	 * 
 	 */
-	protected DrawableShape pauseBtn = null;
+	protected IDrawableShape pauseBtn = null;
 	
 	
 	/**
@@ -111,7 +111,7 @@ public class PauseButton
 	/**
 	 * 
 	 */
-	public PauseButton(GameThread thread, float textsize, int tcolour, Vector2 position,
+	public PauseButton(GameThread thread, float textsize, int tcolour, Vector2d position,
 			Paints p_initial, Paints p_pause)
 	{
 		this.thread = thread;

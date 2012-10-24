@@ -1,6 +1,7 @@
 package sky.engine.geometry.shapes;
 
-import sky.engine.geometry.vectors.Vector2;
+import sky.engine.geometry.vectors.Vector2d;
+import sky.engine.math.MathHelper;
 import sky.engine.physics.collisions.Projection;
 
 /**
@@ -12,7 +13,7 @@ import sky.engine.physics.collisions.Projection;
 public class Circle extends Shape
 {
 	/** 
-	 * This circle's radius
+	 * The Circle's radius
 	 */
 	protected float Radius = 0;
 	
@@ -20,41 +21,38 @@ public class Circle extends Shape
 	
 	
 	
-	
-
-	
 	/**
-	 * Create new instance of a Geometric Circle
+	 * Create new instance of a Circle
 	 */
 	public Circle(float radius)
 	{
-		super(Vector2.zeros());
+		super(Vector2d.zeros());
 		Radius = radius;
-		vertices = new Vector2[2];
+		vertices = new Vector2d[2];
 		isCircle = true;
 	}
 	
 	
 	/**
-	 * Create new instance of a Geometric Circle
+	 * Create new instance of a Circle
 	 */
-	public Circle(Vector2 position, float radius)
+	public Circle(Vector2d position, float radius)
 	{
 		super(position);
 		Radius = radius;
-		vertices = new Vector2[2];
+		vertices = new Vector2d[2];
 		isCircle = true;
 	}
 
 	
 	/**
-	 * Create new instance of a Geometric Circle
+	 * Create new instance of a Circle
 	 */
-	public Circle(Vector2 position, float radius, Vector2 velocity, float mass)
+	public Circle(Vector2d position, float radius, Vector2d velocity, float mass)
 	{
 		super(position, velocity, mass);
 		Radius = radius;
-		vertices = new Vector2[2];
+		vertices = new Vector2d[2];
 		isCircle = true;
 	}
 	
@@ -66,10 +64,9 @@ public class Circle extends Shape
 	{
 		super(circle.Position, circle.Velocity, circle.Mass);
 		Radius = circle.Radius;
-		vertices = new Vector2[2];
+		vertices = new Vector2d[2];
 		isCircle = true;
 	}
-	
 	
 	
 	
@@ -88,7 +85,6 @@ public class Circle extends Shape
 	
 	
 	
-	
 	/**
 	 * Set the radius.
 	 */
@@ -96,7 +92,6 @@ public class Circle extends Shape
 	{
 		Radius = radius;
 	}
-	
 	
 	
 	
@@ -112,15 +107,13 @@ public class Circle extends Shape
 	
 	
 	
-	
 	/**
 	 * Return the circumference of this circle
 	 */
 	public float circumference()
 	{
-		return ((float)Math.PI * 2.0f * Radius);
+		return (MathHelper.PI * 2.0f * Radius);
 	}
-	
 	
 	
 	
@@ -132,9 +125,8 @@ public class Circle extends Shape
 	@Override
 	public float area()
 	{
-		return (Radius * Radius) * (float)Math.PI;		
+		return (Radius * Radius) * MathHelper.PI;		
 	}
-	
 	
 	
 	
@@ -144,13 +136,13 @@ public class Circle extends Shape
 	 * Project this circle onto the given axis
 	 */
 	@Override
-	public Projection project(Vector2 axis)
+	public Projection project(Vector2d axis)
 	{
 		float rvx = Radius * axis.X;
 		float rvy = Radius * axis.Y;
 
-		this.vertices[0] = new Vector2(Position.X + rvx, Position.Y + rvy);
-		this.vertices[1] = new Vector2(Position.X - rvx, Position.Y - rvy);
+		this.vertices[0] = new Vector2d(Position.X + rvx, Position.Y + rvy);
+		this.vertices[1] = new Vector2d(Position.X - rvx, Position.Y - rvy);
 		
 		float min = axis.dot(vertices[0]);
 		float max = min;
