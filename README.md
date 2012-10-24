@@ -1,10 +1,11 @@
-Sky Engine v0.9.4
+Sky Engine v0.9.5
 ===================
 
-Sky Engine is a basic 2D Games Engine for use with Android Development, programmed in Java. It is still
+Sky Engine is a 2D Game Engine for use with Android Development, programmed in Java. It is still
 currently under development, but a lot of the engine exists to be able to create basic games.
 
-The Engine utilises the Android Canvas to draw shapes, sprites and text to the screen.
+The Engine utilises the Android SurfaceView and Canvas to draw shapes, sprites, text, particles and
+you name it to the screen.
 
 Sky Engine has been designed to have an almost XNA feel and approach, where after initially
 creating the thread and surfaces with the main Activity itself; all game functions are
@@ -23,15 +24,64 @@ placed in a class that should implement StageInterface. This brings forth method
 Documentation and Usage
 -----------------------
 
-Usage of the engine is still in development. However you can now find the documentation either on here,
-or over at http://badgerati.com/projects/sky_engine/ -  it still is not fully complete yet, with most
-descriptions etc. missing.
+Usage of the engine is still under development. However, you can now find the documentation over at
+http://badgerati.com/projects/sky_engine/ - it's still not fully complete yet, with most descriptions missing.
 
 
 
 
 Updates and Fixes
 -----------------
+
+Version 0.9.5
+
+    * Renamed Vector2 and Vector3 to Vector2d and Vector3d respectively.
+    * Implemented a Pointer class, which is just a 2D point with a slight bounding circle around it for better touch interactions.
+    * Implemented a TimeSpan class which stores time in milliseconds, seconds, minutes, hours and days; as well as ticks (1 tick = 1 millisecond).
+    * Implemented a GameTime class to store ElapsedGameTime between updates (frames), TotalGameTime, and the FPS.
+    * Timer class now takes a TimeSpan object, which is used for the new overridable 'onTick()' event.
+    * Pretty much everything in the Graphics library, as well as a few other things, implement the IDrawableComponent interface.
+    * Completely removed the drawable package in the Graphics library, so things like shapes are now in: sky.engine.graphics.shapes
+    * All interface names are now identified by a preceeding letter 'I'. For example: IStage, ITexture and IDrawableComponent.
+    * Implemented a Background class for easier creation and drawing of solid colour, or image (Texture) backgrounds.
+    * GameActivity class now automatically creates a GameSurface for you.
+    * Options class has been renamed to Settings, which can be found in: sky.engine.game.settings
+    * Created a MathHelper class which contains PI as a float as well as other constants and methods.
+    * Implemented a ContentManager. This allows for easier loading of bitmaps and fonts, currently.
+    * This gets toyed around with a lot, but for the final time the bounding volumes can be found at: sky.engine.physics.bounding
+    * BoundingBox is now BoundingOBB, as well as a new BoundingAABB.
+    * Graphics library now has a gui package, which currently contains a Button and ImageButton.
+    * Buttons and ImageButtons implement overridable 'onClick()' and 'onFocus()' events.
+    * The Particles library can now all be found at: sky.engine.particles
+    * Particles are still the same, except as they get further out they start to slowly fade away.
+    * Implemented a TextureParticle which is exactly the same, except the particles are now textures.
+    * Explosions and Trails can now either be of all one colour, or take an array of colours to be randomised.
+    * Implemented a TextureExplosion and a TextureTrail which is the same as above, but with Textures.
+    * You can find Explosions in: sky.engine.graphics.particles.explosions
+    * You can fina Trails in: sky.engine.graphics.particles.trails
+    * Implemented a FadingSprite, which let's be honest, is pretty much self-explanitory. You can set direction for fading in or out, and well as speed.
+    * There is now an ITexture interface. Why? Who knows, but it may come in handy.
+    * Textures can now be scaled, drawn and better positioned.
+    * You can create a new Texture using one of the static 'Texture.createScaledTexture(...)' methods.
+    * Just something I'm dabbling around with, but will be used later for variable storage: Implemented a XMLParser.
+    * XMLParser does fully work, you just have to override the event methods.
+    * RigidBody now stores 'TerminalVelocity', 'Restitution', 'Friction' and 'Acceleration'.
+    * MTV class has been renamed to Contact - much more descriptive.
+    * SATCollision class has been renamed to CollisionDetector.
+    * Implemented a CollisionResolver, this is only basic at the moment, and needs far more work done to it.
+    * Implemented a GameScreen, this is for use with the new architecture I'm aiming towards. They're similar to a 'Stage', and also implement the IScreen interface.
+    * The big one, I've implemented a ScreenManager. This stores a list of GameScreens, and allows for better utilisation of a SurfaceView and Canvas.
+    * Implemented a GameScreenActivity which is similar to GameActivity, except it utilises the ScreenManager.
+    * Implemented a GameScreenSurface, again this is similar to GameSurface but utilises the ScreenManager.
+    * Created a MultiMap, this is similar to MultiList, except you can index by a specific given Object key rather than just by numerical value ordering.
+
+    Ideas and Still-to-do
+    * May remove constructors which are passed velocities and masses - to shrink the code down a bit.
+    * Implement interfaces for event driven architectures, instead of relying on overriding them.
+    * Implement a way to get the smallest bounding AABB for an object(s).
+    * Implement an XMLWriter.
+    * Improve on the CollisionResolver, massively.
+
 
 Version 0.9.4
 
@@ -145,13 +195,7 @@ Future Development and Ideas
 
 	* Implement bounding volume hierarchies (and R-trees?).
 	* Implement Quaternions for use with 3D later on. Possible applications with 2D?
-	* A class that can deal with the inbuilt Android 'options' menu more easily.
-	* A class that can have more control over screens - much like in XNA.
-	* Extend the HighscoreManager to deal with possibilities other than just name-and-score.
 	* Multiplayer and Networking - this may have to be done across bluetooth.
-	* Improve the particle engine, so we can now use sprites as particles.
 	* Possibility of polygonisation instead of triangulation, to generate more efficient convex polygons for collision detection.
 	* Develop the use of an event-driven architecture. This will have to be done for multiplayer.
-	* XML parser, for the data sent back and forth between devices.
-	* A long shot, but research into LUA for user-developed add-ons?
 	* The big one. 3D and OpenGL.
