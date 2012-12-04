@@ -2,7 +2,7 @@ package sky.engine.geometry.vectors;
 
 import java.util.Comparator;
 
-import sky.engine.math.Angle;
+import sky.engine.math.AngleHelper;
 
 /**
  * 
@@ -405,7 +405,7 @@ public class Vector3d implements Comparable<Vector3d>
 	 */
 	public float angleXY()
 	{
-		return Angle.arctan(X, -Y);
+		return AngleHelper.arctan(X, -Y);
 	}
 	
 	
@@ -417,7 +417,7 @@ public class Vector3d implements Comparable<Vector3d>
 	 */
 	public float angleYZ()
 	{
-		return Angle.arctan(Y, -Z);
+		return AngleHelper.arctan(Y, -Z);
 	}
 	
 	
@@ -429,7 +429,7 @@ public class Vector3d implements Comparable<Vector3d>
 	 */
 	public float angleXZ()
 	{
-		return Angle.arctan(X, -Z);
+		return AngleHelper.arctan(X, -Z);
 	}
 	
 	

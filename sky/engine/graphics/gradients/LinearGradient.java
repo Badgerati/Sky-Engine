@@ -1,7 +1,7 @@
 package sky.engine.graphics.gradients;
 
 import sky.engine.geometry.vectors.Vector2d;
-import sky.engine.graphics.IDrawableComponent;
+import sky.engine.graphics.DrawableComponent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -13,7 +13,7 @@ import android.graphics.Shader;
  * @author Matthew Kelly (Badgerati - Cadaeic Studios)
  *
  */
-public class LinearGradient implements IDrawableComponent
+public class LinearGradient extends DrawableComponent
 {
 	
 	/**
@@ -63,6 +63,7 @@ public class LinearGradient implements IDrawableComponent
 	/**
 	 * Draw gradient
 	 */
+	@Override
 	public void draw(Canvas canvas)
 	{
 		canvas.drawRect(linear_rect, linear_paint);

@@ -1,5 +1,6 @@
 package sky.engine.graphics.text;
 
+import sky.engine.components.time.GameTime;
 import sky.engine.components.time.Timer;
 import sky.engine.geometry.vectors.Vector2d;
 import android.graphics.Canvas;
@@ -102,7 +103,8 @@ public class SlidingText extends CustomText
 	/**
 	 * Update the sliding text
 	 */
-	public void update()
+	@Override
+	public void update(GameTime gameTime)
 	{
 		if (timer.getTime() >= timeToWait)
 		{

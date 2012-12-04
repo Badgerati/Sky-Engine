@@ -48,13 +48,13 @@ public class Circle extends Shape
 	/**
 	 * Create new instance of a Circle
 	 */
-	public Circle(Vector2d position, float radius, Vector2d velocity, float mass)
-	{
-		super(position, velocity, mass);
-		Radius = radius;
-		vertices = new Vector2d[2];
-		isCircle = true;
-	}
+	//public Circle(Vector2d position, float radius, Vector2d velocity, float mass)
+	//{
+	//	super(position, velocity, mass);
+	//	Radius = radius;
+	//	vertices = new Vector2d[2];
+	//	isCircle = true;
+	//}
 	
 	
 	/**

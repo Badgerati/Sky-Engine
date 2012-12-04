@@ -55,16 +55,6 @@ public class DrawableLine extends Line implements IDrawableShape, IDrawableCompo
 		super(v1, v2);
 		fillpaint = new Fill();
 	}
-
-	
-	/**
-	 * Create new instance of a line
-	 */
-	public DrawableLine(Vector2d v1, Vector2d v2, Vector2d velocity, float mass)
-	{
-		super(v1, v2, velocity, mass);
-		fillpaint = new Fill();
-	}
 	
 	
 	/**
@@ -77,42 +67,6 @@ public class DrawableLine extends Line implements IDrawableShape, IDrawableCompo
 		outlinepaint = outline == null ? null : new Outline(outline);
 		blurpaint = blur == null ? null : new Blur(blur);
 	}
-	
-	
-	/**
-	 * Create new instance of a line
-	 */
-	public DrawableLine(Vector2d v1, Vector2d v2, Fill fill, Outline outline, Blur blur, Vector2d velocity, float mass)
-	{
-		super(v1, v2, velocity, mass);
-		fillpaint = fill == null ? null : new Fill(fill);
-		outlinepaint = outline == null ? null : new Outline(outline);
-		blurpaint = blur == null ? null : new Blur(blur);
-	}
-	
-	
-	/**
-	 * Create new instance of a line
-	 */
-	public DrawableLine(Vector2d v1, Vector2d v2, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias)
-	{
-		super(v1, v2);
-		fillpaint = new Fill(fill, antialias);
-		outlinepaint = new Outline(outline, outlinewidth, antialias);
-		blurpaint = new Blur(blur, blurwidth, blurradius);
-	}
-	
-	
-	/**
-	 * Create new instance of a line
-	 */
-	public DrawableLine(Vector2d v1, Vector2d v2, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias, Vector2d velocity, float mass)
-	{
-		super(v1, v2, velocity, mass);
-		fillpaint = new Fill(fill, antialias);
-		outlinepaint = new Outline(outline, outlinewidth, antialias);
-		blurpaint = new Blur(blur, blurwidth, blurradius);
-	}
 
 	
 	
@@ -124,8 +78,7 @@ public class DrawableLine extends Line implements IDrawableShape, IDrawableCompo
 	 */
 	public DrawableLine(DrawableLine line)
 	{
-		super(line.vertices[0], line.vertices[1], line.Velocity, line.Mass);
-		Position = line.Position.clone();
+		super(line);
 		fillpaint = new Fill(line.fillpaint);
 		outlinepaint = new Outline(line.outlinepaint);
 		blurpaint = new Blur(line.blurpaint);
@@ -179,11 +132,26 @@ public class DrawableLine extends Line implements IDrawableShape, IDrawableCompo
 	/**
 	 * Set the paint for the shape
 	 */
-	public void setPaint(Paints paint)
+	public void setPaints(Paints paint)
 	{
 		fillpaint = paint.fill();
 		outlinepaint = paint.outline();
 		blurpaint = paint.blur();
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Set the alpha for the shape
+	 */
+	public void setAlpha(int alpha)
+	{
+		if (fillpaint != null) fillpaint.setAlpha(alpha);
+		if (outlinepaint != null) outlinepaint.setAlpha(alpha);
+		if (blurpaint != null) blurpaint.setAlpha(alpha);
 	}
 	
 	

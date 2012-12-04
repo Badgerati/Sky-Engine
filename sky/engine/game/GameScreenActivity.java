@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -99,7 +100,7 @@ public class GameScreenActivity extends Activity
     
     
     /**
-     * Add view to framelayout from outside of this UI thread
+     * Add view to framelayout from outside of the UI thread
      */
     public void addViewOnUIThread(final View view)
     {
@@ -124,6 +125,38 @@ public class GameScreenActivity extends Activity
     
     
     
+    /**
+     * Remove view from framelayout from outside of the UI thread
+     */
+    public void removeViewOnUIThread(final View view)
+    {
+    	this.runOnUiThread(new Runnable() {
+    		public void run() {
+    			framelayout.removeView(view);
+    		}
+    	});
+    }
+    
+    
+    
+    
+    /**
+     * Remove all views from framelayout from outside of the UI thread, except the
+     * original game surface
+     */
+    public void removeAllViewsOnUIThread()
+    {
+    	this.runOnUiThread(new Runnable() {
+    		public void run() {
+    			for (int i = 1; i < framelayout.getChildCount(); i++)
+    				framelayout.removeViewAt(i);
+    		}
+    	});
+    }
+    
+    
+    
+    
     
     /**
      * Set content view for activity
@@ -140,9 +173,10 @@ public class GameScreenActivity extends Activity
     /**
      * 
      */
-    protected void createAccelerometer()
+    protected void createAccelerometer(int delay)
     {
-        Accelerometer accel = new Accelerometer(this);
+    	if (delay < 0) delay = SensorManager.SENSOR_DELAY_GAME;
+        Accelerometer accel = new Accelerometer(this, delay);
         gamescrnsurface.setAccelerometer(accel);
         gamescrnsurface.registerAccelListener();
     }
@@ -292,11 +326,12 @@ public class GameScreenActivity extends Activity
 	public void restart()
 	{
 		boolean acc = gamescrnsurface.accelerometerExists();
+		int delay = gamescrnsurface.getAccelerometerDelay();
 		
 		gamescrnsurface.destroyThread();
 		createThread();
 		startThread();
-		if (acc) createAccelerometer();
+		if (acc) createAccelerometer(delay);
 		runThread();
 	}
 	

@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -118,9 +119,10 @@ public class GameActivity extends Activity
     /**
      * 
      */
-    protected void createAccelerometer()
+    protected void createAccelerometer(int delay)
     {
-        Accelerometer accel = new Accelerometer(this);
+    	if (delay < 0) delay = SensorManager.SENSOR_DELAY_GAME;
+        Accelerometer accel = new Accelerometer(this, delay);
         gamesurface.setAccelerometer(accel);
         gamesurface.registerAccelListener();
     }
@@ -271,11 +273,12 @@ public class GameActivity extends Activity
 	public void restart()
 	{
 		boolean acc = gamesurface.accelerometerExists();
+		int delay = gamesurface.getAccelerometerDelay();
 		
 		gamesurface.destroyThread();
 		createThread();
 		startThread();
-		if (acc) createAccelerometer();
+		if (acc) createAccelerometer(delay);
 		runThread();
 	}
 	

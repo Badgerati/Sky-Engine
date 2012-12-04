@@ -81,6 +81,18 @@ public class Outline extends Paint
 	
 	
 	
+	/**
+	 * 
+	 */
+	public Outline clone()
+	{
+		return new Outline(this);
+	}
+	
+	
+	
+	
+	
 	
 	/**
 	 * Sets the outline

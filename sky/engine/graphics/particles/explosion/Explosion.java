@@ -3,10 +3,11 @@ package sky.engine.graphics.particles.explosion;
 import java.util.ArrayList;
 import java.util.List;
 
+import sky.engine.components.time.GameTime;
 import sky.engine.geometry.vectors.Vector2d;
 import sky.engine.graphics.IDrawableComponent;
 import sky.engine.graphics.particles.Particle;
-import sky.engine.math.Angle;
+import sky.engine.math.AngleHelper;
 import sky.engine.math.SERandom;
 import sky.engine.util.primitives.SEArrayList;
 import android.graphics.Canvas;
@@ -150,9 +151,9 @@ public class Explosion implements IDrawableComponent
 		
 		//angle of trajectory
 		int tempangle = SERandom.getInt(359);
-		Vector2d velocity = new Vector2d((float)(SERandom.getDouble() * this.velocity) * Angle.sin(tempangle),
-								      (float)(SERandom.getDouble() * this.velocity) * Angle.cos(tempangle));
-		float angle = (float)(tempangle * Angle.TO_RADIANS);
+		Vector2d velocity = new Vector2d((float)(SERandom.getDouble() * this.velocity) * AngleHelper.sin(tempangle),
+								      (float)(SERandom.getDouble() * this.velocity) * AngleHelper.cos(tempangle));
+		float angle = (float)(tempangle * AngleHelper.TO_RADIANS);
 		
 		//angluar
 		float angular = 0.1f * (float)(SERandom.getDouble() * 2 - 1);
@@ -199,6 +200,31 @@ public class Explosion implements IDrawableComponent
 	
 	
 	
+	/**
+	 * Set explosion's position
+	 */
+	public void setPosition(Vector2d position)
+	{
+		Position.X = position.X;
+		Position.Y = position.Y;
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Get explosion's position
+	 */
+	public Vector2d getPosition()
+	{
+		return Position;
+	}
+	
+	
+	
+	
+	
 	
 	
 	
@@ -206,11 +232,11 @@ public class Explosion implements IDrawableComponent
 	/**
 	 * Update the explosive particles
 	 */
-	public void update()
+	public void update(GameTime gameTime)
 	{
 		for (int particle = 0; particle < particles.size(); particle++)
 		{
-			particles.get(particle).update();
+			particles.get(particle).update(gameTime);
 			if (particles.get(particle).TTL <= 0)
 			{
 				particles.remove(particle);

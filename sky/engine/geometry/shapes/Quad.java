@@ -23,19 +23,19 @@ public class Quad extends Polygon
 	/**
 	 * Create new instance of a quad
 	 */
-	public Quad(Vector2d v1, Vector2d v2, Vector2d v3, Vector2d v4, Vector2d velocity, float mass)
-	{
-		super(new Vector2d[] { v1, v2, v3, v4 }, velocity, mass);
-	}
+	//public Quad(Vector2d v1, Vector2d v2, Vector2d v3, Vector2d v4, Vector2d velocity, float mass)
+	//{
+	//	super(new Vector2d[] { v1, v2, v3, v4 }, velocity, mass);
+	//}
 
 	
 	/**
 	 * Create new instance of a quad
 	 */
-	protected Quad(Vector2d position, Vector2d v1, Vector2d v2, Vector2d v3, Vector2d v4, Vector2d velocity, float mass)
-	{
-		super(position, new Vector2d[] { v1, v2, v3, v4 }, velocity, mass);
-	}
+	//protected Quad(Vector2d position, Vector2d v1, Vector2d v2, Vector2d v3, Vector2d v4, Vector2d velocity, float mass)
+	//{
+	//	super(position, new Vector2d[] { v1, v2, v3, v4 }, velocity, mass);
+	//}
 	
 	
 	/**
@@ -43,7 +43,7 @@ public class Quad extends Polygon
 	 */
 	public Quad(Quad quad)
 	{
-		super(quad.Position, quad.vertices, quad.Velocity, quad.Mass);
+		super(quad);
 	}
 	
 	

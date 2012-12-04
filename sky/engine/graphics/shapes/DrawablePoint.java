@@ -63,62 +63,12 @@ public class DrawablePoint extends Shape implements IDrawableShape, IDrawableCom
 	/**
 	 * Create instance of a new point
 	 */
-	public DrawablePoint(Vector2d position, Vector2d velocity, float mass)
-	{
-		super(position, velocity, mass);
-		outlinepaint = new Outline();
-		initialise(position);
-	}
-	
-	
-	/**
-	 * Create instance of a new point
-	 */
 	public DrawablePoint(Vector2d position, Fill fill, Outline outline, Blur blur)
 	{
 		super(position);
 		fillpaint = fill == null ? null : new Fill(fill);
 		outlinepaint = outline == null ? null : new Outline(outline);
 		blurpaint = blur == null ? null : new Blur(blur);
-		initialise(position);
-	}
-	
-	
-	/**
-	 * Create instance of a new point
-	 */
-	public DrawablePoint(Vector2d position, Fill fill, Outline outline, Blur blur, Vector2d velocity, float mass)
-	{
-		super(position, velocity, mass);
-		fillpaint = fill == null ? null : new Fill(fill);
-		outlinepaint = outline == null ? null : new Outline(outline);
-		blurpaint = blur == null ? null : new Blur(blur);
-		initialise(position);
-	}
-	
-	
-	/**
-	 * Create instance of a new point
-	 */
-	public DrawablePoint(Vector2d position, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias)
-	{
-		super(position);
-		fillpaint = new Fill(fill, antialias);
-		outlinepaint = new Outline(outline, outlinewidth, antialias);
-		blurpaint = new Blur(blur, blurwidth, blurradius);
-		initialise(position);
-	}
-	
-	
-	/**
-	 * Create instance of a new point
-	 */
-	public DrawablePoint(Vector2d position, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias, Vector2d velocity, float mass)
-	{
-		super(position, velocity, mass);
-		fillpaint = new Fill(fill, antialias);
-		outlinepaint = new Outline(outline, outlinewidth, antialias);
-		blurpaint = new Blur(blur, blurwidth, blurradius);
 		initialise(position);
 	}
 	
@@ -200,11 +150,26 @@ public class DrawablePoint extends Shape implements IDrawableShape, IDrawableCom
 	/**
 	 * Set the paint for the shape
 	 */
-	public void setPaint(Paints paint)
+	public void setPaints(Paints paint)
 	{
 		fillpaint = paint.fill();
 		outlinepaint = paint.outline();
 		blurpaint = paint.blur();
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Set the alpha for the shape
+	 */
+	public void setAlpha(int alpha)
+	{
+		if (fillpaint != null) fillpaint.setAlpha(alpha);
+		if (outlinepaint != null) outlinepaint.setAlpha(alpha);
+		if (blurpaint != null) blurpaint.setAlpha(alpha);
 	}
 	
 	

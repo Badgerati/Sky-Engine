@@ -1,19 +1,20 @@
 package sky.engine.graphics.paints;
 
 import sky.engine.graphics.Colour;
+import android.graphics.BitmapShader;
 import android.graphics.Paint;
 
 /**
  * 
  * 
- * @author Matthew Kelly (Badgerati)
+ * @author Matthew Kelly (Badgerati - Cadaeic Studios)
  *
  */
 public class Fill extends Paint
 {
 	
 	/**
-	 * Create new instance of a FillPaint
+	 * Create new instance of a Fill
 	 */
 	public Fill()
 	{
@@ -22,7 +23,7 @@ public class Fill extends Paint
 	
 	
 	/**
-	 * Create new instance of a FillPaint
+	 * Create new instance of a Fill
 	 */
 	public Fill(int colour)
 	{
@@ -31,7 +32,7 @@ public class Fill extends Paint
 	
 	
 	/**
-	 * Create new instance of a FillPaint
+	 * Create new instance of a Fill
 	 */
 	public Fill(int colour, boolean antialias)
 	{
@@ -40,11 +41,33 @@ public class Fill extends Paint
 	
 	
 	/**
-	 * Create new instance of a FillPaint
+	 * Create new instance of a Fill
 	 */
 	public Fill(Fill paint)
 	{
 		initialise(paint.getColor(), paint.isAntiAlias());
+		this.setShader(paint.getShader());
+	}
+	
+	/**
+	 * Create new instance of Fill
+	 */
+	public Fill(BitmapShader shader)
+	{
+		initialise(Colour.WHITE, true);
+		this.setShader(shader);
+	}
+	
+	
+	
+	
+	
+	/**
+	 * 
+	 */
+	public Fill clone()
+	{
+		return new Fill(this);
 	}
 	
 	
@@ -58,8 +81,8 @@ public class Fill extends Paint
 	public void set(Fill paint)
 	{
 		if (paint == null) return;
-		
 		initialise(paint.getColor(), paint.isAntiAlias());
+		this.setShader(paint.getShader());
 	}
 	
 	

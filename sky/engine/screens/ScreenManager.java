@@ -2,6 +2,7 @@ package sky.engine.screens;
 
 import java.util.ArrayList;
 
+import sky.engine.audio.MusicManager;
 import sky.engine.audio.SoundManager;
 import sky.engine.components.Size;
 import sky.engine.components.time.GameTime;
@@ -125,11 +126,12 @@ public class ScreenManager
 		ContentManager.initialise(resources);
 		TextureManager.initialise();
 		SoundManager.initialise(context, 10, SoundManager.STREAM_MUSIC, 100);
+		MusicManager.initialise(context);
 		SERandom.initialise();
 		
 		for (int i = 0; i < screens.size(); i++)
 		{
-			screens.get(i).load(activity);
+			screens.get(i).load();
 		}
 	}
 	
@@ -140,11 +142,14 @@ public class ScreenManager
 	 * Handle touch screen input
 	 */
 	public boolean handleTouchInput(MotionEvent event)
-	{		
-		for (int i = 0; i < screens.size(); i++)
+	{
+		for (int i = screens.size() - 1; i >= 0; i--)
 		{
 			if (screens.get(i).isActive())
-				return screens.get(i).handleTouchInput(event);
+			{
+				screens.get(i).handleTouchInput(event);
+				break;
+			}
 		}
 		
 		return true;
@@ -159,10 +164,13 @@ public class ScreenManager
 	 */
 	public void handleAccelInput(SensorEvent event)
 	{
-		for (int i = 0; i < screens.size(); i++)
+		for (int i = screens.size() - 1; i >= 0; i--)
 		{
 			if (screens.get(i).isActive())
+			{
 				screens.get(i).handleAccelInput(event);
+				break;
+			}
 		}
 	}
 	
@@ -246,9 +254,28 @@ public class ScreenManager
 		
 		if (ScreenManager.resources != null)
 		{
-			screen.load(activity);
+			screen.load();
 		}
 	}
+	
+	
+	
+	
+	
+	/**
+	 * Add a new screen
+	 */
+	public static void addAll(ArrayList<GameScreen> screens)
+	{
+		screens.addAll(screens);
+		
+		if (ScreenManager.resources != null)
+		{
+			for (int i = 0; i < screens.size(); i++)
+				screens.get(i).load();
+		}
+	}
+	
 	
 	
 	
@@ -261,6 +288,49 @@ public class ScreenManager
 	{
 		screens.remove(screen);
 		screensToUpdate.remove(screen);
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Remove a screen
+	 */
+	public static void remove(int index)
+	{
+		if (index < 0 || index >= screens.size())
+			throw new IndexOutOfBoundsException();
+		
+		GameScreen screen = screens.remove(index);
+		screensToUpdate.remove(screen);
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Remove a number of screens
+	 */
+	public static void removeAll(ArrayList<GameScreen> screens)
+	{
+		screens.removeAll(screens);
+		screensToUpdate.removeAll(screens);
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Clear all screens
+	 */
+	public static void clear()
+	{
+		screens.clear();
+		screensToUpdate.clear();
 	}
 	
 	
@@ -285,10 +355,13 @@ public class ScreenManager
 	 */
 	public static void pause()
 	{
-		for (int i = 0; i < screens.size(); i++)
+		for (int i = screens.size() - 1; i >= 0; i--)
 		{
 			if (screens.get(i).isActive())
+			{
 				screens.get(i).pause();
+				break;
+			}
 		}
 		
 		thread.pause();
@@ -303,10 +376,13 @@ public class ScreenManager
 	 */
 	public static void resume()
 	{
-		for (int i = 0; i < screens.size(); i++)
+		for (int i = screens.size() - 1; i >= 0; i--)
 		{
 			if (screens.get(i).isActive())
+			{
 				screens.get(i).resume();
+				break;
+			}
 		}
 		
 		thread.resume();
@@ -326,10 +402,13 @@ public class ScreenManager
 			quit();
 		}
 		
-		for (int i = 0; i < screens.size(); i++)
+		for (int i = screens.size() - 1; i >= 0; i--)
 		{
 			if (screens.get(i).isActive())
+			{
 				screens.get(i).onBackKey();
+				break;
+			}
 		}
 	}
 	
@@ -342,7 +421,12 @@ public class ScreenManager
 	 */
 	public static void quit()
 	{
+		activity.removeAllViewsOnUIThread();
 		activity.quit();
+		
+		SoundManager.clear();
+		MusicManager.clear();
+		TextureManager.clear();
 	}
 	
 	
@@ -368,6 +452,17 @@ public class ScreenManager
 	public static GameScreen[] getScreens()
 	{
 		return (GameScreen[])screens.toArray();
+	}
+	
+	
+	
+	
+	/**
+	 * Returns the Activity for the screens
+	 */
+	public static GameScreenActivity getActivity()
+	{
+		return activity;
 	}
 	
 }

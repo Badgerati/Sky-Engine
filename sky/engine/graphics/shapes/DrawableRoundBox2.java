@@ -70,7 +70,7 @@ public class DrawableRoundBox2 extends DrawableBox
 	public DrawableRoundBox2(DrawableBox box, float r1, float r2, float r3, float r4)
 	{
 		super(box);
-		initialise(r1, r2, r3, r4, box.Velocity, box.mass());
+		initialise(r1, r2, r3, r4);
 	}
 	
 	
@@ -86,7 +86,7 @@ public class DrawableRoundBox2 extends DrawableBox
 	/**
 	 * Initialises the arcs and lines
 	 */
-	private void initialise(float r1, float r2, float r3, float r4, Vector2d velocity, float mass)
+	private void initialise(float r1, float r2, float r3, float r4)
 	{
 		//fix the radii
 		r1 = r1 < 0 ? 0 : r1;
@@ -119,7 +119,7 @@ public class DrawableRoundBox2 extends DrawableBox
 		Vector2d arcpos4 = new Vector2d(Position.X - quaterX, Position.Y + quaterY);
 		
 		if (r1 > 0) {
-			arcs[0] = new DrawableArc(arcpos1.add(tmpr1, tmpr1), r1, 180, 90, velocity, mass);
+			arcs[0] = new DrawableArc(arcpos1.add(tmpr1, tmpr1), r1, 180, 90);
 			arcs[0].fillpaint = this.fillpaint;
 			arcs[0].outlinepaint = this.outlinepaint;
 			arcs[0].blurpaint = this.blurpaint;
@@ -127,7 +127,7 @@ public class DrawableRoundBox2 extends DrawableBox
 		}
 		
 		if (r2 > 0) {
-			arcs[1] = new DrawableArc(arcpos2.add(-tmpr2, tmpr2), r2, 270, 90, velocity, mass);
+			arcs[1] = new DrawableArc(arcpos2.add(-tmpr2, tmpr2), r2, 270, 90);
 			arcs[1].fillpaint = this.fillpaint;
 			arcs[1].outlinepaint = this.outlinepaint;
 			arcs[1].blurpaint = this.blurpaint;
@@ -135,7 +135,7 @@ public class DrawableRoundBox2 extends DrawableBox
 		}
 		
 		if (r3 > 0) {
-			arcs[2] = new DrawableArc(arcpos3.add(-tmpr3, -tmpr3), r3, 0, 90, velocity, mass);
+			arcs[2] = new DrawableArc(arcpos3.add(-tmpr3, -tmpr3), r3, 0, 90);
 			arcs[2].fillpaint = this.fillpaint;
 			arcs[2].outlinepaint = this.outlinepaint;
 			arcs[2].blurpaint = this.blurpaint;
@@ -143,7 +143,7 @@ public class DrawableRoundBox2 extends DrawableBox
 		}
 		
 		if (r4 > 0) {
-			arcs[3] = new DrawableArc(arcpos4.add(tmpr4, -tmpr4), r4, 90, 90, velocity, mass);
+			arcs[3] = new DrawableArc(arcpos4.add(tmpr4, -tmpr4), r4, 90, 90);
 			arcs[3].fillpaint = this.fillpaint;
 			arcs[3].outlinepaint = this.outlinepaint;
 			arcs[3].blurpaint = this.blurpaint;
@@ -157,22 +157,22 @@ public class DrawableRoundBox2 extends DrawableBox
 		Outline lineout = new Outline(this.outlinepaint);
 		Blur lineblur = new Blur(this.blurpaint);
 		
-		lines[0] = new DrawableLine(arcpos1.add(tmpr1, 0), arcpos2.sub(tmpr2, 0), velocity, mass);
+		lines[0] = new DrawableLine(arcpos1.add(tmpr1, 0), arcpos2.sub(tmpr2, 0));
 		lines[0].fillpaint = null;
 		lines[0].outlinepaint = lineout;
 		lines[0].blurpaint = lineblur;
 		
-		lines[1] = new DrawableLine(arcpos2.add(0, tmpr2), arcpos3.sub(0, tmpr3), velocity, mass);
+		lines[1] = new DrawableLine(arcpos2.add(0, tmpr2), arcpos3.sub(0, tmpr3));
 		lines[1].fillpaint = null;
 		lines[1].outlinepaint = lineout;
 		lines[1].blurpaint = lineblur;
 		
-		lines[2] = new DrawableLine(arcpos3.sub(tmpr3, 0), arcpos4.add(tmpr4, 0), velocity, mass);
+		lines[2] = new DrawableLine(arcpos3.sub(tmpr3, 0), arcpos4.add(tmpr4, 0));
 		lines[2].fillpaint = null;
 		lines[2].outlinepaint = lineout;
 		lines[2].blurpaint = lineblur;
 		
-		lines[3] = new DrawableLine(arcpos4.sub(0, tmpr4), arcpos1.add(0, tmpr1), velocity, mass);
+		lines[3] = new DrawableLine(arcpos4.sub(0, tmpr4), arcpos1.add(0, tmpr1));
 		lines[3].fillpaint = null;
 		lines[3].outlinepaint = lineout;
 		lines[3].blurpaint = lineblur;

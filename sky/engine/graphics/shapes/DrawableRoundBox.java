@@ -59,16 +59,6 @@ public class DrawableRoundBox extends DrawableBox
 		super(position, width, height);
 		intialise(rx, ry);
 	}
-
-	
-	/**
-	 * Create new instance of a Round Box
-	 */
-	public DrawableRoundBox(Vector2d position, float width, float height, float rx, float ry, Vector2d velocity, float mass)
-	{
-		super(position, width, height, velocity, mass);
-		intialise(rx, ry);
-	}
 	
 	
 	/**
@@ -77,36 +67,6 @@ public class DrawableRoundBox extends DrawableBox
 	public DrawableRoundBox(Vector2d position, float width, float height, float rx, float ry, Fill fill, Outline outline, Blur blur)
 	{
 		super(position, width, height, fill, outline, blur);
-		intialise(rx, ry);
-	}
-	
-	
-	/**
-	 * Create new instance of a Round Box
-	 */
-	public DrawableRoundBox(Vector2d position, float width, float height, float rx, float ry, Fill fill, Outline outline, Blur blur, Vector2d velocity, float mass)
-	{
-		super(position, width, height, fill, outline, blur, velocity, mass);
-		intialise(rx, ry);
-	}
-	
-	
-	/**
-	 * Create new instance of a Round Box
-	 */
-	public DrawableRoundBox(Vector2d position, float width, float height, float rx, float ry, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias)
-	{
-		super(position, width, height, fill, outline, blur, outlinewidth, blurwidth, blurradius, antialias);
-		intialise(rx, ry);
-	}
-	
-	
-	/**
-	 * Create new instance of a Round Box
-	 */
-	public DrawableRoundBox(Vector2d position, float width, float height, float rx, float ry, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias, Vector2d velocity, float mass)
-	{
-		super(position, width, height, fill, outline, blur, outlinewidth, blurwidth, blurradius, antialias, velocity, mass);
 		intialise(rx, ry);
 	}
 	
@@ -120,7 +80,7 @@ public class DrawableRoundBox extends DrawableBox
 	 */
 	public DrawableRoundBox(DrawableRoundBox rbox)
 	{
-		super(rbox.Position, rbox.Width, rbox.Height, rbox.Velocity, rbox.Mass);
+		super(rbox);
 		fillpaint = new Fill(rbox.fillpaint);
 		outlinepaint = new Outline(rbox.outlinepaint);
 		blurpaint = new Blur(rbox.blurpaint);

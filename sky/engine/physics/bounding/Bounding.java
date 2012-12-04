@@ -4,7 +4,7 @@ import sky.engine.geometry.Circumcircle;
 import sky.engine.geometry.ConvexHull;
 import sky.engine.geometry.Triangulation;
 import sky.engine.geometry.vectors.Vector2d;
-import sky.engine.math.Angle;
+import sky.engine.math.AngleHelper;
 import sky.engine.physics.bodies.ICollidableBody;
 import sky.engine.physics.collisions.Contact;
 import sky.engine.physics.collisions.Projection;
@@ -38,7 +38,7 @@ public abstract class Bounding implements ICollidableBody
 	/**
 	 * Current degree of rotation of this bound
 	 */
-	private int degreesOfRotation;
+	private float degreesOfRotation;
 	
 	
 	
@@ -78,9 +78,9 @@ public abstract class Bounding implements ICollidableBody
 	/**
 	 * Rotate the bound at the origin on given degree
 	 */
-	public void rotate(int degree)
+	public void rotate(float degree)
 	{
-		degreesOfRotation = Angle.wrapAngle(degreesOfRotation + degree);
+		degreesOfRotation = AngleHelper.constrainAngle(degreesOfRotation + degree);
 		
 		for (int i = 0; i < vertices.length; i++)
 			if (vertices[i] != null)
@@ -95,9 +95,9 @@ public abstract class Bounding implements ICollidableBody
 	/**
 	 * Rotate the bound at the given origin on given degree
 	 */
-	public void rotate(int degree, Vector2d origin)
+	public void rotate(float degree, Vector2d origin)
 	{
-		degreesOfRotation = Angle.wrapAngle(degreesOfRotation + degree);
+		degreesOfRotation = AngleHelper.constrainAngle(degreesOfRotation + degree);
 		Position.rotate(degree, origin);
 		
 		for (int i = 0; i < vertices.length; i++)
@@ -470,7 +470,7 @@ public abstract class Bounding implements ICollidableBody
 	/**
 	 * Get the current degree of rotation
 	 */
-	public int getDegrees()
+	public float getDegrees()
 	{
 		return degreesOfRotation;
 	}

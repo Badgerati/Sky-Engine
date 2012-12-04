@@ -4,7 +4,7 @@ import sky.engine.components.Size;
 import sky.engine.components.time.GameTime;
 import sky.engine.geometry.vectors.Vector2d;
 import sky.engine.graphics.IDrawableComponent;
-import sky.engine.math.Angle;
+import sky.engine.math.AngleHelper;
 import sky.engine.physics.bodies.RigidBody;
 import sky.engine.physics.bounding.BoundingOval;
 import android.graphics.Bitmap;
@@ -42,7 +42,7 @@ public class Sprite extends RigidBody implements IDrawableComponent
 	/**
 	 * current rotation of the sprite
 	 */
-	protected int rotation;
+	protected float rotation;
 	
 	
 	/**
@@ -105,12 +105,12 @@ public class Sprite extends RigidBody implements IDrawableComponent
 	
 	
 	/**
-	 * Create an instance of a Sprite with velocity and mass
+	 * Create an instance of a Sprite
 	 */
-	public Sprite(Bitmap bitmap, Vector2d position, float scale, Vector2d velocity, float mass)
+	public Sprite(Bitmap bitmap, Vector2d position, float scalewidth, float scaleheight)
 	{
-		super(position, velocity, mass);
-		initialise(bitmap, scale, scale);
+		super(position, Vector2d.zeros(), 0);
+		initialise(bitmap, scalewidth, scaleheight);
 	}
 	
 	
@@ -490,11 +490,24 @@ public class Sprite extends RigidBody implements IDrawableComponent
 	
 	
 	/**
+	 * Rotate the sprite to so many degrees
+	 */
+	public void setRotation(float degree)
+	{
+		rotation = AngleHelper.constrainAngle(degree);
+	}
+	
+	
+	
+	
+	
+	
+	/**
 	 * Rotate the sprite by so many degrees
 	 */
-	public void setRotation(int degree)
+	public void rotate(float degrees)
 	{
-		rotation = Angle.wrapAngle(degree);
+		rotation = AngleHelper.constrainAngle(rotation + degrees);
 	}
 	
 	
@@ -504,7 +517,7 @@ public class Sprite extends RigidBody implements IDrawableComponent
 	/**
 	 * Returns current rotation of sprite
 	 */
-	public int getRotation()
+	public float getRotation()
 	{
 		return rotation;
 	}

@@ -22,4 +22,10 @@ public interface Styles
 	 */
 	public Paints focused();
 	
+	
+	/**
+	 * 
+	 */
+	public Styles clone();
+	
 }

@@ -2,9 +2,11 @@ package sky.engine.graphics.gui;
 
 import sky.engine.geometry.vectors.Vector2d;
 import sky.engine.graphics.Colour;
-import sky.engine.graphics.IDrawableComponent;
-import sky.engine.graphics.paints.Paints;
-import sky.engine.graphics.shapes.DrawableCircle;
+import sky.engine.graphics.DrawableComponent;
+import sky.engine.graphics.paints.Blur;
+import sky.engine.graphics.paints.Outline;
+import sky.engine.graphics.paints.styles.PaintStyles;
+import sky.engine.graphics.paints.styles.Styles;
 import sky.engine.graphics.shapes.DrawableRoundBox;
 import sky.engine.graphics.shapes.IDrawableShape;
 import sky.engine.graphics.text.CustomText;
@@ -18,8 +20,37 @@ import android.view.MotionEvent;
  * @author Matthew Kelly (Badgerati - Cadaeic Studios)
  *
  */
-public class Button implements IDrawableComponent
+public class Button extends DrawableComponent
 {
+	
+	/**
+	 * Click listener interface
+	 */
+	public interface OnClickListener
+	{
+		/**
+		 * onClick event
+		 */
+		public void onClick(Button src);
+	}
+	
+	
+	
+	
+	/**
+	 * Focus listener interface
+	 */
+	public interface OnFocusListener
+	{
+		/**
+		 * onFocus event
+		 */
+		public void onFocus(Button src);
+	}
+	
+	
+	
+	
 	
 	/**
 	 * States
@@ -45,12 +76,6 @@ public class Button implements IDrawableComponent
 	 * Is the button focusable
 	 */
 	public boolean Focusable = true;
-	
-	
-	/**
-	 * Position of the Button
-	 */
-	protected Vector2d position = Vector2d.zeros();
 	
 	
 	/**
@@ -84,15 +109,27 @@ public class Button implements IDrawableComponent
 	
 	
 	/**
-	 * Normal paint
+	 * Button paint style
 	 */
-	protected Paints normalpaint = null;
+	protected Styles buttonStyle = null;
 	
 	
 	/**
-	 * Focused paint
+	 * Current alpha of the button
 	 */
-	protected Paints focusedpaint = null;
+	private int alpha = 255;
+	
+	
+	/**
+	 * Click listener event handler
+	 */
+	private OnClickListener clickListener = null;
+	
+	
+	/**
+	 * Focus listener event handler
+	 */
+	private OnFocusListener focusListener = null;
 	
 	
 	
@@ -102,42 +139,39 @@ public class Button implements IDrawableComponent
 	/**
 	 * Create a new Button privately
 	 */
-	protected Button() { }
+	protected Button(Vector2d position, String text)
+	{
+		Position = position.clone();
+		this.text = new CustomText(text, position, Colour.BLACK, 20f);
+	}
 	
 	
 	/**
 	 * Create a new Button
 	 */
-	public Button(Vector2d position, float width, float height, String text)
+	public Button(Vector2d position, String text, float width, float height)
 	{
 		button = new DrawableRoundBox(position, width, height, 5, 5);
 		this.initialise(position, width, height, text);
 	}
 	
 	
-	/**
-	 * Create a new Button
-	 */
-	public Button(Vector2d position, float radius, String text)
-	{
-		button = new DrawableCircle(position, radius);
-		this.initialise(position, radius, radius, text);
-	}
-	
-	
 	
 	
 	
 	/**
-	 * Private method to initialise the Button
+	 * Initialise the Button
 	 */
-	protected void initialise(Vector2d position, float width, float height, String text)
+	private void initialise(Vector2d position, float width, float height, String text)
 	{
-		this.position = position.clone();
+		Position = position.clone();
 		this.width = width;
 		this.height = height;
 		
 		this.text = new CustomText(text, position, Colour.BLACK, 20f);
+		
+		Styles style = new PaintStyles.WhiteBlue(Outline.DEFAULT_OUTLINE_WIDTH, Blur.DEFAULT_BLUR_RADIUS);
+		setStyle(style);
 		
 		buttonBound = new BoundingAABB(position, width, height);
 	}
@@ -147,12 +181,36 @@ public class Button implements IDrawableComponent
 	
 	
 	/**
-	 * Set the paint to use for normal appearance
+	 * Returns a clone of this Button
 	 */
-	public void setNormalPaint(Paints paint)
+	public Button clone()
 	{
-		normalpaint = new Paints(paint);
-		button.setPaint(paint);
+		Button btn = new Button(Position, text.Text, width, height);
+		btn.setStyle(buttonStyle);
+		btn.setAlpha(alpha);
+		btn.setTextSize(text.getTextSize());
+		btn.setTextColour(text.getColour());
+		btn.setOnClickListener(clickListener);
+		btn.setOnFocusListener(focusListener);
+		
+		return btn;
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Set position of the Button
+	 */
+	@Override
+	public void setPosition(Vector2d position)
+	{
+		super.setPosition(position);
+		text.Position = position.clone();
+		button.setPosition(position);
+		buttonBound.setPosition(position);
 	}
 	
 	
@@ -160,11 +218,40 @@ public class Button implements IDrawableComponent
 	
 	
 	/**
-	 * Set the paint to use for focused appearance
+	 * Set the style to use for the appearance
 	 */
-	public void setFocusedPaint(Paints paint)
+	public void setStyle(Styles style)
 	{
-		focusedpaint = new Paints(paint);
+		buttonStyle = style.clone();
+		button.setPaints(buttonStyle.normal());
+	}
+	
+	
+	
+	
+	/**
+	 * Set the alpha of the button
+	 */
+	public void setAlpha(int alpha)
+	{
+		if (alpha < 0) alpha = 0;
+		if (alpha > 255) alpha = 255;
+		
+		this.alpha = alpha;
+		buttonStyle.normal().setAlpha(alpha);
+		buttonStyle.focused().setAlpha(alpha);
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Returns the alpha of the button
+	 */
+	public int getAlpha()
+	{
+		return alpha;
 	}
 	
 	
@@ -217,6 +304,29 @@ public class Button implements IDrawableComponent
 	
 	
 	
+	/**
+	 * Returns the height of the button
+	 */
+	public float getHeight()
+	{
+		return height;
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Returns the width of the button
+	 */
+	public float getWidth()
+	{
+		return width;
+	}
+	
+	
+	
+	
 	
 	/**
 	 * Touch event to be handled manually
@@ -229,14 +339,14 @@ public class Button implements IDrawableComponent
 			{
 				case MotionEvent.ACTION_UP:
 					currentState = STATE_CLICKED;
-					onClick();
+					if (clickListener != null) clickListener.onClick(this);
 					break;
 					
 				default:
 					if (Focusable)
 					{
 						currentState = STATE_FOCUSED;
-						onFocus();
+						if (focusListener != null) focusListener.onFocus(this);
 					}
 					break;
 			}
@@ -253,11 +363,11 @@ public class Button implements IDrawableComponent
 	
 	
 	/**
-	 * On Click event for the Button
+	 * Set the click listener event for the Button
 	 */
-	public void onClick()
+	public void setOnClickListener(OnClickListener listener)
 	{
-		return;
+		clickListener = listener;
 	}
 	
 	
@@ -265,11 +375,11 @@ public class Button implements IDrawableComponent
 	
 	
 	/**
-	 * On Focus event for the Button
+	 * Set the focus listener event for the Button
 	 */
-	public void onFocus()
+	public void setOnFocusListener(OnFocusListener listener)
 	{
-		return;
+		focusListener = listener;
 	}
 	
 	
@@ -280,6 +390,7 @@ public class Button implements IDrawableComponent
 	/**
 	 * Draw the Button
 	 */
+	@Override
 	public void draw(Canvas canvas)
 	{
 		if (Focusable && previousState != currentState)
@@ -290,11 +401,11 @@ public class Button implements IDrawableComponent
 			{
 				case STATE_NORMAL:
 				case STATE_CLICKED:
-					button.setPaint(normalpaint);
+					button.setPaints(buttonStyle.normal().clone());
 					break;
 					
 				case STATE_FOCUSED:
-					button.setPaint(focusedpaint);
+					button.setPaints(buttonStyle.focused().clone());
 					break;
 			}
 		}

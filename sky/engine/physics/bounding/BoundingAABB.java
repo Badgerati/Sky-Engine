@@ -155,7 +155,7 @@ public class BoundingAABB extends Bounding
 	 * Rotate is unsupported
 	 */
 	@Override
-	public void rotate(int degree)
+	public void rotate(float degree)
 	{
 		return;
 	}

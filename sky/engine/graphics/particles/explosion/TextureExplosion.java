@@ -7,7 +7,7 @@ import android.graphics.Canvas;
 import sky.engine.geometry.vectors.Vector2d;
 import sky.engine.graphics.particles.TextureParticle;
 import sky.engine.graphics.textures.Texture;
-import sky.engine.math.Angle;
+import sky.engine.math.AngleHelper;
 import sky.engine.math.SERandom;
 import sky.engine.util.primitives.SEArrayList;
 
@@ -66,9 +66,9 @@ public class TextureExplosion extends Explosion
 		
 		//angle of trajectory
 		int tempangle = SERandom.getInt(359);
-		Vector2d velocity = new Vector2d((float)(SERandom.getDouble() * this.velocity) * Angle.sin(tempangle),
-								      (float)(SERandom.getDouble() * this.velocity) * Angle.cos(tempangle));
-		float angle = (float)(tempangle * Angle.TO_RADIANS);
+		Vector2d velocity = new Vector2d((float)(SERandom.getDouble() * this.velocity) * AngleHelper.sin(tempangle),
+								      (float)(SERandom.getDouble() * this.velocity) * AngleHelper.cos(tempangle));
+		float angle = (float)(tempangle * AngleHelper.TO_RADIANS);
 		
 		//angluar
 		float angular = 0.1f * (float)(SERandom.getDouble() * 2 - 1);

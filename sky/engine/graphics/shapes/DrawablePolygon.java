@@ -10,6 +10,7 @@ import sky.engine.graphics.paints.Paints;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Path;
+import android.graphics.Shader;
 
 /**
  * 
@@ -63,62 +64,12 @@ public class DrawablePolygon extends Polygon implements IDrawableShape, IDrawabl
 	/**
 	 * Create new instance of a polygon
 	 */
-	public DrawablePolygon(Vector2d[] vertices, Vector2d velocity, float mass)
-	{
-		super(vertices, velocity, mass);
-		outlinepaint = new Outline();
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a polygon
-	 */
 	public DrawablePolygon(Vector2d[] vertices, Fill fill, Outline outline, Blur blur)
 	{
 		super(vertices);
 		fillpaint = fill == null ? null : new Fill(fill);
 		outlinepaint = outline == null ? null : new Outline(outline);
 		blurpaint = blur == null ? null : new Blur(blur);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a polygon
-	 */
-	public DrawablePolygon(Vector2d[] vertices, Fill fill, Outline outline, Blur blur, Vector2d velocity, float mass)
-	{
-		super(vertices, velocity, mass);
-		fillpaint = fill == null ? null : new Fill(fill);
-		outlinepaint = outline == null ? null : new Outline(outline);
-		blurpaint = blur == null ? null : new Blur(blur);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a polygon
-	 */
-	public DrawablePolygon(Vector2d[] vertices, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias)
-	{
-		super(vertices);
-		fillpaint = new Fill(fill, antialias);
-		outlinepaint = new Outline(outline, outlinewidth, antialias);
-		blurpaint = new Blur(blur, blurwidth, blurradius);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a polygon
-	 */
-	public DrawablePolygon(Vector2d[] vertices, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias, Vector2d velocity, float mass)
-	{
-		super(vertices, velocity, mass);
-		fillpaint = new Fill(fill, antialias);
-		outlinepaint = new Outline(outline, outlinewidth, antialias);
-		blurpaint = new Blur(blur, blurwidth, blurradius);
 		initialise();
 	}
 	
@@ -141,62 +92,12 @@ public class DrawablePolygon extends Polygon implements IDrawableShape, IDrawabl
 	/**
 	 * Create new instance of a polygon
 	 */
-	public DrawablePolygon(Vector2d position, int noOfVertices, float size, Vector2d velocity, float mass)
-	{
-		super(position, noOfVertices, size, velocity, mass);
-		outlinepaint = new Outline();
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a polygon
-	 */
 	public DrawablePolygon(Vector2d position, int noOfVertices, float size, Fill fill, Outline outline, Blur blur)
 	{
 		super(position, noOfVertices, size);
 		fillpaint = fill == null ? null : new Fill(fill);
 		outlinepaint = outline == null ? null : new Outline(outline);
 		blurpaint = blur == null ? null : new Blur(blur);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a polygon
-	 */
-	public DrawablePolygon(Vector2d position, int noOfVertices, float size, Fill fill, Outline outline, Blur blur, Vector2d velocity, float mass)
-	{
-		super(position, noOfVertices, size, velocity, mass);
-		fillpaint = fill == null ? null : new Fill(fill);
-		outlinepaint = outline == null ? null : new Outline(outline);
-		blurpaint = blur == null ? null : new Blur(blur);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a polygon
-	 */
-	public DrawablePolygon(Vector2d position, int noOfVertices, float size, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias)
-	{
-		super(position, noOfVertices, size);
-		fillpaint = new Fill(fill, antialias);
-		outlinepaint = new Outline(outline, outlinewidth, antialias);
-		blurpaint = new Blur(blur, blurwidth, blurradius);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a polygon
-	 */
-	public DrawablePolygon(Vector2d position, int noOfVertices, float size, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias, Vector2d velocity, float mass)
-	{
-		super(position, noOfVertices, size, velocity, mass);
-		fillpaint = new Fill(fill, antialias);
-		outlinepaint = new Outline(outline, outlinewidth, antialias);
-		blurpaint = new Blur(blur, blurwidth, blurradius);
 		initialise();
 	}
 	
@@ -217,17 +118,6 @@ public class DrawablePolygon extends Polygon implements IDrawableShape, IDrawabl
 	
 	
 	/**
-	 * Create new instance of a default polygon
-	 */
-	public DrawablePolygon(Vector2d position, int noOfVertices, float minSize, float maxSize, Vector2d velocity, float mass)
-	{
-		super(position, noOfVertices, minSize, maxSize, velocity, mass);
-		outlinepaint = new Outline();
-		initialise();
-	}
-	
-	
-	/**
 	 * Create new instance of a polygon
 	 */
 	public DrawablePolygon(Vector2d position, int noOfVertices, float minSize, float maxSize, Fill fill, Outline outline, Blur blur)
@@ -236,45 +126,6 @@ public class DrawablePolygon extends Polygon implements IDrawableShape, IDrawabl
 		fillpaint = fill == null ? null : new Fill(fill);
 		outlinepaint = outline == null ? null : new Outline(outline);
 		blurpaint = blur == null ? null : new Blur(blur);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a polygon
-	 */
-	public DrawablePolygon(Vector2d position, int noOfVertices, float minSize, float maxSize, Fill fill, Outline outline, Blur blur, Vector2d velocity, float mass)
-	{
-		super(position, noOfVertices, minSize, maxSize, velocity, mass);
-		fillpaint = fill == null ? null : new Fill(fill);
-		outlinepaint = outline == null ? null : new Outline(outline);
-		blurpaint = blur == null ? null : new Blur(blur);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a polygon
-	 */
-	public DrawablePolygon(Vector2d position, int noOfVertices, float minSize, float maxSize, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias)
-	{
-		super(position, noOfVertices, minSize, maxSize);
-		fillpaint = new Fill(fill, antialias);
-		outlinepaint = new Outline(outline, outlinewidth, antialias);
-		blurpaint = new Blur(blur, blurwidth, blurradius);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a polygon
-	 */
-	public DrawablePolygon(Vector2d position, int noOfVertices, float minSize, float maxSize, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias, Vector2d velocity, float mass)
-	{
-		super(position, noOfVertices, minSize, maxSize, velocity, mass);
-		fillpaint = new Fill(fill, antialias);
-		outlinepaint = new Outline(outline, outlinewidth, antialias);
-		blurpaint = new Blur(blur, blurwidth, blurradius);
 		initialise();
 	}
 	
@@ -288,7 +139,7 @@ public class DrawablePolygon extends Polygon implements IDrawableShape, IDrawabl
 	 */
 	public DrawablePolygon(DrawablePolygon poly)
 	{
-		super(poly.Position, poly.vertices, poly.Velocity, poly.Mass);
+		super(poly);
 		fillpaint = new Fill(poly.fillpaint);
 		outlinepaint = new Outline(poly.outlinepaint);
 		blurpaint = new Blur(poly.blurpaint);
@@ -372,11 +223,72 @@ public class DrawablePolygon extends Polygon implements IDrawableShape, IDrawabl
 	/**
 	 * Set the paint for the shape
 	 */
-	public void setPaint(Paints paint)
+	public void setPaints(Paints paint)
 	{
 		fillpaint = paint.fill();
 		outlinepaint = paint.outline();
 		blurpaint = paint.blur();
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Rotate
+	 */
+	@Override
+	public void rotate(float degrees)
+	{
+		super.rotate(degrees);
+		Shader shader = fillpaint == null ? null : fillpaint.getShader();
+		
+		if (shader != null)
+		{
+			matrix.reset();
+			matrix.postTranslate(-Position.X, -Position.Y);
+			matrix.postRotate(this.degreesOfRotation);
+			matrix.postTranslate(Position.X, Position.Y);
+			shader.setLocalMatrix(matrix);
+		}
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Rotate
+	 */
+	@Override
+	public void rotate(float degrees, Vector2d origin)
+	{
+		super.rotate(degrees, origin);
+		Shader shader = fillpaint == null ? null : fillpaint.getShader();
+		
+		if (shader != null)
+		{
+			matrix.reset();
+			matrix.postTranslate(-origin.X, -origin.Y);
+			matrix.postRotate(this.degreesOfRotation);
+			matrix.postTranslate(origin.X, origin.Y);
+			shader.setLocalMatrix(matrix);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Set the alpha for the shape
+	 */
+	public void setAlpha(int alpha)
+	{
+		if (fillpaint != null) fillpaint.setAlpha(alpha);
+		if (outlinepaint != null) outlinepaint.setAlpha(alpha);
+		if (blurpaint != null) blurpaint.setAlpha(alpha);
 	}
 	
 	

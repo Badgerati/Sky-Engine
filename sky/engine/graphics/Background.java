@@ -3,7 +3,7 @@ package sky.engine.graphics;
 import sky.engine.graphics.textures.Texture;
 import android.graphics.Canvas;
 
-public class Background implements IDrawableComponent
+public class Background extends DrawableComponent
 {
 	
 	/**
@@ -45,6 +45,19 @@ public class Background implements IDrawableComponent
 	
 	
 	/**
+	 * Recycle the background texture, if it exists
+	 */
+	public void recycle()
+	{
+		if (texture != null)
+			texture.recycle();
+	}
+	
+	
+	
+	
+	
+	/**
 	 * Draw Background
 	 */
 	public void draw(Canvas canvas)
@@ -53,7 +66,7 @@ public class Background implements IDrawableComponent
 			canvas.drawColor(colour);
 		
 		else if (texture != null)
-			texture.draw(canvas, 0, 0, null);
+			texture.draw(canvas, Position.X, Position.Y, null);
 	}
 	
 	

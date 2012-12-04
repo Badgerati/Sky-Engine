@@ -61,6 +61,12 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	
 	
 	/**
+	 * Accelerometer
+	 */
+	private Accelerometer accel = null;
+	
+	
+	/**
 	 * Accelerometer handle
 	 */
 	private Sensor accelerometer = null;
@@ -388,6 +394,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	{
 		if (accel != null)
 		{
+			this.accel = accel;
 			sensorManager = accel.getManager();
 			accelerometer = accel.getAccelerometer();
 		}
@@ -408,7 +415,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	{
 		if (sensorManager != null)
 		{
-			sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
+			sensorManager.registerListener(this, accelerometer, accel.getDelay());
 		}
 	}
 	
@@ -441,6 +448,20 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 	public boolean accelerometerExists()
 	{
 		return (accelerometer != null);
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Returns the delay of the accelerometer
+	 */
+	public int getAccelerometerDelay()
+	{
+		if (accel == null) return -1;
+		return accel.getDelay();
 	}
 	
 	

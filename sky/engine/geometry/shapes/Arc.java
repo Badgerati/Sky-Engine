@@ -1,7 +1,7 @@
 package sky.engine.geometry.shapes;
 
 import sky.engine.geometry.vectors.Vector2d;
-import sky.engine.math.Angle;
+import sky.engine.math.AngleHelper;
 
 /**
  * 
@@ -44,7 +44,7 @@ public class Arc extends Circle
 	 */
 	public Arc(Arc arc)
 	{
-		super(arc.Position, arc.Radius);
+		super(arc);
 		StartAngle = arc.StartAngle;
 		SweepAngle = arc.SweepAngle;
 	}
@@ -53,12 +53,12 @@ public class Arc extends Circle
 	/**
 	 * Create new instance of a Geometric Arc
 	 */
-	public Arc(Vector2d position, float radius, float startangle, float sweepangle, Vector2d velocity, float mass)
-	{
-		super(position, radius, velocity, mass);
-		StartAngle = startangle;
-		SweepAngle = sweepangle;
-	}
+	//public Arc(Vector2d position, float radius, float startangle, float sweepangle, Vector2d velocity, float mass)
+	//{
+	//	super(position, radius, velocity, mass);
+	//	StartAngle = startangle;
+	//	SweepAngle = sweepangle;
+	//}
 	
 	
 	
@@ -71,7 +71,7 @@ public class Arc extends Circle
 	 */
 	public Arc clone()
 	{
-		return new Arc(Position, Radius, StartAngle, SweepAngle);
+		return new Arc(this);
 	}
 	
 	
@@ -86,7 +86,7 @@ public class Arc extends Circle
 	@Override
 	public float circumference()
 	{
-		return (SweepAngle * Angle.TO_RADIANS) * Radius;
+		return (SweepAngle * AngleHelper.TO_RADIANS) * Radius;
 	}
 	
 	
@@ -100,7 +100,7 @@ public class Arc extends Circle
 	@Override
 	public float area()
 	{
-		return ((SweepAngle * Angle.TO_RADIANS) * 0.5f) * (Radius * Radius);
+		return ((SweepAngle * AngleHelper.TO_RADIANS) * 0.5f) * (Radius * Radius);
 	}
 	
 	

@@ -6,7 +6,7 @@ import android.graphics.Matrix;
 import android.graphics.Path;
 
 import sky.engine.geometry.vectors.Vector2d;
-import sky.engine.math.Angle;
+import sky.engine.math.AngleHelper;
 
 /**
  * 
@@ -74,55 +74,6 @@ public class Polygon extends Shape
 	
 	
 	/**
-	 * Create new instance of a geometric polygon, with only a position
-	 */
-	protected Polygon(Vector2d position, Vector2d velocity, float mass)
-	{
-		super(position, velocity, mass);
-	}
-	
-	
-	/**
-	 * Create new instance of a geometric polygon
-	 */
-	protected Polygon(Vector2d position, Vector2d[] vertices, Vector2d velocity, float mass)
-	{
-		super(position, velocity, mass);
-		initialise(vertices);
-	}
-	
-	
-	/**
-	 * Create new instance of a geometric polygon
-	 */
-	public Polygon(Vector2d[] vertices, Vector2d velocity, float mass)
-	{
-		super(Vector2d.getCentre(vertices), velocity, mass);
-		initialise(vertices);
-	}
-	
-	
-	/**
-	 * Create new instance of a geometric polygon
-	 */
-	public Polygon(Vector2d position, int noOfVertices, float size, Vector2d velocity, float mass)
-	{
-		super(position, velocity, mass);
-		generateVertices(noOfVertices, size, size);
-	}
-	
-	
-	/**
-	 * Creates new instance of a randomised geometric polygon
-	 */
-	public Polygon(Vector2d position, int noOfVertices, float minSize, float maxSize, Vector2d velocity, float mass)
-	{
-		super(position, velocity, mass);
-		generateVertices(noOfVertices, minSize, maxSize);
-	}
-	
-	
-	/**
 	 * Create new Polygon from another geometric polygon
 	 */
 	public Polygon(Polygon poly)
@@ -164,14 +115,14 @@ public class Polygon extends Shape
 		Random rand = new Random();
 		float degrees = 360.0f / noOfVertices;
 		float range = maxSize - minSize;
-		float x = (Angle.sin(0) * ((rand.nextFloat() * range) + minSize));
-		float y = (Angle.cos(0) * ((rand.nextFloat() * range) - minSize));
+		float x = (AngleHelper.sin(0) * ((rand.nextFloat() * range) + minSize));
+		float y = (AngleHelper.cos(0) * ((rand.nextFloat() * range) + minSize));
 		
 		vertices[0] = new Vector2d(x, y);
 		for (int i = 1; i < noOfVertices; i++)
 		{
-			x = (Angle.sin((int)(degrees * i)) * ((rand.nextFloat() * range) + minSize));
-			y = (Angle.cos((int)(degrees * i)) * ((rand.nextFloat() * range) - minSize));
+			x = (AngleHelper.sin((int)(degrees * i)) * ((rand.nextFloat() * range) + minSize));
+			y = (AngleHelper.cos((int)(degrees * i)) * ((rand.nextFloat() * range) + minSize));
 			vertices[i] = new Vector2d(x, y);
 		}
 		
@@ -250,7 +201,7 @@ public class Polygon extends Shape
 	 * Rotate this geometric polygon at the origin
 	 */
 	@Override
-	public void rotate(int degree)
+	public void rotate(float degree)
 	{
 		super.rotate(degree);
 		
@@ -275,7 +226,7 @@ public class Polygon extends Shape
 	 * Rotate this geometric polygon at the given origin
 	 */
 	@Override
-	public void rotate(int degree, Vector2d origin)
+	public void rotate(float degree, Vector2d origin)
 	{
 		super.rotate(degree, origin);
 		
@@ -332,6 +283,30 @@ public class Polygon extends Shape
 			Vector2d scaleVel = velocity.mulScalar(dt);
 			matrix.reset();
 			matrix.postTranslate(scaleVel.X, scaleVel.Y);
+			
+			polygon.transform(matrix);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Integrate this geometric polygon
+	 */
+	@Override
+	public void integrate(float x, float y, float dt)
+	{
+		super.integrate(x, y, dt);
+		
+		if (matrix != null)
+		{
+			float scaleX = x * dt;
+			float scaleY = y * dt;
+			matrix.reset();
+			matrix.postTranslate(scaleX, scaleY);
 			
 			polygon.transform(matrix);
 		}

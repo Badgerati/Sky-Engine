@@ -8,7 +8,9 @@ import sky.engine.graphics.paints.Fill;
 import sky.engine.graphics.paints.Outline;
 import sky.engine.graphics.paints.Paints;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.RectF;
+import android.graphics.Shader;
 
 /**
  * 
@@ -70,17 +72,6 @@ public class DrawableArc extends Arc implements IDrawableShape, IDrawableCompone
 		outlinepaint = new Outline();
 		setRect();
 	}
-
-	
-	/**
-	 * Create new instance of a arc
-	 */
-	public DrawableArc(Vector2d position, float radius, float startangle, float sweepangle, Vector2d velocity, float mass)
-	{
-		super(position, radius, startangle, sweepangle, velocity, mass);
-		outlinepaint = new Outline();
-		setRect();
-	}
 	
 	
 	/**
@@ -96,45 +87,6 @@ public class DrawableArc extends Arc implements IDrawableShape, IDrawableCompone
 	}
 	
 	
-	/**
-	 * Create new instance of a arc
-	 */
-	public DrawableArc(Vector2d position, float radius, float startangle, float sweepangle, Fill fill, Outline outline, Blur blur, Vector2d velocity, float mass)
-	{
-		super(position, radius, startangle, sweepangle, velocity, mass);
-		fillpaint = fill == null ? null : new Fill(fill);
-		outlinepaint = outline == null ? null : new Outline(outline);
-		blurpaint = blur == null ? null : new Blur(blur);
-		setRect();
-	}
-	
-	
-	/**
-	 * Create new instance of a arc
-	 */
-	public DrawableArc(Vector2d position, float radius, float startangle, float sweepangle, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias)
-	{
-		super(position, radius, startangle, sweepangle);
-		fillpaint = new Fill(fill, antialias);
-		outlinepaint = new Outline(outline, outlinewidth, antialias);
-		blurpaint = new Blur(blur, blurwidth, blurradius);
-		setRect();
-	}
-	
-	
-	/**
-	 * Create new instance of a arc
-	 */
-	public DrawableArc(Vector2d position, float radius, float startangle, float sweepangle, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias, Vector2d velocity, float mass)
-	{
-		super(position, radius, startangle, sweepangle, velocity, mass);
-		fillpaint = new Fill(fill, antialias);
-		outlinepaint = new Outline(outline, outlinewidth, antialias);
-		blurpaint = new Blur(blur, blurwidth, blurradius);
-		setRect();
-	}
-	
-	
 	
 	
 	/**
@@ -142,7 +94,7 @@ public class DrawableArc extends Arc implements IDrawableShape, IDrawableCompone
 	 */
 	public DrawableArc(DrawableArc arc)
 	{
-		super(arc.Position, arc.Radius, arc.StartAngle, arc.SweepAngle, arc.Velocity, arc.Mass);
+		super(arc);
 		fillpaint = new Fill(arc.fillpaint);
 		outlinepaint = new Outline(arc.outlinepaint);
 		blurpaint = new Blur(arc.blurpaint);
@@ -213,11 +165,49 @@ public class DrawableArc extends Arc implements IDrawableShape, IDrawableCompone
 	/**
 	 * Set the paint for the shape
 	 */
-	public void setPaint(Paints paint)
+	public void setPaints(Paints paint)
 	{
 		fillpaint = paint.fill();
 		outlinepaint = paint.outline();
 		blurpaint = paint.blur();
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Rotate
+	 */
+	@Override
+	public void rotate(float degrees)
+	{
+		super.rotate(degrees);
+		Shader shader = fillpaint.getShader();
+		
+		if (shader != null)
+		{
+			Matrix mat = new Matrix();
+			mat.postTranslate(-Position.X, -Position.Y);
+			mat.postRotate(this.degreesOfRotation);
+			mat.postTranslate(Position.X, Position.Y);
+			shader.setLocalMatrix(mat);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Set the alpha for the shape
+	 */
+	public void setAlpha(int alpha)
+	{
+		if (fillpaint != null) fillpaint.setAlpha(alpha);
+		if (outlinepaint != null) outlinepaint.setAlpha(alpha);
+		if (blurpaint != null) blurpaint.setAlpha(alpha);
 	}
 	
 	

@@ -10,6 +10,7 @@ import sky.engine.graphics.paints.Paints;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Path;
+import android.graphics.Shader;
 
 /**
  * 
@@ -63,62 +64,12 @@ public class DrawableQuad extends Quad implements IDrawableShape, IDrawableCompo
 	/**
 	 * Create new instance of a quad
 	 */
-	public DrawableQuad(Vector2d v1, Vector2d v2, Vector2d v3, Vector2d v4, Vector2d velocity, float mass)
-	{
-		super(v1, v2, v3, v4, velocity, mass);
-		outlinepaint = new Outline();
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a quad
-	 */
 	public DrawableQuad(Vector2d v1, Vector2d v2, Vector2d v3, Vector2d v4, Fill fill, Outline outline, Blur blur)
 	{
 		super(v1, v2, v3, v4);
 		fillpaint = fill == null ? null : new Fill(fill);
 		outlinepaint = outline == null ? null : new Outline(outline);
 		blurpaint = blur == null ? null : new Blur(blur);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a quad
-	 */
-	public DrawableQuad(Vector2d v1, Vector2d v2, Vector2d v3, Vector2d v4, Fill fill, Outline outline, Blur blur, Vector2d velocity, float mass)
-	{
-		super(v1, v2, v3, v4, velocity, mass);
-		fillpaint = fill == null ? null : new Fill(fill);
-		outlinepaint = outline == null ? null : new Outline(outline);
-		blurpaint = blur == null ? null : new Blur(blur);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a quad
-	 */
-	public DrawableQuad(Vector2d v1, Vector2d v2, Vector2d v3, Vector2d v4, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias)
-	{
-		super(v1, v2, v3, v4);
-		fillpaint = new Fill(fill, antialias);
-		outlinepaint = new Outline(outline, outlinewidth, antialias);
-		blurpaint = new Blur(blur, blurwidth, blurradius);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a quad
-	 */
-	public DrawableQuad(Vector2d v1, Vector2d v2, Vector2d v3, Vector2d v4, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias, Vector2d velocity, float mass)
-	{
-		super(v1, v2, v3, v4, velocity, mass);
-		fillpaint = new Fill(fill, antialias);
-		outlinepaint = new Outline(outline, outlinewidth, antialias);
-		blurpaint = new Blur(blur, blurwidth, blurradius);
 		initialise();
 	}
 	
@@ -132,7 +83,7 @@ public class DrawableQuad extends Quad implements IDrawableShape, IDrawableCompo
 	 */
 	public DrawableQuad(DrawableQuad quad)
 	{
-		super(quad.Position, quad.vertices[0], quad.vertices[1], quad.vertices[2], quad.vertices[3], quad.Velocity, quad.Mass);
+		super(quad);
 		fillpaint = new Fill(quad.fillpaint);
 		outlinepaint = new Outline(quad.outlinepaint);
 		blurpaint = new Blur(quad.blurpaint);
@@ -212,11 +163,49 @@ public class DrawableQuad extends Quad implements IDrawableShape, IDrawableCompo
 	/**
 	 * Set the paint for the shape
 	 */
-	public void setPaint(Paints paint)
+	public void setPaints(Paints paint)
 	{
 		fillpaint = paint.fill();
 		outlinepaint = paint.outline();
 		blurpaint = paint.blur();
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Rotate
+	 */
+	@Override
+	public void rotate(float degrees)
+	{
+		super.rotate(degrees);
+		Shader shader = fillpaint == null ? null : fillpaint.getShader();
+		
+		if (shader != null)
+		{
+			Matrix mat = new Matrix();
+			mat.postTranslate(-Position.X, -Position.Y);
+			mat.postRotate(this.degreesOfRotation);
+			mat.postTranslate(Position.X, Position.Y);
+			shader.setLocalMatrix(mat);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Set the alpha for the shape
+	 */
+	public void setAlpha(int alpha)
+	{
+		if (fillpaint != null) fillpaint.setAlpha(alpha);
+		if (outlinepaint != null) outlinepaint.setAlpha(alpha);
+		if (blurpaint != null) blurpaint.setAlpha(alpha);
 	}
 	
 	

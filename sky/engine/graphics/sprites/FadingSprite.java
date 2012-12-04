@@ -86,9 +86,9 @@ public class FadingSprite extends Sprite
 	/**
 	 * Create a new Fading Sprite
 	 */
-	public FadingSprite(Bitmap bitmap, Vector2d position, float scale, int direction, TimeSpan time, Vector2d velocity, float mass)
+	public FadingSprite(Bitmap bitmap, Vector2d position, float scalewidth, float scaleheight, int direction, TimeSpan time)
 	{
-		super(bitmap, position, scale, velocity, mass);
+		super(bitmap, position, scalewidth, scaleheight);
 		this.direction = direction;
 		lengthOfTime = time.TotalMilliseconds();
 		
@@ -97,6 +97,22 @@ public class FadingSprite extends Sprite
 		
 		currentState = FADING;
 	}
+	
+	
+	/**
+	 * Create a new Fading Sprite
+	 */
+	//public FadingSprite(Bitmap bitmap, Vector2d position, float scale, int direction, TimeSpan time, Vector2d velocity, float mass)
+	//{
+	//	super(bitmap, position, scale, velocity, mass);
+	//	this.direction = direction;
+	//	lengthOfTime = time.TotalMilliseconds();
+	//	
+	//	currentAlpha = direction <= 0 ? 255.0f : 0.0f;
+	//	alphaFadeSpeed = 255.0f / lengthOfTime;
+	//	
+	//	currentState = FADING;
+	//}
 	
 	
 	

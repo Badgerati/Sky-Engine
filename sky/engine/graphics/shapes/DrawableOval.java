@@ -8,7 +8,9 @@ import sky.engine.graphics.paints.Fill;
 import sky.engine.graphics.paints.Outline;
 import sky.engine.graphics.paints.Paints;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.RectF;
+import android.graphics.Shader;
 
 /**
  * 
@@ -67,17 +69,6 @@ public class DrawableOval extends Oval implements IDrawableShape, IDrawableCompo
 		outlinepaint = new Outline();
 		setRect();
 	}
-
-	
-	/**
-	 * Create new instance of an oval
-	 */
-	public DrawableOval(Vector2d position, float xradius, float yradius, Vector2d velocity, float mass)
-	{
-		super(position, xradius, yradius, velocity, mass);
-		outlinepaint = new Outline();
-		setRect();
-	}
 	
 	
 	/**
@@ -93,45 +84,6 @@ public class DrawableOval extends Oval implements IDrawableShape, IDrawableCompo
 	}
 	
 	
-	/**
-	 * Create new instance of an oval
-	 */
-	public DrawableOval(Vector2d position, float xradius, float yradius, Fill fill, Outline outline, Blur blur, Vector2d velocity, float mass)
-	{
-		super(position, xradius, yradius, velocity, mass);
-		fillpaint = fill == null ? null : new Fill(fill);
-		outlinepaint = outline == null ? null : new Outline(outline);
-		blurpaint = blur == null ? null : new Blur(blur);
-		setRect();
-	}
-	
-	
-	/**
-	 * Create new instance of an oval
-	 */
-	public DrawableOval(Vector2d position, float xradius, float yradius, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias)
-	{
-		super(position, xradius, yradius);
-		fillpaint = new Fill(fill, antialias);
-		outlinepaint = new Outline(outline, outlinewidth, antialias);
-		blurpaint = new Blur(blur, blurwidth, blurradius);
-		setRect();
-	}
-	
-	
-	/**
-	 * Create new instance of an oval
-	 */
-	public DrawableOval(Vector2d position, float xradius, float yradius, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias, Vector2d velocity, float mass)
-	{
-		super(position, xradius, yradius, velocity, mass);
-		fillpaint = new Fill(fill, antialias);
-		outlinepaint = new Outline(outline, outlinewidth, antialias);
-		blurpaint = new Blur(blur, blurwidth, blurradius);
-		setRect();
-	}
-	
-	
 	
 	
 	/**
@@ -139,7 +91,7 @@ public class DrawableOval extends Oval implements IDrawableShape, IDrawableCompo
 	 */
 	public DrawableOval(DrawableOval oval)
 	{
-		super(oval.Position, oval.xRadius, oval.yRadius, oval.Velocity, oval.Mass);
+		super(oval);
 		fillpaint = new Fill(oval.fillpaint);
 		outlinepaint = new Outline(oval.outlinepaint);
 		blurpaint = new Blur(oval.blurpaint);
@@ -208,11 +160,49 @@ public class DrawableOval extends Oval implements IDrawableShape, IDrawableCompo
 	/**
 	 * Set the paint for the shape
 	 */
-	public void setPaint(Paints paint)
+	public void setPaints(Paints paint)
 	{
 		fillpaint = paint.fill();
 		outlinepaint = paint.outline();
 		blurpaint = paint.blur();
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Rotate
+	 */
+	@Override
+	public void rotate(float degrees)
+	{
+		super.rotate(degrees);
+		Shader shader = fillpaint.getShader();
+		
+		if (shader != null)
+		{
+			Matrix mat = new Matrix();
+			mat.postTranslate(-Position.X, -Position.Y);
+			mat.postRotate(this.degreesOfRotation);
+			mat.postTranslate(Position.X, Position.Y);
+			shader.setLocalMatrix(mat);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Set the alpha for the shape
+	 */
+	public void setAlpha(int alpha)
+	{
+		if (fillpaint != null) fillpaint.setAlpha(alpha);
+		if (outlinepaint != null) outlinepaint.setAlpha(alpha);
+		if (blurpaint != null) blurpaint.setAlpha(alpha);
 	}
 	
 	

@@ -10,6 +10,23 @@ import java.util.Calendar;
  */
 public class Timer
 {
+	
+	/**
+	 * Tick listener interface
+	 */
+	public interface OnTickListener
+	{
+		/**
+		 * onTick event
+		 */
+		public void onTick(Timer src);
+	}
+	
+	
+	
+	
+	
+	
 	/**
 	 * States of the timer
 	 */
@@ -67,6 +84,12 @@ public class Timer
 	 * Last running time checked, used for the tick period event
 	 */
 	protected long lastRunningTime = 0;
+	
+	
+	/**
+	 * Tick listener event handler
+	 */
+	private OnTickListener tickListener = null;
 	
 	
 	
@@ -188,7 +211,7 @@ public class Timer
 			{
 				passedTicks++;
 				lastRunningTime = passedTicks * tickPeriod;
-				onTick();
+				if (tickListener != null) tickListener.onTick(this);
 			}
 		}
 	}
@@ -199,9 +222,9 @@ public class Timer
 	/**
 	 * Event to be run on every certain tick period
 	 */
-	public void onTick()
+	public void setOnTickListener(OnTickListener listener)
 	{
-		return;
+		tickListener = listener;
 	}
 	
 	

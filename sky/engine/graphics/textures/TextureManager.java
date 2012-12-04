@@ -104,7 +104,15 @@ public abstract class TextureManager
 	 */
 	public static void clear()
 	{
-		textures.clear();
+		if (textures != null)
+		{
+			for (int key : textures.keySet())
+			{
+				textures.get(key).recycle();
+			}
+			
+			textures.clear();
+		}
 	}
 	
 	

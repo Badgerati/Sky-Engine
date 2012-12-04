@@ -1,9 +1,11 @@
 package sky.engine.graphics.text;
 
 import sky.engine.geometry.vectors.Vector2d;
-import sky.engine.graphics.IDrawableComponent;
+import sky.engine.graphics.DrawableComponent;
+import sky.engine.util.primitives.SEString;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 
 /**
  * 
@@ -11,7 +13,7 @@ import android.graphics.Paint;
  * @author Matthew Kelly (Badgerati - Cadaeic Studios)
  *
  */
-public class CustomText implements IDrawableComponent
+public class CustomText extends DrawableComponent
 {
 	/**
 	 * Text to display
@@ -50,6 +52,7 @@ public class CustomText implements IDrawableComponent
 		textpaint = new Paint();
 		textpaint.setColor(colour);
 		textpaint.setTextSize(size);
+		textpaint.setAntiAlias(true);
 		Position = position.clone();
 		this.Text = text;
 	}
@@ -69,6 +72,45 @@ public class CustomText implements IDrawableComponent
 	
 	
 	
+	/**
+	 * Set Text's position
+	 */
+	@Override
+	public void setPosition(Vector2d position)
+	{
+		Position.X = position.X;
+		Position.Y = position.Y;
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Get Text's position
+	 */
+	@Override
+	public Vector2d getPosition()
+	{
+		return Position;
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Set the anti-aliasing
+	 */
+	public void setAntiAlias(boolean flag)
+	{
+		textpaint.setAntiAlias(flag);
+	}
+	
+	
+	
+	
+	
 	
 	/**
 	 * Set the text size
@@ -76,6 +118,43 @@ public class CustomText implements IDrawableComponent
 	public void setTextSize(float textsize)
 	{
 		textpaint.setTextSize(textsize);
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Returns the text size
+	 */
+	public float getTextSize()
+	{
+		return textpaint.getTextSize();
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Set the font to use
+	 */
+	public void setFont(Typeface font)
+	{
+		textpaint.setTypeface(font);
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Returns the font used
+	 */
+	public Typeface getFont()
+	{
+		return textpaint.getTypeface();
 	}
 	
 	
@@ -93,12 +172,35 @@ public class CustomText implements IDrawableComponent
 	
 	
 	
+	
+	/**
+	 * Returns the colour of the text
+	 */
+	public int getColour()
+	{
+		return textpaint.getColor();
+	}
+	
+	
+	
+	
 	/**
 	 * Set alpha of the text
 	 */
 	public void setAlpha(int alpha)
 	{
 		textpaint.setAlpha(alpha);
+	}
+	
+	
+	
+	
+	/**
+	 * Returns the alpha of the text
+	 */
+	public int getAlpha()
+	{
+		return textpaint.getAlpha();
 	}
 	
 	
@@ -117,12 +219,64 @@ public class CustomText implements IDrawableComponent
 	
 	
 	
+	
+	/**
+	 * Returns height of the text
+	 */
+	public float getHeight()
+	{
+		return SEString.getHeight(textpaint);
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Returns the true height of the text, including newlines with optional
+	 * separation distance
+	 */
+	public float getHeight(float sep_dist)
+	{
+		return SEString.getHeight(Text, textpaint, sep_dist);
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Returns the width of the text
+	 */
+	public float getWidth()
+	{
+		return SEString.getWidth(Text, textpaint);
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Returns the true width of the text, including newlines with optional
+	 * separation distance
+	 */
+	public float[] getWidths()
+	{
+		return SEString.getWidths(Text, textpaint);
+	}
+	
+	
+	
+	
 
 	
 	
 	/**
 	 * Draw the text
 	 */
+	@Override
 	public void draw(Canvas canvas)
 	{
 		Paint.FontMetrics fm = textpaint.getFontMetrics();

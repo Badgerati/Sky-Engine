@@ -3,10 +3,12 @@ package sky.engine.graphics.textures;
 import sky.engine.components.Size;
 import sky.engine.geometry.vectors.Vector2d;
 import sky.engine.graphics.ContentManager;
-import sky.engine.graphics.IDrawableComponent;
+import sky.engine.graphics.DrawableComponent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Shader;
 
 /**
  * 
@@ -14,18 +16,12 @@ import android.graphics.Paint;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public class Texture implements ITexture, IDrawableComponent
+public class Texture extends DrawableComponent implements ITexture
 {
 	/**
 	 * Bitmap for this texture.
 	 */
 	protected Bitmap bitmap = null;
-	
-	
-	/**
-	 * Position of Texture if it is to be drawn
-	 */
-	protected Vector2d position = null;
 	
 	
 	/**
@@ -44,7 +40,6 @@ public class Texture implements ITexture, IDrawableComponent
 	public Texture(Bitmap bitmap)
 	{
 		this.bitmap = bitmap;
-		position = Vector2d.zeros();
 	}
 	
 	
@@ -54,7 +49,6 @@ public class Texture implements ITexture, IDrawableComponent
 	public Texture(int resID)
 	{
 		this.bitmap = ContentManager.loadBitmap(resID);
-		position = Vector2d.zeros();
 	}
 	
 	
@@ -133,19 +127,7 @@ public class Texture implements ITexture, IDrawableComponent
 	 */
 	public Texture clone()
 	{
-		return new Texture(bitmap);
-	}
-	
-	
-	
-	
-	
-	/**
-	 * Sets the Texture's position
-	 */
-	public void setPosition(Vector2d position)
-	{
-		this.position = position.clone();
+		return new Texture(Bitmap.createBitmap(bitmap));
 	}
 	
 	
@@ -157,8 +139,8 @@ public class Texture implements ITexture, IDrawableComponent
 	 */
 	public void setPositionWithOffset(Vector2d position)
 	{
-		this.position.X = position.X - (bitmap.getWidth() * 0.5f);
-		this.position.Y = position.Y - (bitmap.getHeight() * 0.5f);
+		Position.X = position.X - (bitmap.getWidth() * 0.5f);
+		Position.Y = position.Y - (bitmap.getHeight() * 0.5f);
 	}
 	
 	
@@ -226,6 +208,18 @@ public class Texture implements ITexture, IDrawableComponent
 	
 	
 	/**
+	 * Returns a BitmapShader associated with this Texture.
+	 */
+	public BitmapShader shader(Shader.TileMode tileMode)
+	{
+		return new BitmapShader(bitmap, tileMode, tileMode);
+	}
+	
+	
+	
+	
+	
+	/**
 	 * Returns the height of this Texture.
 	 */
 	public float height()
@@ -275,11 +269,24 @@ public class Texture implements ITexture, IDrawableComponent
 	
 	
 	/**
+	 * Recycles the bitmap
+	 */
+	public void recycle()
+	{
+		bitmap.recycle();
+	}
+	
+	
+	
+	
+	
+	/**
 	 * Draw the Texture
 	 */
+	@Override
 	public void draw(Canvas canvas)
 	{
-		canvas.drawBitmap(bitmap, position.X, position.Y, paint);
+		canvas.drawBitmap(bitmap, Position.X, Position.Y, paint);
 	}
 	
 	

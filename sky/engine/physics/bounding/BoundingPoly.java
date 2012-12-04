@@ -3,7 +3,7 @@ package sky.engine.physics.bounding;
 import java.util.Random;
 
 import sky.engine.geometry.vectors.Vector2d;
-import sky.engine.math.Angle;
+import sky.engine.math.AngleHelper;
 
 /**
  * Bounding Polygons are to be created to bound more complicated objects.
@@ -95,14 +95,14 @@ public class BoundingPoly extends Bounding
 		Random rand = new Random();
 		float degrees = 360.0f / noOfVertices;
 		float range = maxSize - minSize;
-		float x = Angle.sin(0) * ((rand.nextFloat() * range) + minSize);
-		float y = Angle.cos(0) * ((rand.nextFloat() * range) - minSize);
+		float x = AngleHelper.sin(0) * ((rand.nextFloat() * range) + minSize);
+		float y = AngleHelper.cos(0) * ((rand.nextFloat() * range) - minSize);
 		
 		vertices[0] = new Vector2d(x, y);
 		for (int i = 1; i < noOfVertices; i++)
 		{
-			x = Angle.sin((int)(degrees * i)) * ((rand.nextFloat() * range) + minSize);
-			y = Angle.cos((int)(degrees * i)) * ((rand.nextFloat() * range) - minSize);
+			x = AngleHelper.sin((int)(degrees * i)) * ((rand.nextFloat() * range) + minSize);
+			y = AngleHelper.cos((int)(degrees * i)) * ((rand.nextFloat() * range) - minSize);
 			vertices[i] = new Vector2d(x, y);
 		}
 		

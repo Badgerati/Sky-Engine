@@ -40,11 +40,11 @@ public class Box extends Shape
 	/**
 	 * Create new instance of a box
 	 */
-	public Box(Vector2d position, float width, float height, Vector2d velocity, float mass)
-	{
-		super(position, velocity, mass);
-		build(width, height);
-	}
+	//public Box(Vector2d position, float width, float height, Vector2d velocity, float mass)
+	//{
+	//	super(position, velocity, mass);
+	//	build(width, height);
+	//}
 
 	
 	/**

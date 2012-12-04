@@ -1,7 +1,7 @@
 package sky.engine.physics;
 
 import sky.engine.geometry.vectors.Vector2d;
-import sky.engine.math.Angle;
+import sky.engine.math.AngleHelper;
 
 /**
  * 
@@ -93,7 +93,7 @@ public abstract class Momentum
 	 */
 	public static float asAngle(Vector2d momentum)
 	{
-		return Angle.arctan(momentum.X, -momentum.Y);
+		return AngleHelper.arctan(momentum.X, -momentum.Y);
 	}
 	
 	

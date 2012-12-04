@@ -24,11 +24,11 @@ public class Line extends Shape
 	/**
 	 * Create new instance of a line
 	 */
-	public Line(Vector2d v1, Vector2d v2, Vector2d velocity, float mass)
-	{
-		super(v1.midpoint(v2), velocity, mass);
-		initialise(v1, v2);
-	}
+	//public Line(Vector2d v1, Vector2d v2, Vector2d velocity, float mass)
+	//{
+	//	super(v1.midpoint(v2), velocity, mass);
+	//	initialise(v1, v2);
+	//}
 	
 	
 	/**

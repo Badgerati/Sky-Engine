@@ -1,7 +1,8 @@
 package sky.engine.graphics.text;
 
+import sky.engine.components.time.GameTime;
 import sky.engine.geometry.vectors.Vector2d;
-import sky.engine.math.Angle;
+import sky.engine.math.AngleHelper;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
@@ -23,13 +24,13 @@ public class SpinningText extends CustomText
 	/**
 	 * Speed of rotation
 	 */
-	public int rotateSpeed = 0;
+	public float rotateSpeed = 0;
 	
 	
 	/**
 	 * Current amount of rotation
 	 */
-	public int currentRotation = 0;
+	public float currentRotation = 0;
 	
 	
 	
@@ -38,7 +39,7 @@ public class SpinningText extends CustomText
 	/**
 	 * Create new instance of spinning text
 	 */
-	public SpinningText(String text, Vector2d position, Vector2d offset, int colour, float size, int rotation, int speed)
+	public SpinningText(String text, Vector2d position, Vector2d offset, int colour, float size, float rotation, float speed)
 	{
 		super(text, position, colour, size);
 		initialise(offset, rotation, speed);
@@ -48,7 +49,7 @@ public class SpinningText extends CustomText
 	/**
 	 * Create new instance of spinning text
 	 */
-	public SpinningText(String text, Vector2d position, Vector2d offset, Paint paint, int rotation, int speed)
+	public SpinningText(String text, Vector2d position, Vector2d offset, Paint paint, float rotation, float speed)
 	{
 		super(text, position, paint);
 		initialise(offset, rotation, speed);
@@ -60,7 +61,7 @@ public class SpinningText extends CustomText
 	/**
 	 * Initialises the rotations
 	 */
-	private void initialise(Vector2d offset, int rotation, int speed)
+	private void initialise(Vector2d offset, float rotation, float speed)
 	{
 		this.offset = offset.clone();
 		currentRotation = rotation;
@@ -74,10 +75,11 @@ public class SpinningText extends CustomText
 	/**
 	 * Update the spinning text
 	 */
-	public void update()
+	@Override
+	public void update(GameTime gameTime)
 	{
 		currentRotation += rotateSpeed;
-		currentRotation = Angle.wrapAngle(currentRotation);
+		currentRotation = AngleHelper.constrainAngle(currentRotation);
 	}
 	
 	

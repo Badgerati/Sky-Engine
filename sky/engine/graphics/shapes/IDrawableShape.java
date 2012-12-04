@@ -40,9 +40,15 @@ public interface IDrawableShape
 	
 	
 	/**
-	 * Set the paint for the shape
+	 * Set the paints for the shape
 	 */
-	public void setPaint(Paints paint);
+	public void setPaints(Paints paint);
+	
+	
+	/**
+	 * Set the alpha for the shape
+	 */
+	public void setAlpha(int alpha);
 	
 	
 	/**

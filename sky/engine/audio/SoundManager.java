@@ -70,6 +70,12 @@ public abstract class SoundManager
 	protected static Context context = null;
 	
 	
+	/**
+	 * Is the sound muted?
+	 */
+	protected static boolean Muted = false;
+	
+	
 	
 	
 	
@@ -133,6 +139,8 @@ public abstract class SoundManager
 	 */
 	public static void play(int soundID, float volumelevel)
 	{
+		if (Muted) volumelevel = 0f;
+		
 		float streamVolumeCurrent = audiomanager.getStreamVolume(AudioManager.STREAM_MUSIC);
 		float streamVolumeMax = audiomanager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);    
 		float volume = (streamVolumeCurrent / streamVolumeMax) * volumelevel;
@@ -145,6 +153,77 @@ public abstract class SoundManager
 			}
 			catch (Exception e) { }
 		}
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Remove a sound file
+	 */
+	public static void remove(int soundID)
+	{
+		if (sounds != null)
+		{
+			sounds.remove(soundID);
+		}
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Set sound to be muted
+	 */
+	public static void setMuted(boolean flag)
+	{
+		Muted = flag;
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Returns if the sound is currently being muted
+	 */
+	public static boolean isMuted()
+	{
+		return Muted;
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Remove all sound files
+	 */
+	public static void clear()
+	{
+		if (sounds != null)
+		{
+			sounds.clear();
+		}
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Returns the number of sound files currently loaded
+	 */
+	public static int size()
+	{
+		if (sounds != null)
+			return sounds.size();
+		
+		return 0;
 	}
 	
 	

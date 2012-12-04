@@ -44,14 +44,14 @@ public class Oval extends Shape
 	/**
 	 * Create new instance of a Geometric Oval
 	 */
-	public Oval(Vector2d position, float xradius, float yradius, Vector2d velocity, float mass)
-	{
-		super(position, velocity, mass);
-		xRadius = xradius;
-		yRadius = yradius;
-		vertices = new Vector2d[2];
-		isCircle = true;
-	}
+	//public Oval(Vector2d position, float xradius, float yradius, Vector2d velocity, float mass)
+	//{
+	//	super(position, velocity, mass);
+	//	xRadius = xradius;
+	//	yRadius = yradius;
+	//	vertices = new Vector2d[2];
+	//	isCircle = true;
+	//}
 	
 	
 	/**

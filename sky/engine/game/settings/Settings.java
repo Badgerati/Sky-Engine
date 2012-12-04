@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 /**
- * Options class to automatically read in and store various options. Options should be
+ * Settings class to automatically read in and store various options. Settings should be
  * stored in the format "Name = Bob" or "Easy = true". With this, we simply use the
  * variable name as the Map key and the value as the key's value. Variables are case-
  * insensitive.
@@ -22,9 +22,9 @@ public abstract class Settings
 {
 	
 	/**
-	 * Hash Map to store the various options
+	 * Hash Map to store the various Settings
 	 */
-	protected static HashMap<String, String> optionsmap = null;
+	protected static HashMap<String, String> settingsmap = null;
 	
 	
 	
@@ -33,11 +33,11 @@ public abstract class Settings
 	
 	
 	/**
-	 * Initialises the options map
+	 * Initialises the settings map
 	 */
 	public static void initialise()
 	{
-		optionsmap = new HashMap<String, String>();
+		settingsmap = new HashMap<String, String>();
 	}
 	
 	
@@ -51,7 +51,7 @@ public abstract class Settings
 	 */
 	public static boolean read(Context context, String filename)
 	{
-		optionsmap = new HashMap<String, String>();
+		settingsmap = new HashMap<String, String>();
 		
 		try
 		{
@@ -90,7 +90,7 @@ public abstract class Settings
 			variable = line.split("=")[0].trim();
 			value = line.split("=")[1].trim();
 			
-			optionsmap.put(variable.toUpperCase(), value);
+			settingsmap.put(variable.toUpperCase(), value);
 		}
 	}
 	
@@ -132,10 +132,10 @@ public abstract class Settings
 	 */
 	public static void set(String variable, String value)
 	{
-		if (optionsmap == null)
-			optionsmap = new HashMap<String, String>(); 
+		if (settingsmap == null)
+			settingsmap = new HashMap<String, String>(); 
 		
-		optionsmap.put(variable.toUpperCase(), value);
+		settingsmap.put(variable.toUpperCase(), value);
 	}
 	
 	
@@ -147,10 +147,10 @@ public abstract class Settings
 	 */
 	public static String getString(String variable)
 	{
-		if (optionsmap == null)
+		if (settingsmap == null)
 			return "";
 		
-		return optionsmap.get(variable.toUpperCase());
+		return settingsmap.get(variable.toUpperCase());
 	}
 	
 	
@@ -162,10 +162,25 @@ public abstract class Settings
 	 */
 	public static int getInt(String variable)
 	{
-		if (optionsmap == null)
+		if (settingsmap == null)
 			return 0;
 		
-		return Integer.parseInt(optionsmap.get(variable.toUpperCase()));
+		return Integer.parseInt(settingsmap.get(variable.toUpperCase()));
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Returns the value of the given variable as an Float
+	 */
+	public static float getFloat(String variable)
+	{
+		if (settingsmap == null)
+			return 0.0f;
+		
+		return Float.parseFloat(settingsmap.get(variable.toUpperCase()));
 	}
 	
 	
@@ -177,10 +192,10 @@ public abstract class Settings
 	 */
 	public static boolean getBool(String variable)
 	{
-		if (optionsmap == null)
+		if (settingsmap == null)
 			return false;
 		
-		return Boolean.parseBoolean(optionsmap.get(variable.toUpperCase()));
+		return Boolean.parseBoolean(settingsmap.get(variable.toUpperCase()));
 	}
 	
 	
@@ -195,11 +210,11 @@ public abstract class Settings
 	public static void save(Context context, String filename)
 	{
 		String options = "";
-		Set<String> keys = optionsmap.keySet();
+		Set<String> keys = settingsmap.keySet();
 		
 		for (String key : keys)
 		{
-			options += (key + " = " + optionsmap.get(key) + "\n");
+			options += (key + " = " + settingsmap.get(key) + "\n");
 		}
 		options = options.substring(0, options.length() - ("\n").length());
 		

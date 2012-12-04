@@ -45,31 +45,26 @@ public class Accelerometer
 	
 	
 	
-	
-
-	
 	/**
 	 * Create a new Accelerometer object
 	 */
-	public Accelerometer(Activity activity)
+	public Accelerometer(Activity activity, int delay)
 	{
 		manager = (SensorManager) activity.getSystemService(Context.SENSOR_SERVICE);
 		accel = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		this.delay = delay;
 	}
 	
 	
 	/**
 	 * Create a new Accelerometer object
 	 */
-	public Accelerometer(SensorManager manager)
+	public Accelerometer(SensorManager manager, int delay)
 	{
 		this.manager = manager;
 		accel = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		this.delay = delay;
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -89,9 +84,6 @@ public class Accelerometer
 	
 	
 	
-
-	
-	
 	
 	
 	/**
@@ -108,24 +100,25 @@ public class Accelerometer
 	
 	
 	
-	
-	
-	
 	/**
 	 * Get delay type
 	 */
-	public int getDelayType()
+	public int getDelay()
 	{
 		return delay;
 	}
 	
 	
+	
+	
+	
+	
 	/**
 	 * Set delay type
 	 */
-	public void setDelayType(int type)
+	public void setDelay(int delay)
 	{
-		delay = type;
+		this.delay = delay;
 	}
 	
 

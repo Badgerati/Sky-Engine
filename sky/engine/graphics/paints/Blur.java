@@ -108,6 +108,18 @@ public class Blur extends Paint
 	
 	
 	
+	/**
+	 * 
+	 */
+	public Blur clone()
+	{
+		return new Blur(this);
+	}
+	
+	
+	
+	
+	
 	
 	/**
 	 * Sets the blur

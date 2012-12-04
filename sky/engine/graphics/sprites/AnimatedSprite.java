@@ -89,7 +89,7 @@ public class AnimatedSprite extends Sprite
 	
 	
 	
-	
+
 	
 	
 	/**
@@ -103,13 +103,23 @@ public class AnimatedSprite extends Sprite
 	
 	
 	/**
-	 * Create a new instance of an AnimatedSprite with velocity and mass
+	 * Create a new instance of an AnimatedSprite
 	 */
-	public AnimatedSprite(Bitmap bitmap, Vector2d position, float scale, int rows, int columns, int fps, Vector2d velocity, float mass)
+	public AnimatedSprite(Bitmap bitmap, Vector2d position, float scalewidth, float scaleheight, int rows, int columns, int fps)
 	{
-		super(bitmap, position, scale, velocity, mass);
+		super(bitmap, position, scalewidth, scaleheight);
 		initialise(rows, columns, fps);
 	}
+	
+	
+	/**
+	 * Create a new instance of an AnimatedSprite with velocity and mass
+	 */
+	//public AnimatedSprite(Bitmap bitmap, Vector2d position, float scale, int rows, int columns, int fps, Vector2d velocity, float mass)
+	//{
+	//	super(bitmap, position, scale, velocity, mass);
+	//	initialise(rows, columns, fps);
+	//}
 	
 	
 	
@@ -601,6 +611,7 @@ public class AnimatedSprite extends Sprite
 	/**
 	 * Update the sprite to move along a frame
 	 */
+	@Override
 	public void update(GameTime gameTime)
 	{
 		//update main sprite

@@ -1,5 +1,6 @@
 package sky.engine.graphics.particles;
 
+import sky.engine.components.time.GameTime;
 import sky.engine.geometry.vectors.Vector2d;
 import sky.engine.graphics.textures.Texture;
 import android.graphics.Canvas;
@@ -39,9 +40,9 @@ public class TextureParticle extends Particle
 	 * Update the Particle
 	 */
 	@Override
-	public void update()
+	public void update(GameTime gameTime)
 	{
-		super.update();
+		super.update(gameTime);
 	}
 	
 	

@@ -1,5 +1,6 @@
 package sky.engine.graphics.text;
 
+import sky.engine.components.time.GameTime;
 import sky.engine.components.time.Timer;
 import sky.engine.geometry.vectors.Vector2d;
 import android.graphics.Canvas;
@@ -88,7 +89,8 @@ public class FlashingText extends CustomText
 	/**
 	 * Update the flashing text
 	 */
-	public void update()
+	@Override
+	public void update(GameTime gameTime)
 	{
 		switch (currentstage)
 		{

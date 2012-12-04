@@ -2,7 +2,7 @@ package sky.engine.geometry.vectors;
 
 import java.util.Comparator;
 
-import sky.engine.math.Angle;
+import sky.engine.math.AngleHelper;
 
 
 /**
@@ -404,7 +404,7 @@ public class Vector2d implements Comparable<Vector2d>
 	 */
 	public float angle()
 	{
-		return Angle.arctan(X, -Y);
+		return AngleHelper.arctan(X, -Y);
 	}
 	
 	
@@ -416,8 +416,8 @@ public class Vector2d implements Comparable<Vector2d>
 	 */
 	public void rotate(float degree, float x, float y)
 	{
-		float sinA = Angle.sin(degree);
-		float cosA = Angle.cos(degree);
+		float sinA = AngleHelper.sin(degree);
+		float cosA = AngleHelper.cos(degree);
 
 		float Xoffset = X - x;
 		float Yoffset = Y - y;
@@ -438,8 +438,8 @@ public class Vector2d implements Comparable<Vector2d>
 	 */
 	public void rotate(float degree, Vector2d origin)
 	{
-		float sinA = Angle.sin(degree);
-		float cosA = Angle.cos(degree);
+		float sinA = AngleHelper.sin(degree);
+		float cosA = AngleHelper.cos(degree);
 
 		float Xoffset = X - origin.X;
 		float Yoffset = Y - origin.Y;
@@ -774,6 +774,7 @@ public class Vector2d implements Comparable<Vector2d>
 	/**
 	 * Returns string representation of this vector
 	 */
+	@Override
 	public String toString()
 	{
 		return "(X = " + Float.toString(X) + ", Y = " + Float.toString(Y) + ")";

@@ -12,19 +12,19 @@ public class Paints
 	/**
 	 * Fill paint
 	 */
-	protected Fill Fillpaint = null;
+	protected Fill fillpaint = null;
 	
 	
 	/**
 	 * Outline paint
 	 */
-	protected Outline Outlinepaint = null;
+	protected Outline outlinepaint = null;
 	
 	
 	/**
 	 * Blur paint
 	 */
-	protected Blur Blurpaint = null;
+	protected Blur blurpaint = null;
 	
 	
 	
@@ -36,9 +36,9 @@ public class Paints
 	 */
 	public Paints(Fill fill, Outline outline, Blur blur)
 	{
-		Fillpaint = fill == null ? null : new Fill(fill);
-		Outlinepaint = outline == null ? null : new Outline(outline);
-		Blurpaint = blur == null ? null : new Blur(blur);
+		fillpaint = fill == null ? null : new Fill(fill);
+		outlinepaint = outline == null ? null : new Outline(outline);
+		blurpaint = blur == null ? null : new Blur(blur);
 	}
 	
 	
@@ -51,9 +51,9 @@ public class Paints
 	 */
 	public Paints(int fill, int outline, int blur)
 	{
-		Fillpaint = new Fill(fill);
-		Outlinepaint = new Outline(outline);
-		Blurpaint = new Blur(blur);
+		fillpaint = new Fill(fill);
+		outlinepaint = new Outline(outline);
+		blurpaint = new Blur(blur);
 	}
 	
 	
@@ -66,9 +66,66 @@ public class Paints
 	 */
 	public Paints(Paints paints)
 	{
-		Fillpaint = paints.fill();
-		Outlinepaint = paints.outline();
-		Blurpaint = paints.blur();
+		fillpaint = paints.fill().clone();
+		outlinepaint = paints.outline().clone();
+		blurpaint = paints.blur().clone();
+	}
+	
+	
+	
+	
+	
+	/**
+	 * 
+	 */
+	public Paints clone()
+	{
+		return new Paints(this);
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Set alpha of the paints
+	 */
+	public void setAlpha(int alpha)
+	{
+		fillpaint.setAlpha(alpha);
+		outlinepaint.setAlpha(alpha);
+		blurpaint.setAlpha(alpha);
+	}
+	
+	
+	
+
+	
+	
+	/**
+	 * 
+	 */
+	public void setFillColour(int fill)
+	{
+		fillpaint.setColor(fill);
+	}
+	
+	
+	/**
+	 * 
+	 */
+	public void setOutlineColour(int fill)
+	{
+		outlinepaint.setColor(fill);
+	}
+	
+	
+	/**
+	 * 
+	 */
+	public void setBlurColour(int fill)
+	{
+		blurpaint.setColor(fill);
 	}
 	
 	
@@ -81,7 +138,7 @@ public class Paints
 	 */
 	public Fill fill()
 	{
-		return Fillpaint == null ? null : new Fill(Fillpaint);
+		return fillpaint == null ? null : fillpaint;
 	}
 	
 	
@@ -90,7 +147,7 @@ public class Paints
 	 */
 	public Outline outline()
 	{
-		return Outlinepaint == null ? null : new Outline(Outlinepaint);
+		return outlinepaint == null ? null : outlinepaint;
 	}
 	
 	
@@ -99,7 +156,7 @@ public class Paints
 	 */
 	public Blur blur()
 	{
-		return Blurpaint == null ? null : new Blur(Blurpaint);
+		return blurpaint == null ? null : blurpaint;
 	}
 	
 

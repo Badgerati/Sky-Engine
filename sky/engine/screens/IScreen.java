@@ -1,7 +1,6 @@
 package sky.engine.screens;
 
 import sky.engine.components.time.GameTime;
-import sky.engine.game.GameScreenActivity;
 import android.graphics.Canvas;
 import android.hardware.SensorEvent;
 import android.view.MotionEvent;
@@ -17,7 +16,13 @@ public interface IScreen
 	/**
 	 * Loading content
 	 */
-	public void load(GameScreenActivity activity);
+	public void load();
+	
+	
+	/**
+	 * Unload content
+	 */
+	public void unload();
 	
 	
 	/**

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import sky.engine.components.time.GameTime;
 import sky.engine.components.time.TimeSpan;
 import sky.engine.components.time.Timer;
-import sky.engine.game.GameScreenActivity;
-import sky.engine.graphics.Colour;
 import sky.engine.graphics.IDrawableComponent;
 import sky.engine.math.MathHelper;
 import android.graphics.Canvas;
@@ -75,6 +73,12 @@ public abstract class GameScreen implements IScreen
 	
 	
 	/**
+	 * Indicates if all required content has been loaded
+	 */
+	protected boolean ContentLoaded = false;
+	
+	
+	/**
 	 * Array of all Timers in the screen, for easier dealing
 	 */
 	protected ArrayList<Timer> timers = new ArrayList<Timer>();
@@ -100,7 +104,11 @@ public abstract class GameScreen implements IScreen
 	/**
 	 * GameScreen
 	 */
-	public GameScreen() { }
+	public GameScreen()
+	{
+		transitionOnTime = new TimeSpan();
+		transitionOffTime = new TimeSpan();
+	}
 	
 	
 	
@@ -111,8 +119,22 @@ public abstract class GameScreen implements IScreen
 	/**
 	 * Load the content of the screen
 	 */
-	public void load(GameScreenActivity activity)
+	public void load()
 	{
+		ContentLoaded = true;
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Unload content
+	 */
+	public void unload()
+	{
+		drawableComponents.clear();
+		drawableUIComponents.clear();
 	}
 	
 	
@@ -236,14 +258,11 @@ public abstract class GameScreen implements IScreen
 	 * Draw the screen
 	 */
 	public void draw(Canvas canvas)
-	{
-		canvas.drawColor(Colour.BLACK);
-		
+	{		
 		for (int i = 0; i < drawableComponents.size(); i++)
 		{
 			drawableComponents.get(i).draw(canvas);
-		}
-			
+		}		
 	}
 	
 	
@@ -273,6 +292,7 @@ public abstract class GameScreen implements IScreen
 	{
 		if (transitionOffTime.equals(TimeSpan.zero()))
 		{
+			unload();
 			ScreenManager.remove(this);
 		}
 		else

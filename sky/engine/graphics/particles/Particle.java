@@ -1,7 +1,8 @@
 package sky.engine.graphics.particles;
 
+import sky.engine.components.time.GameTime;
 import sky.engine.geometry.vectors.Vector2d;
-import sky.engine.graphics.IDrawableComponent;
+import sky.engine.graphics.DrawableComponent;
 import sky.engine.math.SERandom;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -12,7 +13,7 @@ import android.graphics.Paint;
  * @author Matthew Kelly (Badgerati).
  *
  */
-public class Particle implements IDrawableComponent
+public class Particle extends DrawableComponent
 {	
 	/**
 	 * Alive and dead constants
@@ -42,7 +43,7 @@ public class Particle implements IDrawableComponent
 	/**
 	 * Position of the particle
 	 */
-	protected Vector2d Position = null;
+	//protected Vector2d Position = null;
 	
 	
 	/**
@@ -160,13 +161,13 @@ public class Particle implements IDrawableComponent
 	/**
 	 * Update the particle
 	 */	
-	public void update()
+	@Override
+	public void update(GameTime gameTime)
 	{
 		if (particleState == STATE_ALIVE)
 		{
 			TTL--;
-			Position.X += Velocity.X;
-			Position.Y += Velocity.Y;
+			Position.integrate(Velocity);
 		}
 
 		paint.setAlpha(paint.getAlpha() - fadeSpeed);		
@@ -182,6 +183,7 @@ public class Particle implements IDrawableComponent
 	/**
 	 * Draw the particle
 	 */
+	@Override
 	public void draw(Canvas canvas)
 	{
 		canvas.drawRect(Position.X, Position.Y, (Position.X + particleSize), (Position.Y + particleSize), paint);		

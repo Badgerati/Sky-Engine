@@ -1,6 +1,6 @@
 package sky.engine.graphics.text;
 
-import sky.engine.components.time.Timer;
+import sky.engine.components.time.GameTime;
 import sky.engine.geometry.vectors.Vector2d;
 import sky.engine.threads.GameThread;
 import android.graphics.Canvas;
@@ -27,25 +27,25 @@ public class FadingText extends CustomText
 	/**
 	 * Amount of time text is shown
 	 */
-	protected float onTime = 0;
+	protected long onTime = 0;
 	
 	
 	/**
 	 * Amount of time text is hidden
 	 */
-	protected float offTime = 0;
+	protected long offTime = 0;
 	
 	
 	/**
 	 * Amount of time text is fading in
 	 */
-	protected float inTime = 0;
+	protected long inTime = 0;
 	
 	
 	/**
 	 * Amount of time text is fading out
 	 */
-	protected float outTime = 0;
+	protected long outTime = 0;
 	
 	
 	/**
@@ -63,13 +63,25 @@ public class FadingText extends CustomText
 	/**
 	 * Global timer
 	 */
-	protected Timer timer = null;
+	protected long timer = 0;
 	
 	
 	/**
 	 * Current temporary alpha value
 	 */
 	protected float alphavalue = 255.0f;
+	
+	
+	/**
+	 * Minimum alpha
+	 */
+	protected float minAlpha = 0.0f;
+	
+	
+	/**
+	 * Minimum alpha
+	 */
+	protected float maxAlpha = 255.0f;
 	
 	
 	
@@ -80,7 +92,7 @@ public class FadingText extends CustomText
 	/**
 	 * Create new instance of fading text
 	 */
-	public FadingText(String text, Vector2d position, int colour, float size, float on, float off, float in, float out)
+	public FadingText(String text, Vector2d position, int colour, float size, long on, long off, long in, long out)
 	{
 		super(text, position, colour, size);
 		initialise(on, off, in, out);
@@ -90,7 +102,7 @@ public class FadingText extends CustomText
 	/**
 	 * Create new instance of fading text
 	 */
-	public FadingText(String text, Vector2d position, Paint paint, float on, float off, float in, float out)
+	public FadingText(String text, Vector2d position, Paint paint, long on, long off, long in, long out)
 	{
 		super(text, position, paint);
 		initialise(on, off, in, out);
@@ -102,11 +114,10 @@ public class FadingText extends CustomText
 	/**
 	 * Initialises the fading timers
 	 */
-	private void initialise(float on, float off, float in, float out)
+	private void initialise(long on, long off, long in, long out)
 	{
 		//timers
-		timer = new Timer();
-		timer.start();
+		timer = 0;
 		onTime = on;
 		offTime = off;
 		inTime = in;
@@ -119,9 +130,44 @@ public class FadingText extends CustomText
 		alphavalue = 255.0f;
 		
 		//fading co-efficients
-		inFade = 255.0f / in / GameThread.MAX_FPS;
-		outFade = 255.0f / out / GameThread.MAX_FPS;
+		inFade = (maxAlpha - minAlpha) / (in / 1000.0f) / GameThread.MAX_FPS;
+		outFade = (maxAlpha - minAlpha) / (out / 1000.0f) / GameThread.MAX_FPS;
 	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Set the minimum alpha value
+	 */
+	public void setMinimumAlpha(float min)
+	{
+		if (min < 0.0f) min = 0.0f;
+		if (min > maxAlpha || min > 255.0f) min = maxAlpha;
+		
+		minAlpha = min;
+		outFade = (maxAlpha - minAlpha) / (outTime / 1000.0f) / GameThread.MAX_FPS;
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Set the maximum alpha value
+	 */
+	public void setMaximumAlpha(float max)
+	{
+		if (max > 255.0f) max = 255.0f;
+		if (max < minAlpha || max < 0.0f) max = minAlpha;
+		
+		maxAlpha = max;
+		inFade = (maxAlpha - minAlpha) / (inTime / 1000.0f) / GameThread.MAX_FPS;
+	}
+	
 	
 	
 	
@@ -130,55 +176,58 @@ public class FadingText extends CustomText
 	/**
 	 * Update the fading text
 	 */
-	public void update()
+	@Override
+	public void update(GameTime gameTime)
 	{
+		timer += gameTime.ElapsedGameTime;
+		
 		switch (currentstage)
 		{
 			default: case TEXT_ON:
-				if (timer.getTime() >= onTime)
+				if (timer >= onTime)
 				{
 					currentstage = TEXT_OUT;
-					timer.reset();
+					timer = 0;
 				}
 				break;
 				
 			case TEXT_OUT:
-				if (timer.getTime() < outTime)
+				if (timer < outTime)
 				{
 					alphavalue -= outFade;
-					if (alphavalue < 0.0f) alphavalue = 0.0f;
+					if (alphavalue < minAlpha) alphavalue = minAlpha;
 					this.setAlpha((int)alphavalue);
 				}
 				else
 				{
-					this.setAlpha(0);
-					alphavalue = 0.0f;
+					this.setAlpha((int)minAlpha);
+					alphavalue = minAlpha;
 					currentstage = TEXT_OFF;
-					timer.reset();
+					timer = 0;
 				}
 				break;
 				
 			case TEXT_OFF:
-				if (timer.getTime() >= offTime)
+				if (timer >= offTime)
 				{
 					currentstage = TEXT_IN;
-					timer.reset();
+					timer = 0;
 				}
 				break;
 				
 			case TEXT_IN:
-				if (timer.getTime() < inTime)
+				if (timer < inTime)
 				{
 					alphavalue += inFade;
-					if (alphavalue > 255.0f) alphavalue = 255.0f;
+					if (alphavalue > maxAlpha) alphavalue = maxAlpha;
 					this.setAlpha((int)alphavalue);
 				}
 				else
 				{
-					this.setAlpha(255);
-					alphavalue = 255.0f;
+					this.setAlpha((int)maxAlpha);
+					alphavalue = maxAlpha;
 					currentstage = TEXT_ON;
-					timer.reset();
+					timer = 0;
 				}
 				break;
 		}

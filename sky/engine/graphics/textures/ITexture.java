@@ -3,8 +3,10 @@ package sky.engine.graphics.textures;
 import sky.engine.components.Size;
 import sky.engine.geometry.vectors.Vector2d;
 import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Shader;
 
 /**
  * 
@@ -19,6 +21,11 @@ public interface ITexture
 	 * Returns the Bitmap of this Texture
 	 */
 	public Bitmap bitmap();
+	
+	/**
+	 * Returns a BitmapShader for this Texture
+	 */
+	public BitmapShader shader(Shader.TileMode tileMode);
 	
 	
 	/**
@@ -67,6 +74,12 @@ public interface ITexture
 	 * Scales the Bitmap of this Texture to the given size
 	 */
 	public void scale(Size scalesize);
+	
+	
+	/**
+	 * Recycles the bitmap
+	 */
+	public void recycle();
 	
 	
 	/**

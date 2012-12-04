@@ -10,6 +10,7 @@ import sky.engine.graphics.paints.Paints;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Path;
+import android.graphics.Shader;
 
 /**
  * 
@@ -63,62 +64,12 @@ public class DrawableTriangle extends Triangle implements IDrawableShape, IDrawa
 	/**
 	 * Create new instance of a triangle
 	 */
-	public DrawableTriangle(Vector2d v1, Vector2d v2, Vector2d v3, Vector2d velocity, float mass)
-	{
-		super(v1, v2, v3, velocity, mass);
-		outlinepaint = new Outline();
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a triangle
-	 */
 	public DrawableTriangle(Vector2d v1, Vector2d v2, Vector2d v3, Fill fill, Outline outline, Blur blur)
 	{
 		super(v1, v2, v3);
 		fillpaint = fill == null ? null : new Fill(fill);
 		outlinepaint = outline == null ? null : new Outline(outline);
 		blurpaint = blur == null ? null : new Blur(blur);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a triangle
-	 */
-	public DrawableTriangle(Vector2d v1, Vector2d v2, Vector2d v3, Fill fill, Outline outline, Blur blur, Vector2d velocity, float mass)
-	{
-		super(v1, v2, v3, velocity, mass);
-		fillpaint = fill == null ? null : new Fill(fill);
-		outlinepaint = outline == null ? null : new Outline(outline);
-		blurpaint = blur == null ? null : new Blur(blur);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a triangle
-	 */
-	public DrawableTriangle(Vector2d v1, Vector2d v2, Vector2d v3, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias)
-	{
-		super(v1, v2, v3);
-		fillpaint = new Fill(fill, antialias);
-		outlinepaint = new Outline(outline, outlinewidth, antialias);
-		blurpaint = new Blur(blur, blurwidth, blurradius);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a triangle
-	 */
-	public DrawableTriangle(Vector2d v1, Vector2d v2, Vector2d v3, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias, Vector2d velocity, float mass)
-	{
-		super(v1, v2, v3, velocity, mass);
-		fillpaint = new Fill(fill, antialias);
-		outlinepaint = new Outline(outline, outlinewidth, antialias);
-		blurpaint = new Blur(blur, blurwidth, blurradius);
 		initialise();
 	}
 
@@ -137,17 +88,6 @@ public class DrawableTriangle extends Triangle implements IDrawableShape, IDrawa
 		outlinepaint = new Outline();
 		initialise();
 	}
-
-	
-	/**
-	 * Create new instance of a triangle
-	 */
-	public DrawableTriangle(Vector2d position, float sidex, float sidey, float sidez, Vector2d velocity, float mass)
-	{
-		super(position, sidex, sidey, sidez, velocity, mass);
-		outlinepaint = new Outline();
-		initialise();
-	}
 	
 	
 	/**
@@ -163,45 +103,6 @@ public class DrawableTriangle extends Triangle implements IDrawableShape, IDrawa
 	}
 	
 	
-	/**
-	 * Create new instance of a triangle
-	 */
-	public DrawableTriangle(Vector2d position, float sidex, float sidey, float sidez, Fill fill, Outline outline, Blur blur, Vector2d velocity, float mass)
-	{
-		super(position, sidex, sidey, sidez, velocity, mass);
-		fillpaint = fill == null ? null : new Fill(fill);
-		outlinepaint = outline == null ? null : new Outline(outline);
-		blurpaint = blur == null ? null : new Blur(blur);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a triangle
-	 */
-	public DrawableTriangle(Vector2d position, float sidex, float sidey, float sidez, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias)
-	{
-		super(position, sidex, sidey, sidez);
-		fillpaint = new Fill(fill, antialias);
-		outlinepaint = new Outline(outline, outlinewidth, antialias);
-		blurpaint = new Blur(blur, blurwidth, blurradius);
-		initialise();
-	}
-	
-	
-	/**
-	 * Create new instance of a triangle
-	 */
-	public DrawableTriangle(Vector2d position, float sidex, float sidey, float sidez, int fill, int outline, int blur, float outlinewidth, float blurwidth, float blurradius, boolean antialias, Vector2d velocity, float mass)
-	{
-		super(position, sidex, sidey, sidez, velocity, mass);
-		fillpaint = new Fill(fill, antialias);
-		outlinepaint = new Outline(outline, outlinewidth, antialias);
-		blurpaint = new Blur(blur, blurwidth, blurradius);
-		initialise();
-	}
-	
-	
 	
 	
 	
@@ -213,7 +114,7 @@ public class DrawableTriangle extends Triangle implements IDrawableShape, IDrawa
 	 */
 	public DrawableTriangle(DrawableTriangle tri)
 	{
-		super(tri.Position, tri.vertices[0], tri.vertices[1], tri.vertices[2], tri.Velocity, tri.Mass);
+		super(tri);
 		fillpaint = new Fill(tri.fillpaint);
 		outlinepaint = new Outline(tri.outlinepaint);
 		blurpaint = new Blur(tri.blurpaint);
@@ -301,11 +202,49 @@ public class DrawableTriangle extends Triangle implements IDrawableShape, IDrawa
 	/**
 	 * Set the paint for the shape
 	 */
-	public void setPaint(Paints paint)
+	public void setPaints(Paints paint)
 	{
 		fillpaint = paint.fill();
 		outlinepaint = paint.outline();
 		blurpaint = paint.blur();
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Rotate
+	 */
+	@Override
+	public void rotate(float degrees)
+	{
+		super.rotate(degrees);
+		Shader shader = fillpaint.getShader();
+		
+		if (shader != null)
+		{
+			Matrix mat = new Matrix();
+			mat.postTranslate(-Position.X, -Position.Y);
+			mat.postRotate(this.degreesOfRotation);
+			mat.postTranslate(Position.X, Position.Y);
+			shader.setLocalMatrix(mat);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * Set the alpha for the shape
+	 */
+	public void setAlpha(int alpha)
+	{
+		if (fillpaint != null) fillpaint.setAlpha(alpha);
+		if (outlinepaint != null) outlinepaint.setAlpha(alpha);
+		if (blurpaint != null) blurpaint.setAlpha(alpha);
 	}
 	
 	
